@@ -179,7 +179,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.valid_csv_attributes
-    column_names.map(&:to_sym) + [:full_name]
+    column_names.map(&:to_sym) + %i[full_name avatar_url]
   end
 
   def generate_webdav_secret_key
