@@ -1,9 +1,9 @@
 ### Checklist
-- [ ] databasemigraties samengevoegd in 1 databasemigratie
-- [ ] databasemigraties getest vanaf `origin/staging` (`git checkout staging ; git pull ; bundle exec rails db:reset ; git checkout BRANCH ; bundle exec rails db:migrate`)
+- [ ] merged database migrations into 1 database migration
+- [ ] tested database migrations from `origin/staging` (`git checkout staging ; git pull ; bundle exec rails db:reset ; git checkout BRANCH ; bundle exec rails db:migrate`)
 
-### Samenvatting
-Geef een korte samenvatting van de wijzigingen in deze pull request. Zijn er gerelateerde issues die hiermee opgelost worden? Benoem deze dan (met 'fixes #xyz', zie https://github.com/blog/1506-closing-issues-via-pull-requests), zodat ze automatisch worden opgelost als de pull request wordt gemerget.
+### Summary
+Shortly summarize the changes in this pull request. Does it concern changes in the UI, add some screenshots. Are there related issues solved? Please, mention them (with 'fixes #xyz', see https://github.com/blog/1506-closing-issues-via-pull-requests), so they can be resolved automatically when merging this pull request.
 
-### Overige informatie
-Als er nog iets anders belangrijk en relevant voor deze pull request is, benoem dat dan hier. Denk bijvoorbeeld aan gerelateerde pull requests (ook in `amber-ui`), nieuw geïntroduceerde conventies, gems of andere dependencies die je nu nodig hebt.
+### Other information
+If there is some other relavent and imporant information for this pull request, mention it here. For example, related pull requests (also in `amber-api`) or newly introduced conventions, packages or other dependencies.

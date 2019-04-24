@@ -1,8 +1,10 @@
-### Hoe te reproduceren
+### How to reproduce
 1. ...
 
-### Verwacht gedrag
-Vertel wat er zou moeten gebeuren
+### Expected behaviour
+Explain what should happen
 
-### Eigenlijk gedrag
-Vertel wat er in plaats daarvan gebeurt
+### Current behaviour
+Explain what currently happens
+
+*Optionally add some screenshots*
