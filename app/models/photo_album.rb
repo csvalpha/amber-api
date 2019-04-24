@@ -13,7 +13,7 @@ class PhotoAlbum < ApplicationRecord
 
     Zip::File.open(temp_file.path, Zip::File::CREATE) do |file|
       photos.each do |photo|
-        file.add(photo.image.file.filename, photo.image.path)
+        file.add("#{photo.id}.#{photo.image.file.extension}", photo.image.path)
       end
     end
 
