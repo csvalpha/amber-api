@@ -79,6 +79,7 @@ member_permission_map = {
   'form/open_question' => %i[create read],
   'form/closed_question_answer' => %i[create read],
   'form/open_question_answer' => %i[create read],
+  'permission' => [:read],
   'static_page' => %i[read],
   'debit/collection' => %i[read],
   'debit/transaction' => []
@@ -108,6 +109,7 @@ old_members_permission_map = {
   'form/open_question' => %i[read],
   'form/closed_question_answer' => %i[read],
   'form/open_question_answer' => %i[read],
+  'permission' => [:read],
   'static_page' => %i[read]
 }
 
