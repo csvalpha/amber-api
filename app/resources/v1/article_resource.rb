@@ -1,0 +1,48 @@
+class V1::ArticleResource < V1::ApplicationResource
+  attributes :title, :content, :publicly_visible, :content_camofied, :cover_photo,
+             :amount_of_comments, :cover_photo_url
+
+  def amount_of_comments
+    @model.comments.size
+  end
+
+  def cover_photo_url
+    @model.cover_photo.url
+  end
+
+  def content_camofied
+    camofy(@model['content'])
+  end
+
+  has_one :author, always_include_linkage_data: true
+  has_one :group, always_include_linkage_data: true
+  has_many :comments
+
+  def fetchable_fields
+    super - [:cover_photo]
+  end
+
+  def self.creatable_fields(_context)
+    %i[title content publicly_visible group cover_photo]
+  end
+
+  def self.searchable_fields
+    %i[title content]
+  end
+
+  before_create do
+    @model.author_id = current_user.id
+  end
+
+  before_save do
+    user_is_member_of_group?
+  end
+
+  def user_is_member_of_group?
+    return true unless @model.group
+    return true if current_user.permission?(:update, @model)
+    return if current_user.current_group_member?(@model.group)
+
+    raise AmberError::NotMemberOfGroupError
+  end
+end

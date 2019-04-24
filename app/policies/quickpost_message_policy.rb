@@ -1,0 +1,2 @@
+class QuickpostMessagePolicy < ApplicationPolicy
+end

@@ -1,0 +1,15 @@
+Er is een account voor u aangemaakt op de C.S.V. Alpha-webstek. Deze is op dit moment nog niet geactiveerd.
+<br/>
+De link is 1 dag geldig. Mocht de link verlopen zijn, dan kunt u een nieuwe link
+aanvragen:
+<a href="<%= User.password_reset_url %>">
+  <%= User.password_reset_url %>
+</a>
+. <br/><br/>
+
+Uw gebruikersnaam is <b><%= @user.username %></b>.<br/><br/>
+
+Volg deze link om uw account te activeren:<br/>
+<a href="<%= @user.activation_url %>">
+  <%= @user.activation_url %>
+</a><br/>

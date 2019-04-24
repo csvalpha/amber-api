@@ -1,0 +1,13 @@
+De gebruiker <%= @exporting_user.full_name %> heeft een groep geëxporteerd. Hier zijn de details:<br/><br/>
+
+<ul>
+  <li>Datum: <%= l Time.zone.now, format: :long %></li>
+  <li>Groep: <%= @group.name %></li>
+  <li>Database velden: <%= @fields %></li>
+</ul>
+
+<br/>
+<br/>
+
+De gebruiker heeft de volgende reden opgegeven: <br/>
+<pre><%= @description %></pre>

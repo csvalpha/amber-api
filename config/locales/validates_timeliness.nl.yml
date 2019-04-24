@@ -1,0 +1,16 @@
+nl:
+  errors:
+    messages:
+      invalid_date: "is geen geldige datum"
+      invalid_time: "is geen geldig tijdstip"
+      invalid_datetime: "is geen geldig tijdstip met datum"
+      is_at: "moet om %{restriction} zijn"
+      before: "moet voor %{restriction} zijn"
+      on_or_before: "moet op of voor %{restriction} zijn"
+      after: "moet na %{restriction} zijn"
+      on_or_after: "moet op of na %{restriction} zijn"
+  validates_timeliness:
+    error_value_formats:
+      date: '%Y-%m-%d'
+      time: '%H:%M:%S'
+      datetime: '%Y-%m-%d %H:%M:%S'

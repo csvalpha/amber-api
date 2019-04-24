@@ -1,0 +1,90 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRailsVersion: 5.1
+  Exclude:
+    - 'db/schema.rb'
+    - 'config/initializers/secret_token.rb'
+    - 'vendor/**/*'
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/Guardfile'
+    - '**/*.rake'
+    - 'config/environments/*'
+    - 'config/routes.rb'
+    - 'spec/**/*'
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*'
+
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/ReversibleMigration:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+RSpec/LeadingSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/SubjectStub:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'app/controllers/v1/**/*'
+    - 'app/resources/v1/**/*'
+    - 'app/processors/v1/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Enable cops that are disabled by default, but are useful nonetheless
+# See https://github.com/bbatsov/rubocop/blob/master/config/disabled.yml
+
+Rails:
+  Enabled: true
+
+Style/AutoResourceCleanup:
+  Enabled: true
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+
+Style/OptionHash:
+  Enabled: true
+  Exclude:
+    - 'app/resources/v1/**/*'
+    - 'app/paginators/*'
+
+Style/Send:
+  Enabled: true
+
+Style/StringMethods:
+  Enabled: true

@@ -1,0 +1,156 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://feed.dagelijkswoord.nl/api/json/1.0/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Basic aWN0QGNzdmFscGhhLm5sOjdjNTRlMzI0NzQ1M2FiYTBiYWFkMDllMDIxYWZjMTNhYWMwYjhiN2M=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 18 Feb 2019 19:40:03 GMT
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '2751'
+      Content-Type:
+      - text/html; charset=UTF-8
+      X-Varnish:
+      - 4839335 4899610
+      Age:
+      - '1503'
+      Via:
+      - 1.1 varnish (Varnish/5.2)
+      Accept-Ranges:
+      - bytes
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"translations":{"nbv":"Nieuwe Bijbelvertaling","nbg":"NBG51","statenvertaling":"Statenvertaling","willibrord":"Willibrord","hsv":"Herziene
+        Statenvertaling","naardense":"Naardense Bijbel","bgt":"Bijbel in Gewone Taal"},"copyrights":{"willibrord":"De
+        bijbeltekst in deze uitgave is ontleend aan de Willibrordvertaling (herziene
+        editie), (C) Katholieke Bijbelstichting 1995.","statenvertaling":"De bijbeltekst
+        in deze uitgave is ontleend aan de Statenvertaling 1977, (C) Nederlands Bijbelgenootschap
+        1977.","nbv":"De bijbeltekst in deze uitgave is ontleend aan De Nieuwe Bijbelvertaling,
+        (C) Nederlands Bijbelgenootschap 2004\/2007.","nbg":"De bijbeltekst in deze
+        uitgave is ontleend aan de NBG-vertaling 1951, (C) Nederlands Bijbelgenootschap
+        1951","naardense":"De bijbeltekst in deze uitgave is ontleend aan de Naardense
+        Bijbel, (C) Uitgeverij Skandalon","hsv":"De bijbeltekst in deze uitgave is
+        ontleend aan de Bijbel in de Herziene Statenvertaling, (C) Stichting HSV 2010.
+        Alle rechten voorbehouden, (C) Stichting HSV en Uitgeverij Jongbloed - Heerenveen.","bgt":"Deze
+        bijbeltekst komt uit de Bijbel in Gewone Taal, (C) Nederlands Bijbelgenootschap
+        2014."},"data":[{"ts":"2019-02-18","source":"Jeremia 29:11-14a","fulltext":"http:\/\/bijbel.dagelijkswoord.nl\/bijbel\/Jeremia+29%3A11-14a?from=json","wpId":"5920","text":{"nbv":"Mijn
+        plan met jullie staat vast - spreekt de HEER. Ik heb jullie geluk voor ogen,
+        niet jullie ongeluk: ik zal je een hoopvolle toekomst geven. Jullie zullen
+        mij aanroepen en tot mij bidden, en ik zal naar jullie luisteren. Jullie zullen
+        mij zoeken en ook vinden, als jullie mij tenminste met hart en ziel zoeken.
+        Ik zal me door jullie laten vinden - spreekt de HEER - en ik zal in je lot
+        een keer brengen. Ik zal jullie samenbrengen uit alle volken en plaatsen waarheen
+        ik je verbannen heb - spreekt de HEER - en je laten terugkeren naar Jeruzalem,
+        waaruit ik je heb laten wegvoeren.","nbg":"Want Ik weet, welke gedachten Ik
+        over u koester, luidt het woord des HEREN, gedachten van vrede en niet van
+        onheil, om u een hoopvolle toekomst te geven. Dan zult gij Mij aanroepen en
+        heengaan en tot Mij bidden, en Ik zal naar u horen; dan zult gij Mij zoeken
+        en vinden, wanneer gij naar Mij vraagt met uw ganse hart. Dan zal Ik Mij door
+        u laten vinden, luidt het woord des HEREN, en in uw lot een keer brengen;
+        dan zal Ik u verzamelen uit alle volkeren en van alle plaatsen waarheen Ik
+        u verstoten heb, luidt het woord des HEREN, en u terugbrengen naar de plaats
+        vanwaar Ik u in ballingschap heb doen wegvoeren.","statenvertaling":"Want
+        Ik weet de gedachten, die Ik over u denk, spreekt de HEERE, gedachten des
+        vredes, en niet des kwaads, dat Ik u geve het einde en de verwachting. Dan
+        zult gij Mij aanroepen, en henengaan, en tot Mij bidden; en Ik zal naar u
+        horen. En gij zult Mij zoeken en vinden, wanneer gij naar Mij zult vragen
+        met uw ganse hart. En Ik zal van ulieden gevonden worden, spreekt de HEERE,
+        en Ik zal uw gevangenis wenden, en u vergaderen uit al de volken, en uit al
+        de plaatsen, waarhenen Ik u gedreven heb, spreekt de HEERE; en Ik zal u wederbrengen
+        tot de plaats, van waar Ik u gevankelijk heb doen wegvoeren.","willibrord":"Ik
+        ken de plannen die Ik met u heb - godsspraak van de HEER. Ze hebben uw heil
+        op het oog, niet uw ongeluk, en een hoopvolle toekomst. Als u Mij aanroept
+        en tot Mij bidt, zal Ik u verhoren. Als u Mij zoekt, met heel uw hart zoekt,
+        zult u Mij vinden, dan laat Ik mij vinden - godsspraak van de HEER. Ik herstel
+        u weer in uw vroegere staat; uit de versnippering over alle volken en plaatsen
+        breng Ik u weer samen - godsspraak van de HEER. Ik breng u terug naar deze
+        plaats, waaruit Ik u heb weggevoerd.","hsv":"Ik immers, Ik ken de gedachten
+        die Ik over u koester, spreekt de HEERE. Het zijn gedachten van vrede en niet
+        van kwaad, namelijk om u toekomst en hoop te geven. Dan zult u Mij aanroepen
+        en heengaan, u zult tot Mij bidden en Ik zal naar u luisteren. U zult Mij
+        zoeken en vinden, wanneer u naar Mij zult vragen met heel uw hart. Ik zal
+        door u gevonden worden, spreekt de HEERE, Ik zal een omkeer brengen in uw
+        gevangenschap en u bijeenbrengen uit alle volken en uit alle plaatsen waarheen
+        Ik u verdreven heb, spreekt de HEERE, en Ik zal u terugbrengen naar de plaats
+        vanwaar Ik u in ballingschap heb gevoerd.","naardense":"Want zelf ken ik de
+        gedachten het best die ik over u denk, is de tijding van de Ene,- gedachten
+        van vrede en niet van kwaad: u een toekomst te geven en goede hoop. Roepen
+        zult ge mij en voortgaan tot mij te bidden,- en ik zal naar u horen; zoeken
+        zult ge mij en vinden,- wanneer ge naar mij vragen zult met heel uw hart;
+        ik zal mij door u laten vinden, is de tijding van de Ene, en in uw kerkering
+        een keer brengen: verzamelen zal ik u uit alle volkeren en uit alle oorden
+        waarheen ik u heb weggestoten, is de tijding van de Ene; doen terugkeren zal
+        ik u naar het oord waaruit ik u heb verbannen.","bgt":"Dit is mijn besluit,
+        dit is mijn plan met jullie: Het zal goed met jullie aflopen, niet slecht.
+        Ik zorg dat er voor jullie een nieuwe tijd komt. Ik zal jullie nieuwe hoop
+        geven. In die tijd zullen jullie weer tot mij bidden, en zal ik naar jullie
+        luisteren. Jullie zullen mij zoeken. En als je mij zoekt met heel je hart,
+        zul je mij vinden. Ja, jullie zullen mij weer vinden. En ik zal ervoor zorgen
+        dat het weer goed met jullie gaat. Ik haal jullie allemaal terug, uit alle
+        landen en alle plaatsen waar ik jullie heen gejaagd heb. Dan zullen jullie
+        terugkomen in Jeruzalem."}},{"ts":"2019-02-17","source":"2 Timoteus 2:1","fulltext":"http:\/\/bijbel.dagelijkswoord.nl\/bijbel\/2+Timoteus+2%3A1?from=json","wpId":"5919","text":{"nbv":"Mijn
+        kind, wees sterk door de genade van Christus Jezus.","nbg":"Gij dan, mijn
+        kind, wees krachtig in de genade van Christus Jezus,","statenvertaling":"Gij
+        dan, mijn zoon, word gesterkt in de genade, die in Christus Jezus is;","willibrord":"U
+        dan, mijn kind, wees sterk door de genade van Christus Jezus.","hsv":"U dan,
+        mijn zoon, word gesterkt in de genade die in Christus Jezus is.","naardense":"Jij
+        dan, mijn kind, wees krachtig in de genade die is in Christus Jezus,","bgt":"Timote\u00fcs,
+        mijn zoon, vertrouw erop dat Jezus Christus goed voor je is."}},{"ts":"2019-02-16","source":"1
+        Korintiers 15:54-55","fulltext":"http:\/\/bijbel.dagelijkswoord.nl\/bijbel\/1+Korintiers+15%3A54-55?from=json","wpId":"5918","text":{"nbv":"En
+        wanneer dit vergankelijke lichaam is bekleed met het onvergankelijke, dit
+        sterfelijke met het onsterfelijke, zal wat geschreven staat in vervulling
+        gaan: ''De dood is opgeslokt en overwonnen. Dood, waar is je overwinning?
+        Dood, waar is je angel?''","nbg":"En zodra dit vergankelijke onvergankelijkheid
+        aangedaan heeft, en dit sterfelijke onsterfelijkheid aangedaan heeft, zal
+        het woord werkelijkheid worden, dat geschreven is: De dood is verzwolgen in
+        de overwinning. Dood, waar is uw overwinning? Dood, waar is uw prikkel?","statenvertaling":"En
+        wanneer dit verderfelijke zal onverderfelijkheid aangedaan hebben, en dit
+        sterfelijke zal onsterfelijkheid aangedaan hebben, alsdan zal het woord geschieden,
+        dat geschreven is: De dood is verslonden tot overwinning. Dood, waar is uw
+        prikkel? Hel, waar is uw overwinning?","willibrord":"En wanneer dit vergankelijke
+        met onvergankelijkheid is bekleed en dit sterfelijke met onsterfelijkheid,
+        dan zal het woord van de Schrift in vervulling gaan: De dood is verslonden,
+        de overwinning is behaald! Dood, waar is je overwinning? Dood, waar is je
+        angel?","hsv":"En wanneer dit vergankelijke zich met onvergankelijkheid bekleed
+        zal hebben, en dit sterfelijke zich met onsterfelijkheid bekleed zal hebben,
+        dan zal het woord geschieden dat geschreven staat: De dood is verslonden tot
+        overwinning. Dood, waar is uw prikkel? Graf, waar is uw overwinning?","naardense":"Maar
+        wanneer dit vergankelijke bekleed zal zijn met onvergankelijkheid en dit sterfelijke
+        bekleed zal zijn met onsterfelijkheid, dan zal het woord geschieden dat geschreven
+        is: ''verzwolgen is de dood door de overwinning; dood, waar is je overwinning,
+        dood, waar is je angel?''","bgt":"Ons sterfelijke lichaam zal dus veranderd
+        worden in een onsterfelijk lichaam. Dan wordt werkelijkheid wat in de heilige
+        boeken staat: ''De dood is overwonnen en voor altijd verdwenen. De dood heeft
+        geen macht meer en kan ons geen kwaad meer doen!''"}}],"strings":{"donatie":"Deze
+        informatie wordt u gratis aangeboden door Stichting Dagelijks Woord. Wilt
+        u een bijdrage leveren om het doorontwikkelen van deze app en andere bijbel-diensten
+        mogelijk te maken, dan kan dat via http:\/\/www.dagelijkswoord.nl\/over\/donatie","link":"If
+        you''re using the data from this feed, please be so kind to link to our website."},"debug_info":{"worker":"work_edge","generated":"2019-02-18
+        19:40:03"}}'
+    http_version: 
+  recorded_at: Sun, 17 Feb 2019 23:00:00 GMT
+recorded_with: VCR 4.0.0

@@ -1,0 +1,81 @@
+require 'rails_helper'
+
+RSpec.describe Photo, type: :model do
+  subject(:photo) { FactoryBot.build_stubbed(:photo) }
+
+  describe '#valid?' do
+    it { expect(photo).to be_valid }
+
+    context 'when without an image' do
+      subject(:photo) { FactoryBot.build_stubbed(:photo, image: nil) }
+
+      it { expect(photo).not_to be_valid }
+    end
+
+    context 'when without an original filename' do
+      subject(:photo) { FactoryBot.build_stubbed(:photo, original_filename: nil) }
+
+      it { expect(photo).not_to be_valid }
+    end
+
+    context 'when without an photo album' do
+      subject(:photo) { FactoryBot.build_stubbed(:photo, photo_album: nil) }
+
+      it { expect(photo).not_to be_valid }
+    end
+
+    context 'when without an uploader' do
+      subject(:photo) { FactoryBot.build_stubbed(:photo, uploader: nil) }
+
+      it { expect(photo).not_to be_valid }
+    end
+  end
+
+  describe '#with_comments' do
+    let(:photo_with_comments) { FactoryBot.create(:photo) }
+    let(:photo_with_one_comment) { FactoryBot.create(:photo) }
+
+    before do
+      FactoryBot.create(:photo_comment, photo: photo_with_comments)
+      FactoryBot.create(:photo_comment, photo: photo_with_comments)
+      FactoryBot.create(:photo_comment, photo: photo_with_one_comment)
+      FactoryBot.create(:photo)
+    end
+
+    it { expect(described_class.count).to be 3 }
+    it { expect(described_class.with_comments.count).to be 2 }
+  end
+
+  describe '#publicly_visible' do
+    let(:public_album) { FactoryBot.create(:photo_album, publicly_visible: true) }
+    let(:private_album) { FactoryBot.create(:photo_album, publicly_visible: false) }
+
+    before do
+      FactoryBot.create(:photo, photo_album: public_album)
+      FactoryBot.create(:photo, photo_album: public_album)
+      FactoryBot.create(:photo, photo_album: private_album)
+    end
+
+    it { expect(described_class.publicly_visible.count).to be 2 }
+    it { expect(described_class.count - described_class.publicly_visible.count).to be 1 }
+  end
+
+  describe '#extract_exif' do
+    subject(:photo) { FactoryBot.create(:photo) }
+
+    it { expect(photo.exif_make).to eq 'Nikon' }
+    it { expect(photo.exif_model).to eq 'Nikon D500' }
+    it { expect(photo.exif_exposure_time).to eq '1/100' }
+    it { expect(photo.exif_aperture_value).to eq '3.5' }
+    it { expect(photo.exif_iso_speed_ratings).to eq '400' }
+    it { expect(photo.exif_copyright).to eq 'C.S.V. Alpha' }
+    it { expect(photo.exif_lens_model).to eq 'Nikkor AF-S 24-70mm f/2.8G ED' }
+    it { expect(photo.exif_focal_length).to eq 50 }
+  end
+
+  describe '#extract_exif_on_png' do
+    subject(:photo) { FactoryBot.create(:photo, :png) }
+
+    it { expect(photo.exif_make).to be nil }
+  end
+end

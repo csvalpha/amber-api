@@ -1,0 +1,9 @@
+Het volgende bericht is succesvol verstuurd:<br/><br/>
+
+<%= @message %><br/><br/>
+
+Het bericht is verstuurd naar de onderstaande mensen:<br/>
+
+<% @recipients.each do |user| %>
+ - <%= user.full_name %><br/>
+<% end %>

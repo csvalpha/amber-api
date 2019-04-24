@@ -1,0 +1,6 @@
+Het importeren van de transacties voor incasso <%= @collection.name %> is mislukt!<br/><br/>
+
+De volgende errors zijn opgetreden:<br/>
+<% @errors.each do |error| %><br/>
+    - <%= error %><br/>
+<% end %>
