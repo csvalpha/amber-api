@@ -1,5 +1,5 @@
 ### Checklist
-- [ ] merged database migrations into 1 migration
+- [ ] merged database migrations into 1 database migration
 - [ ] tested database migrations from `origin/staging` (`git checkout staging ; git pull ; bundle exec rails db:reset ; git checkout BRANCH ; bundle exec rails db:migrate`)
 
 ### Summary
