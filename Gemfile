@@ -5,7 +5,7 @@ gem 'rotp', '~> 3.3.1' # for active_model_otp
 
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4'
-gem 'carrierwave', '=1.2.2'
+gem 'carrierwave', '=1.3.1'
 gem 'carrierwave-base64', '~> 2.5'
 gem 'carrierwave-bombshelter', '~> 0.2.2'
 gem 'case_transform', '~> 0.2'
