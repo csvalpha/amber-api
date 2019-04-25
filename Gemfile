@@ -52,7 +52,7 @@ gem 'vpim', '~> 13.11.11'
 group :development, :test do
   gem 'awesome_print'
   gem 'brakeman', require: false
-  gem 'bullet', '=5.7.5'
+  gem 'bullet', '=5.9.0'
   gem 'colorize'
   gem 'consistency_fail'
   gem 'dotenv-rails'
