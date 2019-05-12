@@ -69,7 +69,7 @@ GEM
       msgpack (~> 1.0)
     bootsnap (1.4.4-java)
       msgpack (~> 1.0)
-    brakeman (4.5.0)
+    brakeman (4.5.1)
     builder (3.2.3)
     bullet (5.7.5)
       activesupport (>= 3.0.0)
