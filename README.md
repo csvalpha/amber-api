@@ -11,6 +11,8 @@ Alpha AMBER API
 * On macOS: Xcode (or xcode-select), see [Nokogiri docs](http://www.nokogiri.org/tutorials/installing_nokogiri.html#mac_os_x) - `xcode-select --install`
 
 ## Installation
+For windows or fast-setup users see 'Installation (Docker)'
+
 1. Install prerequisites
 2. Create a Postgres user with permission to create databases. _(optional)_
   
@@ -24,6 +26,14 @@ Alpha AMBER API
 4. Install gems with `bundle install`
 5. Create databases and tables and run seeds with `bundle exec rails db:setup`
 6. Copy the `.env.example` to `.env` and update the fields to reflect your environment
+
+### Installation (Docker)
+It is also possible to get the application running without the need to install all the dependencies manually. If you use windows this is the only possible setup since ImageMagick doesn't run in windows.
+
+1. Install Docker and Docker-Compose
+1. Run `docker-compose up`
+1. run `docker-compose run web rails db:setup`
+
 
 ## Usage
 To start the server, execute:
