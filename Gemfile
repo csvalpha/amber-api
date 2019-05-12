@@ -46,7 +46,7 @@ gem 'sidekiq', '~> 5.0'
 gem 'sidekiq-scheduler', '~> 3.0'
 gem 'slack-notifier', '~> 2.0'
 gem 'validates_timeliness', '~> 4.0'
-gem 'versionist', '~> 1.7.0'
+gem 'versionist', '~> 2.0.0'
 gem 'vpim', '~> 13.11.11'
 
 group :development, :test do
