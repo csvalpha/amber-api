@@ -1,5 +1,4 @@
-version: '2'
-
+version: '3'
 services:
   db:
     env_file: .env
@@ -12,35 +11,21 @@ services:
     command: redis-server --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data:/var/lib/redis/data
-  sidekiq:
-    env_file: .env
-    image: docker.csvalpha.nl/amber-api:latest
-    command: sidekiq -C config/sidekiq.yml
-    depends_on:
-      - db
-      - redis
-    environment:
-      - RAILS_ENV=production
-      - REDIS_HOST=redis
-      - POSTGRES_HOST=db
   web:
     env_file: .env
-    image: docker.csvalpha.nl/amber-api:latest
-    depends_on:
-      - db
-      - redis
     environment:
       - RAILS_ENV=production
       - REDIS_HOST=redis
       - POSTGRES_HOST=db
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - ./public/uploads:/app/public/uploads
-      - ./log:/app/log
-    labels:
-    - traefik.enable=true
-    - traefik.port=3000
-    - traefik.api.frontend.rule=Host:$HOST;PathPrefixStrip:/api
-    - traefik.static.frontend.rule=Host:$HOST;PathPrefix:/uploads,/ical,/sidekiq
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
 
 volumes:
   postgres_data:
