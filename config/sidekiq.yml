@@ -2,3 +2,10 @@
   - default
   - mailers
   - mail_handlers
+
+:schedule:
+  cleanup_expired_stored_mails:
+    cron: '0 0 9 * * *'   # Runs every day at 9AM
+    class: CleanupExpiredStoredMailsJob
+    queue: mail_handlers
+    description: Cleanup job for expired emails
