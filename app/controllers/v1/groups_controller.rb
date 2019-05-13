@@ -17,7 +17,7 @@ class V1::GroupsController < V1::ApplicationController
   private
 
   def send_export_notifications(description)
-    return unless Rails.env.production?
+    return unless Rails.env.production? || Rails.env.staging?
 
     # :nocov:
     SlackMessageJob.perform_later(slack_notification(description))
