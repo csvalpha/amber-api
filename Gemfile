@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'active_model_otp', :git => 'https://github.com/heapsource/active_model_otp.git'
-#gem 'rotp', '~> 3.3.1' # for active_model_otp
+gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
 
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4'
@@ -77,7 +76,8 @@ end
 group :test do
   gem 'guard-rspec', require: false
   gem 'rspec-rails'
-  gem 'rubocop', '~> 0.52', require: false
+  gem 'rubocop', '~> 0.69', require: false
+  gem 'rubocop-performance', '~> 1.3.0', require: false
   gem 'rubocop-rspec', require: false
   gem 'simplecov', require: false
   gem 'terminal-notifier-guard'
