@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'active_model_otp', '~> 1.2.0'
-gem 'rotp', '~> 3.3.1' # for active_model_otp
+gem 'active_model_otp', :git => 'https://github.com/heapsource/active_model_otp.git'
+#gem 'rotp', '~> 3.3.1' # for active_model_otp
 
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4'
