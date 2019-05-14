@@ -9,6 +9,13 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
 
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
+
 Metrics/BlockLength:
   Exclude:
     - '**/Guardfile'
