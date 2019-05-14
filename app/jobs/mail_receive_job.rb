@@ -53,7 +53,7 @@ class MailReceiveJob < ApplicationJob
 
   # :nocov:
   def send_slack_message(message)
-    return unless Rails.env.production?
+    return unless Rails.env.production? || Rails.env.staging?
 
     SlackMessageJob.perform_later(message, channel: '#mail')
   end
