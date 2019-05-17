@@ -1,4 +1,6 @@
-require: rubocop-rspec
+require:
+  - rubocop-rspec
+  - rubocop-performance
 
 AllCops:
   TargetRailsVersion: 5.1
@@ -8,6 +10,13 @@ AllCops:
     - 'vendor/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
 
 Metrics/BlockLength:
   Exclude:
