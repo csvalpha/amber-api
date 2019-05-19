@@ -27,8 +27,8 @@ class Activity < ApplicationRecord
   })
   scope :publicly_visible, (-> { where(publicly_visible: true) })
   scope :closing, (lambda { |days_ahead = 7|
-    now = Date.current
-    ahead = (days_ahead + 1).days.from_now.to_date
+    now = DateTime.current
+    ahead = days_ahead.days.from_now.to_datetime
     Activity.joins(:form).where(form_forms: { respond_until: now..ahead })
   })
 
