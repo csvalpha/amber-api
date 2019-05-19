@@ -207,7 +207,7 @@ GEM
     jsonapi-authorization (3.0.1)
       jsonapi-resources (~> 0.9)
       pundit (>= 1.0.0, < 3.0.0)
-    jsonapi-resources (0.9.6)
+    jsonapi-resources (0.9.7)
       activerecord (>= 4.1)
       concurrent-ruby
       railties (>= 4.1)
