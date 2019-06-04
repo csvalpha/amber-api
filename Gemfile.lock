@@ -484,7 +484,7 @@ GEM
     validates_timeliness (4.0.2)
       timeliness (~> 0.3.7)
     vcard_parser (0.0.9)
-    vcr (4.0.0)
+    vcr (5.0.0)
     versionist (2.0.0)
       activesupport (>= 3)
       railties (>= 3)
