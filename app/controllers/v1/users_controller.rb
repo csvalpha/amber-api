@@ -85,6 +85,19 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     head :no_content
   end
 
+  def nextcloud
+    render json: {'id': current_user.id,
+                  'displayName': current_user.full_name,
+                  'email': current_user.email,
+                  'photoURL': absolute_avatar_path(current_user),
+                  'roles': 'admin,member'}
+  end
+
+  def nextcloud_groups
+    render json: current_user.active_groups.map {|group| {'id': group.id, 'name': group.name}}
+  end
+
+
   def batch_import # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     authorize model_class
 
@@ -147,6 +160,12 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     @model.save
     @model.provisioning_uri(@model.username, issuer: 'Alpha')
   end
+
+  def absolute_avatar_path(user)
+    default_options = Rails.application.config.action_mailer.default_url_options
+    URI::Generic.build(default_options.merge(path: user.avatar.url)).to_s
+  end
+
 
   def remove_password_from_params_when_blank?
     params[:data][:attributes].delete(:password) if params[:data][:attributes][:password].blank?
