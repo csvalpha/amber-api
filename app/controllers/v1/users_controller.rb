@@ -89,7 +89,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     render json: { 'id': current_user.id,
                    'displayName': current_user.full_name,
                    'email': current_user.email,
-                   'roles': nextcloud_roles }
+                   'groups': nextcloud_groups }
   end
 
   def batch_import # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
@@ -160,7 +160,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     URI::Generic.build(default_options.merge(path: user.avatar.url)).to_s
   end
 
-  def nextcloud_roles
+  def nextcloud_groups
     current_user.active_groups.map(&:id).join(',')
   end
 end
