@@ -61,7 +61,6 @@ Rails.application.routes.draw do
       end
     end
     get 'users/me/nextcloud', to: 'users#nextcloud'
-    get 'users/me/nextcloud_groups', to: 'users#nextcloud_groups'
 
     jsonapi_resources :quickpost_messages
 
