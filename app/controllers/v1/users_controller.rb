@@ -86,17 +86,11 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
   end
 
   def nextcloud
-    render json: {'id': current_user.id,
-                  'displayName': current_user.full_name,
-                  'email': current_user.email,
-                  'photoURL': absolute_avatar_path(current_user),
-                  'roles': 'admin,member'}
+    render json: { 'id': current_user.id,
+                   'displayName': current_user.full_name,
+                   'email': current_user.email,
+                   'roles': nextcloud_roles }
   end
-
-  def nextcloud_groups
-    render json: current_user.active_groups.map {|group| {'id': group.id, 'name': group.name}}
-  end
-
 
   def batch_import # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     authorize model_class
@@ -166,8 +160,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     URI::Generic.build(default_options.merge(path: user.avatar.url)).to_s
   end
 
-
-  def remove_password_from_params_when_blank?
-    params[:data][:attributes].delete(:password) if params[:data][:attributes][:password].blank?
+  def nextcloud_roles
+    current_user.active_groups.map(&:id).join(',')
   end
 end
