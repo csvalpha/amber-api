@@ -20,7 +20,7 @@ RSpec.describe V1::ActivityResource, type: :resource do
         FactoryBot.create(:activity, form: closing_form)
       end
 
-      it { expect(filtered).to eq Activity.closing }
+      it { expect(filtered).to match_array Activity.closing }
       it { expect(filtered.length).to eq 1 }
     end
   end

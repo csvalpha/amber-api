@@ -227,25 +227,32 @@ RSpec.describe Activity, type: :model do
 
   describe '.closing' do
     let(:closed_form) { FactoryBot.create(:expired_form) }
-    let(:upcoming_form) { FactoryBot.create(:form, respond_until: Time.zone.now) }
+    let(:just_closed_form) { FactoryBot.create(:form, respond_until: 30.seconds.ago) }
+    let(:almost_closing_form) { FactoryBot.create(:form, respond_until: 30.seconds.from_now) }
+    let(:upcoming_form) { FactoryBot.create(:form, respond_until: 1.day.from_now) }
     let(:upcoming_week_form) { FactoryBot.create(:form, respond_until: 7.days.from_now) }
     let(:far_away_form) { FactoryBot.create(:form, respond_until: 14.days.from_now) }
 
     let(:closed) { FactoryBot.create(:activity, form: closed_form) }
+    let(:just_closed) { FactoryBot.create(:activity, form: just_closed_form) }
+    let(:almost_closing) { FactoryBot.create(:activity, form: almost_closing_form) }
     let(:upcoming) { FactoryBot.create(:activity, form: upcoming_form) }
     let(:upcoming_week) { FactoryBot.create(:activity, form: upcoming_week_form) }
     let(:far_away) { FactoryBot.create(:activity, form: far_away_form) }
 
     before do
       closed
+      just_closed
+      almost_closing
       upcoming
       upcoming_week
       far_away
     end
 
-    it { expect(Activity.closing(0)).to match_array [upcoming] }
-    it { expect(Activity.closing(7)).to match_array [upcoming, upcoming_week] }
-    it { expect(Activity.closing).to match_array [upcoming, upcoming_week] }
+    it { expect(Activity.closing(0)).to match_array [] }
+    it { expect(Activity.closing(1)).to match_array [almost_closing, upcoming] }
+    it { expect(Activity.closing(7)).to match_array [almost_closing, upcoming, upcoming_week] }
+    it { expect(Activity.closing).to match_array [almost_closing, upcoming, upcoming_week] }
   end
 
   describe '#full_day?' do
