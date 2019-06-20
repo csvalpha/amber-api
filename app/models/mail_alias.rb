@@ -61,14 +61,6 @@ class MailAlias < ApplicationRecord
     Rails.application.config.x.mail_domains
   end
 
-  def set_smtp
-    return unless Rails.env.production? || Rails.env.staging?
-    return unless smtp_enabled_changed?
-
-    enable_smtp if smtp_enabled
-    disable_smtp unless smtp_enabled
-  end
-
   def enable_smtp
     password = SecureRandom.hex(16)
     mailgun_client.post("/domains/#{domain}/credentials", 'login': email, 'password': password)
@@ -80,9 +72,19 @@ class MailAlias < ApplicationRecord
     MailSMTPMailer.disabled_email(self).deliver_later
   end
 
+  # :nocov:
+  def set_smtp
+    return unless Rails.env.production? || Rails.env.staging?
+    return unless smtp_enabled_changed?
+
+    enable_smtp if smtp_enabled
+    disable_smtp unless smtp_enabled
+  end
+
   def mailgun_client
     api_key = Rails.application.config.x.mailgun_api_key
     api_host = Rails.application.config.x.mailgun_host
     @mailgun_client = Mailgun::Client.new api_key, api_host
   end
+  # :nocov:
 end

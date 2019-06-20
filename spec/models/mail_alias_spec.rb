@@ -135,6 +135,12 @@ RSpec.describe MailAlias, type: :model do
     end
   end
 
+  context '#domain' do
+    let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }
+
+    it { expect(mail_alias.domain).to eq 'csvalpha.nl' }
+  end
+
   context '#to_s' do
     context 'when with a user' do
       let(:user) do
