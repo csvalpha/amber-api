@@ -159,11 +159,6 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     params[:data][:attributes].delete(:password) if params[:data][:attributes][:password].blank?
   end
 
-  def absolute_avatar_path(user)
-    default_options = Rails.application.config.action_mailer.default_url_options
-    URI::Generic.build(default_options.merge(path: user.avatar.url)).to_s
-  end
-
   def nextcloud_groups
     current_user.active_groups.map(&:id).join(',')
   end
