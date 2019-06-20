@@ -62,6 +62,7 @@ class MailAlias < ApplicationRecord
   end
 
   def set_smtp
+    return unless Rails.env.production? || Rails.env.staging?
     return unless smtp_enabled_changed?
 
     enable_smtp if smtp_enabled
