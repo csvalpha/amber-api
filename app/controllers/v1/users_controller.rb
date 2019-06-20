@@ -154,6 +154,10 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     @model.save
     @model.provisioning_uri(@model.username, issuer: 'Alpha')
   end
+  
+  def remove_password_from_params_when_blank?
+    params[:data][:attributes].delete(:password) if params[:data][:attributes][:password].blank?
+  end
 
   def absolute_avatar_path(user)
     default_options = Rails.application.config.action_mailer.default_url_options
