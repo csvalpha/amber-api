@@ -53,6 +53,7 @@ module Amber
 
     config.x.mailgun_api_key = credentials.dig(Rails.env.to_sym, :mailgun_api_key)
     config.x.mailgun_validation_key = credentials.dig(Rails.env.to_sym, :mailgun_validation_key)
+    config.x.mailgun_host = 'api.eu.mailgun.net'
     config.x.mail_domains = %w[csvalpha.nl societeitflux.nl sandbox86621.mailgun.org]
 
     config.x.sentry_dsn = credentials.dig(Rails.env.to_sym, :sentry_dsn)
