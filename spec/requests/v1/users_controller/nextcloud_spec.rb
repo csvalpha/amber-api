@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'POST /users/me/nextcloud', version: 1 do
-    let(:group) { FactoryBot.create(:group)}
+    let(:group) { FactoryBot.create(:group) }
     let(:record) { FactoryBot.create(:user, groups: [group]) }
     let(:record_url) { '/v1/users/me/nextcloud' }
 
