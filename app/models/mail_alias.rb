@@ -78,7 +78,6 @@ class MailAlias < ApplicationRecord
   def disable_smtp
     mailgun_client.delete("/domains/#{domain}/credentials/#{email}")
     MailSMTPMailer.disabled_email(self).deliver_later
-
   end
 
   def mailgun_client
@@ -86,6 +85,4 @@ class MailAlias < ApplicationRecord
     api_host = Rails.application.config.x.mailgun_host
     @mailgun_client = Mailgun::Client.new api_key, api_host
   end
-
-
 end
