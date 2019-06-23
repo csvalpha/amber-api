@@ -1,11 +1,7 @@
 require_relative 'routes/contact_sync_handler'
 
 Rails.application.routes.draw do
-  scope 'v1' do
-    use_doorkeeper do
-      controllers authorizations: 'v1/o_auth_authorizations'
-    end
-  end
+  scope 'v1', &method(:use_doorkeeper)
 
   namespace :v1 do
     jsonapi_resources :activities do
@@ -87,10 +83,6 @@ Rails.application.routes.draw do
       jsonapi_resources :categories
       jsonapi_resources :posts
       jsonapi_resources :threads
-    end
-
-    scope 'oauth' do
-      post :auth_code_redirect_uri, to: 'o_auth_authorizations#auth_code_redirect_uri'
     end
   end
 

@@ -2,6 +2,7 @@ OTP_HEADER = 'X-Amber-OTP'.freeze
 
 Doorkeeper.configure do
   orm :active_record
+  api_only
 
   use_refresh_token
 
