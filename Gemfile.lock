@@ -135,7 +135,7 @@ GEM
     dotenv-rails (2.7.4)
       dotenv (= 2.7.4)
       railties (>= 3.2, < 6.1)
-    equatable (0.6.0)
+    equatable (0.6.1)
     erubi (1.8.0)
     et-orbi (1.2.1)
       tzinfo
@@ -211,7 +211,7 @@ GEM
     jsonapi-authorization (3.0.1)
       jsonapi-resources (~> 0.9)
       pundit (>= 1.0.0, < 3.0.0)
-    jsonapi-resources (0.9.8)
+    jsonapi-resources (0.9.9)
       activerecord (>= 4.1)
       concurrent-ruby
       railties (>= 4.1)
@@ -294,7 +294,7 @@ GEM
       pry (~> 0.10)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    public_suffix (3.1.0)
+    public_suffix (3.1.1)
     puma (3.12.1)
     puma (3.12.1-java)
     pundit (2.0.1)
@@ -389,7 +389,7 @@ GEM
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
-    rspec-core (3.8.1)
+    rspec-core (3.8.2)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.4)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -406,7 +406,7 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.2)
-    rubocop (0.71.0)
+    rubocop (0.72.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.6)
@@ -464,7 +464,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sshkit (1.18.2)
+    sshkit (1.19.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     strings (0.1.5)
@@ -519,7 +519,7 @@ GEM
     websocket-driver (0.7.1-java)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
-    yard (0.9.19)
+    yard (0.9.20)
 
 PLATFORMS
   java
