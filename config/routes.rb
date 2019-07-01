@@ -60,6 +60,8 @@ Rails.application.routes.draw do
         post :activate_webdav
       end
     end
+    get 'users/me/nextcloud', to: 'users#nextcloud'
+
     jsonapi_resources :quickpost_messages
 
     namespace :debit do
