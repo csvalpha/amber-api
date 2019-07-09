@@ -12,7 +12,7 @@ class MailAlias < ApplicationRecord
 
   before_validation :downcase_email
 
-  before_save :set_smtp
+  after_save :set_smtp
 
   scope :mail_aliases_moderated_by_user, (lambda { |user|
     joins(:moderator_group).where(moderator_group: Group.active_groups_for_user(user))
@@ -77,8 +77,11 @@ class MailAlias < ApplicationRecord
     return unless Rails.env.production? || Rails.env.staging?
     return unless smtp_enabled_changed?
 
-    enable_smtp if smtp_enabled
-    disable_smtp unless smtp_enabled
+    if smtp_enabled
+      enable_smtp
+    else
+      disable_smtp
+    end
   end
 
   def mailgun_client
