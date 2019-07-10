@@ -1,8 +1,8 @@
 OTP_HEADER = 'X-Amber-OTP'.freeze
 
-Doorkeeper.configure do
+Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   orm :active_record
-
+  api_only
   use_refresh_token
 
   # See https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow
