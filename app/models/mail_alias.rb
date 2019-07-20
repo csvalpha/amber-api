@@ -63,7 +63,6 @@ class MailAlias < ApplicationRecord
 
   # :nocov:
   def set_smtp
-    return unless Rails.env.production? || Rails.env.staging?
     return unless smtp_enabled_changed?
 
     SMTPJob.perform_later(self, smtp_enabled)
