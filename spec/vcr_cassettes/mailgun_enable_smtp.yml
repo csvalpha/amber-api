@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mailgun.net/v3/domains/societeitflux.nl/credentials
+    body:
+      encoding: UTF-8
+      string: login=granville_graham%40societeitflux.nl&password=8249cd1437edf8f2176ac1ce9b951b48
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.3p105
+      Content-Length:
+      - '83'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - api.mailgun.net
+      Authorization:
+      - Basic YXBpOnNlY3JldF9tYWlsZ3VuX2FwaV9rZXk=
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 20 Jun 2019 13:46:15 GMT
+      Server:
+      - nginx
+      Www-Authenticate:
+      - Basic realm="MG API"
+      Content-Length:
+      - '33'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"message":"Invalid private key"}'
+    http_version: 
+  recorded_at: Thu, 20 Jun 2019 13:46:15 GMT
+recorded_with: VCR 5.0.0
