@@ -12,9 +12,9 @@ class MailAlias < ApplicationRecord
 
   before_validation :downcase_email
 
-  after_save :set_smtp
+  before_save :set_smtp
 
-  scope :mail_aliases_moderated_by_user, (lambda { |user|
+  scope :mail_aliases_moderated_by_user, (lambda {|user|
     joins(:moderator_group).where(moderator_group: Group.active_groups_for_user(user))
   })
 
@@ -61,33 +61,13 @@ class MailAlias < ApplicationRecord
     Rails.application.config.x.mail_domains
   end
 
-  def enable_smtp
-    password = SecureRandom.hex(16)
-    mailgun_client.post("/domains/#{domain}/credentials", 'login': email, 'password': password)
-    MailSMTPMailer.enabled_email(self, password).deliver_later
-  end
-
-  def disable_smtp
-    mailgun_client.delete("/domains/#{domain}/credentials/#{email}")
-    MailSMTPMailer.disabled_email(self).deliver_later
-  end
-
   # :nocov:
   def set_smtp
-    return unless Rails.env.production? || Rails.env.staging?
+    # return unless Rails.env.production? || Rails.env.staging?
     return unless smtp_enabled_changed?
+    debugger
 
-    if smtp_enabled
-      enable_smtp
-    else
-      disable_smtp
-    end
-  end
-
-  def mailgun_client
-    api_key = Rails.application.config.x.mailgun_api_key
-    api_host = Rails.application.config.x.mailgun_host
-    @mailgun_client = Mailgun::Client.new api_key, api_host
+    SMTPJob.perform_later(self, smtp_enabled)
   end
   # :nocov:
 end
