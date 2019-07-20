@@ -12,9 +12,9 @@ class SMTPJob < ApplicationJob
   private
 
   def enable_smtp(mail_alias)
-    puts "OK!"
     password = SecureRandom.hex(16)
-    mailgun_client.post("/domains/#{mail_alias.domain}/credentials", 'login': mail_alias.email, 'password': password)
+    mailgun_client.post("/domains/#{mail_alias.domain}/credentials",
+                        'login': mail_alias.email, 'password': password)
     MailSMTPMailer.enabled_email(mail_alias, password).deliver_later
   end
 
@@ -23,10 +23,11 @@ class SMTPJob < ApplicationJob
     MailSMTPMailer.disabled_email(mail_alias).deliver_later
   end
 
+  # :nocov:
   def mailgun_client
     api_key = Rails.application.config.x.mailgun_api_key
     api_host = Rails.application.config.x.mailgun_host
     @mailgun_client = Mailgun::Client.new api_key, api_host
   end
-
+  # :nocov:
 end
