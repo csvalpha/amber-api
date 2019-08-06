@@ -249,10 +249,12 @@ RSpec.describe Activity, type: :model do
       far_away
     end
 
-    it { expect(Activity.closing(0)).to match_array [] }
-    it { expect(Activity.closing(1)).to match_array [almost_closing, upcoming] }
-    it { expect(Activity.closing(7)).to match_array [almost_closing, upcoming, upcoming_week] }
-    it { expect(Activity.closing).to match_array [almost_closing, upcoming, upcoming_week] }
+    it { expect(described_class.closing(0)).to match_array [] }
+    it { expect(described_class.closing(1)).to match_array [almost_closing, upcoming] }
+    it do
+      expect(described_class.closing(7)).to match_array [almost_closing, upcoming, upcoming_week]
+    end
+    it { expect(described_class.closing).to match_array [almost_closing, upcoming, upcoming_week] }
   end
 
   describe '#full_day?' do

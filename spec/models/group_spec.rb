@@ -80,7 +80,7 @@ RSpec.describe Group, type: :model do
     let(:user) { FactoryBot.create(:user) }
 
     context 'when without active membership' do
-      it { expect(Group.active.length).to eq 0 }
+      it { expect(described_class.active.length).to eq 0 }
     end
 
     context 'when with active membership' do
@@ -88,7 +88,7 @@ RSpec.describe Group, type: :model do
         FactoryBot.create(:membership, group: group, user: user)
       end
 
-      it { expect(Group.active.length).to eq 1 }
+      it { expect(described_class.active.length).to eq 1 }
     end
 
     context 'when with expired membership' do
@@ -96,7 +96,7 @@ RSpec.describe Group, type: :model do
         FactoryBot.create(:membership, group: group, user: user, end_date: Time.zone.now - 1.day)
       end
 
-      it { expect(Group.active.length).to eq 0 }
+      it { expect(described_class.active.length).to eq 0 }
     end
 
     context 'when with future membership' do
@@ -104,7 +104,7 @@ RSpec.describe Group, type: :model do
         FactoryBot.create(:membership, group: group, user: user, start_date: Time.zone.now + 1.day)
       end
 
-      it { expect(Group.active.length).to eq 0 }
+      it { expect(described_class.active.length).to eq 0 }
     end
   end
 
@@ -118,7 +118,7 @@ RSpec.describe Group, type: :model do
         FactoryBot.create(:membership, group: group, user: user)
       end
 
-      it { expect(Group.active_groups_for_user(user).length).to eq 1 }
+      it { expect(described_class.active_groups_for_user(user).length).to eq 1 }
     end
 
     context 'when with expired membership' do
@@ -126,7 +126,7 @@ RSpec.describe Group, type: :model do
         FactoryBot.create(:membership, group: group, user: user, end_date: Time.zone.now - 1.day)
       end
 
-      it { expect(Group.active_groups_for_user(user).length).to eq 0 }
+      it { expect(described_class.active_groups_for_user(user).length).to eq 0 }
     end
 
     context 'when with future membership' do
@@ -134,7 +134,7 @@ RSpec.describe Group, type: :model do
         FactoryBot.create(:membership, group: group, user: user, start_date: Time.zone.now + 1.day)
       end
 
-      it { expect(Group.active_groups_for_user(user).length).to eq 0 }
+      it { expect(described_class.active_groups_for_user(user).length).to eq 0 }
     end
 
     context 'when with expired and current membership' do
@@ -145,8 +145,8 @@ RSpec.describe Group, type: :model do
         FactoryBot.create(:membership, group: group2, user: user, end_date: Time.zone.now - 1.day)
       end
 
-      it { expect(Group.active_groups_for_user(user).length).to eq 1 }
-      it { expect(Group.active_groups_for_user(user).first).to eq group }
+      it { expect(described_class.active_groups_for_user(user).length).to eq 1 }
+      it { expect(described_class.active_groups_for_user(user).first).to eq group }
     end
   end
 
