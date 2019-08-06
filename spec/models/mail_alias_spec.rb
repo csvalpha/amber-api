@@ -165,42 +165,4 @@ RSpec.describe MailAlias, type: :model do
       it { expect(mail_alias.to_s).to eq('ICT-commissie <ict@csvalpha.nl>') }
     end
   end
-
-  context '#set_smtp' do
-    let(:mail_alias) { FactoryBot.create(:mail_alias) }
-    let(:mailgun_client) { Mailgun::Client.new }
-    let(:mail) { ActionMailer::Base.deliveries.first }
-
-    context '#enable_smtp' do
-      before do
-        ActionMailer::Base.deliveries = []
-        allow(mail_alias).to receive(:mailgun_client) { mailgun_client }
-        allow(mailgun_client).to receive(:post).and_return(true)
-
-        perform_enqueued_jobs do
-          VCR.use_cassette('mailgun_enable_smtp') { mail_alias.__send__(:enable_smtp) }
-        end
-      end
-
-      it { expect(mailgun_client).to have_received(:post) }
-      it { expect(mail.to).to eq [mail_alias.email] }
-      it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt" }
-    end
-
-    context '#disable_smtp' do
-      before do
-        ActionMailer::Base.deliveries = []
-        allow(mail_alias).to receive(:mailgun_client) { mailgun_client }
-        allow(mailgun_client).to receive(:delete).and_return(true)
-
-        perform_enqueued_jobs do
-          VCR.use_cassette('mailgun_disable_smtp') { mail_alias.__send__(:disable_smtp) }
-        end
-      end
-
-      it { expect(mailgun_client).to have_received(:delete) }
-      it { expect(mail.to).to eq [mail_alias.email] }
-      it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} opgeheven" }
-    end
-  end
 end
