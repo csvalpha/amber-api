@@ -28,7 +28,7 @@ class SMTPJob < ApplicationJob
     return @mailgun_client unless @mailgun_client.nil?
     api_key = Rails.application.config.x.mailgun_api_key
     api_host = Rails.application.config.x.mailgun_host
-    @mailgun_client ||= Mailgun::Client.new api_key, api_host
+    @mailgun_client = Mailgun::Client.new api_key, api_host
   end
   # :nocov:
 end
