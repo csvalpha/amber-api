@@ -21,7 +21,7 @@ RSpec.describe SMTPJob, type: :job do
 
       it { expect(mailgun_client).to have_received(:post) }
       it { expect(mail.bcc).to eq mail_alias.mail_addresses }
-      it { expect(mail.cc).to eq ['mailbeheer@csvalpha.nl'] }
+      it { expect(mail.to).to eq ['mailbeheer@csvalpha.nl'] }
       it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt" }
     end
 
@@ -40,7 +40,7 @@ RSpec.describe SMTPJob, type: :job do
 
       it { expect(mailgun_client).to have_received(:delete) }
       it { expect(mail.bcc).to eq mail_alias.mail_addresses }
-      it { expect(mail.cc).to eq ['mailbeheer@csvalpha.nl'] }
+      it { expect(mail.to).to eq ['mailbeheer@csvalpha.nl'] }
       it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} opgeheven" }
     end
   end
