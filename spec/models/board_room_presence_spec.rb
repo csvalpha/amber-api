@@ -48,19 +48,19 @@ RSpec.describe BoardRoomPresence, type: :model do
     context 'when started in the past and ended in the future' do
       before { FactoryBot.create(:board_room_presence) }
 
-      it { expect(BoardRoomPresence.current.count).to eq 1 }
+      it { expect(described_class.current.count).to eq 1 }
     end
 
     context 'when not yet started' do
       before { FactoryBot.create(:board_room_presence, start_time: 1.minute.from_now) }
 
-      it { expect(BoardRoomPresence.current.count).to eq 0 }
+      it { expect(described_class.current.count).to eq 0 }
     end
 
     context 'when just ended' do
       before { FactoryBot.create(:board_room_presence, end_time: 1.second.ago) }
 
-      it { expect(BoardRoomPresence.current.count).to eq 0 }
+      it { expect(described_class.current.count).to eq 0 }
     end
   end
 
@@ -68,19 +68,19 @@ RSpec.describe BoardRoomPresence, type: :model do
     context 'when started in the past and ended in the future' do
       before { FactoryBot.create(:board_room_presence) }
 
-      it { expect(BoardRoomPresence.future.count).to eq 0 }
+      it { expect(described_class.future.count).to eq 0 }
     end
 
     context 'when not yet started' do
       before { FactoryBot.create(:board_room_presence, start_time: 1.minute.from_now) }
 
-      it { expect(BoardRoomPresence.future.count).to eq 1 }
+      it { expect(described_class.future.count).to eq 1 }
     end
 
     context 'when just ended' do
       before { FactoryBot.create(:board_room_presence, end_time: 1.second.ago) }
 
-      it { expect(BoardRoomPresence.future.count).to eq 0 }
+      it { expect(described_class.future.count).to eq 0 }
     end
   end
 
@@ -88,25 +88,25 @@ RSpec.describe BoardRoomPresence, type: :model do
     context 'when started in the past and ended in the future' do
       before { FactoryBot.create(:board_room_presence) }
 
-      it { expect(BoardRoomPresence.current_and_future.count).to eq 1 }
+      it { expect(described_class.current_and_future.count).to eq 1 }
     end
 
     context 'when not yet started' do
       before { FactoryBot.create(:board_room_presence, start_time: 1.minute.from_now) }
 
-      it { expect(BoardRoomPresence.current_and_future.count).to eq 1 }
+      it { expect(described_class.current_and_future.count).to eq 1 }
     end
 
     context 'when just ended' do
       before { FactoryBot.create(:board_room_presence, end_time: 1.second.ago) }
 
-      it { expect(BoardRoomPresence.current_and_future.count).to eq 0 }
+      it { expect(described_class.current_and_future.count).to eq 0 }
     end
 
     context 'when starting in the future' do
       before { FactoryBot.create(:board_room_presence, start_time: 1.second.from_now) }
 
-      it { expect(BoardRoomPresence.current_and_future.count).to eq 1 }
+      it { expect(described_class.current_and_future.count).to eq 1 }
     end
   end
 end

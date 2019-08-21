@@ -4,7 +4,7 @@ RSpec.describe Webdav::User, type: :model do
   let(:user) { FactoryBot.create(:user) }
   let(:group) { FactoryBot.create(:group, users: [user]) }
 
-  subject(:webdav_user) { Webdav::User.new(user, group.id) }
+  subject(:webdav_user) { described_class.new(user, group.id) }
 
   describe '#current_addressbook' do
     it { expect(webdav_user.current_addressbook.name).to eq(group.name) }
