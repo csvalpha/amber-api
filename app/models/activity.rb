@@ -1,6 +1,5 @@
 class Activity < ApplicationRecord
   mount_base64_uploader :cover_photo, CoverPhotoUploader
-  has_paper_trail skip: [:cover_photo]
 
   belongs_to :form, class_name: 'Form::Form', optional: true
   has_many :responses, through: :form, class_name: 'Form::Response'

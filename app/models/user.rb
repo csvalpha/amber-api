@@ -4,7 +4,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one_time_password
 
   mount_base64_uploader :avatar, AvatarUploader
-  has_paper_trail skip: [:avatar]
+  has_paper_trail skip: [:avatar, :cover_photo, :image], unless: Proc.new { |o| o.archived? }
 
   has_many :memberships, inverse_of: :user
   has_many :groups, through: :memberships
@@ -15,6 +15,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :permissions_users, class_name: 'PermissionsUsers'
   has_many :user_permissions, through: :permissions_users, source: :permission
   has_many :article_comments
+  has_many :board_room_presences
   has_many :photo_comments
   has_many :mail_aliases
   has_many :mandates, class_name: 'Debit::Mandate'
@@ -160,13 +161,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def archive!
     attributes.each_key do |attribute|
-      self[attribute] = nil unless %w[deleted_at updated_at created_at enabled id]
+      self[attribute] = nil unless %w[deleted_at updated_at created_at login_enabled id]
                                    .include? attribute
     end
     self.first_name = 'Gearchiveerde gebruiker'
     self.last_name = id
     self.login_enabled = false
     self.archived_at = Time.zone.now
+    self.versions.destroy_all
     save
   end
 

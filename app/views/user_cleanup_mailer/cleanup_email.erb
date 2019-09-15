@@ -1,0 +1,12 @@
+<% if @will_remove_users %>
+  De volgende gebruikers zijn meer dan 18 maanden geen onderdeel meer van een groep. <b>Om deze reden gaan ze automatisch verwijderd worden binnen 2 maanden.</b> Zorg dat u deze gebruikers binnen een maand toevoegd aan een groep om dit process te stoppen.
+  Mocht u dit niet doen dan zal alle informatie van de gebruiker verwijderd worden, het is niet mogelijk dit ongedaan te maken.
+
+  <% @will_remove_users.each do |user| %><br/>
+    - <%= user.full_name %><br/>
+  <% end %>
+<% end %>
+
+<% if @removed_users %>
+  Er zijn <%= @removed_users.size %> gebruikers verwijderd. Dit is gebeurd omdat ze voor meer dan 20 maanden niet gekoppeld waren aan een groep. Het is niet mogelijk dit process ongedaan te maken.
+<% end %>

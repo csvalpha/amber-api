@@ -442,7 +442,7 @@ RSpec.describe User, type: :model do
     context 'with blank last name prefix' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: '',
-                                 last_name: 'Last', username: nil)
+                          last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.last' }
@@ -451,7 +451,7 @@ RSpec.describe User, type: :model do
     context 'without last name prefix' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: nil,
-                                 last_name: 'Last', username: nil)
+                          last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.last' }
@@ -460,7 +460,7 @@ RSpec.describe User, type: :model do
     context 'with last name prefix' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: 'Prefix',
-                                 last_name: 'Last', username: nil)
+                          last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.prefixlast' }
@@ -469,8 +469,8 @@ RSpec.describe User, type: :model do
     context 'with spaces in name' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First First2',
-                                 last_name_prefix: 'Prefix Prefix2',
-                                 last_name: 'Last Last2', username: nil)
+                          last_name_prefix: 'Prefix Prefix2',
+                          last_name: 'Last Last2', username: nil)
       end
 
       it { expect(user.username).to eq 'firstfirst2.prefixprefix2lastlast2' }
@@ -479,7 +479,7 @@ RSpec.describe User, type: :model do
     context 'with special character in name' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'äëï',
-                                 last_name_prefix: '', last_name: 'õ', username: nil)
+                          last_name_prefix: '', last_name: 'õ', username: nil)
       end
 
       it { expect(user.username).to eq 'aei.o' }
@@ -493,7 +493,7 @@ RSpec.describe User, type: :model do
 
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: 'Prefix',
-                                 last_name: 'Last', username: nil)
+                          last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.prefixlast2' }
@@ -593,7 +593,7 @@ RSpec.describe User, type: :model do
     context 'when in group with expired membership' do
       before do
         FactoryBot.create(:membership, group: another_group, user: user,
-                                       end_date: Faker::Time.between(1.month.ago, Date.yesterday))
+                          end_date: Faker::Time.between(1.month.ago, Date.yesterday))
       end
 
       it { expect(user.current_group_member?(another_group)).to be false }
@@ -629,35 +629,50 @@ RSpec.describe User, type: :model do
 
   describe '#archive!' do
     context 'when archiving a user' do
-      subject(:user) { FactoryBot.create(:user) }
+      with_versioning do
+        subject(:user) { FactoryBot.create(:user) }
 
-      let(:nil_attributes) do
-        %w[email username password_digest deleted_at last_name_prefix birthday
+        let(:nil_attributes) do
+          %w[email username password_digest deleted_at last_name_prefix birthday
            address postcode city phone_number food_preferences iban iban_holder study
            start_study activated_at activation_token avatar activation_token_valid_till
            sidekiq_access vegetarian picture_publication_preference emergency_contact
            emergency_number ifes_data_sharing_preference info_in_almanak
            almanak_subscription_preference digtus_subscription_preference]
-      end
+        end
 
-      before { user.archive! && user.reload }
+        before { user.archive! && user.reload }
 
-      it { expect(user.archive!).to be true }
-      it { expect(user.full_name).to eq "Gearchiveerde gebruiker #{user.id}" }
-      it { expect(user.archived_at).not_to be_nil }
-      it { expect(user.login_enabled).to be false }
-      it { expect { user.archive! }.not_to(change(user, :id)) }
+        it { expect(user.archive!).to be true }
+        it { expect(user.full_name).to eq "Gearchiveerde gebruiker #{user.id}" }
+        it { expect(user.archived_at).not_to be_nil }
+        it { expect(user.login_enabled).to be false }
+        it { expect(user.versions).to be_empty }
+        it { expect { user.archive! }.not_to(change(user, :id)) }
 
-      it do
-        nil_attributes.each do |attribute|
-          expect(user[attribute]).to be_nil
+        it do
+          nil_attributes.each do |attribute|
+            expect(user[attribute]).to be_nil
+          end
         end
       end
     end
+
   end
 
   describe '.password_reset_url' do
     it { expect(User.password_reset_url).to include('forgot_password') }
+  end
+
+  describe 'has_paper_trail' do
+    with_versioning do
+      let(:user) { FactoryBot.create(:user) }
+
+      # Currently we have a problem with paper trail which causes two versions to be created on each change
+      # This is caused by the fact that we call paper trail twice (once in ApplicationRecord and once in User)
+      it { expect(user.versions.size).to eq 2 }
+      it { expect { user.update(first_name: 'some_other_name') }.to(change { user.versions.size }.from(2).to(4)) }
+    end
   end
 
   private
