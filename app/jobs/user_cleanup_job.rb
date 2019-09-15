@@ -8,7 +8,7 @@ class UserCleanupJob < ApplicationJob
 
     User.where(archived_at: nil).select{|u| u.active_groups.size == 0}.each do |user|
       last_active_group = user.memberships.order(:end_date).last
-      return if last_active_group.nil?
+      next if last_active_group.nil?
 
       if last_active_group.end_date < 20.months.ago
         removed_users << user
