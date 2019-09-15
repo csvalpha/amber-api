@@ -4,7 +4,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one_time_password
 
   mount_base64_uploader :avatar, AvatarUploader
-  has_paper_trail skip: [:avatar, :cover_photo, :image], unless: Proc.new { |o| o.archived? }
+  has_paper_trail skip: %i[avatar cover_photo image], unless: proc { |o| o.archived? }
 
   has_many :memberships, inverse_of: :user
   has_many :groups, through: :memberships
@@ -168,7 +168,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_name = id
     self.login_enabled = false
     self.archived_at = Time.zone.now
-    self.versions.destroy_all
+    versions.destroy_all
     save
   end
 
