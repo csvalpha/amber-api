@@ -12,7 +12,7 @@ class Activity < ApplicationRecord
   validates :description, presence: true
   validates :form, uniqueness: true, allow_nil: true
   validates :location, presence: true
-  validates :price, inclusion: { in: 0..250 }
+  validates :price, inclusion: { in: 0..1000 }
   validates :price, presence: true
   validates :publicly_visible, inclusion: [true, false]
   validates :start_time, presence: true

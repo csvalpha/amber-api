@@ -43,7 +43,7 @@ RSpec.describe Activity, type: :model do
     end
 
     context 'when with a too large price' do
-      subject(:activity) { FactoryBot.build_stubbed(:activity, price: 250.01) }
+      subject(:activity) { FactoryBot.build_stubbed(:activity, price: 1000.01) }
 
       it { expect(activity).not_to be_valid }
     end
