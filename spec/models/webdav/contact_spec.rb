@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Webdav::Contact, type: :model do
   let(:user) { FactoryBot.build_stubbed(:user) }
 
-  subject(:contact) { Webdav::Contact.new(user) }
+  subject(:contact) { described_class.new(user) }
 
   describe '#uid' do
     it { expect(contact.uid).to eq(user.id.to_s) }
@@ -15,7 +15,7 @@ RSpec.describe Webdav::Contact, type: :model do
 
   describe '#update_from_vcard()' do
     let(:other_user) { FactoryBot.build_stubbed(:user) }
-    let(:other_vcard) { Webdav::Contact.user_to_vcard(other_user) }
+    let(:other_vcard) { described_class.user_to_vcard(other_user) }
 
     it { expect { contact.update_from_vcard(other_vcard) }.not_to(change(user, :first_name)) }
   end
@@ -41,7 +41,7 @@ RSpec.describe Webdav::Contact, type: :model do
   end
 
   describe '#vcard' do
-    let(:vcard) { Webdav::Contact.user_to_vcard(user) }
+    let(:vcard) { described_class.user_to_vcard(user) }
 
     it { expect(contact.vcard).not_to be_nil }
     it { expect(contact.vcard.vcard).to eq(vcard.to_s) }
@@ -51,7 +51,7 @@ RSpec.describe Webdav::Contact, type: :model do
   describe '#user_to_vcard' do
     let(:time_now) { Time.zone.now }
 
-    subject(:vcard) { Webdav::Contact.user_to_vcard(user) }
+    subject(:vcard) { described_class.user_to_vcard(user) }
 
     it { allow(Time.zone).to receive(:now).and_return(time_now) }
     it { expect(vcard.name.given).to eq(user.first_name) }

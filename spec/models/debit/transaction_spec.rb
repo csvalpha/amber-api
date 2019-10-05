@@ -33,14 +33,14 @@ RSpec.describe Debit::Transaction, type: :model do
 
   describe '.transactions_for' do
     context 'when transaction is for user' do
-      let(:scoped) { Debit::Transaction.transactions_for(transaction.user) }
+      let(:scoped) { described_class.transactions_for(transaction.user) }
 
       it { expect(scoped).to contain_exactly(transaction) }
     end
 
     context 'when transaciton is for another user' do
       let(:user) { FactoryBot.create(:user) }
-      let(:scoped) { Debit::Transaction.transactions_for(user) }
+      let(:scoped) { described_class.transactions_for(user) }
 
       it { expect(scoped).to be_empty }
     end

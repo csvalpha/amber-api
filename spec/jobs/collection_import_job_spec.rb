@@ -12,7 +12,7 @@ RSpec.describe CollectionImportJob, type: :job do
 
     subject(:job) do
       perform_enqueued_jobs do
-        CollectionImportJob.perform_now(base64_data, collection, user)
+        described_class.perform_now(base64_data, collection, user)
       end
     end
 

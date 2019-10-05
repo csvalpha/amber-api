@@ -300,7 +300,7 @@ RSpec.describe User, type: :model do
   describe '.activated' do
     it do
       expect { FactoryBot.create(:user, activated_at: Time.zone.now) }.to(
-        change { User.activated.count }.by(1)
+        change { described_class.activated.count }.by(1)
       )
     end
   end
@@ -308,7 +308,7 @@ RSpec.describe User, type: :model do
   describe '.contactsync_users' do
     it do
       expect { FactoryBot.create(:user, webdav_secret_key: SecureRandom.hex(32)) }.to(
-        change { User.contactsync_users.count }.by(1)
+        change { described_class.contactsync_users.count }.by(1)
       )
     end
   end
@@ -316,7 +316,7 @@ RSpec.describe User, type: :model do
   describe '.login_enabled' do
     it do
       expect { FactoryBot.create(:user, login_enabled: true) }.to(
-        change { User.login_enabled.count }.by(1)
+        change { described_class.login_enabled.count }.by(1)
       )
     end
   end
@@ -324,7 +324,7 @@ RSpec.describe User, type: :model do
   describe '.tomato_users' do
     it do
       expect { FactoryBot.create(:user, allow_tomato_sharing: true) }.to(
-        change { User.tomato_users.count }.by(1)
+        change { described_class.tomato_users.count }.by(1)
       )
     end
   end
@@ -332,15 +332,15 @@ RSpec.describe User, type: :model do
   describe '.birthday' do
     before { FactoryBot.create(:user, birthday: Time.zone.local(1992, 10, 25)) }
 
-    it { expect(User.birthday(10, 24).count).to eq(0) }
-    it { expect(User.birthday(10, 25).count).to eq(1) }
-    it { expect(User.birthday(10, 26).count).to eq(0) }
+    it { expect(described_class.birthday(10, 24).count).to eq(0) }
+    it { expect(described_class.birthday(10, 25).count).to eq(1) }
+    it { expect(described_class.birthday(10, 26).count).to eq(0) }
   end
 
   describe '.sidekiq_access' do
     it do
       expect { FactoryBot.create(:user, sidekiq_access: true) }.to(
-        change { User.sidekiq_access.count }.by(1)
+        change { described_class.sidekiq_access.count }.by(1)
       )
     end
   end
@@ -353,8 +353,8 @@ RSpec.describe User, type: :model do
         FactoryBot.create(:user, birthday: 1.day.from_now)
       end
 
-      it { expect(User.upcoming_birthdays(0).count).to eq(1) }
-      it { expect(User.upcoming_birthdays(1).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(0).count).to eq(1) }
+      it { expect(described_class.upcoming_birthdays(1).count).to eq(2) }
     end
 
     context 'when with birthday 29 February in leap year' do
@@ -368,9 +368,9 @@ RSpec.describe User, type: :model do
         Timecop.return
       end
 
-      it { expect(User.upcoming_birthdays(0).count).to eq(1) }
-      it { expect(User.upcoming_birthdays(1).count).to eq(2) }
-      it { expect(User.upcoming_birthdays(2).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(0).count).to eq(1) }
+      it { expect(described_class.upcoming_birthdays(1).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(2).count).to eq(2) }
     end
 
     context 'when with birthday 29 February in non-leap year' do
@@ -384,9 +384,9 @@ RSpec.describe User, type: :model do
         Timecop.return
       end
 
-      it { expect(User.upcoming_birthdays(0).count).to eq(2) }
-      it { expect(User.upcoming_birthdays(1).count).to eq(2) }
-      it { expect(User.upcoming_birthdays(2).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(0).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(1).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(2).count).to eq(2) }
     end
   end
 
@@ -660,7 +660,7 @@ RSpec.describe User, type: :model do
   end
 
   describe '.password_reset_url' do
-    it { expect(User.password_reset_url).to include('forgot_password') }
+    it { expect(described_class.password_reset_url).to include('forgot_password') }
   end
 
   describe 'has_paper_trail' do
