@@ -3,12 +3,12 @@ class CleanupExpiredStoredMailsJob < ApplicationJob
 
   def perform
     # Really destroy already moderated emails older than two weeks
-    deleted_mails = StoredMail.only_deleted.where('created_at < ?', 2.weeks.ago)
+    deleted_mails = StoredMail.only_deleted.where('created_at <= ?', 4.weeks.ago)
     deleted_mails_count = deleted_mails.count
     deleted_mails.each(&:really_destroy!) if deleted_mails_count.positive?
 
     # Delete all expired (ignored) emails after the 3-day threshold imposed by Mailgun
-    expired_mails = StoredMail.where('created_at < ?', 3.days.ago)
+    expired_mails = StoredMail.where('created_at <= ?', 4.days.ago)
     expired_mails_count = expired_mails.count
     expired_mails.each(&:destroy) if expired_mails.any?
 
