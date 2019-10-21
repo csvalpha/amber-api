@@ -55,7 +55,9 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::ContactResource' 
             "/contacts/books/#{group.id}/#{group.users[0].id}"
           )
         end
+
         it { expect(xml_response['propstat']['prop']['displayname']).to eq group.users[0].id.to_s }
+
         it do
           expect(xml_response['propstat']['prop']['address_data'])
             .to eq(Webdav::Contact.user_to_vcard(group.users[0]).to_s)

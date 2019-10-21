@@ -15,11 +15,11 @@ RSpec.describe PollPolicy, type: :policy do
     end
   end
 
-  context '#create_with_form?' do
+  describe '#create_with_form?' do
     it { expect(policy.new(nil, nil).create_with_form?(nil)).to be true }
   end
 
-  context '#replace_form?' do
+  describe '#replace_form?' do
     it { expect(policy.new(nil, nil).replace_form?(nil)).to be true }
   end
 end

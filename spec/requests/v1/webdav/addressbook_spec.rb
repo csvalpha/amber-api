@@ -50,11 +50,14 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::AddressbookResour
         # For an example response see https://github.com/csvalpha/amber-api/wiki/CardDAV-explained-with-examples
         it_behaves_like '207 Multistatus'
         it { expect(responses.length).to eq 5 }
+
         it do
           expect(responses[0]['href'])
             .to eq "/webdav/#{user.id}/#{user.webdav_secret_key}/contacts/books/#{group.id}/"
         end
+
         it { expect(responses[0]['propstat']['prop']['displayname']).to eq group.name }
+
         it 'contains responses for the contacts' do
           expect(responses[1..4].map { |r| r['href'] })
             .to match_array(group.users.map do |u|

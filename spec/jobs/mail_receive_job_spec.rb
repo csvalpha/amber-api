@@ -98,9 +98,11 @@ RSpec.describe MailReceiveJob, type: :job do
       end
 
       it { expect(awaiting_moderation_email.to.first).to include('unknown@example.org') }
+
       it do
         expect(awaiting_moderation_email.subject).to include('Moderatieverzoek in behandeling:')
       end
+
       it { expect(request_for_moderation_email.to.first).to include('moderator@csvalpha.nl') }
       it { expect(request_for_moderation_email.subject).to include('Moderatieverzoek:') }
       it { expect(MailForwardJob).not_to have_been_enqueued }
@@ -127,9 +129,11 @@ RSpec.describe MailReceiveJob, type: :job do
       end
 
       it { expect(awaiting_moderation_email.to.first).to include(mail_alias.user.email) }
+
       it do
         expect(awaiting_moderation_email.subject).to include('Moderatieverzoek in behandeling:')
       end
+
       it { expect(request_for_moderation_email.to.first).to include('moderator@csvalpha.nl') }
       it { expect(request_for_moderation_email.subject).to include('Moderatieverzoek:') }
       it { expect(MailForwardJob).not_to have_been_enqueued }
