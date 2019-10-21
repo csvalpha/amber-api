@@ -45,16 +45,24 @@ class MailAlias < ApplicationRecord
   end
 
   def group_xor_user?
-    errors.add(:base, 'Must have either one group OR one user') unless (group && !user) || (!group && user) # rubocop:disable Metrics/LineLength
+    unless (group && !user) || (!group && user)
+      errors.add(:base, 'Must have either one group OR one user')
+    end
   end
 
   def known_mail_domain?
-    errors.add(:email, "Must end with a known domain (#{known_mail_domains.join(', ')})") unless email.ends_with?(*known_mail_domains) # rubocop:disable Metrics/LineLength
+    unless email.ends_with?(*known_mail_domains)
+      errors.add(:email, "Must end with a known domain (#{known_mail_domains.join(', ')})")
+    end
   end
 
   def when_moderated_with_moderator?
-    errors.add(:base, "Must have a moderator, as moderation type is #{moderation_type}") if %w[semi_moderated moderated].include?(moderation_type) && !moderator_group # rubocop:disable Metrics/LineLength
-    errors.add(:base, 'Must have no moderator, as moderation type is open') if moderation_type == 'open' && moderator_group # rubocop:disable Metrics/LineLength
+    if %w[semi_moderated moderated].include?(moderation_type) && !moderator_group
+      errors.add(:base, "Must have a moderator, as moderation type is #{moderation_type}")
+    end
+    if moderation_type == 'open' && moderator_group
+      errors.add(:base, 'Must have no moderator, as moderation type is open')
+    end
   end
 
   def known_mail_domains

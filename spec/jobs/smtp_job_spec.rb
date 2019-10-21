@@ -6,7 +6,7 @@ RSpec.describe SMTPJob, type: :job do
     let(:mailgun_client) { Mailgun::Client.new }
     let(:mail) { ActionMailer::Base.deliveries.first }
 
-    context '#enable_smtp' do
+    describe '#enable_smtp' do
       let(:job) { described_class.new(mail_alias, true) }
 
       before do
@@ -25,7 +25,7 @@ RSpec.describe SMTPJob, type: :job do
       it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt" }
     end
 
-    context '#disable_smtp' do
+    describe '#disable_smtp' do
       let(:job) { described_class.new(mail_alias, false) }
 
       before do

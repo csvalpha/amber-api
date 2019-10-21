@@ -50,11 +50,11 @@ RSpec.describe GroupPolicy, type: :policy do
     end
   end
 
-  context '#create_with_permissions?' do
+  describe '#create_with_permissions?' do
     it { expect(policy.new(nil, nil).create_with_permissions?(nil)).to be true }
   end
 
-  context '#replace_permissions?' do
+  describe '#replace_permissions?' do
     it { expect(policy.new(nil, nil).replace_permissions?(nil)).to be true }
   end
 end
