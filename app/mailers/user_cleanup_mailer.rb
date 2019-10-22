@@ -3,7 +3,7 @@ class UserCleanupMailer < ApplicationMailer
     @will_archive_users = will_archive_users
     @archived_users = archived_users
     subject = "[Belangrijk!] #{@will_archive_users} Alpha accounts staan op het punt gearchiveerd te worden"
-    subject = 'Er zijn gebruikers verwijderd!' if @will_archive_users.empty?
+    subject = 'Er zijn gebruikers gearchiveerd!' if @will_archive_users.empty?
 
     mail to: 'ict@csvalpha.nl;bestuur@csvalpha.nl', subject: subject
   end
