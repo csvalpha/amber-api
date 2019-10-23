@@ -5,11 +5,11 @@ RSpec.describe Debit::MandatePolicy, type: :policy do
 
   subject(:policy) { described_class.new(user, nil) }
 
-  context '#create_with_user?' do
+  describe '#create_with_user?' do
     it { expect(policy.create_with_user?(nil)).to be true }
   end
 
-  context '#replace_user?' do
+  describe '#replace_user?' do
     it { expect(policy.replace_user?(nil)).to be true }
   end
 end

@@ -5,19 +5,19 @@ RSpec.describe Debit::TransactionPolicy, type: :policy do
 
   subject(:policy) { described_class.new(user, nil) }
 
-  context '#create_with_user?' do
+  describe '#create_with_user?' do
     it { expect(policy.create_with_user?(nil)).to be true }
   end
 
-  context '#replace_user?' do
+  describe '#replace_user?' do
     it { expect(policy.replace_user?(nil)).to be true }
   end
 
-  context '#create_with_collection?' do
+  describe '#create_with_collection?' do
     it { expect(policy.create_with_collection?(nil)).to be true }
   end
 
-  context '#replace_collection?' do
+  describe '#replace_collection?' do
     it { expect(policy.replace_collection?(nil)).to be true }
   end
 end

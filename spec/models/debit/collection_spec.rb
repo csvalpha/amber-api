@@ -51,6 +51,7 @@ RSpec.describe Debit::Collection, type: :model do
         end
 
         it { expect(collection.to_sepa).to be_nil }
+
         it do
           expect(
             collection.errors.messages[:sepa].first
@@ -65,6 +66,7 @@ RSpec.describe Debit::Collection, type: :model do
         end
 
         it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
+
         it do
           expect(collection.errors).to be_empty
         end
@@ -92,6 +94,7 @@ RSpec.describe Debit::Collection, type: :model do
       end
 
       it { expect(collection.to_sepa).to be_nil }
+
       it do
         expect(
           collection.errors.messages[:sepa].first
@@ -115,6 +118,7 @@ RSpec.describe Debit::Collection, type: :model do
       before { collection.to_sepa }
 
       it { expect(collection.to_sepa).to be_nil }
+
       it do
         expect(collection.errors.messages[:sepa].first).to eq 'can only generate sepa files'\
 ' for collections in future'
