@@ -13,8 +13,8 @@
 <% if @archived_users.any? %>
   <br/>
   Er
-  <% 'is'.pluralize(@archived_users.size, plural: 'zijn') %> <%= @archived_users.size %>
-  <% 'gebruiker'.pluralize(@archived_users.size, plural: 'gebruikers') %> gearchiveerd.
+  <%= 'is'.pluralize(@archived_users.size, plural: 'zijn') %> <%= @archived_users.size %>
+  <%= 'gebruiker'.pluralize(@archived_users.size, plural: 'gebruikers') %> gearchiveerd.
   Dit is gebeurd omdat ze voor meer dan 20 maanden niet gekoppeld waren aan een groep. Het is niet mogelijk dit process ongedaan te maken.
   <br/>
 <% end %>
