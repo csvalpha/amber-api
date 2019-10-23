@@ -73,6 +73,9 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/GuardClause:
+  Enabled: false
+
 # Enable cops that are disabled by default, but are useful nonetheless
 # See https://github.com/bbatsov/rubocop/blob/master/config/disabled.yml
 
