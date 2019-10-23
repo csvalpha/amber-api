@@ -3,7 +3,7 @@ require 'csv'
 class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one_time_password
 
-  mount_base64_uploader :avatar, AvatarUpload
+  mount_base64_uploader :avatar
   has_paper_trail skip: %i[avatar], unless: proc { |o| o.archived? }
 
   has_many :memberships, inverse_of: :user
