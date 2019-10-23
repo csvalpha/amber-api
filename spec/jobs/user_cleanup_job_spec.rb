@@ -39,7 +39,7 @@ RSpec.describe UserCleanupJob, type: :job do
     it { expect(ActionMailer::Base.deliveries.count).to eq 1 }
     it { expect(email.to).to include 'bestuur@csvalpha.nl' }
     it { expect(email.to).to include 'ict@csvalpha.nl' }
-    it { expect(email.body.to_s).to include(almost_remove_user.full_name) }
+    it { expect(email.body.to_s).to include(almost_archive_user.full_name) }
     it { expect(email.body.to_s).not_to include(user.full_name) }
     it { expect(email.body.to_s).to include('Er is 1 gebruiker gerarchiveerd.') }
     it { expect(user_to_be_archived.full_name).to include 'Gearchiveerde gebruiker' }
