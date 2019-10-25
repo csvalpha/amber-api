@@ -19,9 +19,9 @@ class CleanupExpiredStoredMailsJob < ApplicationJob
     return unless deleted_count.positive? || expired_count.positive?
 
     SlackMessageJob.perform_later(
-      "Email cleanup finished. #{deleted_count} expired #{'emails'.pluralize(deleted_count)} "\
+      "Email cleanup finished. #{deleted_count} expired #{'email'.pluralize(deleted_count)} "\
       "really destroyed; #{expired_count} ignored (not-moderated) "\
-      "#{'emails'.pluralize(expired_count)} soft-deleted",
+      "#{'email'.pluralize(expired_count)} soft-deleted",
       channel: '#monitoring'
     )
   end
