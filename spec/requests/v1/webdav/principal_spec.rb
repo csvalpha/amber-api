@@ -31,6 +31,7 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::PrincipalResource
           expect(xml_response['propstat']['prop']['resourcetype'].keys)
             .to contain_exactly('collection', 'principal')
         end
+
         it do
           expect(xml_response['propstat']['prop']['current_user_principal']['href'])
             .to eq "/webdav/#{user.id}/#{user.webdav_secret_key}/contacts"

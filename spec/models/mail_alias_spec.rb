@@ -90,7 +90,7 @@ RSpec.describe MailAlias, type: :model do
     end
   end
 
-  context '#mail_addresses' do
+  describe '#mail_addresses' do
     context 'when with group' do
       subject(:mail_alias) { FactoryBot.build_stubbed(:mail_alias, :with_group) }
 
@@ -106,7 +106,7 @@ RSpec.describe MailAlias, type: :model do
     end
   end
 
-  context '#downcase_email' do
+  describe '#downcase_email' do
     subject(:mail_alias) do
       FactoryBot.create(:mail_alias, :with_group, email: 'Test@csvalpha.nl')
     end
@@ -114,7 +114,7 @@ RSpec.describe MailAlias, type: :model do
     it { expect(mail_alias.email).to eq 'test@csvalpha.nl' }
   end
 
-  context '#moderators' do
+  describe '#moderators' do
     context 'when with open alias' do
       subject(:mail_alias) do
         FactoryBot.build_stubbed(:mail_alias, :with_group, moderation_type: 'open')
@@ -135,13 +135,13 @@ RSpec.describe MailAlias, type: :model do
     end
   end
 
-  context '#domain' do
+  describe '#domain' do
     let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }
 
     it { expect(mail_alias.domain).to eq 'csvalpha.nl' }
   end
 
-  context '#to_s' do
+  describe '#to_s' do
     context 'when with a user' do
       let(:user) do
         FactoryBot.build_stubbed(:user, first_name: 'Alpha', last_name_prefix: nil,

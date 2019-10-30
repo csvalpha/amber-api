@@ -5,11 +5,11 @@ RSpec.describe ArticleCommentPolicy, type: :policy do
 
   let(:user) { FactoryBot.build(:user) }
 
-  context '#create_with_article?' do
+  describe '#create_with_article?' do
     it { expect(policy.create_with_article?(nil)).to be true }
   end
 
-  context '#replace_article?' do
+  describe '#replace_article?' do
     it { expect(policy.replace_article?(nil)).to be true }
   end
 end

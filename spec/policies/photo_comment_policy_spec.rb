@@ -5,11 +5,11 @@ RSpec.describe PhotoCommentPolicy, type: :policy do
 
   let(:user) { FactoryBot.build(:user) }
 
-  context '#create_with_photo?' do
+  describe '#create_with_photo?' do
     it { expect(policy.create_with_photo?(nil)).to be true }
   end
 
-  context '#replace_photo?' do
+  describe '#replace_photo?' do
     it { expect(policy.replace_photo?(nil)).to be true }
   end
 end
