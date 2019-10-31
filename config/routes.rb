@@ -120,6 +120,8 @@ Rails.application.routes.draw do
   end
 
   require 'sidekiq/web'
+  require 'sidekiq-scheduler/web'
+
   # See https://github.com/mperham/sidekiq/wiki/Monitoring#forbidden
   Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 

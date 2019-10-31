@@ -2,3 +2,10 @@
   - default
   - mailers
   - mail_handlers
+
+:schedule:
+  :mail_moderation_reminder:
+    cron: '0 0 15 * * *'
+    class: MailModerationReminderJob
+    queue: mail_handlers
+    description: Reminder job for to be moderated mails
