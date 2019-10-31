@@ -1,0 +1,2 @@
+class QuickpostStatisticPolicy < ApplicationPolicy
+end

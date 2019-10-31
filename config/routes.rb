@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     get 'users/me/nextcloud', to: 'users#nextcloud'
 
     jsonapi_resources :quickpost_messages
+    jsonapi_resources :quickpost_statistics, only: :index
 
     namespace :debit do
       jsonapi_resources :collections do
