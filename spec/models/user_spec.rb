@@ -672,7 +672,7 @@ RSpec.describe User, type: :model do
       # This is caused by the fact that we call paper trail twice
       # (once in ApplicationRecord and once in User)
       it { expect(user.versions.size).to eq 2 }
-      
+
       it do
         expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(2).to(4))
       end
