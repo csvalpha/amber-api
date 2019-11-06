@@ -18,7 +18,7 @@ RSpec.describe MailReceiveJob, type: :job do
         ActionMailer::Base.deliveries = []
         allow(mail_fetcher_class).to receive(:new) { OpenStruct.new(sender: sender) }
         perform_enqueued_jobs do
-          described_class.perform_now('unknown@example.org', message_url)
+          described_class.perform_now('unknown@csvalpha.nl', message_url)
         end
       end
 
@@ -26,7 +26,7 @@ RSpec.describe MailReceiveJob, type: :job do
       it { expect(ndr_mail.to.first).to eq 'alice@example.org' }
 
       context 'when sender is noreply' do
-        let(:sender) { 'noreply@example.org' }
+        let(:sender) { 'noreply@csvalpha.nl' }
 
         it { expect(ndr_mail).to be nil }
       end

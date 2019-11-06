@@ -31,7 +31,7 @@ class MailReceiveJob < ApplicationJob
 
   private
 
-  def gather_valid_aliases(recipients, fetched_mail)
+  def gather_valid_aliases(recipients, fetched_mail) # rubocop:disable Metrics/AbcSize
     mail_aliases = []
     recipients.split(', ').each do |recipient|
       next unless Rails.application.config.x.mail_domains.include?(recipient.split('@')[1])
