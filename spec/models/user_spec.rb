@@ -629,28 +629,31 @@ RSpec.describe User, type: :model do
 
   describe '#archive!' do
     context 'when archiving a user' do
-      subject(:user) { FactoryBot.create(:user) }
+      with_versioning do
+        subject(:user) { FactoryBot.create(:user) }
 
-      let(:nil_attributes) do
-        %w[email username password_digest deleted_at last_name_prefix birthday
-           address postcode city phone_number food_preferences iban iban_holder study
-           start_study activated_at activation_token avatar activation_token_valid_till
-           sidekiq_access vegetarian picture_publication_preference emergency_contact
-           emergency_number ifes_data_sharing_preference info_in_almanak
-           almanak_subscription_preference digtus_subscription_preference]
-      end
+        let(:nil_attributes) do
+          %w[email username password_digest deleted_at last_name_prefix birthday
+             address postcode city phone_number food_preferences iban iban_holder study
+             start_study activated_at activation_token avatar activation_token_valid_till
+             sidekiq_access vegetarian picture_publication_preference emergency_contact
+             emergency_number ifes_data_sharing_preference info_in_almanak
+             almanak_subscription_preference digtus_subscription_preference]
+        end
 
-      before { user.archive! && user.reload }
+        before { user.archive! && user.reload }
 
-      it { expect(user.archive!).to be true }
-      it { expect(user.full_name).to eq "Gearchiveerde gebruiker #{user.id}" }
-      it { expect(user.archived_at).not_to be_nil }
-      it { expect(user.login_enabled).to be false }
-      it { expect { user.archive! }.not_to(change(user, :id)) }
+        it { expect(user.archive!).to be true }
+        it { expect(user.full_name).to eq "Gearchiveerde gebruiker #{user.id}" }
+        it { expect(user.archived_at).not_to be_nil }
+        it { expect(user.login_enabled).to be false }
+        it { expect(user.versions).to be_empty }
+        it { expect { user.archive! }.not_to(change(user, :id)) }
 
-      it do
-        nil_attributes.each do |attribute|
-          expect(user[attribute]).to be_nil
+        it do
+          nil_attributes.each do |attribute|
+            expect(user[attribute]).to be_nil
+          end
         end
       end
     end
@@ -658,6 +661,22 @@ RSpec.describe User, type: :model do
 
   describe '.password_reset_url' do
     it { expect(described_class.password_reset_url).to include('forgot_password') }
+  end
+
+  describe 'has_paper_trail' do
+    with_versioning do
+      let(:user) { FactoryBot.create(:user) }
+
+      # Currently we have a problem with paper trail
+      # which causes two versions to be created on each change
+      # This is caused by the fact that we call paper trail twice
+      # (once in ApplicationRecord and once in User)
+      it { expect(user.versions.size).to eq 2 }
+
+      it do
+        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(2).to(4))
+      end
+    end
   end
 
   private
