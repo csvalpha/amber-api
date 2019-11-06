@@ -34,6 +34,8 @@ class MailReceiveJob < ApplicationJob
   def gather_valid_aliases(recipients, fetched_mail)
     mail_aliases = []
     recipients.split(', ').each do |recipient|
+      next unless Rails.application.config.x.mail_domains.include?(recipient.split('@')[1])
+
       mail_alias = MailAlias.where(email: recipient.downcase).first
       mail_aliases.push(mail_alias) if mail_alias
       notify_unknown_address(fetched_mail.sender, recipient) unless mail_alias
