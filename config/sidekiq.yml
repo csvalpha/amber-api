@@ -2,7 +2,12 @@
   - default
   - mailers
   - mail_handlers
-  -
+
 schedule:
   UserCleanupJob:
     cron: '0 9 1 * *'  # At 09:00:00 on each first of the month => https://crontab.guru/#0_9_1_*_*
+  cleanup_expired_stored_mails:
+    cron: '0 0 9 * * *'   # Runs every day at 9AM
+    class: CleanupExpiredStoredMailsJob
+    queue: mail_handlers
+    description: Cleanup job for expired emails
