@@ -1,7 +1,6 @@
 require_relative 'routes/contact_sync_handler'
 
 Rails.application.routes.draw do
-  use_doorkeeper
   scope 'v1', &method(:use_doorkeeper)
 
   namespace :v1 do
