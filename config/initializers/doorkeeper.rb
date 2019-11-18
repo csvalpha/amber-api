@@ -5,6 +5,8 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   api_only
   use_refresh_token
 
+  optional_scopes :tomato
+
   # See https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow
   grant_flows %w[password authorization_code client_credentials]
 
