@@ -1,7 +1,7 @@
 steps:
   - label: ":docker: Build test image"
     plugins:
-      - docker-compose#v2.6.0:
+      - docker-compose#v3.1.0:
           build: app
           config: docker-compose.buildkite.yml
 
@@ -10,14 +10,14 @@ steps:
   - label: ":rspec: Rspec"
     command: "bin/wait_for -t 30 db:5432 -- bin/ci.sh spec"
     plugins:
-      - docker-compose#v2.6.0:
+      - docker-compose#v3.1.0:
           run: app
           config: docker-compose.buildkite.yml
 
   - label: ":rubocop: Lint"
     command: "bin/ci.sh lint"
     plugins:
-      - docker-compose#v2.6.0:
+      - docker-compose#v3.1.0:
           run: app
           config: docker-compose.buildkite.yml
 
@@ -30,7 +30,7 @@ steps:
           server: docker.csvalpha.nl
           username: buildkite
           password-env: DOCKER_PASSWORD
-      - docker-compose#v2.6.0:
+      - docker-compose#v3.1.0:
           push: app-production:docker.csvalpha.nl/amber-api:staging
           config: docker-compose.buildkite.yml
 
@@ -41,7 +41,7 @@ steps:
           server: docker.csvalpha.nl
           username: buildkite
           password-env: DOCKER_PASSWORD
-      - docker-compose#v2.6.0:
+      - docker-compose#v3.1.0:
           push: app-production:docker.csvalpha.nl/amber-api:latest
           config: docker-compose.buildkite.yml
 
