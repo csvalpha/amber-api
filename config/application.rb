@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module Amber
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.0
+    config.load_defaults 6.0
     Rails.application.config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" # TODO remove when defaults are set to 6.0
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -33,11 +33,7 @@ module Amber
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-
-    config.autoload_paths << Rails.root.join('app', 'helpers')
-    config.autoload_paths << Rails.root.join('app', 'paginators')
-
-    config.i18n.default_locale = :nl
+        config.i18n.default_locale = :nl
 
     # Required by message_bus as long as https://github.com/SamSaffron/message_bus/issues/124
     # is not fixed

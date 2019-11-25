@@ -1,4 +1,4 @@
-class SMTPJob < ApplicationJob
+class SmtpJob < ApplicationJob
   queue_as :default
 
   def perform(mail_alias, enable)
@@ -15,12 +15,12 @@ class SMTPJob < ApplicationJob
     password = SecureRandom.hex(16)
     mailgun_client.post("/domains/#{mail_alias.domain}/credentials",
                         'login': mail_alias.email, 'password': password)
-    MailSMTPMailer.enabled_email(mail_alias, password).deliver_later
+    MailSmtpMailer.enabled_email(mail_alias, password).deliver_later
   end
 
   def disable_smtp(mail_alias)
     mailgun_client.delete("/domains/#{mail_alias.domain}/credentials/#{mail_alias.email}")
-    MailSMTPMailer.disabled_email(mail_alias).deliver_later
+    MailSmtpMailer.disabled_email(mail_alias).deliver_later
   end
 
   # :nocov:

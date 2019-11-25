@@ -73,7 +73,7 @@ class MailAlias < ApplicationRecord
   def set_smtp
     return unless smtp_enabled_changed?
 
-    SMTPJob.perform_later(self, smtp_enabled)
+    SmtpJob.perform_later(self, smtp_enabled)
   end
   # :nocov:
 end

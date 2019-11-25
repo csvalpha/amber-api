@@ -3,8 +3,10 @@ JSONAPI.configure do |config|
 
   # By default an exception will return a 500, when you want to handle the error in the controller
   # you have to specifiy it here
-  config.exception_class_whitelist = [Pundit::NotAuthorizedError,
-                                      AmberError::NotMemberOfGroupError]
+  # We whitelist all such that sentry can pick them up
+  config.whitelist_all_exceptions = true
+
+
 
   # Do not raise an error when unpermitted paramaters are passed.
   # Instead add warnings in the metadata
