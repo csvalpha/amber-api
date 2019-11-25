@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :form, class: Form::Form do
+  factory :form, class: 'Form::Form' do
     respond_from { Faker::Time.between(1.month.ago, Date.yesterday, :day) }
     respond_until { Faker::Time.between(Date.tomorrow, 7.days.from_now, :day) }
 

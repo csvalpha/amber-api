@@ -43,17 +43,16 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
   # Configure url to test actionmailer urls
-  config.action_mailer.default_url_options = {scheme: 'http', host: 'testhost', port: 1337}
+  config.action_mailer.default_url_options = { scheme: 'http', host: 'testhost', port: 1337 }
   config.active_job.queue_adapter = :test
   config.middleware.delete Rack::Attack
 
   config.after_initialize do
-    Bullet.enable = false # TODO revert!
+    Bullet.enable = false # TODO: revert!
     Bullet.raise = false
     PaperTrail.enabled = false
   end

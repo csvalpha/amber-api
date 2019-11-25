@@ -4,7 +4,7 @@ module UploaderExtensions
   end
 end
 
-# TODO check that we did need this...
+# TODO: check that we did need this...
 # if Rails.env.test?
 #   Dir[Rails.root.join('app', 'uploaders', '*.rb')].each { |file| require file }
 #

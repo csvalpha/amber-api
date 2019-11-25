@@ -1,18 +1,18 @@
 require_relative 'boot'
 
-require "rails"
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-#require "action_mailbox/engine"
-#require "action_text/engine"
-#require "action_view/railtie"
+require 'rails'
+require 'active_model/railtie'
+require 'active_job/railtie'
+require 'active_record/railtie'
+require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+# require "action_mailbox/engine"
+# require "action_text/engine"
+# require "action_view/railtie"
 # require "action_cable/engine"
 # require "sprockets/railtie"
-#require "rails/test_unit/railtie"
+# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -22,7 +22,6 @@ module Amber
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-    Rails.application.config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" # TODO remove when defaults are set to 6.0
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -33,7 +32,7 @@ module Amber
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-        config.i18n.default_locale = :nl
+    config.i18n.default_locale = :nl
 
     # Required by message_bus as long as https://github.com/SamSaffron/message_bus/issues/124
     # is not fixed

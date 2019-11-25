@@ -6,8 +6,6 @@ JSONAPI.configure do |config|
   # We whitelist all such that sentry can pick them up
   config.whitelist_all_exceptions = true
 
-
-
   # Do not raise an error when unpermitted paramaters are passed.
   # Instead add warnings in the metadata
   config.raise_if_parameters_not_allowed = false

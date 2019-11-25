@@ -28,7 +28,7 @@ class Activity < ApplicationRecord
   scope :closing, (lambda { |days_ahead = 7|
     now = DateTime.current
     ahead = days_ahead.days.from_now.to_datetime
-    self.joins(:form).where(form_forms: { respond_until: now..ahead })
+    joins(:form).where(form_forms: { respond_until: now..ahead })
   })
 
   after_save :copy_author_and_group_to_form!
