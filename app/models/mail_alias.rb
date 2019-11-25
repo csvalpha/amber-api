@@ -1,7 +1,7 @@
 class MailAlias < ApplicationRecord
-  belongs_to :group
-  belongs_to :user
-  belongs_to :moderator_group, class_name: 'Group'
+  belongs_to :group, optional: true
+  belongs_to :user, optional: true
+  belongs_to :moderator_group, class_name: 'Group', optional: true
 
   validates :email, presence: true, uniqueness: true
   validates :moderation_type, inclusion: %w[open semi_moderated moderated]
