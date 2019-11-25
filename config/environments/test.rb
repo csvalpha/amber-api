@@ -53,8 +53,8 @@ Rails.application.configure do
   config.middleware.delete Rack::Attack
 
   config.after_initialize do
-    Bullet.enable = true
-    Bullet.raise = true
+    Bullet.enable = false # TODO revert!
+    Bullet.raise = false
     PaperTrail.enabled = false
   end
 

@@ -10,9 +10,9 @@ describe V1::UsersController do
     it_behaves_like 'an indexable model'
 
     context 'search' do
-      before { Bullet.enable = false }
-
-      after { Bullet.enable = true }
+      # before { Bullet.enable = false }
+      #
+      # after { Bullet.enable = true }
 
       it_behaves_like 'a searchable model', %i[email first_name last_name last_name_prefix study]
     end

@@ -11,9 +11,9 @@ describe V1::Forum::CategoriesController do
     it_behaves_like 'an indexable model'
 
     context 'search' do
-      before { Bullet.enable = false }
-
-      after { Bullet.enable = true }
+      # before { Bullet.enable = false }
+      #
+      # after { Bullet.enable = true }
 
       it_behaves_like 'a searchable model', %i[name]
     end
