@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :thread, class: Forum::Thread do
+  factory :thread, class: 'Forum::Thread' do
     title { Faker::Hipster.sentence(4, true, 2) }
     association :author, factory: :user
     category

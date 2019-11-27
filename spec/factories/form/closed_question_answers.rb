@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :closed_question_answer, class: Form::ClosedQuestionAnswer do
+  factory :closed_question_answer, class: 'Form::ClosedQuestionAnswer' do
     option do
       FactoryBot.create(:closed_question_option,
                         question: FactoryBot.create(:closed_question,

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :mandate, class: Debit::Mandate do
+  factory :mandate, class: 'Debit::Mandate' do
     start_date { Faker::Date.between(12.months.ago, 1.month.ago) }
     iban_holder { Faker::Name.first_name }
     iban do
