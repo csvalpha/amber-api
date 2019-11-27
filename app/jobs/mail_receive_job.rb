@@ -27,6 +27,8 @@ class MailReceiveJob < ApplicationJob
       MailModerationMailer.request_for_moderation_email(moderator, stored_mail).deliver_later
     end
     MailModerationMailer.awaiting_moderation_email(stored_mail.sender, stored_mail).deliver_later
+    Sidekiq.set_schedule("mail_reminder_#{stored_mail.id}", 'in' => ['24h'], 'class' =>
+      'MailModerationReminderJob', args: [stored_mail])
   end
 
   private

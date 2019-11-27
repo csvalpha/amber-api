@@ -1,13 +1,17 @@
 class MailModerationReminderJob < ApplicationJob
   queue_as :default
 
-  def perform
-    StoredMail.all.where('created_at <= ?', 6.hours.ago).group_by(&:mail_alias_id)
-              .each do |mail_alias_id, to_be_moderated_mails|
-      MailAlias.find(mail_alias_id).moderators.each do |moderator|
-        MailModerationReminderMailer.moderation_reminder_email(moderator, to_be_moderated_mails)
-                                    .deliver_later
-      end
+  def perform(stored_mail)
+    return unless stored_mail
+
+    stored_mail.mail_alias.moderators.each do |moderator|
+      MailModerationMailer.reminder_for_moderation_email(moderator, stored_mail).deliver_later
     end
+
+    # Only reschedule if mail doesn't expire next day
+    return unless Time.zone.now + 25.hours < stored_mail.created_at + 3.days
+
+    Sidekiq.set_schedule("mail_reminder_#{stored_mail.id}", 'in' => ['24h'], 'class' =>
+      'MailModerationReminderJob', args: [stored_mail])
   end
 end
