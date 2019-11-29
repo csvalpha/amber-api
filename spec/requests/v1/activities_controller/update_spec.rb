@@ -14,9 +14,9 @@ describe V1::ActivitiesController do
     # end
 
     it_behaves_like 'an updatable model with group' do
-      before { Bullet.enabled = false }
+      before { Bullet.enable = false }
 
-      after { Bullet.enabled = true }
+      after { Bullet.enable = true }
     end
 
     context 'when with permission' do
