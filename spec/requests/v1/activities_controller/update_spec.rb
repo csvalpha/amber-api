@@ -14,8 +14,9 @@ describe V1::ActivitiesController do
     # end
 
     it_behaves_like 'an updatable model with group' do
-      before { Bullet.enabled = false}
-      after { Bullet.enabled = true}
+      before { Bullet.enabled = false }
+
+      after { Bullet.enabled = true }
     end
 
     context 'when with permission' do
@@ -29,7 +30,6 @@ describe V1::ActivitiesController do
               type: record_type(record)
             })
       end
-
 
       it { expect { request && record.reload }.not_to(change(record, :author)) }
     end
