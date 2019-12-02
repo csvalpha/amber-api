@@ -15,6 +15,7 @@ class MailReceiveJob < ApplicationJob
       else
         send_mail_moderations(mail_alias, message_url, fetched_mail)
       end
+      mail_alias.update(last_received_at: Time.zone.now)
     end
   end
 
