@@ -2,59 +2,39 @@ require 'rails_helper'
 
 RSpec.describe CleanupExpiredStoredMailsJob, type: :job do
   describe '#perform' do
-    let(:valid_stored_mail) { FactoryBot.create(:stored_mail) }
+    let(:stored_mail) { FactoryBot.create(:stored_mail) }
 
     subject(:job) { described_class.new }
 
     before do
-      valid_stored_mail
+      stored_mail
 
       # Set up spy for #inform_slack
-      allow(job).to receive(:inform_slack).and_call_original
+      allow(job).to receive(:inform_slack)
+      job.perform
     end
 
     context 'when with no old emails' do
-      before { job.perform }
-
       it { expect(StoredMail.count).to be(1) }
       it { expect(job).to have_received(:inform_slack).with(0, 0) }
     end
 
     context 'when with one expired email and no deleted emails' do
-      before do
-        FactoryBot.create(:stored_mail, :expired)
-      end
+      let(:stored_mail){ FactoryBot.create(:stored_mail, :expired)}
 
-      it { expect { job.perform }.to change { StoredMail.only_deleted.count }.from(0).to(1) }
-
-      describe 'calls #inform_slack with the right arguments' do
-        before { job.perform }
-
-        it { expect(job).to have_received(:inform_slack).with(0, 1) }
-      end
+      it { expect(StoredMail.only_deleted.count).to eq 1}
+      it { expect(job).to have_received(:inform_slack).with(0, 1) }
     end
 
     context 'when with one deleted email and no expired emails' do
-      before do
-        FactoryBot.create(:stored_mail, :deleted)
-      end
+      let(:stored_mail) { FactoryBot.create(:stored_mail, :deleted)}
 
-      it { expect { job.perform }.to change { StoredMail.only_deleted.count }.from(1).to(0) }
-
-      describe 'calls #inform_slack with the right arguments' do
-        before { job.perform }
-
-        it { expect(job).to have_received(:inform_slack).with(1, 0) }
-      end
+      it { expect(StoredMail.only_deleted.count).to eq 0}
+      it { expect(job).to have_received(:inform_slack).with(1, 0) }
     end
 
     context 'when with both deleted emails and expired emails' do
-      before do
-        FactoryBot.create(:stored_mail, :expired)
-        FactoryBot.create_list(:stored_mail, 2, :deleted)
-
-        job.perform
-      end
+      let(:stored_mail) {  FactoryBot.create_list(:stored_mail, 2, :deleted) + [FactoryBot.create(:stored_mail, :expired)] }
 
       it { expect(job).to have_received(:inform_slack).with(2, 1) }
     end
