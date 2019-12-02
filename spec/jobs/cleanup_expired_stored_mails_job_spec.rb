@@ -20,21 +20,24 @@ RSpec.describe CleanupExpiredStoredMailsJob, type: :job do
     end
 
     context 'when with one expired email and no deleted emails' do
-      let(:stored_mail){ FactoryBot.create(:stored_mail, :expired)}
+      let(:stored_mail) { FactoryBot.create(:stored_mail, :expired) }
 
-      it { expect(StoredMail.only_deleted.count).to eq 1}
+      it { expect(StoredMail.only_deleted.count).to eq 1 }
       it { expect(job).to have_received(:inform_slack).with(0, 1) }
     end
 
     context 'when with one deleted email and no expired emails' do
-      let(:stored_mail) { FactoryBot.create(:stored_mail, :deleted)}
+      let(:stored_mail) { FactoryBot.create(:stored_mail, :deleted) }
 
-      it { expect(StoredMail.only_deleted.count).to eq 0}
+      it { expect(StoredMail.only_deleted.count).to eq 0 }
       it { expect(job).to have_received(:inform_slack).with(1, 0) }
     end
 
     context 'when with both deleted emails and expired emails' do
-      let(:stored_mail) {  FactoryBot.create_list(:stored_mail, 2, :deleted) + [FactoryBot.create(:stored_mail, :expired)] }
+      let(:stored_mail) do
+        FactoryBot.create_list(:stored_mail, 2, :deleted) +
+          [FactoryBot.create(:stored_mail, :expired)]
+      end
 
       it { expect(job).to have_received(:inform_slack).with(2, 1) }
     end
