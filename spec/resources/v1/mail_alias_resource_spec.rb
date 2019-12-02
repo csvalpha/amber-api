@@ -8,7 +8,7 @@ RSpec.describe V1::MailAliasResource, type: :resource do
   describe '#fetchable_fields' do
     let(:read_fields) do
       %i[email moderation_type description smtp_enabled
-      created_at group id moderator_group updated_at user]
+         created_at group id moderator_group updated_at user]
     end
 
     context 'when with read permission' do
