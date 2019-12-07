@@ -81,7 +81,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.cache_store = :redis_cache_store, {url: Rails.application.config_for(:cable)['url'] }
+  config.cache_store = :redis_cache_store, { url: Rails.application.config_for(:cable)['url'] }
 
   # Refer to the front end of AMBER (Ember)
   config.action_mailer.default_url_options = { scheme: 'https',

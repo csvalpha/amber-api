@@ -14,7 +14,7 @@ RSpec.describe ArticleComment, type: :model do
 
     context 'when with a too long content' do
       subject(:article_comment) do
-        FactoryBot.build(:article_comment, content: Faker::Lorem.characters(501))
+        FactoryBot.build(:article_comment, content: Faker::Lorem.characters(number: 501))
       end
 
       it { expect(article_comment.valid?).to be false }
