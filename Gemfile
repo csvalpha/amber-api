@@ -36,7 +36,7 @@ gem 'rack-attack', '~> 6.0'
 gem 'rack-cors', '~> 1.0', require: 'rack/cors'
 gem 'rails', '~> 6.0'
 gem 'rails-i18n', '~> 6.0'
-gem 'redis-rails', '~> 5.0.1'
+gem "redis", "~> 4.0"
 gem 'rqrcode', '~> 1.1'
 gem 'ruby-filemagic', '~> 0.7'
 gem 'rubyzip', '~> 2.0'
