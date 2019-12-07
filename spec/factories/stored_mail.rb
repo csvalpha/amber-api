@@ -7,11 +7,11 @@ FactoryBot.define do
     subject { Faker::Book.title }
 
     trait :expired do
-      created_at { Faker::Time.between(4.days.ago, 7.days.ago) }
+      created_at { Faker::Time.between(5.days.ago, 7.days.ago) }
     end
 
     trait :deleted do
-      created_at { Faker::Time.between(4.weeks.ago, 6.weeks.ago) }
+      created_at { Faker::Time.between(5.weeks.ago, 6.weeks.ago) }
       deleted_at { 1.day.ago }
     end
   end

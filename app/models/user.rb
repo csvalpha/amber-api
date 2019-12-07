@@ -89,6 +89,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :active_users_for_group, (lambda { |group|
     joins(:memberships).merge(Membership.active.where(group: group))
   })
+  scope :archived, (lambda { |bool = true|
+    return where.not(archived_at: nil) if bool
+
+    where(archived_at: nil)
+  })
 
   def full_name
     [first_name, last_name_prefix, last_name].reject(&:blank?).join(' ')
