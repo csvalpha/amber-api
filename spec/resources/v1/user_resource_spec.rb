@@ -232,7 +232,7 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     describe 'archived' do
-      let(:archived_user) { FactoryBot.create(:user)}
+      let(:archived_user) { FactoryBot.create(:user) }
 
       before do
         archived_user.archive!
@@ -252,7 +252,6 @@ RSpec.describe V1::UserResource, type: :resource do
         it { expect(filtered.size).to eq 2 }
         it { expect(filtered).to include user }
       end
-
     end
   end
 end

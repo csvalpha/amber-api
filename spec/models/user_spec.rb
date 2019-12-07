@@ -401,17 +401,19 @@ RSpec.describe User, type: :model do
     end
 
     context 'when archived true' do
-      it { expect(described_class.archived(true).size).to eq 1}
-      it { expect(described_class.archived(true)).to include archived_user}
+      it { expect(described_class.archived(true).size).to eq 1 }
+      it { expect(described_class.archived(true)).to include archived_user }
+    end
+
+    context 'when archived true implicit' do
+      it { expect(described_class.archived.size).to eq 1 }
+      it { expect(described_class.archived).to include archived_user }
     end
 
     context 'when archived false' do
-      it { expect(described_class.archived(false).size).to eq 2}
-      it { expect(described_class.archived(false)).to include users.first}
+      it { expect(described_class.archived(false).size).to eq 2 }
+      it { expect(described_class.archived(false)).to include users.first }
     end
-
-
-
   end
 
   describe '#destroy' do
