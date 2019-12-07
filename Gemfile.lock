@@ -227,7 +227,7 @@ GEM
       activerecord (>= 4.1)
       concurrent-ruby
       railties (>= 4.1)
-    listen (3.2.0)
+    listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.4.0)
@@ -266,12 +266,12 @@ GEM
     netrc (0.11.0)
     nio4r (2.5.2)
     nio4r (2.5.2-java)
-    nokogiri (1.10.5)
+    nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
-    nokogiri (1.10.5-java)
-    nokogiri (1.10.5-x64-mingw32)
+    nokogiri (1.10.7-java)
+    nokogiri (1.10.7-x64-mingw32)
       mini_portile2 (~> 2.4.0)
-    nokogiri (1.10.5-x86-mingw32)
+    nokogiri (1.10.7-x86-mingw32)
       mini_portile2 (~> 2.4.0)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -289,7 +289,7 @@ GEM
     pg (1.1.4)
     pg (1.1.4-x64-mingw32)
     pg (1.1.4-x86-mingw32)
-    phonelib (0.6.39)
+    phonelib (0.6.40)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -519,7 +519,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
     yard (0.9.20)
-    zeitwerk (2.2.1)
+    zeitwerk (2.2.2)
 
 PLATFORMS
   java
@@ -584,9 +584,9 @@ DEPENDENCIES
   redis-rails (~> 5.0.1)
   rqrcode (~> 0.10)
   rspec-rails
-  rubocop (~> 0.69)
+  rubocop
   rubocop-performance
-  rubocop-rails (~> 2.1)
+  rubocop-rails
   rubocop-rspec
   ruby-filemagic (~> 0.7)
   rubyzip (~> 2.0)

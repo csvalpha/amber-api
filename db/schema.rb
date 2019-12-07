@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_085924) do
+ActiveRecord::Schema.define(version: 2019_12_02_085126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -267,6 +267,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_085924) do
     t.datetime "deleted_at"
     t.bigint "moderator_group_id"
     t.boolean "smtp_enabled", default: false
+    t.datetime "last_received_at"
     t.index ["email"], name: "index_mail_aliases_on_email", unique: true
     t.index ["moderator_group_id"], name: "index_mail_aliases_on_moderator_group_id"
   end

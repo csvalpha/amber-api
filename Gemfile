@@ -77,9 +77,9 @@ end
 group :test do
   gem 'guard-rspec', require: false
   gem 'rspec-rails'
-  gem 'rubocop', '~> 0.69', require: false
+  gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', '~> 2.1', require: false
+  gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'simplecov', require: false
   gem 'terminal-notifier-guard'
