@@ -15,6 +15,7 @@ class CleanupExpiredStoredMailsJob < ApplicationJob
     inform_slack(deleted_mails_count, expired_mails_count)
   end
 
+  # :nocov:
   def inform_slack(deleted_count, expired_count)
     return unless deleted_count.positive? || expired_count.positive?
 
@@ -25,4 +26,5 @@ class CleanupExpiredStoredMailsJob < ApplicationJob
       channel: '#monitoring'
     )
   end
+  # :nocov:
 end
