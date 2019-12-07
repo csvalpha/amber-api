@@ -6,6 +6,10 @@ describe V1::ActivitiesController do
     let(:record_url) { '/v1/activities' }
     let(:record_permission) { 'activity.create' }
 
+    after { Bullet.enable = true }
+
+    before { Bullet.enable = false }
+
     it_behaves_like 'a creatable model with group'
 
     it_behaves_like 'a creatable and permissible model' do

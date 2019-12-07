@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SMTPJob, type: :job do
+RSpec.describe SmtpJob, type: :job do
   describe '#perform' do
     let(:mail_alias) { FactoryBot.create(:mail_alias) }
     let(:mailgun_client) { Mailgun::Client.new }

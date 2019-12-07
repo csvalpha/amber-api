@@ -23,5 +23,9 @@ describe V1::Form::ClosedQuestionAnswersController do
         }
       end
     end
+
+    before { Bullet.enable = false }
+
+    after { Bullet.enable = true }
   end
 end

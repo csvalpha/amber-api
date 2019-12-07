@@ -78,16 +78,16 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   })
   scope :upcoming_birthdays, (lambda { |days_ahead = 7|
     range = (0.days.from_now.to_date..days_ahead.days.from_now.to_date)
-    scope = range.inject(User.birthday) do |birthdays, day|
-      birthdays.or(User.birthday(day.month, day.day))
+    scope = range.inject(birthday) do |birthdays, day|
+      birthdays.or(birthday(day.month, day.day))
     end
     february28 = Date.new(Time.zone.now.year, 2, 28)
-    scope = scope.or(User.birthday(2, 29)) if range.include?(february28) &&
+    scope = scope.or(birthday(2, 29)) if range.include?(february28) &&
       !Date.leap?(Time.zone.now.year)
     scope
   })
   scope :active_users_for_group, (lambda { |group|
-    User.joins(:memberships).merge(Membership.active.where(group: group))
+    joins(:memberships).merge(Membership.active.where(group: group))
   })
   scope :archived, (lambda { |bool = true|
     return where.not(archived_at: nil) if bool

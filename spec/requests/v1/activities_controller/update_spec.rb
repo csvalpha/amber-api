@@ -13,7 +13,11 @@ describe V1::ActivitiesController do
     #   let(:invalid_attributes) { { price: -35 } }
     # end
 
-    it_behaves_like 'an updatable model with group'
+    it_behaves_like 'an updatable model with group' do
+      before { Bullet.enable = false }
+
+      after { Bullet.enable = true }
+    end
 
     context 'when with permission' do
       include_context 'when authenticated' do
