@@ -390,6 +390,30 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '.archived' do
+    let(:user) {}
+    let(:users) { FactoryBot.create_list(:user, 2) }
+    let(:archived_user) { FactoryBot.create(:user) }
+
+    before do
+      users
+      archived_user.archive!
+    end
+
+    context 'when archived true' do
+      it { expect(described_class.archived(true).size).to eq 1}
+      it { expect(described_class.archived(true)).to include archived_user}
+    end
+
+    context 'when archived false' do
+      it { expect(described_class.archived(false).size).to eq 2}
+      it { expect(described_class.archived(false)).to include users.first}
+    end
+
+
+
+  end
+
   describe '#destroy' do
     subject(:user) { FactoryBot.create(:user) }
 
