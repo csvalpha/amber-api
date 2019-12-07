@@ -240,14 +240,14 @@ RSpec.describe V1::UserResource, type: :resource do
       end
 
       context 'when archived' do
-        let(:filter) { { archived: true } }
+        let(:filter) { { archived: 'true' } }
 
         it { expect(filtered.size).to eq 1 }
         it { expect(filtered.first).to eq archived_user }
       end
 
       context 'when not archived' do
-        let(:filter) { { archived: false } }
+        let(:filter) { { archived: 'false' } }
 
         it { expect(filtered.size).to eq 2 }
         it { expect(filtered).to include user }

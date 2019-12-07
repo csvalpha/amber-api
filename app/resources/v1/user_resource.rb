@@ -42,7 +42,9 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   filter :group, apply: lambda { |records, value, _options|
     records.active_users_for_group(Group.find_by(name: value))
   }
-  filter :archived, apply: ->(records, value, _options) { records.archived(value) }
+  filter :archived, apply: ->(records, value, _options) do
+    records.archived(ActiveRecord::Type::Boolean.new.cast(value.first))
+  end
 
 
   # rubocop:disable all
