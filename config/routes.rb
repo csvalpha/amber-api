@@ -51,7 +51,7 @@ Rails.application.routes.draw do
         post :activate_account
         post :archive
         post :resend_activation_mail
-        post :generate_otp_provisioning_uri
+        post :generate_otp_secret
         post :activate_otp
         post :activate_webdav
       end

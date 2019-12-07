@@ -33,7 +33,7 @@ class UserPolicy < ApplicationPolicy
     create?
   end
 
-  def generate_otp_provisioning_uri?
+  def generate_otp_secret?
     me?
   end
 
