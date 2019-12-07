@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe V1::UsersController do
-  describe 'GET /users/:id/generate_otp_provisioning_uri', version: 1 do
+  describe 'GET /users/:id/generate_otp_secret', version: 1 do
     let(:record) { FactoryBot.create(:user) }
-    let(:record_url) { "/v1/users/#{record.id}/generate_otp_provisioning_uri" }
+    let(:record_url) { "/v1/users/#{record.id}/generate_otp_secret" }
 
     subject(:request) { post(record_url) }
 
