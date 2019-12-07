@@ -2,7 +2,6 @@ require 'simplecov'
 
 SimpleCov.start 'rails' do
   add_filter 'app/jobs/sentry_job.rb'
-  add_filter 'lib/capistrano/slack.rb'
 
   minimum_coverage 95
   minimum_coverage_by_file 95
