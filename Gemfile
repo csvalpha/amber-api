@@ -68,6 +68,8 @@ group :development do
 end
 
 group :test do
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'guard-rspec', require: false
   gem 'rspec-rails'
   gem 'rubocop', require: false
@@ -75,8 +77,6 @@ group :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'simplecov', require: false
-  gem 'factory_bot_rails'
-  gem 'faker'
   gem 'terminal-notifier-guard'
   gem 'timecop'
   gem 'vcr'
