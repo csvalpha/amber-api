@@ -9,7 +9,7 @@ describe V1::UsersController do
                                activation_token_valid_till: 1.hour.from_now)
     end
     let(:record_url) { "/v1/users/#{record.id}/activate_account" }
-    let(:valid_password) { Faker::Internet.password(12) }
+    let(:valid_password) { Faker::Internet.password(min_length: 12) }
     let(:params) { { activationToken: activation_token, password: valid_password } }
 
     subject(:request) { post(record_url, params) }

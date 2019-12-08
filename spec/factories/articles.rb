@@ -10,7 +10,7 @@ FactoryBot.define do
     end
 
     title { Faker::Book.title }
-    content { Faker::Hipster.paragraph(3) }
+    content { Faker::Hipster.paragraph(sentence_count: 3) }
     publicly_visible { false }
 
     trait(:public) { publicly_visible { true } }

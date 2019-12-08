@@ -14,7 +14,7 @@ RSpec.describe QuickpostMessage, type: :model do
 
     context 'when with a too long message' do
       subject(:quickpost_message) do
-        FactoryBot.build(:quickpost_message, message: Faker::Lorem.characters(501))
+        FactoryBot.build(:quickpost_message, message: Faker::Lorem.characters(number: 501))
       end
 
       it { expect(quickpost_message.valid?).to be false }
