@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::ActivitiesController do
   describe 'POST /activities/:id/mail_enrolled', version: 1 do
-    let(:message) { Faker::Hipster.paragraph(3) }
+    let(:message) { Faker::Hipster.paragraph(sentence_count: 3) }
 
     subject(:request) { post(record_url, data: { attributes: { message: message } }) }
 

@@ -40,7 +40,12 @@ describe V1::Form::ClosedQuestionAnswersController do
           }
         end
 
-        before { answers.each(&:destroy) }
+        before do
+          Bullet.enable = false
+          answers.each(&:destroy)
+        end
+
+        after { Bullet.enable = true }
       end
     end
 
@@ -65,7 +70,12 @@ describe V1::Form::ClosedQuestionAnswersController do
           }
         end
 
-        before { previous_answer.destroy }
+        before do
+          Bullet.enable = false
+          previous_answer.destroy
+        end
+
+        after { Bullet.enable = true }
       end
     end
   end

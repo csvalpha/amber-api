@@ -14,7 +14,7 @@ RSpec.describe PhotoComment, type: :model do
 
     context 'when with a too long content' do
       subject(:photo_comment) do
-        FactoryBot.build(:photo_comment, content: Faker::Lorem.characters(501))
+        FactoryBot.build(:photo_comment, content: Faker::Lorem.characters(number: 501))
       end
 
       it { expect(photo_comment).not_to be_valid }

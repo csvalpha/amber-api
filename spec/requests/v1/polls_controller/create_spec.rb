@@ -14,6 +14,10 @@ describe V1::PollsController do
         }
       end
       let(:invalid_relationships) { { form: { data: { id: nil, type: 'forms' } } } }
+
+      before { Bullet.enable = false }
+
+      after { Bullet.enable = true }
     end
 
     context 'when authenticated' do
@@ -35,7 +39,12 @@ describe V1::PollsController do
         let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
       end
 
-      before { request }
+      before do
+        Bullet.enable = false
+        request
+      end
+
+      after { Bullet.enable = true }
 
       it_behaves_like '201 Created'
       it { expect(record.class.last.author).to eq(user) }

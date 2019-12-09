@@ -60,8 +60,8 @@ describe V1::UsersController do
     end
 
     describe 'updating password' do
-      let(:old_password) { Faker::Internet.password(12) }
-      let(:new_password) { Faker::Internet.password(12) }
+      let(:old_password) { Faker::Internet.password(min_length: 12) }
+      let(:new_password) { Faker::Internet.password(min_length: 12) }
       let(:record_url) { "/v1/users/#{user.id}" }
 
       include_context 'when authenticated' do
@@ -110,7 +110,7 @@ describe V1::UsersController do
       context 'with invalid old password' do
         let(:valid_attributes) do
           { password: new_password, old_password:
-          Faker::Internet.password(12) }
+          Faker::Internet.password(min_length: 12) }
         end
         let(:request) do
           put(record_url,

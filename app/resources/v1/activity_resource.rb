@@ -16,6 +16,7 @@ class V1::ActivityResource < V1::ApplicationResource
 
   filter :upcoming, apply: ->(records, _value, _options) { records.upcoming }
   filter :closing, apply: ->(records, _value, _options) { records.closing }
+  filter :group, apply: ->(records, value, _options) { records.where(group_id: value) }
 
   def fetchable_fields
     super - [:cover_photo]

@@ -3,7 +3,7 @@ require 'http'
 class MailReceiveJob < ApplicationJob
   queue_as :mail_handlers
 
-  def perform(recipients, message_url) # rubocop:disable Metrics/MethodLength
+  def perform(recipients, message_url) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     fetched_mail = MailgunFetcher::Mail.new(message_url)
     mail_aliases = gather_valid_aliases(recipients, fetched_mail)
     return unless mail_aliases.any?
@@ -15,6 +15,7 @@ class MailReceiveJob < ApplicationJob
       else
         send_mail_moderations(mail_alias, message_url, fetched_mail)
       end
+      mail_alias.update(last_received_at: Time.zone.now)
     end
   end
 

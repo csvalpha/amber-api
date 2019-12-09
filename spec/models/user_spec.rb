@@ -390,6 +390,32 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '.archived' do
+    let(:user) {}
+    let(:users) { FactoryBot.create_list(:user, 2) }
+    let(:archived_user) { FactoryBot.create(:user) }
+
+    before do
+      users
+      archived_user.archive!
+    end
+
+    context 'when archived true' do
+      it { expect(described_class.archived(true).size).to eq 1 }
+      it { expect(described_class.archived(true)).to include archived_user }
+    end
+
+    context 'when archived true implicit' do
+      it { expect(described_class.archived.size).to eq 1 }
+      it { expect(described_class.archived).to include archived_user }
+    end
+
+    context 'when archived false' do
+      it { expect(described_class.archived(false).size).to eq 2 }
+      it { expect(described_class.archived(false)).to include users.first }
+    end
+  end
+
   describe '#destroy' do
     subject(:user) { FactoryBot.create(:user) }
 
@@ -566,7 +592,7 @@ RSpec.describe User, type: :model do
         before do
           FactoryBot.create(:group, users: [user], permission_list: ['user.read'])
           FactoryBot.create(:membership, user: user, group:
-            group, end_date: Faker::Time.between(1.month.ago, Date.yesterday))
+            group, end_date: Faker::Time.between(from: 1.month.ago, to: Date.yesterday))
         end
 
         it { expect(user.permission?(:read, user)).to be true }
@@ -593,7 +619,8 @@ RSpec.describe User, type: :model do
     context 'when in group with expired membership' do
       before do
         FactoryBot.create(:membership, group: another_group, user: user,
-                                       end_date: Faker::Time.between(1.month.ago, Date.yesterday))
+                                       end_date: Faker::Time.between(from: 1.month.ago,
+                                                                     to: Date.yesterday))
       end
 
       it { expect(user.current_group_member?(another_group)).to be false }
@@ -609,7 +636,7 @@ RSpec.describe User, type: :model do
       end
 
       context 'when activating the user and updating password' do
-        let(:password) { Faker::Internet.password(12) }
+        let(:password) { Faker::Internet.password(min_length: 12) }
 
         before do
           user.activate_account!
