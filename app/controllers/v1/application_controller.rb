@@ -1,5 +1,6 @@
 class V1::ApplicationController < ApplicationController
   before_action :doorkeeper_authorize!
+  protect_from_forgery with: :null_session
   rescue_from AmberError::NotMemberOfGroupError, with: :user_is_not_member_of_group_error
 
   def context
