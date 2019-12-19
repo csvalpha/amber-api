@@ -50,6 +50,8 @@ group :development, :test do
   gem 'colorize'
   gem 'consistency_fail'
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
+  gem 'faker', '~> 2.9'
   gem 'fuubar'
   gem 'pry-byebug', require: false
   gem 'pry-rails'
@@ -68,8 +70,6 @@ group :development do
 end
 
 group :test do
-  gem 'factory_bot_rails'
-  gem 'faker'
   gem 'guard-rspec', require: false
   gem 'rspec-rails'
   gem 'rubocop', require: false
