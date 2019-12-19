@@ -17,7 +17,7 @@ RSpec.describe MarkdownHelper, type: :helper do
       )
     end
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     it do
       expect(camofy('![](http://example.org/image.jpg "Image title")')).to eq(
         '![](https://example.org/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067 "Image title")'
@@ -29,6 +29,6 @@ RSpec.describe MarkdownHelper, type: :helper do
         '![](https://example.org/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067 =100x* "Image title")'
       )
     end
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
   end
 end

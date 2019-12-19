@@ -12,7 +12,7 @@ class Permission < ApplicationRecord
     permission_name = name.try(:split, '.')
     errors.add(:name, "must be `model_name`.`action`, is `#{name}`") unless
                                                             permission_name.try(:length) == 2 &&
-                                                            ApplicationRecord.model_names.include?(permission_name.first) && # rubocop:disable Metrics/LineLength
-                                                            %w[create read update destroy].include?(permission_name.second) # rubocop:disable Metrics/LineLength
+                                                            ApplicationRecord.model_names.include?(permission_name.first) && # rubocop:disable Layout/LineLength
+                                                            %w[create read update destroy].include?(permission_name.second) # rubocop:disable Layout/LineLength
   end
 end

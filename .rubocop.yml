@@ -27,7 +27,7 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'spec/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
 
 Metrics/MethodLength:
