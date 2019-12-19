@@ -64,9 +64,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
                     status: :unprocessable_entity
     end
 
-    uri = regenerate_otp_provisioning_uri!
-    qrcode = RQRCode::QRCode.new(uri)
-    render json: { data_url: qrcode.as_png(size: 240).to_data_url, otp_code: uri }
+    render json: { otp_code: regenerate_otp_provisioning_uri! }
   end
 
   def activate_otp
