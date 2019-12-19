@@ -13,6 +13,7 @@ gem 'dav4rack_ext', '~> 1.0'
 gem 'doorkeeper', '~> 5.2'
 gem 'doorkeeper-i18n', '~> 5.2'
 gem 'exifr', '~> 1.3'
+gem 'faker', '~> 2.8'
 gem 'friendly_id', '~> 5.2'
 gem 'http', '~> 4.0'
 gem 'iban-tools', '~> 1.1.0'
@@ -69,7 +70,6 @@ end
 
 group :test do
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'guard-rspec', require: false
   gem 'rspec-rails'
   gem 'rubocop', require: false
