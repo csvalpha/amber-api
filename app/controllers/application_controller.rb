@@ -18,6 +18,7 @@ class ApplicationController < JSONAPI::ResourceController
   end
 
   def current_user
+    @current_user = User.first
     @current_user ||= User.find_by(id: doorkeeper_token&.resource_owner_id)
   end
 

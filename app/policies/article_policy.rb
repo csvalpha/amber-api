@@ -17,6 +17,10 @@ class ArticlePolicy < ApplicationPolicy
     super || scope.where(id: record.id).exists?
   end
 
+  def create?
+    true
+  end
+
   def update?
     record.owners.include?(user) || super
   end

@@ -150,6 +150,8 @@ GEM
       i18n (>= 1.6, < 1.8)
     faraday (0.17.1)
       multipart-post (>= 1.2, < 3)
+    fast_jsonapi (1.5)
+      activesupport (>= 4.2)
     fastimage (2.1.7)
     ffi (1.11.3)
     ffi (1.11.3-java)
@@ -510,6 +512,7 @@ DEPENDENCIES
   exifr (~> 1.3)
   factory_bot_rails
   faker (~> 2.9)
+  fast_jsonapi
   friendly_id (~> 5.2)
   fuubar
   guard-rspec
