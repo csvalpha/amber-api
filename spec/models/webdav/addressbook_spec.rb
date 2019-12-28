@@ -10,7 +10,7 @@ RSpec.describe Webdav::Addressbook, type: :model do
   end
   let(:group) { FactoryBot.create(:group, users: users) }
 
-  subject(:addressbook) { Webdav::Addressbook.new(group) }
+  subject(:addressbook) { described_class.new(group) }
 
   describe '#name' do
     it { expect(addressbook.name).to eq(group.name) }
@@ -22,6 +22,7 @@ RSpec.describe Webdav::Addressbook, type: :model do
 
   describe '#contacts' do
     it { expect(addressbook.contacts.size).to eq(2) }
+
     it {
       expect(addressbook.contacts.collect(&:uid)).to contain_exactly(users[0].id.to_s,
                                                                      users[2].id.to_s)
@@ -58,6 +59,7 @@ RSpec.describe Webdav::Addressbook, type: :model do
       expect { addressbook.create_contact(new_contact) }
         .not_to(change { addressbook.contacts.count })
     end
+
     it { expect { addressbook.create_contact(new_contact) }.not_to(change(User, :count)) }
   end
 

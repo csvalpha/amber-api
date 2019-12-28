@@ -300,7 +300,7 @@ RSpec.describe User, type: :model do
   describe '.activated' do
     it do
       expect { FactoryBot.create(:user, activated_at: Time.zone.now) }.to(
-        change { User.activated.count }.by(1)
+        change { described_class.activated.count }.by(1)
       )
     end
   end
@@ -308,7 +308,7 @@ RSpec.describe User, type: :model do
   describe '.contactsync_users' do
     it do
       expect { FactoryBot.create(:user, webdav_secret_key: SecureRandom.hex(32)) }.to(
-        change { User.contactsync_users.count }.by(1)
+        change { described_class.contactsync_users.count }.by(1)
       )
     end
   end
@@ -316,7 +316,7 @@ RSpec.describe User, type: :model do
   describe '.login_enabled' do
     it do
       expect { FactoryBot.create(:user, login_enabled: true) }.to(
-        change { User.login_enabled.count }.by(1)
+        change { described_class.login_enabled.count }.by(1)
       )
     end
   end
@@ -324,7 +324,7 @@ RSpec.describe User, type: :model do
   describe '.tomato_users' do
     it do
       expect { FactoryBot.create(:user, allow_tomato_sharing: true) }.to(
-        change { User.tomato_users.count }.by(1)
+        change { described_class.tomato_users.count }.by(1)
       )
     end
   end
@@ -332,15 +332,15 @@ RSpec.describe User, type: :model do
   describe '.birthday' do
     before { FactoryBot.create(:user, birthday: Time.zone.local(1992, 10, 25)) }
 
-    it { expect(User.birthday(10, 24).count).to eq(0) }
-    it { expect(User.birthday(10, 25).count).to eq(1) }
-    it { expect(User.birthday(10, 26).count).to eq(0) }
+    it { expect(described_class.birthday(10, 24).count).to eq(0) }
+    it { expect(described_class.birthday(10, 25).count).to eq(1) }
+    it { expect(described_class.birthday(10, 26).count).to eq(0) }
   end
 
   describe '.sidekiq_access' do
     it do
       expect { FactoryBot.create(:user, sidekiq_access: true) }.to(
-        change { User.sidekiq_access.count }.by(1)
+        change { described_class.sidekiq_access.count }.by(1)
       )
     end
   end
@@ -353,8 +353,8 @@ RSpec.describe User, type: :model do
         FactoryBot.create(:user, birthday: 1.day.from_now)
       end
 
-      it { expect(User.upcoming_birthdays(0).count).to eq(1) }
-      it { expect(User.upcoming_birthdays(1).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(0).count).to eq(1) }
+      it { expect(described_class.upcoming_birthdays(1).count).to eq(2) }
     end
 
     context 'when with birthday 29 February in leap year' do
@@ -368,9 +368,9 @@ RSpec.describe User, type: :model do
         Timecop.return
       end
 
-      it { expect(User.upcoming_birthdays(0).count).to eq(1) }
-      it { expect(User.upcoming_birthdays(1).count).to eq(2) }
-      it { expect(User.upcoming_birthdays(2).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(0).count).to eq(1) }
+      it { expect(described_class.upcoming_birthdays(1).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(2).count).to eq(2) }
     end
 
     context 'when with birthday 29 February in non-leap year' do
@@ -384,9 +384,35 @@ RSpec.describe User, type: :model do
         Timecop.return
       end
 
-      it { expect(User.upcoming_birthdays(0).count).to eq(2) }
-      it { expect(User.upcoming_birthdays(1).count).to eq(2) }
-      it { expect(User.upcoming_birthdays(2).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(0).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(1).count).to eq(2) }
+      it { expect(described_class.upcoming_birthdays(2).count).to eq(2) }
+    end
+  end
+
+  describe '.archived' do
+    let(:user) {}
+    let(:users) { FactoryBot.create_list(:user, 2) }
+    let(:archived_user) { FactoryBot.create(:user) }
+
+    before do
+      users
+      archived_user.archive!
+    end
+
+    context 'when archived true' do
+      it { expect(described_class.archived(true).size).to eq 1 }
+      it { expect(described_class.archived(true)).to include archived_user }
+    end
+
+    context 'when archived true implicit' do
+      it { expect(described_class.archived.size).to eq 1 }
+      it { expect(described_class.archived).to include archived_user }
+    end
+
+    context 'when archived false' do
+      it { expect(described_class.archived(false).size).to eq 2 }
+      it { expect(described_class.archived(false)).to include users.first }
     end
   end
 
@@ -566,7 +592,7 @@ RSpec.describe User, type: :model do
         before do
           FactoryBot.create(:group, users: [user], permission_list: ['user.read'])
           FactoryBot.create(:membership, user: user, group:
-            group, end_date: Faker::Time.between(1.month.ago, Date.yesterday))
+            group, end_date: Faker::Time.between(from: 1.month.ago, to: Date.yesterday))
         end
 
         it { expect(user.permission?(:read, user)).to be true }
@@ -593,7 +619,8 @@ RSpec.describe User, type: :model do
     context 'when in group with expired membership' do
       before do
         FactoryBot.create(:membership, group: another_group, user: user,
-                                       end_date: Faker::Time.between(1.month.ago, Date.yesterday))
+                                       end_date: Faker::Time.between(from: 1.month.ago,
+                                                                     to: Date.yesterday))
       end
 
       it { expect(user.current_group_member?(another_group)).to be false }
@@ -609,7 +636,7 @@ RSpec.describe User, type: :model do
       end
 
       context 'when activating the user and updating password' do
-        let(:password) { Faker::Internet.password(12) }
+        let(:password) { Faker::Internet.password(min_length: 12) }
 
         before do
           user.activate_account!
@@ -629,35 +656,54 @@ RSpec.describe User, type: :model do
 
   describe '#archive!' do
     context 'when archiving a user' do
-      subject(:user) { FactoryBot.create(:user) }
+      with_versioning do
+        subject(:user) { FactoryBot.create(:user) }
 
-      let(:nil_attributes) do
-        %w[email username password_digest deleted_at last_name_prefix birthday
-           address postcode city phone_number food_preferences iban iban_holder study
-           start_study activated_at activation_token avatar activation_token_valid_till
-           sidekiq_access vegetarian picture_publication_preference emergency_contact
-           emergency_number ifes_data_sharing_preference info_in_almanak
-           almanak_subscription_preference digtus_subscription_preference]
-      end
+        let(:nil_attributes) do
+          %w[email username password_digest deleted_at last_name_prefix birthday
+             address postcode city phone_number food_preferences iban iban_holder study
+             start_study activated_at activation_token avatar activation_token_valid_till
+             sidekiq_access vegetarian picture_publication_preference emergency_contact
+             emergency_number ifes_data_sharing_preference info_in_almanak
+             almanak_subscription_preference digtus_subscription_preference]
+        end
 
-      before { user.archive! && user.reload }
+        before { user.archive! && user.reload }
 
-      it { expect(user.archive!).to be true }
-      it { expect(user.full_name).to eq "Gearchiveerde gebruiker #{user.id}" }
-      it { expect(user.archived_at).not_to be_nil }
-      it { expect(user.login_enabled).to be false }
-      it { expect { user.archive! }.not_to(change(user, :id)) }
+        it { expect(user.archive!).to be true }
+        it { expect(user.full_name).to eq "Gearchiveerde gebruiker #{user.id}" }
+        it { expect(user.archived_at).not_to be_nil }
+        it { expect(user.login_enabled).to be false }
+        it { expect(user.versions).to be_empty }
+        it { expect { user.archive! }.not_to(change(user, :id)) }
 
-      it do
-        nil_attributes.each do |attribute|
-          expect(user[attribute]).to be_nil
+        it do
+          nil_attributes.each do |attribute|
+            expect(user[attribute]).to be_nil
+          end
         end
       end
     end
   end
 
   describe '.password_reset_url' do
-    it { expect(User.password_reset_url).to include('forgot_password') }
+    it { expect(described_class.password_reset_url).to include('forgot_password') }
+  end
+
+  describe 'has_paper_trail' do
+    with_versioning do
+      let(:user) { FactoryBot.create(:user) }
+
+      # Currently we have a problem with paper trail
+      # which causes two versions to be created on each change
+      # This is caused by the fact that we call paper trail twice
+      # (once in ApplicationRecord and once in User)
+      it { expect(user.versions.size).to eq 2 }
+
+      it do
+        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(2).to(4))
+      end
+    end
   end
 
   private

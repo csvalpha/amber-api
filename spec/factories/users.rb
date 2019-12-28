@@ -3,14 +3,14 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name_prefix { [nil, 'van', 'de', 'van de'].sample }
     last_name { Faker::Name.last_name }
-    birthday { Faker::Date.between(27.years.ago, 17.years.ago) }
+    birthday { Faker::Date.between(from: 27.years.ago, to: 17.years.ago) }
     address { Faker::Address.street_address }
     postcode { Faker::Address.postcode }
     city { Faker::Address.city }
     vegetarian { Faker::Boolean }
     food_preferences { [nil, 'Noten', 'Pinda'].sample }
     study { Faker::Company.profession }
-    start_study { Faker::Date.between(10.years.ago, 1.year.ago) }
+    start_study { Faker::Date.between(from: 10.years.ago, to: 1.year.ago) }
     phone_number { Faker::PhoneNumber.phone_number }
     emergency_contact { Faker::Name.name }
     emergency_number { Faker::PhoneNumber.phone_number }
@@ -22,9 +22,9 @@ FactoryBot.define do
     user_details_sharing_preference { %w[all_users members_only hidden].sample }
     username { nil }
 
-    sequence(:email) { |n| Faker::Internet.safe_email("#{Faker::Internet.user_name}#{n}") }
+    sequence(:email) { |n| Faker::Internet.safe_email(name: "#{Faker::Internet.user_name}#{n}") }
 
-    password = Faker::Internet.password(12)
+    password = Faker::Internet.password(min_length: 12)
     password { password }
     password_confirmation { password }
 

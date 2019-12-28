@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Import::SendActivateMail, type: :model do
-  subject(:send_activation) { Import::SendActivateMail.new }
+  subject(:send_activation) { described_class.new }
 
   let(:not_activated_user) { FactoryBot.create(:user, activated_at: nil) }
   let(:user_with_activation_token) do

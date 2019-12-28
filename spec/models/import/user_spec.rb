@@ -7,7 +7,7 @@ RSpec.describe Import::User, type: :model do
   let(:live_run) { true }
   let(:required_columns) { Import::User::REQUIRED_COLUMNS }
 
-  subject(:user_import) { Import::User.new(test_file, group) }
+  subject(:user_import) { described_class.new(test_file, group) }
 
   describe 'when database and required columns are in sync' do
     it { expect(User.column_names & required_columns).to match_array(required_columns) }
@@ -50,11 +50,13 @@ RSpec.describe Import::User, type: :model do
       before { user_import.valid? && user_import.save!(false) }
 
       it { expect(user_import.errors[:user].size).to eq 1 }
+
       it do
         expect(user_import.errors.full_messages.first).to eq(
           'User Fout in rij 2: First name moet opgegeven zijn'
         )
       end
+
       it { expect { user_import.save!(live_run) }.to(change(User, :count).by(0)) }
     end
   end

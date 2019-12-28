@@ -1,0 +1,20 @@
+<% if @will_archive_users.any? %>
+  De volgende gebruikers zijn meer dan 18 maanden geen onderdeel meer van een groep.<br/>
+  <b>Om deze reden gaan ze automatisch gearchiveerd worden binnen 1 of 2 maanden.</b> <br/>
+  Zorg dat u deze gebruikers binnen een maand toevoegd aan een groep om dit process te stoppen.  Mocht u dit niet doen dan zal alle informatie van de gebruiker verwijderd worden, het is niet mogelijk dit ongedaan te maken.
+  <br/><br/>
+
+  <% @will_archive_users.each do |user| %><br/>
+    - <%= user.full_name %>
+  <% end %><br/><br/>
+
+  Vergeet niet de lidmaatschapsformulieren van deze leden te vernietigd. Als dit gebeurd is zouden we dan op de hoogte kunnen worden gebracht door middel van een mailtje naar privacy@csvalpha.nl.
+
+<% end %>
+<br/>
+
+<% if @archived_users.any? %>
+  <br/>
+  Er <%= 'is'.pluralize(@archived_users.size, plural: 'zijn') %> <%= @archived_users.size %> <%= 'gebruiker'.pluralize(@archived_users.size, plural: 'gebruikers') %> gearchiveerd. Dit is gebeurd omdat ze voor meer dan 20 maanden niet gekoppeld waren aan een groep. Het is niet mogelijk dit process ongedaan te maken.
+  <br/>
+<% end %>

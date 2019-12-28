@@ -20,7 +20,20 @@ RSpec.describe V1::ActivityResource, type: :resource do
         FactoryBot.create(:activity, form: closing_form)
       end
 
-      it { expect(filtered).to eq Activity.closing }
+      it { expect(filtered).to match_array Activity.closing }
+      it { expect(filtered.length).to eq 1 }
+    end
+
+    describe 'group' do
+      let(:group) { FactoryBot.create(:group) }
+      let(:filter) { { group: group.id } }
+
+      before do
+        FactoryBot.create(:activity, group: group)
+        FactoryBot.create(:activity)
+        FactoryBot.create(:activity)
+      end
+
       it { expect(filtered.length).to eq 1 }
     end
   end

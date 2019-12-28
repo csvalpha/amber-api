@@ -1,4 +1,4 @@
-FROM ruby:2.4.4-alpine
+FROM ruby:2.6.5-alpine
 
 ARG BUNDLE_INSTALL_EXCLUDE='development test'
 

@@ -4,9 +4,15 @@ require 'rails'
 require 'active_model/railtie'
 require 'active_job/railtie'
 require 'active_record/railtie'
+require 'active_storage/engine'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
-require 'active_storage/engine'
+# require "action_mailbox/engine"
+# require "action_text/engine"
+# require "action_view/railtie"
+# require "action_cable/engine"
+# require "sprockets/railtie"
+# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -14,18 +20,18 @@ Bundler.require(*Rails.groups)
 
 module Amber
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 6.0
+
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-
-    config.autoload_paths << Rails.root.join('app', 'helpers')
-    config.autoload_paths << Rails.root.join('app', 'paginators')
-
     config.i18n.default_locale = :nl
 
     # Required by message_bus as long as https://github.com/SamSaffron/message_bus/issues/124
@@ -53,7 +59,8 @@ module Amber
 
     config.x.mailgun_api_key = credentials.dig(Rails.env.to_sym, :mailgun_api_key)
     config.x.mailgun_validation_key = credentials.dig(Rails.env.to_sym, :mailgun_validation_key)
-    config.x.mail_domains = %w[csvalpha.nl societeitflux.nl sandbox86621.mailgun.org]
+    config.x.mailgun_host = 'api.eu.mailgun.net'
+    config.x.mail_domains = %w[csvalpha.nl societeitflux.nl sandbox86621.eu.mailgun.org]
 
     config.x.sentry_dsn = credentials.dig(Rails.env.to_sym, :sentry_dsn)
 

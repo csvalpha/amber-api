@@ -46,7 +46,8 @@ shared_examples 'an updatable model with group' do
   context 'when the user is old member of the new group' do
     before do
       FactoryBot.create(:membership, group: new_group, user: user,
-                                     end_date: Faker::Time.between(1.month.ago, Date.yesterday))
+                                     end_date: Faker::Time.between(from: 1.month.ago,
+                                                                   to: Date.yesterday))
     end
 
     it_behaves_like '422 Unprocessable Entity'

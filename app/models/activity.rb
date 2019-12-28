@@ -1,6 +1,5 @@
 class Activity < ApplicationRecord
   mount_base64_uploader :cover_photo, CoverPhotoUploader
-  has_paper_trail skip: [:cover_photo]
 
   belongs_to :form, class_name: 'Form::Form', optional: true
   has_many :responses, through: :form, class_name: 'Form::Response'
@@ -12,7 +11,7 @@ class Activity < ApplicationRecord
   validates :description, presence: true
   validates :form, uniqueness: true, allow_nil: true
   validates :location, presence: true
-  validates :price, inclusion: { in: 0..250 }
+  validates :price, inclusion: { in: 0..1000 }
   validates :price, presence: true
   validates :publicly_visible, inclusion: [true, false]
   validates :start_time, presence: true
@@ -27,9 +26,9 @@ class Activity < ApplicationRecord
   })
   scope :publicly_visible, (-> { where(publicly_visible: true) })
   scope :closing, (lambda { |days_ahead = 7|
-    now = Date.current
-    ahead = (days_ahead + 1).days.from_now.to_date
-    Activity.joins(:form).where(form_forms: { respond_until: now..ahead })
+    now = DateTime.current
+    ahead = days_ahead.days.from_now.to_datetime
+    joins(:form).where(form_forms: { respond_until: now..ahead })
   })
 
   after_save :copy_author_and_group_to_form!

@@ -66,6 +66,10 @@ class V1::ApplicationResource < JSONAPI::Resource
     current_user&.permission?(:read, @model)
   end
 
+  def update_permission?
+    current_user&.permission?(:update, @model)
+  end
+
   def self.user_can_create_or_update?(context)
     context[:user]&.permission?(:create, _model_class) ||
       context[:user]&.permission?(:update, _model_class)

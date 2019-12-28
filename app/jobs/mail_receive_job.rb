@@ -3,7 +3,7 @@ require 'http'
 class MailReceiveJob < ApplicationJob
   queue_as :mail_handlers
 
-  def perform(recipients, message_url) # rubocop:disable Metrics/MethodLength
+  def perform(recipients, message_url) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     fetched_mail = MailgunFetcher::Mail.new(message_url)
     mail_aliases = gather_valid_aliases(recipients, fetched_mail)
     return unless mail_aliases.any?
@@ -15,6 +15,7 @@ class MailReceiveJob < ApplicationJob
       else
         send_mail_moderations(mail_alias, message_url, fetched_mail)
       end
+      mail_alias.update(last_received_at: Time.zone.now)
     end
   end
 
@@ -33,9 +34,11 @@ class MailReceiveJob < ApplicationJob
 
   private
 
-  def gather_valid_aliases(recipients, fetched_mail)
+  def gather_valid_aliases(recipients, fetched_mail) # rubocop:disable Metrics/AbcSize
     mail_aliases = []
     recipients.split(', ').each do |recipient|
+      next unless Rails.application.config.x.mail_domains.include?(recipient.split('@')[1])
+
       mail_alias = MailAlias.where(email: recipient.downcase).first
       mail_aliases.push(mail_alias) if mail_alias
       notify_unknown_address(fetched_mail.sender, recipient) unless mail_alias
@@ -55,7 +58,7 @@ class MailReceiveJob < ApplicationJob
 
   # :nocov:
   def send_slack_message(message)
-    return unless Rails.env.production?
+    return unless Rails.env.production? || Rails.env.staging?
 
     SlackMessageJob.perform_later(message, channel: '#mail')
   end

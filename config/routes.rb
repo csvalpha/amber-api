@@ -1,11 +1,7 @@
 require_relative 'routes/contact_sync_handler'
 
 Rails.application.routes.draw do
-  scope 'v1' do
-    use_doorkeeper do
-      controllers authorizations: 'v1/o_auth_authorizations'
-    end
-  end
+  scope 'v1', &method(:use_doorkeeper)
 
   namespace :v1 do
     jsonapi_resources :activities do
@@ -55,11 +51,13 @@ Rails.application.routes.draw do
         post :activate_account
         post :archive
         post :resend_activation_mail
-        post :generate_otp_provisioning_uri
+        post :generate_otp_secret
         post :activate_otp
         post :activate_webdav
       end
     end
+    get 'users/me/nextcloud', to: 'users#nextcloud'
+
     jsonapi_resources :quickpost_messages
 
     namespace :debit do
@@ -87,10 +85,6 @@ Rails.application.routes.draw do
       jsonapi_resources :categories
       jsonapi_resources :posts
       jsonapi_resources :threads
-    end
-
-    scope 'oauth' do
-      post :auth_code_redirect_uri, to: 'o_auth_authorizations#auth_code_redirect_uri'
     end
   end
 

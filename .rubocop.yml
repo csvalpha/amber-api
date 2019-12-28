@@ -1,4 +1,7 @@
-require: rubocop-rspec
+require:
+  - rubocop-rspec
+  - rubocop-performance
+  - rubocop-rails
 
 AllCops:
   TargetRailsVersion: 5.1
@@ -9,6 +12,13 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
 
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
+
 Metrics/BlockLength:
   Exclude:
     - '**/Guardfile'
@@ -17,12 +27,15 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'spec/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
 
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
+
+Rails/FilePath:
+  EnforcedStyle: arguments
 
 Rails/HttpPositionalArguments:
   Enabled: false
@@ -61,6 +74,9 @@ Style/Documentation:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/GuardClause:
   Enabled: false
 
 # Enable cops that are disabled by default, but are useful nonetheless

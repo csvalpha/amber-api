@@ -48,7 +48,7 @@ RSpec.describe Form::OpenQuestionAnswer, type: :model do
       subject(:open_question_answer) do
         FactoryBot.build(:open_question_answer,
                          question: FactoryBot.create(:open_question_number),
-                         answer: Faker::Number.number(10))
+                         answer: Faker::Number.number(digits: 10))
       end
 
       it { expect(open_question_answer).to be_valid }

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :closed_question, class: Form::ClosedQuestion do
+  factory :closed_question, class: 'Form::ClosedQuestion' do
     question { Faker::Lorem.sentence }
     field_type { %w[checkbox radio].sample }
     required { Faker::Boolean.boolean }
