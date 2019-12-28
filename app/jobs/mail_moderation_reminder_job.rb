@@ -4,6 +4,7 @@ class MailModerationReminderJob < ApplicationJob
   def perform(stored_mail)
     return unless stored_mail
 
+
     stored_mail.mail_alias.moderators.each do |moderator|
       MailModerationMailer.reminder_for_moderation_email(moderator, stored_mail).deliver_later
     end
