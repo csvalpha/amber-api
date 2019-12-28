@@ -11,6 +11,6 @@ class MailModerationReminderJob < ApplicationJob
     # Only reschedule if mail doesn't expire next day
     return unless Time.zone.now + 25.hours < stored_mail.received_at + 3.days
 
-    MailModerationReminderJob.set(wait: 12.hours).perform_later(stored_mail)
+      #MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail)
   end
 end
