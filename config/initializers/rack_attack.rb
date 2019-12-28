@@ -4,7 +4,7 @@ module Rack
     # Throttle all requests by IP (60rpm)
     #
     # Key: "rack::attack:#{Time.now.to_i/:period}:req/ip:#{req.ip}"
-    throttle('req/ip', limit: 300, period: 5.minutes, &:ip)
+    throttle('req/ip', limit: 500, period: 5.minutes, &:ip)
 
     # Throttle POST requests to /oauth/token by IP address
     #
