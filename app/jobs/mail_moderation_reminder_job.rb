@@ -11,7 +11,6 @@ class MailModerationReminderJob < ApplicationJob
     # Only reschedule if mail doesn't expire next day
     return unless Time.zone.now + 25.hours < stored_mail.received_at + 3.days
 
-    Sidekiq.set_schedule("mail_reminder_#{stored_mail.id}", 'in' => ['24h'], 'class' =>
-      'MailModerationReminderJob', args: [stored_mail])
+    MailModerationReminderJob.set(wait: 12.hours).perform_later(stored_mail)
   end
 end
