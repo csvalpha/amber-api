@@ -1,7 +1,7 @@
 # See https://github.com/kickstarter/rack-attack/wiki/Example-Configuration
 module Rack
   class Attack
-    # Throttle all requests by IP (60rpm)
+    # Throttle all requests by IP (100rpm)
     #
     # Key: "rack::attack:#{Time.now.to_i/:period}:req/ip:#{req.ip}"
     throttle('req/ip', limit: 500, period: 5.minutes, &:ip)
