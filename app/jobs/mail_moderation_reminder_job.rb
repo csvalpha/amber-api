@@ -1,7 +1,7 @@
 class MailModerationReminderJob < ApplicationJob
   queue_as :default
 
-  def perform(stored_mail)
+  def perform(stored_mail) # rubocop:disable Metrics/AbcSize
     return unless stored_mail
 
     stored_mail.mail_alias.moderators.each do |moderator|
