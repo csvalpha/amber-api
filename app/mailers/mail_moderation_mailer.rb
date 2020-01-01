@@ -8,7 +8,7 @@ class MailModerationMailer < ApplicationMailer
     @moderator = stored_mail.mail_alias.moderator_group.name
     @subject = stored_mail.subject
     @received_at = stored_mail.received_at
-    @header_text = 'Herinnering'
+    @header_text = 'Moderatieverzoek'
     @call_to_action = { text: 'Klik hier om te modereren', url: to_moderation_url(stored_mail) }
 
     mail to: @user.email, subject: "Moderatieverzoek: #{@subject}"
@@ -49,7 +49,7 @@ class MailModerationMailer < ApplicationMailer
     @moderator = stored_mail.mail_alias.moderator_group.name
     @subject = stored_mail.subject
     @received_at = stored_mail.received_at
-    @header_text = 'Herinnering'
+    @header_text = 'Herinnering moderatieverzoek'
     @call_to_action = { text: 'Klik hier om te modereren', url: to_moderation_url(stored_mail) }
 
     mail to: @user.email, subject: "Herinnering moderatieverzoek: #{@subject}"
