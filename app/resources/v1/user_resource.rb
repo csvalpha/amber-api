@@ -78,9 +78,9 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
                     emergency_contact emergency_number]
     if me?(context)
       attributes += %i[otp_required password
-                        user_details_sharing_preference allow_tomato_sharing
-                        picture_publication_preference info_in_almanak
-                        ifes_data_sharing_preference]
+                       user_details_sharing_preference allow_tomato_sharing
+                       picture_publication_preference info_in_almanak
+                       ifes_data_sharing_preference]
     end
 
     if user_can_create_or_update?(context)

@@ -474,7 +474,7 @@ RSpec.describe User, type: :model do
     context 'with blank last name prefix' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: '',
-                          last_name: 'Last', username: nil)
+                                 last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.last' }
@@ -483,7 +483,7 @@ RSpec.describe User, type: :model do
     context 'without last name prefix' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: nil,
-                          last_name: 'Last', username: nil)
+                                 last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.last' }
@@ -492,7 +492,7 @@ RSpec.describe User, type: :model do
     context 'with last name prefix' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: 'Prefix',
-                          last_name: 'Last', username: nil)
+                                 last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.prefixlast' }
@@ -501,8 +501,8 @@ RSpec.describe User, type: :model do
     context 'with spaces in name' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First First2',
-                          last_name_prefix: 'Prefix Prefix2',
-                          last_name: 'Last Last2', username: nil)
+                                 last_name_prefix: 'Prefix Prefix2',
+                                 last_name: 'Last Last2', username: nil)
       end
 
       it { expect(user.username).to eq 'firstfirst2.prefixprefix2lastlast2' }
@@ -511,7 +511,7 @@ RSpec.describe User, type: :model do
     context 'with special character in name' do
       subject(:user) do
         FactoryBot.create(:user, first_name: 'äëï',
-                          last_name_prefix: '', last_name: 'õ', username: nil)
+                                 last_name_prefix: '', last_name: 'õ', username: nil)
       end
 
       it { expect(user.username).to eq 'aei.o' }
@@ -525,7 +525,7 @@ RSpec.describe User, type: :model do
 
       subject(:user) do
         FactoryBot.create(:user, first_name: 'First', last_name_prefix: 'Prefix',
-                          last_name: 'Last', username: nil)
+                                 last_name: 'Last', username: nil)
       end
 
       it { expect(user.username).to eq 'first.prefixlast2' }
@@ -625,8 +625,8 @@ RSpec.describe User, type: :model do
     context 'when in group with expired membership' do
       before do
         FactoryBot.create(:membership, group: another_group, user: user,
-                          end_date: Faker::Time.between(from: 1.month.ago,
-                                                        to: Date.yesterday))
+                                       end_date: Faker::Time.between(from: 1.month.ago,
+                                                                     to: Date.yesterday))
       end
 
       it { expect(user.current_group_member?(another_group)).to be false }

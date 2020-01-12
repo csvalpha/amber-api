@@ -23,25 +23,25 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # See https://github.com/doorkeeper-gem/doorkeeper#active-record
   has_many :access_grants, class_name: 'Doorkeeper::AccessGrant',
-           foreign_key: :resource_owner_id,
-           dependent: :delete_all
+                           foreign_key: :resource_owner_id,
+                           dependent: :delete_all
   has_many :access_tokens, class_name: 'Doorkeeper::AccessToken',
-           foreign_key: :resource_owner_id,
-           dependent: :delete_all
+                           foreign_key: :resource_owner_id,
+                           dependent: :delete_all
 
   has_secure_password(validations: false)
   # General fields
-  validates :username, presence: true, uniqueness: true, format: {with: /\A[\w\.]+\z/},
-            unless: :archived?
+  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w\.]+\z/ },
+                       unless: :archived?
   validates :email, presence: true, uniqueness: true, unless: :archived?
-  validates :password, length: {minimum: 12}, allow_nil: true, unless: :archived?
+  validates :password, length: { minimum: 12 }, allow_nil: true, unless: :archived?
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :address, presence: true, unless: :archived?
   validates :postcode, presence: true, unless: :archived?
   validates :city, presence: true, unless: :archived?
   validates :vegetarian, inclusion: [true, false], unless: :archived?
-  validates :phone_number, phone: {possible: true, allow_blank: true}
+  validates :phone_number, phone: { possible: true, allow_blank: true }
 
   # Technical fields
   validates :login_enabled, inclusion: [true, false]
@@ -67,7 +67,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   }, unless: :archived?
 
   # Other
-  validates :emergency_number, phone: {possible: true, allow_blank: true}
+  validates :emergency_number, phone: { possible: true, allow_blank: true }
 
   before_create :generate_ical_secret_key
   before_save :revoke_all_access_tokens, unless: :login_enabled?
@@ -116,8 +116,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def generate_username
     value = [first_name, '.', last_name_prefix, last_name]
-              .reject(&:blank?).join('').gsub(/\s|-/, '')
-              .parameterize.tr('-', '.')
+            .reject(&:blank?).join('').gsub(/\s|-/, '')
+            .parameterize.tr('-', '.')
     usernames_like = User.where('username LIKE ?', "#{value}%")
     value = "#{value}#{usernames_like.size}" if usernames_like.any?
     value
@@ -132,7 +132,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return @permission_cache[permission_name] if @permission_cache.key?(permission_name)
 
     permitted = user_permissions.where(name: permission_name).any? ||
-      group_permissions.where(name: permission_name).any?
+                group_permissions.where(name: permission_name).any?
     @permission_cache[permission_name] = permitted
   end
 
@@ -146,7 +146,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def group_permissions
     Permission.joins(:groups_permissions)
-      .merge(GroupsPermissions
+              .merge(GroupsPermissions
                .joins(:group)
                .where(group: Group.active_groups_for_user(self)))
   end
@@ -156,7 +156,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def activation_url
-    params = {activation_token: activation_token}
+    params = { activation_token: activation_token }
     default_options = Rails.application.config.action_mailer.default_url_options
     URI::Generic.build(default_options.merge(path: "/users/#{id}/activate_account",
                                              query: params.to_query)).to_s
@@ -176,7 +176,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def archive!
     attributes.each_key do |attribute|
       self[attribute] = nil unless %w[deleted_at updated_at created_at login_enabled id]
-                                     .include? attribute
+                                   .include? attribute
     end
     self.first_name = 'Gearchiveerde gebruiker'
     self.last_name = id
@@ -191,7 +191,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.activation_token_hash
-    {activation_token: SecureRandom.urlsafe_base64, activation_token_valid_till: 1.day.from_now}
+    { activation_token: SecureRandom.urlsafe_base64, activation_token_valid_till: 1.day.from_now }
   end
 
   def self.valid_csv_attributes
@@ -214,7 +214,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def password_when_activated?
     errors.add(:password, 'when activated, user must have password') if activated_at &&
-      password_digest.blank?
+                                                                        password_digest.blank?
   end
 
   def allow_tomato_sharing_valid?
