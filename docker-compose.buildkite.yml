@@ -11,6 +11,9 @@ services:
         - BUNDLE_INSTALL_EXCLUDE='development'
     depends_on:
       - db
+    labels:
+      - PROJECT=amber-api
+      - CI=true
     environment:
       - RAILS_ENV=test
       - POSTGRES_USER=postgres
