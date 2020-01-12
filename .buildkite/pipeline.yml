@@ -3,7 +3,7 @@ steps:
     plugins:
       - docker-compose#v2.6.0:
           build: app
-          image-name: app-amber
+          image-name: app-amber-buildkite
           config: docker-compose.buildkite.yml
 
   - wait
@@ -13,7 +13,6 @@ steps:
     plugins:
       - docker-compose#v2.6.0:
           run: app
-          image-name: app-amber
           config: docker-compose.buildkite.yml
 
   - label: ":rubocop: Lint"
@@ -21,7 +20,6 @@ steps:
     plugins:
       - docker-compose#v2.6.0:
           run: app
-          image-name: app-amber
           config: docker-compose.buildkite.yml
 
   - wait
