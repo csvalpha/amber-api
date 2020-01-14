@@ -3,7 +3,7 @@ steps:
     plugins:
       - docker-compose#v2.6.0:
           build: app
-          image-name: app-amber-buildkite
+          image-name: app-amber-api-buildkite
           config: docker-compose.buildkite.yml
 
   - wait
