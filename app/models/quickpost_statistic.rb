@@ -29,4 +29,12 @@ class QuickpostStatistic
   def persisted?
     false
   end
+
+  def order(*args)
+    [self] # following order collect is called on the result so return an array with self
+  end
+
+  def count(*args)
+    1 # count is called for meta
+  end
 end
