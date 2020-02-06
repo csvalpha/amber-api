@@ -4,6 +4,9 @@ class V1::MembershipResource < V1::ApplicationResource
   has_one :user, always_include_linkage_data: true
   has_one :group, always_include_linkage_data: true
 
+  filter :active, apply: ->(records, _value, _options) { records.active }
+  filter :group, apply: ->(records, value, _options) { records.where(group_id: value[0]) }
+
   before_save do
     @model.start_date ||= Date.current
   end
