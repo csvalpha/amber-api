@@ -28,6 +28,7 @@ class MailReceiveJob < ApplicationJob
       MailModerationMailer.request_for_moderation_email(moderator, stored_mail).deliver_later
     end
     MailModerationMailer.awaiting_moderation_email(stored_mail.sender, stored_mail).deliver_later
+    MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail)
   end
 
   private

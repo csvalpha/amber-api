@@ -98,7 +98,7 @@ RSpec.describe MailReceiveJob, type: :job do
       before do
         allow(mail_fetcher_class).to receive(:new) { fetched_mail }
 
-        perform_enqueued_jobs do
+        perform_enqueued_jobs(except: MailModerationReminderJob) do
           job.perform(mail_alias.email, message_url)
         end
         mail_alias.reload
@@ -114,6 +114,12 @@ RSpec.describe MailReceiveJob, type: :job do
       it { expect(request_for_moderation_email.subject).to include('Moderatieverzoek:') }
       it { expect(MailForwardJob).not_to have_been_enqueued }
       it { expect(mail_alias.last_received_at).to be_within(10.seconds).of Time.zone.now }
+
+      it do
+        expect { job.perform(mail_alias.email, message_url) }.to have_enqueued_job(
+          MailModerationReminderJob
+        )
+      end
     end
 
     context 'when recipient is a moderated mail alias and sender is recognized' do
@@ -131,7 +137,7 @@ RSpec.describe MailReceiveJob, type: :job do
         ActionMailer::Base.deliveries = []
         allow(mail_fetcher_class).to receive(:new) { fetched_mail }
 
-        perform_enqueued_jobs do
+        perform_enqueued_jobs(except: MailModerationReminderJob) do
           job.perform(mail_alias.email, message_url)
         end
         mail_alias.reload
@@ -147,6 +153,12 @@ RSpec.describe MailReceiveJob, type: :job do
       it { expect(request_for_moderation_email.subject).to include('Moderatieverzoek:') }
       it { expect(MailForwardJob).not_to have_been_enqueued }
       it { expect(mail_alias.last_received_at).to be_within(10.seconds).of Time.zone.now }
+
+      it do
+        expect { job.perform(mail_alias.email, message_url) }.to have_enqueued_job(
+          MailModerationReminderJob
+        )
+      end
     end
   end
 end
