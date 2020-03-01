@@ -29,9 +29,7 @@ RSpec.describe DefaultOffPaginator, type: :resource do
     context 'when without params' do
       it { expect(instance.turned_on).to eq false }
     end
-  end
 
-  describe '#parse_pagination_params' do
     context 'when turned on' do
       let(:params) do
         ActionController::Parameters.new(size: 50, number: 1)
@@ -43,10 +41,6 @@ RSpec.describe DefaultOffPaginator, type: :resource do
         instance.links_page_params(record_count: 5)
         # rubocop:enable RSpec/MessageSpies
       end
-    end
-
-    context 'when without params' do
-      it { expect(instance.links_page_params(record_count: 5)).to eq({}) }
     end
   end
 end
