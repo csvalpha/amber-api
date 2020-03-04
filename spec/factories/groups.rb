@@ -14,6 +14,10 @@ FactoryBot.define do
       permission_list { [] }
     end
 
+    trait :with_user do
+      users { [FactoryBot.create(:user)] }
+    end
+
     after :create do |group, evaluator|
       group.memberships << evaluator.users.compact.map do |user|
         FactoryBot.create(:membership, user: user, group: group)

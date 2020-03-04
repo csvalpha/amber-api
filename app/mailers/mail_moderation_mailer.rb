@@ -1,16 +1,17 @@
 require 'ostruct'
 
 class MailModerationMailer < ApplicationMailer
-  def request_for_moderation_email(user, stored_mail)
-    @user = user
+  def request_for_moderation_email(moderator, stored_mail)
+    @user = moderator
     @sender = stored_mail.sender
     @mail_alias = stored_mail.mail_alias
     @moderator = stored_mail.mail_alias.moderator_group.name
     @subject = stored_mail.subject
     @received_at = stored_mail.received_at
-    @moderation_url = to_moderation_url(stored_mail)
+    @header_text = 'Moderatieverzoek'
+    @call_to_action = { text: 'Klik hier om te modereren', url: to_moderation_url(stored_mail) }
 
-    mail to: user.email, subject: "Moderatieverzoek: #{@subject}"
+    mail to: @user.email, subject: "Moderatieverzoek: #{@subject}"
   end
 
   def awaiting_moderation_email(sender, stored_mail)
@@ -39,6 +40,19 @@ class MailModerationMailer < ApplicationMailer
     @approver = approver
 
     mail to: @user.email, subject: "Mail afgekeurd: #{@subject}"
+  end
+
+  def reminder_for_moderation_email(moderator, stored_mail)
+    @user = moderator
+    @sender = stored_mail.sender
+    @mail_alias = stored_mail.mail_alias
+    @moderator = stored_mail.mail_alias.moderator_group.name
+    @subject = stored_mail.subject
+    @received_at = stored_mail.received_at
+    @header_text = 'Herinnering moderatieverzoek'
+    @call_to_action = { text: 'Klik hier om te modereren', url: to_moderation_url(stored_mail) }
+
+    mail to: @user.email, subject: "Herinnering moderatieverzoek: #{@subject}"
   end
 
   private
