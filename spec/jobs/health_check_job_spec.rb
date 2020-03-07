@@ -8,18 +8,17 @@ RSpec.describe HealthCheckJob, type: :job do
     let(:fake_http) { instance_double(FakeHTTP) }
 
     before do
-      allow(Rails.application.config.x).to receive(:healthcheck_ids).and_return({'test': hc_id})
+      allow(Rails.application.config.x).to receive(:healthcheck_ids).and_return({ 'test': hc_id })
 
       stub_const('HTTP', fake_http)
       allow(fake_http).to receive(:get)
       job
     end
 
-
     context 'when with configured hc_id' do
       it do
         expect(fake_http).to have_received(:get).with(
-            'https://hc-ping.com/test-id'
+          'https://hc-ping.com/test-id'
         )
       end
     end
@@ -29,7 +28,5 @@ RSpec.describe HealthCheckJob, type: :job do
 
       it { expect(fake_http).not_to have_received(:get) }
     end
-
   end
 end
-
