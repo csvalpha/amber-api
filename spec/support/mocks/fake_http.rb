@@ -1,1 +1,4 @@
-class FakeHTTP; def post(*args); end; end
+class FakeHTTP
+  def post(*args); end
+  def get(*args); end
+end
