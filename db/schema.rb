@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_190605) do
+ActiveRecord::Schema.define(version: 2020_03_09_212409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,17 @@ ActiveRecord::Schema.define(version: 2020_03_09_190605) do
     t.index ["author_id"], name: "index_forum_threads_on_author_id"
     t.index ["category_id"], name: "index_forum_threads_on_category_id"
     t.index ["deleted_at"], name: "index_forum_threads_on_deleted_at"
+  end
+
+  create_table "forum_unread_threads", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "thread_id"
+    t.integer "post_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["thread_id"], name: "index_forum_unread_threads_on_thread_id"
+    t.index ["user_id"], name: "index_forum_unread_threads_on_user_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -432,16 +443,6 @@ ActiveRecord::Schema.define(version: 2020_03_09_190605) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mail_alias_id"], name: "index_stored_mails_on_mail_alias_id"
-  end
-
-  create_table "unread_threads", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "thread_id"
-    t.integer "post_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["thread_id"], name: "index_unread_threads_on_thread_id"
-    t.index ["user_id"], name: "index_unread_threads_on_user_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
