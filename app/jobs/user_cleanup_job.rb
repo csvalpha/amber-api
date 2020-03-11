@@ -17,6 +17,8 @@ class UserCleanupJob < ApplicationJob
       end
     end
 
+    return unless removed_users.any? || will_remove_users.any?
+
     UserCleanupMailer.cleanup_email(will_remove_users, removed_users).deliver_now
     HealthCheckJob.perform_now(:user_cleanup)
   end
