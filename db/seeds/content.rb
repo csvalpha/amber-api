@@ -27,6 +27,13 @@ members.sample(5).each do |user|
   )
 end
 
+articles << FactoryBot.create(
+    :article,
+    :pinned,
+    author: members.first,
+    group: nil
+)
+
 articles.each do |article|
   members.sample(6).each do |user|
     FactoryBot.create(:article_comment, article: article, author: user)
