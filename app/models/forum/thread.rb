@@ -1,7 +1,7 @@
 module Forum
   class Thread < ApplicationRecord
     has_many :posts, dependent: :destroy, counter_cache: :posts_count
-    has_many :unread_threads, dependent: :destroy
+    has_many :read_threads, dependent: :destroy
 
     belongs_to :author, class_name: 'User'
     belongs_to :category, touch: true

@@ -1,5 +1,5 @@
 module Forum
-  class UnreadThread < ApplicationRecord
+  class ReadThread < ApplicationRecord
     belongs_to :user
     belongs_to :thread
     belongs_to :post
