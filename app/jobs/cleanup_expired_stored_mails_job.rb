@@ -17,6 +17,8 @@ class CleanupExpiredStoredMailsJob < ApplicationJob
 
   # :nocov:
   def inform_slack(deleted_count, expired_count)
+    HealthCheckJob.perform_later(:expired_mails_cleanup)
+
     return unless deleted_count.positive? || expired_count.positive?
 
     SlackMessageJob.perform_later(

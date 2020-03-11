@@ -18,5 +18,6 @@ class UserCleanupJob < ApplicationJob
     end
 
     UserCleanupMailer.cleanup_email(will_remove_users, removed_users).deliver_now
+    HealthCheckJob.perform_now(:user_cleanup)
   end
 end
