@@ -1,7 +1,7 @@
 <% if @will_archive_users.any? %>
-  De volgende gebruikers zijn meer dan 18 maanden geen onderdeel meer van een groep.<br/>
+  De volgende <%= 'gebruiker'.pluralize(@will_archive_users.size, plural: 'gebruikers') %> zijn meer dan 18 maanden geen onderdeel meer van een groep.<br/>
   <b>Om deze reden gaan ze automatisch gearchiveerd worden binnen 1 of 2 maanden.</b> <br/>
-  Zorg dat u deze gebruikers binnen een maand toevoegd aan een groep om dit process te stoppen.  Mocht u dit niet doen dan zal alle informatie van de gebruiker verwijderd worden, het is niet mogelijk dit ongedaan te maken.
+  Zorg dat u deze <%= 'gebruiker'.pluralize(@will_archive_users.size, plural: 'gebruikers') %> binnen een maand toevoegd aan een groep om dit process te stoppen.  Mocht u dit niet doen dan zal alle informatie van de gebruiker verwijderd worden, het is niet mogelijk dit ongedaan te maken.
   <br/><br/>
 
   <% @will_archive_users.each do |user| %><br/>
