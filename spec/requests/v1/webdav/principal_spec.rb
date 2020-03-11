@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-# rubocop:disable DescribeClass
+# rubocop:disable RSpec/DescribeClass
 describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::PrincipalResource' do
-  # rubocop:enable DescribeClass
+  # rubocop:enable RSpec/DescribeClass
   describe 'PROPFIND /webdav/:user_id/:key/contacts', version: 1 do
     let(:user) do
       FactoryBot.create(:user, :webdav_enabled, activated_at: Time.zone.now)
