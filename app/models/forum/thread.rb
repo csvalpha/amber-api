@@ -19,15 +19,9 @@ module Forum
       self.posts.last
     end
 
-    def mark_read(user)
-      # Group.active_groups_for_user(self).include?(group)
-      unread_thread = Forum::UnreadThread.find_or_create_by(thread: self, user: user)
-      unread_thread.post = self.last_post
-    end
-
     def read(user)
       thread = Forum::UnreadThread.find_or_create_by(thread: self, user: user)
-      thread.post != nil && thread.post == self.last_post
+      thread.post == self.last_post
     end
   end
 end
