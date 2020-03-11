@@ -129,7 +129,7 @@ RSpec.describe User, type: :model do
     context 'when re-null valid info_in_almanak' do
       subject(:user) { FactoryBot.create(:user) }
 
-      it { expect(user.update(ifes_data_sharing_preference: nil)).to eq false }
+      it { expect(user.update(info_in_almanak: nil)).to eq false }
     end
 
     context 'when re-null user_details_sharing_preference' do
