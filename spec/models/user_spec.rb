@@ -120,13 +120,13 @@ RSpec.describe User, type: :model do
       it { expect(user).not_to be_valid }
     end
 
-    context 'when without a ifes_data_sharing_preference' do
+    context 'when re-null ifes_data_sharing_preference' do
       subject(:user) { FactoryBot.create(:user) }
 
       it { expect(user.update(ifes_data_sharing_preference: nil)).to eq false }
     end
 
-    context 'when without a valid info_in_almanak' do
+    context 'when re-null valid info_in_almanak' do
       subject(:user) { FactoryBot.create(:user) }
 
       it { expect(user.update(ifes_data_sharing_preference: nil)).to eq false }
