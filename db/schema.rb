@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_125011) do
+ActiveRecord::Schema.define(version: 2020_03_10_221355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_06_20_125011) do
     t.integer "author_id"
     t.string "cover_photo"
     t.integer "comments_count", default: 0, null: false
+    t.boolean "pinned", default: false
     t.index ["author_id"], name: "index_articles_on_author_id"
     t.index ["deleted_at"], name: "index_articles_on_deleted_at"
     t.index ["group_id"], name: "index_articles_on_group_id"
@@ -267,6 +268,7 @@ ActiveRecord::Schema.define(version: 2019_06_20_125011) do
     t.datetime "deleted_at"
     t.bigint "moderator_group_id"
     t.boolean "smtp_enabled", default: false
+    t.datetime "last_received_at"
     t.index ["email"], name: "index_mail_aliases_on_email", unique: true
     t.index ["moderator_group_id"], name: "index_mail_aliases_on_moderator_group_id"
   end

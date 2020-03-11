@@ -11,8 +11,10 @@ class Article < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :publicly_visible, inclusion: [true, false]
+  validates :pinned, inclusion: [true, false]
 
   scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :pinned, (-> { where(pinned: true) })
 
   def owners
     if group.present?

@@ -1,6 +1,6 @@
 class V1::ArticleResource < V1::ApplicationResource
   attributes :title, :content, :publicly_visible, :content_camofied, :cover_photo,
-             :amount_of_comments, :cover_photo_url
+             :amount_of_comments, :cover_photo_url, :pinned
 
   def amount_of_comments
     @model.comments.size
@@ -23,7 +23,7 @@ class V1::ArticleResource < V1::ApplicationResource
   end
 
   def self.creatable_fields(_context)
-    %i[title content publicly_visible group cover_photo]
+    %i[title content publicly_visible group cover_photo pinned]
   end
 
   def self.searchable_fields
