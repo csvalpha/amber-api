@@ -5,6 +5,7 @@ class MailModerationReminderJob < ApplicationJob
     stored_mail = StoredMail.find_by(id: stored_mail_id)
 
     return unless stored_mail
+    puts 'here'
 
     stored_mail.mail_alias.moderators.each do |moderator|
       MailModerationMailer.reminder_for_moderation_email(moderator, stored_mail).deliver_later
