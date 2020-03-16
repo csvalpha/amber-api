@@ -3,7 +3,6 @@ steps:
     plugins:
       - docker-compose#v2.6.0:
           build: app
-          image-name: app-amber-api-buildkite
           config: docker-compose.buildkite.yml
 
   - wait
@@ -33,6 +32,7 @@ steps:
           password-env: DOCKER_PASSWORD
       - docker-compose#v2.6.0:
           push: app-production:docker.csvalpha.nl/amber-api:staging
+          image-name: docker.csvalpha.nl/amber-api:staging
           config: docker-compose.buildkite.yml
 
   - label: ":docker: Build+Push `:production` image"
@@ -44,6 +44,7 @@ steps:
           password-env: DOCKER_PASSWORD
       - docker-compose#v2.6.0:
           push: app-production:docker.csvalpha.nl/amber-api:latest
+          image-name: docker.csvalpha.nl/amber-api:latest
           config: docker-compose.buildkite.yml
 
   - block: "Deploy this stage"

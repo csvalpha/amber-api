@@ -37,10 +37,11 @@ services:
       - ./public/uploads:/app/public/uploads
       - ./log:/app/log
     labels:
-    - traefik.enable=true
-    - traefik.port=3000
-    - traefik.api.frontend.rule=Host:$HOST;PathPrefixStrip:/api
-    - traefik.static.frontend.rule=Host:$HOST;PathPrefix:/uploads,/ical,/sidekiq
+      - traefik.enable=true
+      - traefik.http.routers.amber-api-staging.rule=Host(`$HOST`) && PathPrefix(`/api`, `/uploads`, `/sidekiq`, `/webdav`, `/ical`)
+      - traefik.http.routers.amber-api-staging.middlewares=amber-api-strip@file
+      - traefik.http.routers.amber-api-staging.tls.certresolver=default
+
 
 volumes:
   postgres_data:

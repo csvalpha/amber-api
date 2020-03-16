@@ -32,18 +32,27 @@ RSpec.describe UserCleanupJob, type: :job do
       end
 
       user.reload
-      almost_archive_user.reload
-      user_to_be_archived.reload
+      almost_archive_user&.reload
+      user_to_be_archived&.reload
     end
 
-    it { expect(ActionMailer::Base.deliveries.count).to eq 1 }
-    it { expect(email.to).to include 'bestuur@csvalpha.nl' }
-    it { expect(email.to).to include 'ict@csvalpha.nl' }
-    it { expect(email.body.to_s).to include(almost_archive_user.full_name) }
-    it { expect(email.body.to_s).not_to include(user.full_name) }
-    it { expect(email.body.to_s).to include('Er is 1 gebruiker gearchiveerd.') }
-    it { expect(user_to_be_archived.full_name).to include 'Gearchiveerde gebruiker' }
-    it { expect(almost_archive_user.full_name).not_to include 'Gearchiveerde gebruiker' }
-    it { expect(user.full_name).not_to include 'Gearchiveerde gebruiker' }
+    context 'when with will archive and archived users' do
+      it { expect(ActionMailer::Base.deliveries.count).to eq 1 }
+      it { expect(email.to).to include 'bestuur@csvalpha.nl' }
+      it { expect(email.to).to include 'ict@csvalpha.nl' }
+      it { expect(email.body.to_s).to include(almost_archive_user.full_name) }
+      it { expect(email.body.to_s).not_to include(user.full_name) }
+      it { expect(email.body.to_s).to include('Er is 1 gebruiker gearchiveerd.') }
+      it { expect(user_to_be_archived.full_name).to include 'Gearchiveerde gebruiker' }
+      it { expect(almost_archive_user.full_name).not_to include 'Gearchiveerde gebruiker' }
+      it { expect(user.full_name).not_to include 'Gearchiveerde gebruiker' }
+    end
+
+    context 'when without archive or will archive users' do
+      let(:almost_archive_user) { nil }
+      let(:user_to_be_archived) { nil }
+
+      it { expect(ActionMailer::Base.deliveries.count).to eq 0 }
+    end
   end
 end

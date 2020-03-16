@@ -132,17 +132,17 @@ RSpec.describe V1::UserResource, type: :resource do
     let(:creatable_fields) { described_class.creatable_fields(context) }
     let(:basic_fields) do
       %i[avatar email address postcode city phone_number
-         food_preferences vegetarian study start_study picture_publication_preference
-         info_in_almanak almanak_subscription_preference
-         digtus_subscription_preference emergency_contact emergency_number
-         ifes_data_sharing_preference]
+         food_preferences vegetarian study start_study
+         almanak_subscription_preference
+         digtus_subscription_preference emergency_contact emergency_number]
     end
     let(:permissible_fields) do
       %i[first_name last_name_prefix last_name birthday
          user_permissions login_enabled]
     end
     let(:current_user_fields) do
-      %i[otp_required password user_details_sharing_preference allow_tomato_sharing]
+      %i[otp_required password user_details_sharing_preference allow_tomato_sharing
+         info_in_almanak ifes_data_sharing_preference picture_publication_preference]
     end
 
     context 'when without permission' do
