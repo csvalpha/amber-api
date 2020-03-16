@@ -10,7 +10,7 @@ RSpec.describe MailModerationReminderJob, type: :job do
       ActionMailer::Base.deliveries = []
 
       perform_enqueued_jobs(except: job) do
-        job.perform_now(stored_mail.id)
+        job.perform_now(stored_mail)
       end
     end
 
@@ -20,7 +20,7 @@ RSpec.describe MailModerationReminderJob, type: :job do
       end
 
       it { expect(ActionMailer::Base.deliveries.count).to eq 1 }
-      it { expect { job.perform_now(stored_mail.id) }.to have_enqueued_job(job) }
+      it { expect { job.perform_now(stored_mail) }.to have_enqueued_job(job) }
     end
 
     context 'when expiring within 24 hours' do
@@ -29,14 +29,14 @@ RSpec.describe MailModerationReminderJob, type: :job do
       end
 
       it { expect(ActionMailer::Base.deliveries.count).to eq 1 }
-      it { expect { job.perform_now(stored_mail.id) }.not_to have_enqueued_job(job) }
+      it { expect { job.perform_now(stored_mail) }.not_to have_enqueued_job(job) }
     end
 
     context 'when accepted or rejected' do
-      let(:stored_mail) { FactoryBot.create(:stored_mail, :deleted) }
+      let(:stored_mail) {}
 
       it { expect(ActionMailer::Base.deliveries.count).to eq 0 }
-      it { expect { job.perform_now(stored_mail.id) }.not_to have_enqueued_job(job) }
+      it { expect { job.perform_now(stored_mail) }.not_to have_enqueued_job(job) }
     end
   end
 end

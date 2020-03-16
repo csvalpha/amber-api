@@ -19,7 +19,7 @@ class MailReceiveJob < ApplicationJob
     end
   end
 
-  def send_mail_moderations(mail_alias, message_url, fetched_mail) # rubocop:disable Metrics/AbcSize
+  def send_mail_moderations(mail_alias, message_url, fetched_mail)
     stored_mail = StoredMail.create(message_url: message_url, received_at: fetched_mail.received_at,
                                     sender: fetched_mail.sender, mail_alias: mail_alias,
                                     subject: fetched_mail.subject)
@@ -28,7 +28,7 @@ class MailReceiveJob < ApplicationJob
       MailModerationMailer.request_for_moderation_email(moderator, stored_mail).deliver_later
     end
     MailModerationMailer.awaiting_moderation_email(stored_mail.sender, stored_mail).deliver_later
-    MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail.id)
+    MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail)
   end
 
   private
