@@ -20,7 +20,7 @@ module Forum
     end
 
     def read(user)
-      thread = Forum::UnreadThread.find_or_create_by(thread: self, user: user)
+      thread = Forum::ReadThread.find_or_create_by(thread: self, user: user)
       thread.post == self.last_post
     end
   end
