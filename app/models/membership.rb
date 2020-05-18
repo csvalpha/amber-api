@@ -10,6 +10,8 @@ class Membership < ApplicationRecord
 
   validate :unique_on_time_interval?
 
+  after_commit :sync_mail_aliases
+
   scope :active, (lambda {
     where('memberships.start_date <= :now AND
                (memberships.end_date > :now OR memberships.end_date IS NULL)',
@@ -31,5 +33,14 @@ class Membership < ApplicationRecord
 
     errors.add(:membership, 'is not unique on time interval')
     false
+  end
+
+  # Remark, this will cause multiple updates when adding multiple users after each other
+  # But this is quite hard to fix, but just be carefull
+  def sync_mail_aliases
+    return unless Rails.env.production? || Rails.env.staging?
+    return if group.mail_aliases.empty?
+
+    MailAliasSyncJob.perform_later(group.mail_aliases.ids)
   end
 end

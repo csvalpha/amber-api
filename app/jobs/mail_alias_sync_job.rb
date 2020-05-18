@@ -36,6 +36,6 @@ class MailAliasSyncJob < ApplicationJob
   end
 
   def api_host
-    'api.improvmx.com/v3'
+    'https://api.improvmx.com/v3'
   end
 end

@@ -13,6 +13,7 @@ class MailAlias < ApplicationRecord
   before_validation :downcase_email
 
   before_save :set_smtp
+  after_commit :sync_mail_aliases
 
   scope :mail_aliases_moderated_by_user, (lambda { |user|
     joins(:moderator_group).where(moderator_group: Group.active_groups_for_user(user))
@@ -84,4 +85,11 @@ class MailAlias < ApplicationRecord
     SmtpJob.perform_later(self, smtp_enabled)
   end
   # :nocov:
+  #
+  #
+  def sync_mail_aliases
+    return unless Rails.env.production? || Rails.env.staging?
+
+    MailAliasSyncJob.perform_later(id)
+  end
 end
