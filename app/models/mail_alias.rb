@@ -34,6 +34,14 @@ class MailAlias < ApplicationRecord
     "#{group.name} <#{email}>"
   end
 
+  def mail_addresses_str
+    mail_addresses.join(',')
+  end
+
+  def alias_name
+    email.split("@").first
+  end
+
   def domain
     email.split('@').last
   end
