@@ -234,6 +234,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless Rails.env.production? || Rails.env.staging?
     return if group.mail_aliases.empty?
 
-    MailAliasSyncJob.perform_later(self.mail_aliases.ids)
+    MailAliasSyncJob.perform_later(mail_aliases.ids)
   end
 end

@@ -3,5 +3,5 @@ class FakeHTTP
 
   def get(*args); end
 
-  def put(*args);  end
+  def put(*args); end
 end

@@ -1,7 +1,7 @@
 class MailAliasSyncJob < ApplicationJob
   queue_as :default
 
-  def perform(mail_alias_id=nil)
+  def perform(mail_alias_id = nil)
     mail_aliases = MailAlias.where(id: mail_alias_id)
 
     mail_aliases.map do |m|
@@ -18,7 +18,7 @@ class MailAliasSyncJob < ApplicationJob
     r = create_alias(mail_alias)
     return if r == 200
 
-    raise RuntimeError, "Create/Update of alias #{mail_alias} failed. #{r}"
+    raise "Create/Update of alias #{mail_alias} failed. #{r}"
   end
 
   def update_alias(mail_alias)
@@ -32,7 +32,7 @@ class MailAliasSyncJob < ApplicationJob
   end
 
   def client
-    HTTP.basic_auth(user: :api, pass:  Rails.application.config.x.improvmx_api_key)
+    HTTP.basic_auth(user: :api, pass: Rails.application.config.x.improvmx_api_key)
   end
 
   def api_host

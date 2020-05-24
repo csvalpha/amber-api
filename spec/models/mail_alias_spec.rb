@@ -144,13 +144,11 @@ RSpec.describe MailAlias, type: :model do
     it { expect(mail_alias.mail_addresses_str).to eq "#{users.first.email},#{users.second.email}" }
   end
 
-
   describe '#alias_name' do
     let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }
 
     it { expect(mail_alias.alias_name).to eq 'test' }
   end
-
 
   describe '#domain' do
     let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }

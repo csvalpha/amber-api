@@ -40,7 +40,7 @@ class MailAlias < ApplicationRecord
   end
 
   def alias_name
-    email.split("@").first
+    email.split('@').first
   end
 
   def domain
@@ -84,6 +84,7 @@ class MailAlias < ApplicationRecord
 
     SmtpJob.perform_later(self, smtp_enabled)
   end
+
   # :nocov:
   #
   #
