@@ -22,12 +22,12 @@ class MailAliasSyncJob < ApplicationJob
   end
 
   def update_alias(mail_alias)
-    client.put("#{api_host}/domains/#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
+    client.put("#{api_host}/domains/staging.#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
                form: { forward: mail_alias.mail_addresses_str })
   end
 
   def create_alias(mail_alias)
-    client.post("#{api_host}/domains/#{mail_alias.domain}/aliases/",
+    client.post("#{api_host}/domains/staging.#{mail_alias.domain}/aliases/",
                 form: { alias: mail_alias.alias_name, forward: mail_alias.mail_addresses_str })
   end
 
