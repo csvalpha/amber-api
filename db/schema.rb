@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_02_085126) do
+ActiveRecord::Schema.define(version: 2020_05_14_131100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -488,6 +488,31 @@ ActiveRecord::Schema.define(version: 2019_12_02_085126) do
     t.datetime "created_at"
     t.text "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  end
+
+  create_table "vote_forms", id: :serial, force: :cascade do |t|
+    t.string "question", null: false
+    t.datetime "deleted_at"
+    t.integer "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_vote_forms_on_author_id"
+  end
+
+  create_table "vote_respondents", id: false, force: :cascade do |t|
+    t.integer "form_id"
+    t.integer "respondent_id"
+    t.index ["form_id", "respondent_id"], name: "index_vote_respondents_on_form_id_and_respondent_id", unique: true
+    t.index ["form_id"], name: "index_vote_respondents_on_form_id"
+    t.index ["respondent_id"], name: "index_vote_respondents_on_respondent_id"
+  end
+
+  create_table "vote_responses", id: :serial, force: :cascade do |t|
+    t.integer "form_id"
+    t.string "response", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_vote_responses_on_form_id"
   end
 
   add_foreign_key "article_comments", "articles"

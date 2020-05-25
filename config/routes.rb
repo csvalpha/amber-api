@@ -86,6 +86,11 @@ Rails.application.routes.draw do
       jsonapi_resources :posts
       jsonapi_resources :threads
     end
+
+    namespace :vote do
+      jsonapi_resources :forms
+      jsonapi_resources :responses
+    end
   end
 
   get 'coffee', to: 'coffee#index'
