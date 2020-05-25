@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       end
     end
     resources :daily_verse, only: [:index]
+    resources :about_alpha_videos, only: [:index]
     jsonapi_resources :users, only: %i[index show create update] do
       jsonapi_relationships
       collection do
