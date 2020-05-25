@@ -1,6 +1,6 @@
 require 'net/http'
 
-class V1::DailyVerseController < V1::ApplicationController
+class V1::DailyVersesController < V1::ApplicationController
   before_action :doorkeeper_authorize!, except: [:index]
 
   def index
