@@ -40,7 +40,7 @@ Rails.application.routes.draw do
         post :reject
       end
     end
-    resources :daily_verse, only: [:index]
+    resources :daily_verses, only: [:index]
     jsonapi_resources :users, only: %i[index show create update] do
       jsonapi_relationships
       collection do
