@@ -37,10 +37,12 @@ class Membership < ApplicationRecord
 
   # Remark, this will cause multiple updates when adding multiple users after each other
   # But this is quite hard to fix, but just be carefull
+  # :nocov:
   def sync_mail_aliases
     return unless Rails.env.production? || Rails.env.staging?
     return if group.mail_aliases.empty?
 
     MailAliasSyncJob.perform_later(group.mail_aliases.ids)
   end
+  # :nocov:
 end

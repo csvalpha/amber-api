@@ -85,12 +85,10 @@ class MailAlias < ApplicationRecord
     SmtpJob.perform_later(self, smtp_enabled)
   end
 
-  # :nocov:
-  #
-  #
   def sync_mail_aliases
     return unless Rails.env.production? || Rails.env.staging?
 
     MailAliasSyncJob.perform_later(id)
   end
+  # :nocov:
 end
