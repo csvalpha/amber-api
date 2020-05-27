@@ -25,7 +25,7 @@ class MailgunController < ApplicationController
   private
 
   def verify_mailgun_signature(signing_key, token, timestamp, signature)
-    digest = OpenSSL::Digest::SHA256.new
+    digest = OpenSSL::Digest.new('SHA256')
     data = [timestamp, token].join
     signature == OpenSSL::HMAC.hexdigest(digest, signing_key, data)
   end
