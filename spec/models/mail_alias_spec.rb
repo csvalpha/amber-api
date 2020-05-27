@@ -141,7 +141,11 @@ RSpec.describe MailAlias, type: :model do
 
     before { users }
 
-    it { expect(mail_alias.mail_addresses_str).to eq "#{users.first.email},#{users.second.email}" }
+    it do
+      expect(["#{users.first.email},#{users.second.email}",
+              "#{users.second.email},#{users.first.email}"])
+        .to include mail_alias.mail_addresses_str
+    end
   end
 
   describe '#alias_name' do
