@@ -6,7 +6,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   use_refresh_token
 
   hash_token_secrets
-  hash_application_secrets fallback: :plain
+  hash_application_secrets
 
   optional_scopes :tomato
 
