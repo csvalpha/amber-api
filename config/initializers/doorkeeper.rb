@@ -19,7 +19,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
         if !one_time_password
           response.headers[OTP_HEADER] = 'required'
           nil
-        elsif user.authenticate_otp(one_time_password)
+        elsif user.authenticate_otp(one_time_password, drift: 30)
           user
         else
           response.headers[OTP_HEADER] = 'invalid'

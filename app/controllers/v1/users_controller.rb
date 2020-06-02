@@ -69,7 +69,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
   def activate_otp
     authorize @model
-    unless @model.authenticate_otp(params[:one_time_password])
+    unless @model.authenticate_otp(params[:one_time_password], drift: 30)
       return render json: otp_invalid_error, status: :unprocessable_entity
     end
 
