@@ -5,6 +5,9 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   api_only
   use_refresh_token
 
+  hash_token_secrets
+  hash_application_secrets
+
   optional_scopes :tomato
 
   # See https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow
