@@ -6,6 +6,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'paper_trail/frameworks/rspec'
+require 'action_mailbox/test_helper'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -65,6 +66,8 @@ RSpec.configure do |config|
   end
 
   config.include Requests::JsonHelpers, type: :request
+
+  config.include ActionMailbox::TestHelper, type: :mailbox
 
   config.after(:all) do
     FileUtils.rm_rf(Dir[Rails.root.join('spec', 'support', 'uploads')])
