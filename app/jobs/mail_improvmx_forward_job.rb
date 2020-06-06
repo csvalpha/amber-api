@@ -6,12 +6,13 @@ class MailImprovmxForwardJob < ApplicationJob
 
   def perform(stored_mail)
     smtp = Mail::SMTP.new({address: 'smtp.improvmx.com', port: '587',
-                           user_name: 'no-reply@hetkrat.nl', password: '630SDtTBYMcM'})
+                           user_name: 'no-reply@hetkrat.nl', password: 'u02Gyf19SifK'})
     mail = stored_mail.inbound_email.mail
 
     to_addresses = stored_mail.mail_alias.mail_addresses
     while to_addresses.any?
-      mail.from = "forwarding@hetkrat.nl" # TODO Do something smart, such as when it is from an adresses owned by us persists otherwise add the name and send from forwarding@
+      mail.reply_to = mail.from
+      mail.from = new_from(mail)
       mail.bcc = to_addresses.pop(BATCH_SIZE)
 
       smtp.deliver!(mail)
@@ -20,5 +21,13 @@ class MailImprovmxForwardJob < ApplicationJob
 
     # message = "IMPROVMX: #{message_url} is forwarded to #{mail_alias.mail_addresses.join(',')}"
     # SlackMessageJob.perform_later(message, channel: 'mila-log')
+  end
+
+  private
+
+  def new_from(mail)
+    return mail.from if mail.from.first.include?("hetkrat.nl")
+
+    "#{mail.from.first} <forwarding@hetkrat.nl>"
   end
 end

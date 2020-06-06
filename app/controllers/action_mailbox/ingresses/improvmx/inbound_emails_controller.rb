@@ -1,6 +1,6 @@
 
 class ActionMailbox::Ingresses::Improvmx::InboundEmailsController < ActionMailbox::BaseController
-  # before_action :authenticate_by_password
+  before_action :authenticate_by_password
 
   def create
     raw_base64 = params.require(:raw)
