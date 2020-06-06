@@ -6,13 +6,13 @@ class V1::StoredMailResource < V1::ApplicationResource
   has_one :mail_alias, always_include_linkage_data: true
 
   def plain_body
-    mail.plain_body if @model.mailgun_mail?
+    return mail.plain_body if @model.mailgun_mail?
 
     mail.text_part.body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
   end
 
   def attachments
-    mail.attachments if @model.mailgun_mail?
+    return mail.attachments if @model.mailgun_mail?
 
     mail.attachments.map do |attachment|
       file = StringIO.new(attachment.to_s)
