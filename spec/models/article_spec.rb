@@ -62,19 +62,13 @@ RSpec.describe Article, type: :model do
     context 'when other already pinned' do
       subject(:article) { FactoryBot.build(:article, pinned: true) }
 
-      before FactoryBot.create(:article, pinned: true)
+      before { FactoryBot.create(:article, pinned: true) }
 
       it { expect(article).not_to be_valid }
     end
 
     context 'when none already pinned' do
-      subject(:article) { FactoryBot.create(:article, pinned: false) }
-
-      before do
-        FactoryBot.build_stubbed(:article, pinned: false)
-        article.pinned = true
-        article.valid?
-      end
+      subject(:article) { FactoryBot.build(:article, pinned: true) }
 
       it { expect(article).to be_valid }
     end
