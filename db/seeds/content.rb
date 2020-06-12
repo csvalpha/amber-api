@@ -28,10 +28,10 @@ members.sample(5).each do |user|
 end
 
 articles << FactoryBot.create(
-    :article,
-    :pinned,
-    author: members.first,
-    group: nil
+  :article,
+  :pinned,
+  author: members.first,
+  group: nil
 )
 
 articles.each do |article|
