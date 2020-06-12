@@ -30,8 +30,15 @@ class V1::ArticleResource < V1::ApplicationResource
     super - [:cover_photo]
   end
 
-  def self.creatable_fields(_context)
-    %i[title content publicly_visible group cover_photo pinned]
+  def self.creatable_fields(context)
+    attributes = %i[title content publicly_visible group cover_photo]
+
+    attributes += [:pinned] if update_permission?(context)
+    attributes
+  end
+
+  def self.update_permission?(context)
+    context[:user]&.permission?(:update, _model_class)
   end
 
   def self.searchable_fields
