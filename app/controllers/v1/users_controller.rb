@@ -3,7 +3,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
   before_action :doorkeeper_authorize!, except: %i[activate_account reset_password
                                                    get_related_resource]
   before_action :set_model, only: %i[update archive activate_account
-                                     resend_activation_mail generate_otp_provisioning_uri
+                                     resend_activation_mail generate_otp_secret
                                      activate_otp activate_webdav]
 
   def update
@@ -56,7 +56,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     head :no_content
   end
 
-  def generate_otp_provisioning_uri
+  def generate_otp_secret
     authorize @model
 
     if @model.otp_required?
@@ -64,13 +64,12 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
                     status: :unprocessable_entity
     end
 
-    qrcode = RQRCode::QRCode.new(regenerate_otp_provisioning_uri!)
-    render json: { data_url: qrcode.as_png(size: 240).to_data_url }
+    render json: { otp_code: regenerate_otp_provisioning_uri! }
   end
 
   def activate_otp
     authorize @model
-    unless @model.authenticate_otp(params[:one_time_password])
+    unless @model.authenticate_otp(params[:one_time_password], drift: 10)
       return render json: otp_invalid_error, status: :unprocessable_entity
     end
 

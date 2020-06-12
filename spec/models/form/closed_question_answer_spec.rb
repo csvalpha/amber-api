@@ -49,6 +49,7 @@ RSpec.describe Form::ClosedQuestionAnswer, type: :model do
       end
 
       it { expect(another_closed_question_answer).not_to be_valid }
+
       it do
         expect { another_closed_question_answer.save(validate: false) }
           .to raise_exception ActiveRecord::RecordNotUnique
@@ -72,6 +73,7 @@ RSpec.describe Form::ClosedQuestionAnswer, type: :model do
       end
 
       it { expect(another_closed_question_answer).not_to be_valid }
+
       it do
         expect { another_closed_question_answer.save(validate: false) }
           .to raise_exception ActiveRecord::RecordNotUnique

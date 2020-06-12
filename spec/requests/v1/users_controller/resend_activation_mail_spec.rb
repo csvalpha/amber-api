@@ -20,8 +20,8 @@ describe V1::UsersController do
 
       context 'when with activated user' do
         let(:record) do
-          FactoryBot.create(:user, activated_at:
-            Faker::Time.between(1.month.ago, Date.yesterday, :day))
+          FactoryBot.create(:user, activated_at: Faker::Time.between(from: 1.month.ago,
+                                                                     to: Date.yesterday))
         end
         let(:email) { ActionMailer::Base.deliveries }
 

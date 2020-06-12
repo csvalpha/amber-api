@@ -7,28 +7,35 @@ describe V1::ActivitiesController do
     let(:request) { get(record_url) }
     let(:current_activities) do
       Array.new(2) do
-        FactoryBot.create(:activity, start_time: Faker::Time.between(3.days.ago, 2.days.ago),
-                                     end_time: Faker::Time.between(1.day.from_now,
-                                                                   2.days.from_now))
+        FactoryBot.create(:activity, start_time: Faker::Time.between(from: 3.days.ago,
+                                                                     to: 2.days.ago),
+                                     end_time: Faker::Time.between(from: 1.day.from_now,
+                                                                   to: 2.days.from_now))
       end
     end
     let(:future_activities) do
       Array.new(3) do
         FactoryBot.create(:activity,
-                          start_time: Faker::Time.between(1.day.from_now, 2.days.from_now),
-                          end_time: Faker::Time.between(3.days.from_now, 4.days.from_now))
+                          start_time: Faker::Time.between(from: 1.day.from_now,
+                                                          to: 2.days.from_now),
+                          end_time: Faker::Time.between(from: 3.days.from_now,
+                                                        to: 4.days.from_now))
       end
     end
     let(:far_future_activities) do
       Array.new(2) do
         FactoryBot.create(:activity,
-                          start_time: Faker::Time.between(5.days.from_now, 6.days.from_now),
-                          end_time: Faker::Time.between(7.days.from_now, 8.days.from_now))
+                          start_time: Faker::Time.between(from: 5.days.from_now,
+                                                          to: 6.days.from_now),
+                          end_time: Faker::Time.between(from: 7.days.from_now,
+                                                        to: 8.days.from_now))
       end
     end
     let(:passed_activity) do
-      FactoryBot.create(:activity, start_time: Faker::Time.between(5.days.ago, 4.days.ago),
-                                   end_time: Faker::Time.between(2.days.ago, 1.day.ago))
+      FactoryBot.create(:activity, start_time: Faker::Time.between(from: 5.days.ago,
+                                                                   to: 4.days.ago),
+                                   end_time: Faker::Time.between(from: 2.days.ago,
+                                                                 to: 1.day.ago))
     end
     let(:records) do
       current_activities + future_activities + far_future_activities + [passed_activity]

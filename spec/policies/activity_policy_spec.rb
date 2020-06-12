@@ -15,19 +15,19 @@ RSpec.describe ActivityPolicy, type: :policy do
     end
   end
 
-  context '#create_with_form?' do
+  describe '#create_with_form?' do
     it { expect(policy.new(nil, nil).create_with_form?(nil)).to be true }
   end
 
-  context '#replace_form?' do
+  describe '#replace_form?' do
     it { expect(policy.new(nil, nil).replace_form?(nil)).to be true }
   end
 
-  context '#create_with_group?' do
+  describe '#create_with_group?' do
     it { expect(policy.new(nil, nil).create_with_group?(nil)).to be true }
   end
 
-  context '#replace_group?' do
+  describe '#replace_group?' do
     it { expect(policy.new(nil, nil).replace_group?(nil)).to be true }
   end
 end

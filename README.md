@@ -1,6 +1,7 @@
 Alpha AMBER API
 ================
-[![Build status](https://badge.buildkite.com/bd06abde1b95d8a04c61950404f258b8a1c3ba0730041ac4bc.svg)](https://buildkite.com/csv-alpha/amber-api)
+[![Build status](https://badge.buildkite.com/7bb7573780e61f69cb8d834590a0c2125ed5a5ee588fb5380e.svg)](https://buildkite.com/csv-alpha/amber-api)
+[![Depfu](https://badges.depfu.com/badges/663adb8e75ff19a32ca0d866d5fe2e85/count.svg)](https://depfu.com/github/csvalpha/amber-api?project_id=7749)
 
 ## Prerequisites
 * [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (see `.ruby-version`, install with `rvm` or `rbenv`)

@@ -42,6 +42,9 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   filter :group, apply: lambda { |records, value, _options|
     records.active_users_for_group(Group.find_by(name: value))
   }
+  filter :archived, apply: lambda { |records, value, _options|
+    records.archived(ActiveRecord::Type::Boolean.new.cast(value.first))
+  }
 
   # rubocop:disable all
   def fetchable_fields
@@ -70,12 +73,14 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
 
   def self.creatable_fields(context) # rubocop:disable Metrics/MethodLength
     attributes = %i[avatar email address postcode city phone_number
-                    food_preferences vegetarian study start_study picture_publication_preference
-                    info_in_almanak almanak_subscription_preference
-                    digtus_subscription_preference emergency_contact emergency_number
-                    ifes_data_sharing_preference]
+                    food_preferences vegetarian study start_study
+                    almanak_subscription_preference digtus_subscription_preference
+                    emergency_contact emergency_number]
     if me?(context)
-      attributes += %i[otp_required password user_details_sharing_preference allow_tomato_sharing]
+      attributes += %i[otp_required password
+                       user_details_sharing_preference allow_tomato_sharing
+                       picture_publication_preference info_in_almanak
+                       ifes_data_sharing_preference]
     end
 
     if user_can_create_or_update?(context)

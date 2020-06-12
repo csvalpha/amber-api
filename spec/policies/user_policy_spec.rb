@@ -23,6 +23,7 @@ RSpec.describe UserPolicy, type: :policy do
         expect(policy).to permit(application,
                                  FactoryBot.create(:user, allow_tomato_sharing: true))
       end
+
       it do
         expect(policy).not_to permit(application,
                                      FactoryBot.create(:user, allow_tomato_sharing: false))
@@ -62,11 +63,11 @@ RSpec.describe UserPolicy, type: :policy do
     end
   end
 
-  context '#create_with_user_permissions?' do
+  describe '#create_with_user_permissions?' do
     it { expect(policy.new(nil, nil).create_with_user_permissions?(nil)).to be true }
   end
 
-  context '#replace_user_permissions?' do
+  describe '#replace_user_permissions?' do
     it { expect(policy.new(nil, nil).replace_user_permissions?(nil)).to be true }
   end
 end

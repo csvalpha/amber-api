@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-# rubocop:disable DescribeClass
+# rubocop:disable RSpec/DescribeClass
 describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::AddressbookCollectionResource' do
-  # rubocop:enable DescribeClass
+  # rubocop:enable RSpec/DescribeClass
   describe 'PROPFIND /webdav/:user_id/:key/contacts/books', version: 1 do
     let(:users) { FactoryBot.create_list(:user, 4, :webdav_enabled, activated_at: Time.zone.now) }
     let(:user) { users.first }
@@ -42,22 +42,27 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::AddressbookCollec
         it_behaves_like '207 Multistatus'
         it { expect(responses.length).to eq(6) }
         # Second response is the addressbook
+
         it {
           expect(responses[1]['href'])
             .to eq("/webdav/#{user.id}/#{user.webdav_secret_key}/contacts/books/#{group.id}/")
         }
+
         it {
           expect(responses[1]['propstat']['prop']['resourcetype'].keys)
             .to contain_exactly('collection', 'addressbook')
         }
+
         it { expect(responses[1]['propstat']['prop']['displayname']).to eq group.name }
         # third to fifth responses are members
+
         it {
           expect(responses[2..5].map { |r| r['href'] })
             .to match_array(group.users.map do |u|
               "/webdav/#{user.id}/#{user.webdav_secret_key}/contacts/books/#{group.id}/#{u.id}"
             end)
         }
+
         it {
           expect(responses[2..5].map { |r| r['propstat']['prop']['displayname'] })
             .to match_array(group.users.map { |u| u.id.to_s })

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe V1::DailyVerseController do
-  describe 'GET /daily_verse', version: 1 do
+describe V1::DailyVersesController do
+  describe 'GET /daily_verses', version: 1 do
     let(:memory_store) { ActiveSupport::Cache.lookup_store(:memory_store) }
     let(:cache) { Rails.cache }
-    let(:record_url) { '/v1/daily_verse' }
+    let(:record_url) { '/v1/daily_verses' }
     let(:request) do
       VCR.use_cassette('retrieve_daily_verse') do
         get record_url

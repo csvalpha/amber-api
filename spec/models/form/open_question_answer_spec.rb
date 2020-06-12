@@ -44,11 +44,11 @@ RSpec.describe Form::OpenQuestionAnswer, type: :model do
       it { expect(open_question_answer).not_to be_valid }
     end
 
-    context 'when with a non-numerical answer to a numerical question' do
+    context 'when with a numerical answer to a numerical question' do
       subject(:open_question_answer) do
         FactoryBot.build(:open_question_answer,
                          question: FactoryBot.create(:open_question_number),
-                         answer: Faker::Number.number(10))
+                         answer: Faker::Number.number(digits: 10))
       end
 
       it { expect(open_question_answer).to be_valid }
@@ -89,17 +89,6 @@ RSpec.describe Form::OpenQuestionAnswer, type: :model do
     context 'when form is already closed for responses' do
       before do
         open_question_answer.form.update(respond_from: 2.days.ago, respond_until: Date.yesterday)
-      end
-
-      it { expect(open_question_answer).not_to be_valid }
-    end
-
-    context 'when question does not belong to form' do
-      let(:open_question) { FactoryBot.create(:open_question) }
-      let(:another_form) { FactoryBot.create(:form) }
-
-      subject(:open_question_answer) do
-        FactoryBot.build(:open_question_answer, question: open_question, form: another_form)
       end
 
       it { expect(open_question_answer).not_to be_valid }

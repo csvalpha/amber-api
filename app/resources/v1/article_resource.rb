@@ -1,6 +1,6 @@
 class V1::ArticleResource < V1::ApplicationResource
   attributes :title, :content, :publicly_visible, :content_camofied, :cover_photo,
-             :amount_of_comments, :cover_photo_url, :pinned
+             :amount_of_comments, :cover_photo_url, :author_name, :avatar_thumb_url, :pinned
 
   def amount_of_comments
     @model.comments.size
@@ -8,6 +8,14 @@ class V1::ArticleResource < V1::ApplicationResource
 
   def cover_photo_url
     @model.cover_photo.url
+  end
+
+  def author_name
+    @model.group ? @model.group.name : @model.author.full_name
+  end
+
+  def avatar_thumb_url
+    @model.group ? @model.group.avatar.thumb.url : @model.author.avatar.thumb.url
   end
 
   def content_camofied

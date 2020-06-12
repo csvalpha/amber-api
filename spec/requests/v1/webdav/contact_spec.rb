@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-# rubocop:disable DescribeClass
+# rubocop:disable RSpec/DescribeClass
 describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::ContactResource' do
-  # rubocop:enable DescribeClass
+  # rubocop:enable RSpec/DescribeClass
   describe 'PROPFIND /webdav/:user_id/:key/contacts/books/:group_id/:contact_id', version: 1 do
     let(:users) { FactoryBot.create_list(:user, 4, :webdav_enabled, activated_at: Time.zone.now) }
     let(:user) { users.first }
@@ -55,7 +55,9 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::ContactResource' 
             "/contacts/books/#{group.id}/#{group.users[0].id}"
           )
         end
+
         it { expect(xml_response['propstat']['prop']['displayname']).to eq group.users[0].id.to_s }
+
         it do
           expect(xml_response['propstat']['prop']['address_data'])
             .to eq(Webdav::Contact.user_to_vcard(group.users[0]).to_s)

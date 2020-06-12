@@ -1,4 +1,4 @@
-class MailSMTPMailer < ApplicationMailer
+class MailSmtpMailer < ApplicationMailer
   def enabled_email(mail_alias, password)
     @mail_alias = mail_alias
     @password = password

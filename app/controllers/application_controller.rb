@@ -3,6 +3,7 @@ class ApplicationController < JSONAPI::ResourceController
 
   before_action :set_paper_trail_whodunnit
   before_action :set_raven_context
+  protect_from_forgery with: :null_session
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Disable content_type check, since it makes testing practically impossible

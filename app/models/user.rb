@@ -4,7 +4,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one_time_password
 
   mount_base64_uploader :avatar, AvatarUploader
-  has_paper_trail skip: [:avatar]
+  has_paper_trail skip: %i[avatar], unless: proc { |o| o.archived? }
 
   has_many :memberships, inverse_of: :user
   has_many :groups, through: :memberships
@@ -15,6 +15,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :permissions_users, class_name: 'PermissionsUsers'
   has_many :user_permissions, through: :permissions_users, source: :permission
   has_many :article_comments
+  has_many :board_room_presences
   has_many :photo_comments
   has_many :mail_aliases
   has_many :mandates, class_name: 'Debit::Mandate'
@@ -29,8 +30,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
                            dependent: :delete_all
 
   has_secure_password(validations: false)
-  validate :password_when_activated?
-  validate :allow_tomato_sharing_valid?
+  # General fields
   validates :username, presence: true, uniqueness: true, format: { with: /\A[\w\.]+\z/ },
                        unless: :archived?
   validates :email, presence: true, uniqueness: true, unless: :archived?
@@ -40,23 +40,33 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :address, presence: true, unless: :archived?
   validates :postcode, presence: true, unless: :archived?
   validates :city, presence: true, unless: :archived?
-  validates :login_enabled, inclusion: [true, false]
   validates :vegetarian, inclusion: [true, false], unless: :archived?
-  validates :ifes_data_sharing_preference, inclusion: [true, false], unless: :archived?
-  validates :info_in_almanak, inclusion: [true, false], unless: :archived?
-  validates :picture_publication_preference, presence: true, inclusion: {
-    in: %w[always_publish always_ask never_publish]
-  }, unless: :archived?
+  validates :phone_number, phone: { possible: true, allow_blank: true }
+
+  # Technical fields
+  validates :login_enabled, inclusion: [true, false]
+  validate :password_when_activated?
+  validate :allow_tomato_sharing_valid?
+
+  # Preferences
   validates :almanak_subscription_preference, presence: true, inclusion: {
     in: %w[physical digital no_subscription]
   }, unless: :archived?
   validates :digtus_subscription_preference, presence: true, inclusion: {
     in: %w[physical digital no_subscription]
   }, unless: :archived?
-  validates :user_details_sharing_preference, inclusion: {
+
+  # Privacy fields
+  validates :picture_publication_preference, not_renullable: true, inclusion: {
+    in: %w[always_publish always_ask never_publish], allow_nil: true
+  }, unless: :archived?
+  validates :ifes_data_sharing_preference, not_renullable: true, unless: :archived?
+  validates :info_in_almanak, not_renullable: true, unless: :archived?
+  validates :user_details_sharing_preference, not_renullable: true, inclusion: {
     in: %w[hidden members_only all_users], allow_nil: true
   }, unless: :archived?
-  validates :phone_number, phone: { possible: true, allow_blank: true }
+
+  # Other
   validates :emergency_number, phone: { possible: true, allow_blank: true }
 
   before_create :generate_ical_secret_key
@@ -77,16 +87,21 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   })
   scope :upcoming_birthdays, (lambda { |days_ahead = 7|
     range = (0.days.from_now.to_date..days_ahead.days.from_now.to_date)
-    scope = range.inject(User.birthday) do |birthdays, day|
-      birthdays.or(User.birthday(day.month, day.day))
+    scope = range.inject(birthday) do |birthdays, day|
+      birthdays.or(birthday(day.month, day.day))
     end
     february28 = Date.new(Time.zone.now.year, 2, 28)
-    scope = scope.or(User.birthday(2, 29)) if range.include?(february28) &&
+    scope = scope.or(birthday(2, 29)) if range.include?(february28) &&
       !Date.leap?(Time.zone.now.year)
     scope
   })
   scope :active_users_for_group, (lambda { |group|
-    User.joins(:memberships).merge(Membership.active.where(group: group))
+    joins(:memberships).merge(Membership.active.where(group: group))
+  })
+  scope :archived, (lambda { |bool = true|
+    return where.not(archived_at: nil) if bool
+
+    where(archived_at: nil)
   })
 
   def full_name
@@ -160,13 +175,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def archive!
     attributes.each_key do |attribute|
-      self[attribute] = nil unless %w[deleted_at updated_at created_at enabled id]
+      self[attribute] = nil unless %w[deleted_at updated_at created_at login_enabled id]
                                    .include? attribute
     end
     self.first_name = 'Gearchiveerde gebruiker'
     self.last_name = id
     self.login_enabled = false
     self.archived_at = Time.zone.now
+    versions.destroy_all
     save
   end
 

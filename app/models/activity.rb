@@ -1,6 +1,5 @@
 class Activity < ApplicationRecord
   mount_base64_uploader :cover_photo, CoverPhotoUploader
-  has_paper_trail skip: [:cover_photo]
 
   belongs_to :form, class_name: 'Form::Form', optional: true
   has_many :responses, through: :form, class_name: 'Form::Response'
@@ -29,7 +28,7 @@ class Activity < ApplicationRecord
   scope :closing, (lambda { |days_ahead = 7|
     now = DateTime.current
     ahead = days_ahead.days.from_now.to_datetime
-    Activity.joins(:form).where(form_forms: { respond_until: now..ahead })
+    joins(:form).where(form_forms: { respond_until: now..ahead })
   })
 
   after_save :copy_author_and_group_to_form!

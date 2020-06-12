@@ -40,7 +40,7 @@ Rails.application.routes.draw do
         post :reject
       end
     end
-    resources :daily_verse, only: [:index]
+    resources :daily_verses, only: [:index]
     jsonapi_resources :users, only: %i[index show create update] do
       jsonapi_relationships
       collection do
@@ -51,7 +51,7 @@ Rails.application.routes.draw do
         post :activate_account
         post :archive
         post :resend_activation_mail
-        post :generate_otp_provisioning_uri
+        post :generate_otp_secret
         post :activate_otp
         post :activate_webdav
       end
@@ -114,6 +114,8 @@ Rails.application.routes.draw do
   end
 
   require 'sidekiq/web'
+  require 'sidekiq-scheduler/web'
+
   # See https://github.com/mperham/sidekiq/wiki/Monitoring#forbidden
   Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 

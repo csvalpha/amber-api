@@ -11,6 +11,7 @@ AllCops:
     - 'vendor/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
+  NewCops: enable
 
 Rails/UnknownEnv:
   Environments:
@@ -27,12 +28,15 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'spec/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
 
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
+
+Rails/FilePath:
+  EnforcedStyle: arguments
 
 Rails/HttpPositionalArguments:
   Enabled: false
@@ -73,6 +77,9 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/GuardClause:
+  Enabled: false
+
 # Enable cops that are disabled by default, but are useful nonetheless
 # See https://github.com/bbatsov/rubocop/blob/master/config/disabled.yml
 
@@ -97,4 +104,20 @@ Style/Send:
   Enabled: true
 
 Style/StringMethods:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+
+Lint/StructNewOverride:
   Enabled: true

@@ -48,6 +48,7 @@ RSpec.describe StoredMail, type: :model do
     end
 
     it { expect(described_class.stored_mails_moderated_by_user(user).count).to eq 2 }
+
     it do
       expect(described_class.count - described_class.stored_mails_moderated_by_user(user).count)
         .to eq 1

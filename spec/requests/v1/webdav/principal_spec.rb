@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-# rubocop:disable DescribeClass
+# rubocop:disable RSpec/DescribeClass
 describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::PrincipalResource' do
-  # rubocop:enable DescribeClass
+  # rubocop:enable RSpec/DescribeClass
   describe 'PROPFIND /webdav/:user_id/:key/contacts', version: 1 do
     let(:user) do
       FactoryBot.create(:user, :webdav_enabled, activated_at: Time.zone.now)
@@ -31,6 +31,7 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::PrincipalResource
           expect(xml_response['propstat']['prop']['resourcetype'].keys)
             .to contain_exactly('collection', 'principal')
         end
+
         it do
           expect(xml_response['propstat']['prop']['current_user_principal']['href'])
             .to eq "/webdav/#{user.id}/#{user.webdav_secret_key}/contacts"

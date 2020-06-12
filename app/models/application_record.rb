@@ -6,7 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   def self.model_names
     @model_names ||= begin
-      Rails.application.eager_load!
+      Zeitwerk::Loader.eager_load_all
       ActiveRecord::Base.descendants.map { |m| m.name.underscore }
     end
   end

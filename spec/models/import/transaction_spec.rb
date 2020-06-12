@@ -39,6 +39,7 @@ RSpec.describe Import::Transaction, type: :model do
 
       it { expect { importer.import! }.not_to raise_error }
       it { expect(collection.errors.size).to eq 1 }
+
       it do
         expect(errors.first).to eq 'User non-existing not found'
       end
@@ -51,6 +52,7 @@ RSpec.describe Import::Transaction, type: :model do
       end
 
       it { expect { importer.import! }.not_to raise_error }
+
       it {
         expect(errors.first).to eq 'username field must be present'
       }
@@ -64,9 +66,11 @@ RSpec.describe Import::Transaction, type: :model do
 
       it { expect { importer.import! }.not_to raise_error }
       it { expect(errors.size).to eq 2 }
+
       it {
         expect(errors.first).to eq 'Transaction Slot BBQ for user bestuurder has an invalid amount'
       }
+
       it {
         expect(errors.second).to eq 'Transaction  for user bestuurder is invalid'
       }

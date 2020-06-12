@@ -18,7 +18,7 @@ RSpec.describe MailReceiveJob, type: :job do
         ActionMailer::Base.deliveries = []
         allow(mail_fetcher_class).to receive(:new) { OpenStruct.new(sender: sender) }
         perform_enqueued_jobs do
-          described_class.perform_now('unknown@example.org', message_url)
+          described_class.perform_now('unknown@csvalpha.nl', message_url)
         end
       end
 
@@ -26,7 +26,7 @@ RSpec.describe MailReceiveJob, type: :job do
       it { expect(ndr_mail.to.first).to eq 'alice@example.org' }
 
       context 'when sender is noreply' do
-        let(:sender) { 'noreply@example.org' }
+        let(:sender) { 'noreply@csvalpha.nl' }
 
         it { expect(ndr_mail).to be nil }
       end
@@ -58,9 +58,13 @@ RSpec.describe MailReceiveJob, type: :job do
     context 'when recipient is an open mail alias' do
       let(:mail_alias) { FactoryBot.create(:mail_alias, :with_user, moderation_type: :open) }
 
-      before { job.perform(mail_alias.email, message_url) }
+      before do
+        job.perform(mail_alias.email, message_url)
+        mail_alias.reload
+      end
 
       it { expect(MailForwardJob).to have_been_enqueued.with(mail_alias, message_url) }
+      it { expect(mail_alias.last_received_at).to be_within(10.seconds).of Time.zone.now }
     end
 
     context 'when recipient is a semi moderated mail alias and sender belongs to it' do
@@ -72,10 +76,12 @@ RSpec.describe MailReceiveJob, type: :job do
       before do
         allow(mail_fetcher_class).to receive(:new) { OpenStruct.new(sender: mail_alias.user.email) }
         job.perform(mail_alias.email, message_url)
+        mail_alias.reload
       end
 
       it { expect(MailForwardJob).to have_been_enqueued.with(mail_alias, message_url) }
       it { expect(MailModerationMailer).not_to have_been_enqueued }
+      it { expect(mail_alias.last_received_at).to be_within(10.seconds).of Time.zone.now }
     end
 
     context 'when recipient is a semi moderated mail alias and sender is not recognized' do
@@ -92,18 +98,28 @@ RSpec.describe MailReceiveJob, type: :job do
       before do
         allow(mail_fetcher_class).to receive(:new) { fetched_mail }
 
-        perform_enqueued_jobs do
+        perform_enqueued_jobs(except: MailModerationReminderJob) do
           job.perform(mail_alias.email, message_url)
         end
+        mail_alias.reload
       end
 
       it { expect(awaiting_moderation_email.to.first).to include('unknown@example.org') }
+
       it do
         expect(awaiting_moderation_email.subject).to include('Moderatieverzoek in behandeling:')
       end
+
       it { expect(request_for_moderation_email.to.first).to include('moderator@csvalpha.nl') }
       it { expect(request_for_moderation_email.subject).to include('Moderatieverzoek:') }
       it { expect(MailForwardJob).not_to have_been_enqueued }
+      it { expect(mail_alias.last_received_at).to be_within(10.seconds).of Time.zone.now }
+
+      it do
+        expect { job.perform(mail_alias.email, message_url) }.to have_enqueued_job(
+          MailModerationReminderJob
+        )
+      end
     end
 
     context 'when recipient is a moderated mail alias and sender is recognized' do
@@ -121,18 +137,28 @@ RSpec.describe MailReceiveJob, type: :job do
         ActionMailer::Base.deliveries = []
         allow(mail_fetcher_class).to receive(:new) { fetched_mail }
 
-        perform_enqueued_jobs do
+        perform_enqueued_jobs(except: MailModerationReminderJob) do
           job.perform(mail_alias.email, message_url)
         end
+        mail_alias.reload
       end
 
       it { expect(awaiting_moderation_email.to.first).to include(mail_alias.user.email) }
+
       it do
         expect(awaiting_moderation_email.subject).to include('Moderatieverzoek in behandeling:')
       end
+
       it { expect(request_for_moderation_email.to.first).to include('moderator@csvalpha.nl') }
       it { expect(request_for_moderation_email.subject).to include('Moderatieverzoek:') }
       it { expect(MailForwardJob).not_to have_been_enqueued }
+      it { expect(mail_alias.last_received_at).to be_within(10.seconds).of Time.zone.now }
+
+      it do
+        expect { job.perform(mail_alias.email, message_url) }.to have_enqueued_job(
+          MailModerationReminderJob
+        )
+      end
     end
   end
 end

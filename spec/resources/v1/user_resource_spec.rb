@@ -132,17 +132,17 @@ RSpec.describe V1::UserResource, type: :resource do
     let(:creatable_fields) { described_class.creatable_fields(context) }
     let(:basic_fields) do
       %i[avatar email address postcode city phone_number
-         food_preferences vegetarian study start_study picture_publication_preference
-         info_in_almanak almanak_subscription_preference
-         digtus_subscription_preference emergency_contact emergency_number
-         ifes_data_sharing_preference]
+         food_preferences vegetarian study start_study
+         almanak_subscription_preference
+         digtus_subscription_preference emergency_contact emergency_number]
     end
     let(:permissible_fields) do
       %i[first_name last_name_prefix last_name birthday
          user_permissions login_enabled]
     end
     let(:current_user_fields) do
-      %i[otp_required password user_details_sharing_preference allow_tomato_sharing]
+      %i[otp_required password user_details_sharing_preference allow_tomato_sharing
+         info_in_almanak ifes_data_sharing_preference picture_publication_preference]
     end
 
     context 'when without permission' do
@@ -167,7 +167,7 @@ RSpec.describe V1::UserResource, type: :resource do
 
         it {
           expect(creatable_fields).to match_array(basic_fields + permissible_fields +
-                                                       current_user_fields - [:login_enabled])
+                                                    current_user_fields - [:login_enabled])
         }
       end
     end
@@ -181,16 +181,19 @@ RSpec.describe V1::UserResource, type: :resource do
 
       before do
         FactoryBot.create(:user, user_details_sharing_preference: 'all_users',
-                                 birthday: Faker::Date.between(1.day.from_now, 2.days.from_now))
+                                 birthday: Faker::Date.between(from: 1.day.from_now,
+                                                               to: 2.days.from_now))
         FactoryBot.create(:user, user_details_sharing_preference: 'hidden',
-                                 birthday: Faker::Date.between(1.day.from_now, 2.days.from_now))
+                                 birthday: Faker::Date.between(from: 1.day.from_now,
+                                                               to: 2.days.from_now))
       end
 
       context 'when with update permission' do
         let(:user) do
           FactoryBot.create(:user, user_details_sharing_preference: 'members_only',
                                    user_permission_list: ['user.update'],
-                                   birthday: Faker::Date.between(1.day.from_now, 2.days.from_now))
+                                   birthday: Faker::Date.between(from: 1.day.from_now,
+                                                                 to: 2.days.from_now))
         end
 
         it { expect(filtered.size).to eq 3 }
@@ -199,7 +202,8 @@ RSpec.describe V1::UserResource, type: :resource do
       context 'when without permission' do
         let(:user) do
           FactoryBot.create(:user, user_details_sharing_preference: 'members_only',
-                                   birthday: Faker::Date.between(1.day.from_now, 2.days.from_now))
+                                   birthday: Faker::Date.between(from: 1.day.from_now,
+                                                                 to: 2.days.from_now))
         end
 
         it { expect(filtered.size).to eq 2 }
@@ -208,7 +212,8 @@ RSpec.describe V1::UserResource, type: :resource do
       context 'when with own user details sharing set to hidden' do
         let(:user) do
           FactoryBot.create(:user, user_details_sharing_preference: 'hidden',
-                                   birthday: Faker::Date.between(1.day.from_now, 2.days.from_now))
+                                   birthday: Faker::Date.between(from: 1.day.from_now,
+                                                                 to: 2.days.from_now))
         end
 
         it { expect(filtered.size).to eq 2 }
@@ -229,6 +234,29 @@ RSpec.describe V1::UserResource, type: :resource do
 
       it { expect(filtered.size).to eq 1 }
       it { expect(filtered.first).to eq member }
+    end
+
+    describe 'archived' do
+      let(:archived_user) { FactoryBot.create(:user) }
+
+      before do
+        archived_user.archive!
+        FactoryBot.create(:user)
+      end
+
+      context 'when archived' do
+        let(:filter) { { archived: 'true' } }
+
+        it { expect(filtered.size).to eq 1 }
+        it { expect(filtered.first).to eq archived_user }
+      end
+
+      context 'when not archived' do
+        let(:filter) { { archived: 'false' } }
+
+        it { expect(filtered.size).to eq 2 }
+        it { expect(filtered).to include user }
+      end
     end
   end
 end

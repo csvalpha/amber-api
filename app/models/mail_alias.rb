@@ -1,7 +1,7 @@
 class MailAlias < ApplicationRecord
-  belongs_to :group
-  belongs_to :user
-  belongs_to :moderator_group, class_name: 'Group'
+  belongs_to :group, optional: true
+  belongs_to :user, optional: true
+  belongs_to :moderator_group, class_name: 'Group', optional: true
 
   validates :email, presence: true, uniqueness: true
   validates :moderation_type, inclusion: %w[open semi_moderated moderated]
@@ -45,16 +45,24 @@ class MailAlias < ApplicationRecord
   end
 
   def group_xor_user?
-    errors.add(:base, 'Must have either one group OR one user') unless (group && !user) || (!group && user) # rubocop:disable Metrics/LineLength
+    return if (group && !user) || (!group && user)
+
+    errors.add(:base, 'Must have either one group OR one user')
   end
 
   def known_mail_domain?
-    errors.add(:email, "Must end with a known domain (#{known_mail_domains.join(', ')})") unless email.ends_with?(*known_mail_domains) # rubocop:disable Metrics/LineLength
+    return if email.ends_with?(*known_mail_domains)
+
+    errors.add(:email, "Must end with a known domain (#{known_mail_domains.join(', ')})")
   end
 
   def when_moderated_with_moderator?
-    errors.add(:base, "Must have a moderator, as moderation type is #{moderation_type}") if %w[semi_moderated moderated].include?(moderation_type) && !moderator_group # rubocop:disable Metrics/LineLength
-    errors.add(:base, 'Must have no moderator, as moderation type is open') if moderation_type == 'open' && moderator_group # rubocop:disable Metrics/LineLength
+    if %w[semi_moderated moderated].include?(moderation_type) && !moderator_group
+      errors.add(:base, "Must have a moderator, as moderation type is #{moderation_type}")
+    end
+    if moderation_type == 'open' && moderator_group
+      errors.add(:base, 'Must have no moderator, as moderation type is open')
+    end
   end
 
   def known_mail_domains
@@ -65,7 +73,7 @@ class MailAlias < ApplicationRecord
   def set_smtp
     return unless smtp_enabled_changed?
 
-    SMTPJob.perform_later(self, smtp_enabled)
+    SmtpJob.perform_later(self, smtp_enabled)
   end
   # :nocov:
 end
