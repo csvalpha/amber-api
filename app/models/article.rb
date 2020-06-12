@@ -13,6 +13,8 @@ class Article < ApplicationRecord
   validates :publicly_visible, inclusion: [true, false]
   validates :pinned, inclusion: [true, false]
 
+  validate :only_one_pinned_article
+
   scope :publicly_visible, (-> { where(publicly_visible: true) })
   scope :pinned, (-> { where(pinned: true) })
 
@@ -22,5 +24,14 @@ class Article < ApplicationRecord
     else
       [author]
     end
+  end
+
+  private
+
+  def only_one_pinned_article
+    return unless pinned?
+
+    matches = Article.pinned.where('id != ?', id)
+    errors.add(:pinned, 'cannot have more than one pinned article') if matches.exists?
   end
 end
