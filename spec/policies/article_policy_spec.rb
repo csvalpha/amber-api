@@ -19,6 +19,11 @@ RSpec.describe ArticlePolicy, type: :policy do
       let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
 
       it { expect(policy).to permit(user, FactoryBot.build_stubbed(:article)) }
+      it { expect(policy).to permit(user, FactoryBot.build_stubbed(:article, :pinned))}
+    end
+
+    describe 'when with no permission' do
+      it { expect(policy).not_to permit(user, FactoryBot.build_stubbed(:article, :pinned))}
     end
   end
 end
