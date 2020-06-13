@@ -4,31 +4,31 @@ class MailAliasSyncJob < ApplicationJob
   def perform(mail_alias_ids = nil)
     mail_aliases = MailAlias.where(id: mail_alias_ids)
 
-    mail_aliases.map do |m|
-      create_or_update(m)
-    end
+    mail_aliases.map { |m| create_or_update(m) }
   end
 
   private
 
   def create_or_update(mail_alias)
-    r = update_alias(mail_alias)
-    return if r == 200
+    r = update_alias(mail_alias) || create_alias(mail_alias)
 
-    r = create_alias(mail_alias)
-    return if r == 200
-
-    raise "Create/Update of alias #{mail_alias} failed. #{r}"
+    raise "Create/Update of alias #{mail_alias} failed. #{r}" unless r
   end
 
   def update_alias(mail_alias)
-    client.put("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
-               form: { forward: mail_alias.mail_addresses_str })
+    r = client.put(
+      "#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
+      form: { forward: mail_alias.mail_addresses_str }
+    )
+
+    r == 200
   end
 
   def create_alias(mail_alias)
-    client.post("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/",
-                form: { alias: mail_alias.alias_name, forward: mail_alias.mail_addresses_str })
+    r = client.post("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/",
+                    form: { alias: mail_alias.alias_name, forward: mail_alias.mail_addresses_str })
+
+    r == 200
   end
 
   def client
