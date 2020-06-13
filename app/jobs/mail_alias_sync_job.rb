@@ -10,25 +10,23 @@ class MailAliasSyncJob < ApplicationJob
   private
 
   def create_or_update(mail_alias)
-    r = update_alias(mail_alias) || create_alias(mail_alias)
+    r = update_alias(mail_alias)
+    return if r == 200
 
-    raise "Create/Update of alias #{mail_alias} failed. #{r}" unless r
+    r = create_alias(mail_alias)
+    return if r == 200
+
+    raise "Create/Update of alias #{mail_alias} failed. #{r}"
   end
 
   def update_alias(mail_alias)
-    r = client.put(
-      "#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
-      form: { forward: mail_alias.mail_addresses_str }
-    )
-
-    r == 200
+    client.put("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
+               form: { forward: mail_alias.mail_addresses_str })
   end
 
   def create_alias(mail_alias)
-    r = client.post("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/",
-                    form: { alias: mail_alias.alias_name, forward: mail_alias.mail_addresses_str })
-
-    r == 200
+    client.post("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/",
+                form: { alias: mail_alias.alias_name, forward: mail_alias.mail_addresses_str })
   end
 
   def client
