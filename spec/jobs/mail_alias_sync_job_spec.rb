@@ -27,7 +27,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
 
       it do
         expect(fake_http).to have_received(:post).with(
-          'https://api.improvmx.com/v3/domains/staging.sandbox86621.eu.mailgun.org/aliases/',
+          'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/',
           form: { alias: 'test', forward: mail_alias.user.email }
         )
       end
@@ -36,7 +36,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
     context 'when it is an existing alias' do
       it do
         expect(fake_http).to have_received(:put).with(
-          'https://api.improvmx.com/v3/domains/staging.sandbox86621.eu.mailgun.org/aliases/test',
+          'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/test',
           form: { forward: mail_alias.user.email }
         )
       end
