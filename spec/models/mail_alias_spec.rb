@@ -135,6 +135,25 @@ RSpec.describe MailAlias, type: :model do
     end
   end
 
+  describe '#mail_addresses_str' do
+    let(:mail_alias) { FactoryBot.create(:mail_alias, :with_group) }
+    let(:users) { FactoryBot.create_list(:user, 2, groups: [mail_alias.group]) }
+
+    before { users }
+
+    it do
+      expect(["#{users.first.email},#{users.second.email}",
+              "#{users.second.email},#{users.first.email}"])
+        .to include mail_alias.mail_addresses_str
+    end
+  end
+
+  describe '#alias_name' do
+    let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }
+
+    it { expect(mail_alias.alias_name).to eq 'test' }
+  end
+
   describe '#domain' do
     let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }
 

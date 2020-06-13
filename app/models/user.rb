@@ -72,6 +72,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :generate_ical_secret_key
   before_save :revoke_all_access_tokens, unless: :login_enabled?
   before_save :downcase_email!
+  after_commit :sync_mail_aliases
 
   before_destroy do
     throw(:abort)
@@ -228,4 +229,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def generate_ical_secret_key
     self.ical_secret_key = SecureRandom.hex(32)
   end
+
+  # :nocov:
+  def sync_mail_aliases
+    return unless Rails.env.production? || Rails.env.staging?
+    return if group.mail_aliases.empty?
+
+    MailAliasSyncJob.perform_later(mail_aliases.ids)
+  end
+  # :nocov:
 end
