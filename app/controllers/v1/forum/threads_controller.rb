@@ -3,7 +3,7 @@ module V1::Forum
     def mark_read
       authorize @model
 
-      Forum::UnreadThread.find_or_create_by(thread: @model, user: current_user).post = @model.last_post
+      Forum::ReadThread.find_or_create_by(thread: @model, user: current_user).post = @model.last_post
 
       @model.destroy
     end
