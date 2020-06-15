@@ -6,7 +6,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   use_refresh_token
 
   hash_token_secrets
-  hash_application_secrets fallback: :plain
+  hash_application_secrets
 
   optional_scopes :tomato
 
@@ -22,7 +22,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
         if !one_time_password
           response.headers[OTP_HEADER] = 'required'
           nil
-        elsif user.authenticate_otp(one_time_password)
+        elsif user.authenticate_otp(one_time_password, drift: 10)
           user
         else
           response.headers[OTP_HEADER] = 'invalid'

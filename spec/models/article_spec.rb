@@ -35,6 +35,12 @@ RSpec.describe Article, type: :model do
 
       it { expect(article).not_to be_valid }
     end
+
+    context 'when without pinned' do
+      subject(:article) { FactoryBot.build(:article, pinned: nil) }
+
+      it { expect(article).not_to be_valid }
+    end
   end
 
   describe '#save' do
@@ -50,6 +56,22 @@ RSpec.describe Article, type: :model do
 
     it { expect(described_class.publicly_visible.count).to be 2 }
     it { expect(described_class.count - described_class.publicly_visible.count).to be 1 }
+  end
+
+  describe '#pinned' do
+    context 'when other already pinned' do
+      subject(:article) { FactoryBot.build(:article, pinned: true) }
+
+      before { FactoryBot.create(:article, pinned: true) }
+
+      it { expect(article).not_to be_valid }
+    end
+
+    context 'when none already pinned' do
+      subject(:article) { FactoryBot.build(:article, pinned: true) }
+
+      it { expect(article).to be_valid }
+    end
   end
 
   describe '#owners' do
