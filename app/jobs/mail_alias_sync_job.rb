@@ -2,7 +2,7 @@ class MailAliasSyncJob < ApplicationJob
   queue_as :default
 
   def perform(mail_alias_ids = nil)
-    mail_aliases = MailAlias.find(mail_alias_ids)
+    mail_aliases = MailAlias.where(id: mail_alias_ids)
 
     mail_aliases.map { |m| create_or_update(m) }
   end
