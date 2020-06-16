@@ -233,9 +233,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # :nocov:
   def sync_mail_aliases
     return unless Rails.env.production? || Rails.env.staging?
-    return if group.mail_aliases.empty?
 
-    MailAliasSyncJob.perform_later(mail_aliases.ids)
+    MailAliasSyncJob.perform_later(mail_aliases.ids) if mail_aliases.any?
+    MailAliasSyncJob.perform_later(group_mail_aliases.ids) if group_mail_aliases.any?
   end
   # :nocov:
 end
