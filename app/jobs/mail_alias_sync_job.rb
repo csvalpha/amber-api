@@ -11,10 +11,10 @@ class MailAliasSyncJob < ApplicationJob
 
   def create_or_update(mail_alias)
     update = update_alias(mail_alias)
-    return if update == 200
+    return if update.code == 200
 
     create = create_alias(mail_alias)
-    return if create == 200
+    return if create.code == 200
 
     raise "Create/Update of alias #{mail_alias} failed.
 create response=#{create} update response=#{update}"
