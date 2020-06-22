@@ -9,14 +9,18 @@ RSpec.describe MailAliasSyncJob, type: :job do
     end
     let(:http) { class_double('HTTP') }
     let(:fake_http) { instance_double(FakeHTTP) }
+    let(:put_response_object) { instance_double('HTTP::Response') }
+    let(:post_response_object) { instance_double('HTTP::Response') }
     let(:put_response) { 200 }
     let(:post_response) { 200 }
 
     before do
       stub_const('HTTP', http)
       allow(http).to receive(:basic_auth).and_return(fake_http)
-      allow(fake_http).to receive(:put).and_return(put_response)
-      allow(fake_http).to receive(:post).and_return(post_response)
+      allow(put_response_object).to receive(:code).and_return(put_response)
+      allow(fake_http).to receive(:put).and_return(put_response_object)
+      allow(post_response_object).to receive(:code).and_return(post_response)
+      allow(fake_http).to receive(:post).and_return(post_response_object)
       job.perform(mail_alias.id)
     end
 
