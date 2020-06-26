@@ -31,7 +31,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   has_secure_password(validations: false)
   # General fields
-  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w\.]+\z/ },
+  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w.]+\z/ },
                        unless: :archived?
   validates :email, presence: true, uniqueness: true, unless: :archived?
   validates :password, length: { minimum: 12 }, allow_nil: true, unless: :archived?
