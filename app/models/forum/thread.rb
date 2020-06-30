@@ -15,13 +15,9 @@ module Forum
       !closed_at.nil?
     end
 
-    def last_post
-      self.posts.last
-    end
-
     def read(user)
       thread = Forum::ReadThread.find_or_create_by(thread: self, user: user)
-      thread.post == self.last_post
+      thread.post == posts.last
     end
   end
 end

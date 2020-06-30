@@ -4,7 +4,7 @@ module Forum
     belongs_to :thread
     belongs_to :post
 
-    validates :user_id, presence: true
-    validates :thread_id, presence: true
+    validates :user, presence: true
+    validates :thread, presence: true
   end
 end
