@@ -50,8 +50,8 @@ create response=#{create} update response=#{update}"
 
     uri = URI::Generic.build(default_options.merge(path: path))
     uri.user = "api"
-    uri.password = Rails.application.credentials.action_mailbox.ingress_password
+    uri.password = Rails.application.credentials.action_mailbox.fetch(:ingress_password)
 
-    uri
+    uri.to_s
   end
 end

@@ -160,6 +160,21 @@ RSpec.describe MailAlias, type: :model do
     it { expect(mail_alias.domain).to eq 'csvalpha.nl' }
   end
 
+
+  describe '#moderated?' do
+    context 'when open alias' do
+      let(:mail_alias) { FactoryBot.build(:mail_alias, moderation_type: 'open') }
+
+      it { expect(mail_alias.moderated?).to eq false }
+    end
+
+    context 'when moderated alias' do
+      let(:mail_alias) { FactoryBot.build(:mail_alias, moderation_type: 'moderated') }
+
+      it { expect(mail_alias.moderated?).to eq true }
+    end
+  end
+
   describe '#to_s' do
     context 'when with a user' do
       let(:user) do

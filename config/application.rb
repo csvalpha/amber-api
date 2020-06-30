@@ -52,7 +52,7 @@ module Amber
     end
 
     config.action_mailbox.ingress = :improvmx
-    config.hosts = ["93b941f1c37c.ngrok.io", "localhost"]
+    # config.hosts = ["93b941f1c37c.ngrok.io", "localhost"]
 
     config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Europe/Amsterdam'
