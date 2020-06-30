@@ -90,12 +90,6 @@ RSpec.describe User, type: :model do
       it { expect(user).to be_valid }
     end
 
-    context 'when without a user_details_sharing_preference' do
-      subject(:user) { FactoryBot.build_stubbed(:user, user_details_sharing_preference: nil) }
-
-      it { expect(user).to be_valid }
-    end
-
     context 'when with an invalid emergency_number' do
       subject(:user) { FactoryBot.build_stubbed(:user, emergency_number: '+3161234567890') }
 
@@ -114,10 +108,10 @@ RSpec.describe User, type: :model do
       it { expect(user).to be_valid }
     end
 
-    context 'when without a picture_publication_preference' do
-      subject(:user) { FactoryBot.build_stubbed(:user, picture_publication_preference: nil) }
+    context 'when re-null picture_publication_preference' do
+      subject(:user) { FactoryBot.create(:user) }
 
-      it { expect(user).not_to be_valid }
+      it { expect(user.update(picture_publication_preference: nil)).to eq false }
     end
 
     context 'when with an invalid picture_publication_preference' do
@@ -126,14 +120,26 @@ RSpec.describe User, type: :model do
       it { expect(user).not_to be_valid }
     end
 
-    context 'when without a ifes_data_sharing_preference' do
-      subject(:user) { FactoryBot.build_stubbed(:user, ifes_data_sharing_preference: nil) }
+    context 'when re-null ifes_data_sharing_preference' do
+      subject(:user) { FactoryBot.create(:user) }
 
-      it { expect(user).not_to be_valid }
+      it { expect(user.update(ifes_data_sharing_preference: nil)).to eq false }
     end
 
-    context 'when without a valid info_in_almanak' do
-      subject(:user) { FactoryBot.build_stubbed(:user, info_in_almanak: nil) }
+    context 'when re-null valid info_in_almanak' do
+      subject(:user) { FactoryBot.create(:user) }
+
+      it { expect(user.update(info_in_almanak: nil)).to eq false }
+    end
+
+    context 'when re-null user_details_sharing_preference' do
+      subject(:user) { FactoryBot.create(:user) }
+
+      it { expect(user.update(user_details_sharing_preference: nil)).to eq false }
+    end
+
+    context 'when with an invalid user_details_sharing_preference' do
+      subject(:user) { FactoryBot.build_stubbed(:user, user_details_sharing_preference: 'wrong!') }
 
       it { expect(user).not_to be_valid }
     end

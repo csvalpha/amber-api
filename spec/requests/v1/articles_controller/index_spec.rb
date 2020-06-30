@@ -11,6 +11,10 @@ describe V1::ArticlesController do
     let(:record_url) { '/v1/articles' }
     let(:record_permission) { 'article.read' }
 
+    before { Bullet.enable = false }
+
+    after { Bullet.enable = true }
+
     subject(:request) { get(record_url) }
 
     it_behaves_like 'an indexable model'
