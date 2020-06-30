@@ -6,8 +6,9 @@ class MailImprovmxForwardJob < ApplicationJob
 
   def perform(stored_mail)
     smtp = Mail::SMTP.new({address: 'smtp.improvmx.com', port: '587',
-                           user_name: 'no-reply@hetkrat.nl', password: 'u02Gyf19SifK'})
+                           user_name: 'no-reply@hetkrat.nl', password: 'LbislyyRdY49'}) # TODO: use default SMTP as soon as we use ImprovMX as default
     mail = stored_mail.inbound_email.mail
+    mail.to = nil
 
     to_addresses = stored_mail.mail_alias.mail_addresses
     while to_addresses.any?
