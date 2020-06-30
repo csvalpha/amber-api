@@ -32,7 +32,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   has_secure_password(validations: false)
   # General fields
-  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w\.]+\z/ },
+  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w.]+\z/ },
                        unless: :archived?
   validates :email, presence: true, uniqueness: true, unless: :archived?
   validates :password, length: { minimum: 12 }, allow_nil: true, unless: :archived?
@@ -73,6 +73,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :generate_ical_secret_key
   before_save :revoke_all_access_tokens, unless: :login_enabled?
   before_save :downcase_email!
+  after_commit :sync_mail_aliases
 
   before_destroy do
     throw(:abort)
@@ -229,4 +230,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def generate_ical_secret_key
     self.ical_secret_key = SecureRandom.hex(32)
   end
+
+  # :nocov:
+  def sync_mail_aliases
+    return unless Rails.env.production? || Rails.env.staging?
+
+    MailAliasSyncJob.perform_later(mail_aliases.ids) if mail_aliases.any?
+    MailAliasSyncJob.perform_later(group_mail_aliases.ids) if group_mail_aliases.any?
+  end
+  # :nocov:
 end

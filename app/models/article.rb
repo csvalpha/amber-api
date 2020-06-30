@@ -11,8 +11,12 @@ class Article < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :publicly_visible, inclusion: [true, false]
+  validates :pinned, inclusion: [true, false]
+
+  validate :only_one_pinned_article
 
   scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :pinned, (-> { where(pinned: true) })
 
   def owners
     if group.present?
@@ -20,5 +24,14 @@ class Article < ApplicationRecord
     else
       [author]
     end
+  end
+
+  private
+
+  def only_one_pinned_article
+    return unless pinned?
+
+    matches = Article.pinned.where.not(id: id)
+    errors.add(:pinned, 'cannot have more than one pinned article') if matches.exists?
   end
 end

@@ -2,6 +2,7 @@ module Debit
   class Collection < ApplicationRecord
     require 'csv'
     attr_accessor(:import_file)
+
     belongs_to :author, class_name: 'User'
     has_many :transactions, dependent: :destroy
 

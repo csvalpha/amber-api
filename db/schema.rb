@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_205539) do
+ActiveRecord::Schema.define(version: 2020_03_10_221355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2020_03_11_205539) do
     t.integer "author_id"
     t.string "cover_photo"
     t.integer "comments_count", default: 0, null: false
+    t.boolean "pinned", default: false
     t.index ["author_id"], name: "index_articles_on_author_id"
     t.index ["deleted_at"], name: "index_articles_on_deleted_at"
     t.index ["group_id"], name: "index_articles_on_group_id"
@@ -203,17 +204,6 @@ ActiveRecord::Schema.define(version: 2020_03_11_205539) do
     t.index ["author_id"], name: "index_forum_posts_on_author_id"
     t.index ["deleted_at"], name: "index_forum_posts_on_deleted_at"
     t.index ["thread_id"], name: "index_forum_posts_on_thread_id"
-  end
-
-  create_table "forum_read_threads", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "thread_id"
-    t.integer "post_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["thread_id"], name: "index_forum_read_threads_on_thread_id"
-    t.index ["user_id"], name: "index_forum_read_threads_on_user_id"
   end
 
   create_table "forum_threads", id: :serial, force: :cascade do |t|

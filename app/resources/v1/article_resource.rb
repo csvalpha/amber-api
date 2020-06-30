@@ -1,6 +1,6 @@
 class V1::ArticleResource < V1::ApplicationResource
   attributes :title, :content, :publicly_visible, :content_camofied, :cover_photo,
-             :amount_of_comments, :cover_photo_url, :author_name, :avatar_thumb_url
+             :amount_of_comments, :cover_photo_url, :author_name, :avatar_thumb_url, :pinned
 
   def amount_of_comments
     @model.comments.size
@@ -30,8 +30,15 @@ class V1::ArticleResource < V1::ApplicationResource
     super - [:cover_photo]
   end
 
-  def self.creatable_fields(_context)
-    %i[title content publicly_visible group cover_photo]
+  def self.creatable_fields(context)
+    attributes = %i[title content publicly_visible group cover_photo]
+
+    attributes += [:pinned] if update_permission?(context)
+    attributes
+  end
+
+  def self.update_permission?(context)
+    context[:user]&.permission?(:update, _model_class)
   end
 
   def self.searchable_fields
