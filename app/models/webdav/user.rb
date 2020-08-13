@@ -1,7 +1,6 @@
 module Webdav
   class User
-    attr_reader :current_contact
-    attr_writer :current_contact
+    attr_accessor :current_contact
 
     def initialize(user, book_id)
       @user = user

@@ -14,7 +14,7 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def show?
-    super || scope.where(id: record.id).exists?
+    super || scope.exists?(id: record.id)
   end
 
   def update?

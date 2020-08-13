@@ -69,9 +69,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Other
   validates :emergency_number, phone: { possible: true, allow_blank: true }
 
-  before_create :generate_ical_secret_key
-  before_save :revoke_all_access_tokens, unless: :login_enabled?
   before_save :downcase_email!
+  before_save :revoke_all_access_tokens, unless: :login_enabled?
+  before_create :generate_ical_secret_key
   after_commit :sync_mail_aliases
 
   before_destroy do

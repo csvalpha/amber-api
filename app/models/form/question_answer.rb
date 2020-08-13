@@ -9,8 +9,8 @@ module Form
     validate :form_allows_responses?
     validate :question_belongs_to_form?
 
-    after_commit :update_response_completed_status!
     before_destroy :destroyable?
+    after_commit :update_response_completed_status!
 
     private
 
