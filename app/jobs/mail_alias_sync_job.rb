@@ -49,7 +49,7 @@ create response=#{create} update response=#{update}"
     path = '/api/rails/action_mailbox/improvmx/inbound_emails'
 
     uri = URI::Generic.build(default_options.merge(path: path))
-    uri.user = 'api'
+    uri.user = 'actionmailbox'
     uri.password = Rails.application.credentials.action_mailbox.fetch(:ingress_password)
 
     uri.to_s

@@ -12,6 +12,6 @@ class ModeratedMailbox < ApplicationMailbox
       MailModerationMailer.request_for_moderation_email(moderator, stored_mail).deliver_later
     end
     MailModerationMailer.awaiting_moderation_email(stored_mail.sender, stored_mail).deliver_later
-    # MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail.id)
+    MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail.id)
   end
 end
