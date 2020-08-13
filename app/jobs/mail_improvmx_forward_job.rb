@@ -1,6 +1,7 @@
 require 'http'
 BATCH_SIZE=10
-# TODO: Rename after mailgun has been removed
+# TODO: Rename after mailgun has been removed, and increase test coverage
+# :nocov:
 class MailImprovmxForwardJob < ApplicationJob
   queue_as :mail_handlers
 
@@ -18,10 +19,6 @@ class MailImprovmxForwardJob < ApplicationJob
 
       smtp.deliver!(mail)
     end
-
-
-    # message = "IMPROVMX: #{message_url} is forwarded to #{mail_alias.mail_addresses.join(',')}"
-    # SlackMessageJob.perform_later(message, channel: 'mila-log')
   end
 
   private
@@ -32,3 +29,4 @@ class MailImprovmxForwardJob < ApplicationJob
     "#{mail.from.first} <forwarding@hetkrat.nl>"
   end
 end
+# :nocov:
