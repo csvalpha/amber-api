@@ -8,7 +8,7 @@ class V1::StoredMailResource < V1::ApplicationResource
   def plain_body
     return mail.plain_body if @model.mailgun_mail?
 
-    mail.text_part.body.decoded.force_encoding("ISO-8859-1").encode("UTF-8")
+    mail.text_part.body.decoded.force_encoding('ISO-8859-1').encode('UTF-8')
   end
 
   def attachments
@@ -17,7 +17,7 @@ class V1::StoredMailResource < V1::ApplicationResource
     mail.attachments.map do |attachment|
       file = StringIO.new(attachment.to_s)
 
-      {name: attachment.filename, size: file.size}
+      { name: attachment.filename, size: file.size }
     end
   end
 

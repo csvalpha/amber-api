@@ -50,14 +50,18 @@ RSpec.describe MailAliasSyncJob, type: :job do
 
     context 'when it is a moderated alias' do
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_user, :with_moderator, email: 'test@sandbox86621.eu.mailgun.org')
+        FactoryBot.create(:mail_alias, :with_user, :with_moderator,
+                          email: 'test@sandbox86621.eu.mailgun.org')
       end
-      let(:ingress_password) { Rails.application.credentials.action_mailbox.fetch(:ingress_password)}
+      let(:ingress_password) do
+        Rails.application.credentials.action_mailbox.fetch(:ingress_password)
+      end
 
       it do
         expect(fake_http).to have_received(:put).with(
-            'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/test',
-            form: { forward: "http://api:#{ingress_password}@testhost:1337/api/rails/action_mailbox/improvmx/inbound_emails" }
+          'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/test',
+          form: { forward: "http://api:#{ingress_password}
+                            @testhost:1337/api/rails/action_mailbox/improvmx/inbound_emails" }
         )
       end
     end
