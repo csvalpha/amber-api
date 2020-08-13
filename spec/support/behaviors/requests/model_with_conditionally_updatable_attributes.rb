@@ -2,11 +2,12 @@ shared_examples 'a model with conditionally updatable attributes' do |unrestrict
   let(:override_attrs) {}
   let(:new_attrs) do
     attrs = record.attributes.symbolize_keys.transform_values do |value|
-      if value.is_a?(String)
+      case value
+      when String
         '_'
-      elsif value.is_a?(Date)
+      when Date
         value + 1.day
-      elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
+      when TrueClass, FalseClass
         !value
       else
         value
