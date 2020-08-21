@@ -60,8 +60,8 @@ RSpec.describe MailAliasSyncJob, type: :job do
       it do
         expect(fake_http).to have_received(:put).with(
           'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/test',
-          form: { forward: "http://api:#{ingress_password}
-                            @testhost:1337/api/rails/action_mailbox/improvmx/inbound_emails" }
+          form: { forward: "http://actionmailbox:#{ingress_password}" \
+                            '@testhost:1337/api/rails/action_mailbox/improvmx/inbound_emails' }
         )
       end
     end
