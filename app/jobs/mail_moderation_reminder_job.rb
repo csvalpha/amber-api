@@ -1,7 +1,7 @@
 class MailModerationReminderJob < ApplicationJob
   queue_as :default
 
-  def perform(stored_mail_id) # rubocop:disable Metrics/AbcSize
+  def perform(stored_mail_id)
     stored_mail = StoredMail.find_by(id: stored_mail_id)
 
     return unless stored_mail

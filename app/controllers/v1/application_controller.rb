@@ -22,7 +22,7 @@ class V1::ApplicationController < ApplicationController
     result = super
     return result if result.include? '3000'
 
-    result + '/api'
+    "#{result}/api"
   end
 
   def permitted_serializable_attributes

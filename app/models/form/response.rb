@@ -17,7 +17,7 @@ module Form
 
     scope :completed, (-> { where(completed: true) })
 
-    def complete # rubocop:disable Metrics/AbcSize
+    def complete
       reload unless new_record? # reloading is necessary, to make sure all associations are fresh
       return false unless form
 

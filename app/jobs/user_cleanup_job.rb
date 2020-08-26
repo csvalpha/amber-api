@@ -1,7 +1,7 @@
 class UserCleanupJob < ApplicationJob
   queue_as :default
 
-  def perform # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+  def perform # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     will_remove_users = []
     removed_users = []
 
