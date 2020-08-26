@@ -19,7 +19,9 @@ class StoredMail < ApplicationRecord
   def received_at
     return self[:received_at] if mailgun_mail?
 
+    # :nocov:
     inbound_email.mail.date
+    # :nocov:
   end
 
   def sender
@@ -31,6 +33,8 @@ class StoredMail < ApplicationRecord
   def subject
     return self[:subject] if mailgun_mail?
 
+    # :nocov:
     inbound_email.mail.subject
+    # :nocov:
   end
 end

@@ -5,6 +5,7 @@ class V1::StoredMailResource < V1::ApplicationResource
 
   has_one :mail_alias, always_include_linkage_data: true
 
+  # :nocov:
   def plain_body
     return mail.plain_body if @model.mailgun_mail?
 
@@ -20,6 +21,7 @@ class V1::StoredMailResource < V1::ApplicationResource
       { name: attachment.filename, size: file.size }
     end
   end
+  # :nocov:
 
   def self.searchable_fields
     %i[sender subject]
@@ -30,6 +32,8 @@ class V1::StoredMailResource < V1::ApplicationResource
   def mail
     return @mail ||= MailgunFetcher::Mail.new(message_url) if @model.mailgun_mail?
 
+    # :nocov:
     @mail ||= @model.inbound_email.mail
+    # :nocov:
   end
 end
