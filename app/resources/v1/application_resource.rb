@@ -38,7 +38,7 @@ class V1::ApplicationResource < JSONAPI::Resource
     end
   end
 
-  def self.search(records, value) # rubocop:disable Metrics/AbcSize
+  def self.search(records, value)
     return records if records == []
 
     final_records = []

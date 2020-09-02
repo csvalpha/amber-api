@@ -65,6 +65,9 @@ RSpec/SubjectStub:
 RSpec/ContextWording:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/v1/**/*'
