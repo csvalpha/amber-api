@@ -3,7 +3,7 @@ require 'http'
 class MailReceiveJob < ApplicationJob
   queue_as :mail_handlers
 
-  def perform(recipients, message_url) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def perform(recipients, message_url) # rubocop:disable Metrics/MethodLength
     fetched_mail = MailgunFetcher::Mail.new(message_url)
     mail_aliases = gather_valid_aliases(recipients, fetched_mail)
     return unless mail_aliases.any?
@@ -19,7 +19,7 @@ class MailReceiveJob < ApplicationJob
     end
   end
 
-  def send_mail_moderations(mail_alias, message_url, fetched_mail) # rubocop:disable Metrics/AbcSize
+  def send_mail_moderations(mail_alias, message_url, fetched_mail)
     stored_mail = StoredMail.create(message_url: message_url, received_at: fetched_mail.received_at,
                                     sender: fetched_mail.sender, mail_alias: mail_alias,
                                     subject: fetched_mail.subject)
@@ -33,7 +33,7 @@ class MailReceiveJob < ApplicationJob
 
   private
 
-  def gather_valid_aliases(recipients, fetched_mail) # rubocop:disable Metrics/AbcSize
+  def gather_valid_aliases(recipients, fetched_mail)
     mail_aliases = []
     recipients.split(', ').each do |recipient|
       next unless Rails.application.config.x.mail_domains.include?(recipient.split('@')[1])
