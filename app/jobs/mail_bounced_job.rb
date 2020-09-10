@@ -16,7 +16,7 @@ class MailBouncedJob < ApplicationJob
     send_slack_message("User #{@mail[:recipient]} marked mail as spam")
   end
 
-  def handle_permanent # rubocop:disable Metrics/AbcSize
+  def handle_permanent
     send_slack_message("Message `#{@headers[:subject]}` from #{@headers[:from]}"\
             " to #{@headers[:to]} (with recipient #{@mail[:recipient]}) has permanent failure,"\
             " reason: #{@mail[:reason]}")

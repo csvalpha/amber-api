@@ -13,7 +13,7 @@ module Import
       @group = group
     end
 
-    def save!(live_run) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def save!(live_run) # rubocop:disable Metrics/MethodLength
       return unless valid?
 
       ::User.transaction do

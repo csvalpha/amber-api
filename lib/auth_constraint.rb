@@ -1,5 +1,5 @@
 class AuthConstraint
-  def self.sidekiq?(request) # rubocop:disable Metrics/AbcSize
+  def self.sidekiq?(request)
     return false if request.cookie_jar['ember_simple_auth-session'].blank?
 
     token = JSON.parse(request.cookie_jar['ember_simple_auth-session']).dig('authenticated',
