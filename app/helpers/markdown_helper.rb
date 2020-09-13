@@ -11,6 +11,6 @@ module MarkdownHelper
 
   def markdown_img_regex
     # ![alt text](url =widthxheight "title")
-    /!\[([^\[]*)\]\(([^\ )]+)(( =[^\)]?[^ ]+)?( [^\)]?"[^)]+")?)?\)/
+    /!\[([^\[]*)\]\(([^\ )]+)(( =[^)]?[^ ]+)?( [^)]?"[^)]+")?)?\)/
   end
 end

@@ -20,16 +20,15 @@ class Membership < ApplicationRecord
 
   private
 
-  def unique_on_time_interval? # rubocop:disable Metrics/MethodLength
-    return true unless Membership.where.not(id: id)
-                                 .where(group_id: group_id, user_id: user_id)
-                                 .where(':start_date BETWEEN start_date AND end_date OR
+  def unique_on_time_interval?
+    return true unless Membership.where.not(id: id).where(group_id: group_id, user_id: user_id)
+                                 .exists?([':start_date BETWEEN start_date AND end_date OR
                                         :end_date BETWEEN start_date AND end_date OR
                                         start_date BETWEEN :start_date AND :end_date OR
                                         end_date BETWEEN :start_date AND :end_date OR
                                         (start_date < :start_date AND end_date IS NULL) OR
                                         (start_date > :start_date AND :end_date IS NULL)',
-                                        start_date: start_date, end_date: end_date).exists?
+                                           { start_date: start_date, end_date: end_date }])
 
     errors.add(:membership, 'is not unique on time interval')
     false
