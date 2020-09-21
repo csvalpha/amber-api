@@ -8,7 +8,7 @@ class ModeratedMailbox < ApplicationMailbox
 
     stored_mail = StoredMail.create(mail_alias: mail_alias, inbound_email: inbound_email)
 
-    mail_alias.moderators.sample(2).each do |moderator|
+    mail_alias.moderators.each do |moderator|
       MailModerationMailer.request_for_moderation_email(moderator, stored_mail).deliver_later
     end
     MailModerationMailer.awaiting_moderation_email(stored_mail.sender, stored_mail).deliver_later
