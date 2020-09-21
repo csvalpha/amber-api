@@ -47,6 +47,10 @@ class MailAlias < ApplicationRecord
     email.split('@').last
   end
 
+  def moderated?
+    moderation_type == 'moderated'
+  end
+
   private
 
   def downcase_email

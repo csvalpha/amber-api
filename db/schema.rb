@@ -10,10 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_221355) do
+ActiveRecord::Schema.define(version: 2020_06_05_121509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_mailbox_inbound_emails", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.string "message_id", null: false
+    t.string "message_checksum", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "form_id"
@@ -432,6 +462,8 @@ ActiveRecord::Schema.define(version: 2020_03_10_221355) do
     t.datetime "received_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "inbound_email_id"
+    t.index ["inbound_email_id"], name: "index_stored_mails_on_inbound_email_id"
     t.index ["mail_alias_id"], name: "index_stored_mails_on_mail_alias_id"
   end
 
@@ -491,6 +523,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_221355) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "article_comments", "articles"
   add_foreign_key "article_comments", "users", column: "author_id"
   add_foreign_key "articles", "groups"
@@ -507,4 +540,5 @@ ActiveRecord::Schema.define(version: 2020_03_10_221355) do
   add_foreign_key "permissions_users", "users"
   add_foreign_key "photos", "photo_albums"
   add_foreign_key "photos", "users", column: "uploader_id"
+  add_foreign_key "stored_mails", "action_mailbox_inbound_emails", column: "inbound_email_id"
 end
