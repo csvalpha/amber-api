@@ -3,6 +3,11 @@ require_relative 'routes/contact_sync_handler'
 Rails.application.routes.draw do
   scope 'v1', &method(:use_doorkeeper)
 
+  scope '/rails/action_mailbox', module: 'action_mailbox/ingresses' do
+    post '/improvmx/inbound_emails' => 'improvmx/inbound_emails#create',
+         as: :rails_improvmx_inbound_emails
+  end
+
   namespace :v1 do
     jsonapi_resources :activities do
       jsonapi_relationships

@@ -1,5 +1,5 @@
 class MailgunController < ApplicationController
-  def webhook # rubocop:disable Metrics/AbcSize
+  def webhook
     mail = request.params
     return head(:not_acceptable) unless verify_mailgun_signature(
       Rails.application.config.x.mailgun_validation_key,
@@ -10,7 +10,7 @@ class MailgunController < ApplicationController
     head :ok
   end
 
-  def bounces # rubocop:disable Metrics/AbcSize
+  def bounces
     mail = request.params
     signature = mail[:signature]
     return head(:not_acceptable) unless verify_mailgun_signature(
