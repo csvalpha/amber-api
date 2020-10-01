@@ -1,3 +1,4 @@
+# rubocop:disable Style/CombinableLoops
 members = Group.find_by(name: 'Leden').users
 
 articles = []
@@ -151,3 +152,4 @@ end
 members.sample(10).each do |member|
   FactoryBot.create(:mail_alias, user: nil, group: member.groups.first)
 end
+# rubocop:enable Style/CombinableLoops

@@ -1,6 +1,6 @@
 class NotRenullableValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, _value)
-    changed = record.changes.dig(attribute)
+    changed = record.changes[attribute]
 
     return unless changed
 

@@ -22,12 +22,12 @@ create response=#{create} update response=#{update}"
 
   def update_alias(mail_alias)
     client.put("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
-               form: { forward: mail_alias.mail_addresses_str })
+               form: { forward: forward_to(mail_alias) })
   end
 
   def create_alias(mail_alias)
     client.post("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/",
-                form: { alias: mail_alias.alias_name, forward: mail_alias.mail_addresses_str })
+                form: { alias: mail_alias.alias_name, forward: forward_to(mail_alias) })
   end
 
   def client
@@ -36,5 +36,22 @@ create response=#{create} update response=#{update}"
 
   def api_host
     'https://api.improvmx.com/v3'
+  end
+
+  def forward_to(mail_alias)
+    return moderation_route if mail_alias.moderated?
+
+    mail_alias.mail_addresses_str
+  end
+
+  def moderation_route
+    default_options = Rails.application.config.action_mailer.default_url_options
+    path = '/api/rails/action_mailbox/improvmx/inbound_emails'
+
+    uri = URI::Generic.build(default_options.merge(path: path))
+    uri.user = 'actionmailbox'
+    uri.password = Rails.application.credentials.action_mailbox.fetch(:ingress_password)
+
+    uri.to_s
   end
 end
