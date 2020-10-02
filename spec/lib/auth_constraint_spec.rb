@@ -14,7 +14,7 @@ RSpec.describe AuthConstraint do
         OpenStruct.new(cookie_jar: {
                          'ember_simple_auth-session' => JSON.generate(
                            'authenticated' => {
-                             'access_token' => access_token[:token]
+                             'access_token' => access_token.plaintext_token
                            }
                          )
                        })
