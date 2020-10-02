@@ -21,7 +21,7 @@ module Import
     private
 
     def csv_valid?(file_path)
-      csv = CSV.open(file_path, col_sep: ',', headers: true, encoding: 'ISO-8859-1')
+      csv = CSV.open(file_path, col_sep: ',', headers: true, encoding: 'bom|utf-8')
       headers = csv.read.headers
       unless headers.include?('username')
         @errors.add(:import_file, 'username field must be present')
