@@ -17,7 +17,7 @@ describe V1::Forum::ThreadsController do
       context 'when with permission' do
         let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
 
-        it { expect(record.class.last.read(user)).to be true }
+        it { expect(record.class.last.read?(user)).to be true }
       end
     end
   end

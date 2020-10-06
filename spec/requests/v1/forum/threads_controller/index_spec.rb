@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe V1::Forum::ThreadsController do
-
   before { Bullet.enable = false }
 
   after { Bullet.enable = true }
