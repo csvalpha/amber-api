@@ -7,7 +7,7 @@ class V1::Forum::ThreadResource < V1::ApplicationResource
   end
 
   def read
-    @model.read(current_user)
+    @model.read?(current_user)
   end
 
   has_one :author, always_include_linkage_data: true
