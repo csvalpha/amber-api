@@ -5,10 +5,12 @@ class MailForwardJob < ApplicationJob
 
   def perform(mail_alias, message_url)
     # See https://documentation.mailgun.com/en/latest/api-sending.html#examples
-    HTTP.basic_auth(user: :api, pass: Rails.application.config.x.mailgun_api_key)
-        .post(message_url, form: { to: mail_alias.mail_addresses.join(',') })
+    forward_to = mail_alias.email.gsub! '@', '@alpha.'
 
-    message = "#{message_url} is forwarded to #{mail_alias.mail_addresses.join(',')}"
+    HTTP.basic_auth(user: :api, pass: Rails.application.config.x.mailgun_api_key)
+        .post(message_url, form: { to: forward_to })
+
+    message = "#{message_url} is forwarded to #{forward_to}"
     SlackMessageJob.perform_later(message, channel: 'mila-log')
   end
 end

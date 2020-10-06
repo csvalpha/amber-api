@@ -3,19 +3,23 @@ require 'http'
 class MailReceiveJob < ApplicationJob
   queue_as :mail_handlers
 
-  def perform(recipients, message_url) # rubocop:disable Metrics/MethodLength
+  def perform(recipients, message_url)
     fetched_mail = MailgunFetcher::Mail.new(message_url)
     mail_aliases = gather_valid_aliases(recipients, fetched_mail)
     return unless mail_aliases.any?
 
     mail_aliases.each do |mail_alias|
-      if mail_alias.moderation_type == 'open' || (mail_alias.moderation_type == 'semi_moderated' &&
-        mail_alias.mail_addresses.include?(fetched_mail.sender))
-        MailForwardJob.perform_later(mail_alias, message_url)
-      else
-        send_mail_moderations(mail_alias, message_url, fetched_mail)
-      end
+      MailForwardJob.perform_later(mail_alias, message_url)
       mail_alias.update(last_received_at: Time.zone.now)
+
+      # if mail_alias.moderation_type == 'open'
+      # || (mail_alias.moderation_type == 'semi_moderated' &&
+      #   mail_alias.mail_addresses.include?(fetched_mail.sender))
+      #   MailForwardJob.perform_later(mail_alias, message_url)
+      # else
+      #   send_mail_moderations(mail_alias, message_url, fetched_mail)
+      # end
+      #
     end
   end
 
