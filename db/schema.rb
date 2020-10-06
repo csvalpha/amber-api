@@ -236,6 +236,17 @@ ActiveRecord::Schema.define(version: 2020_06_05_121509) do
     t.index ["thread_id"], name: "index_forum_posts_on_thread_id"
   end
 
+  create_table "forum_read_threads", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "thread_id"
+    t.integer "post_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["thread_id"], name: "index_forum_read_threads_on_thread_id"
+    t.index ["user_id"], name: "index_forum_read_threads_on_user_id"
+  end
+
   create_table "forum_threads", id: :serial, force: :cascade do |t|
     t.string "title"
     t.integer "author_id"
