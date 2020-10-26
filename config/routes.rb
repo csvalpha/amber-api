@@ -89,7 +89,12 @@ Rails.application.routes.draw do
     namespace :forum do
       jsonapi_resources :categories
       jsonapi_resources :posts
-      jsonapi_resources :threads
+      jsonapi_resources :threads do
+        jsonapi_relationships
+        member do
+          post :mark_read
+        end
+      end
     end
   end
 

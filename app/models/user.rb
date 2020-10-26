@@ -18,6 +18,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :board_room_presences
   has_many :photo_comments
   has_many :mail_aliases
+  has_many :read_threads
   has_many :mandates, class_name: 'Debit::Mandate'
   has_many :group_mail_aliases, through: :active_groups, source: :mail_aliases
 
