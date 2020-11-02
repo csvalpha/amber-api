@@ -1,9 +1,13 @@
 class V1::Forum::ThreadResource < V1::ApplicationResource
   model_name 'Forum::Thread'
-  attributes :title, :closed_at, :amount_of_posts
+  attributes :title, :closed_at, :amount_of_posts, :read
 
   def amount_of_posts
     @model.posts.size
+  end
+
+  def read
+    @model.read?(current_user)
   end
 
   has_one :author, always_include_linkage_data: true

@@ -2,7 +2,7 @@ class ModeratedMailbox < ApplicationMailbox
   def process # rubocop:disable Metrics/AbcSize
     # Do not use mail.to, this contains all recipients.
     # If there are 2 recipients of alpha this method will be called twice
-    to = inbound_email.mail['Delivered-To'].value
+    to = inbound_email.mail['Delivered-To'].value.gsub('@alpha.', '@')
     mail_alias = MailAlias.find_by(email: to, moderation_type: 'moderated')
     return unless mail_alias
 
