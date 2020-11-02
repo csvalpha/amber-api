@@ -2,6 +2,7 @@
   - default
   - mailers
   - mail_handlers
+  - action_mailbox_routing
 
 schedule:
   UserCleanupJob:
