@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:11.2
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BUNDLE_INSTALL_EXCLUDE='test'
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST=db
+    ports:
+      - 3000:3000
