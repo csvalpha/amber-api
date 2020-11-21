@@ -6,7 +6,7 @@ namespace :cleanup do
     o = OptionParser.new
     o.banner = 'Usage: rake cleanup:doorkeeper_tokens -- [options]'
     o.on('-f', '--force') { options[:run] = true }
-    args = o.order!(ARGV) {}
+    args = o.order!(ARGV)
     o.parse!(args)
 
     if options[:run]
