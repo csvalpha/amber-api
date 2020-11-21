@@ -12,6 +12,24 @@ Alpha AMBER API
 * On macOS: Xcode (or xcode-select), see [Nokogiri docs](http://www.nokogiri.org/tutorials/installing_nokogiri.html#mac_os_x) - `xcode-select --install`
 
 ## Installation
+### With Docker
+1. Install the [Docker Engine](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+2. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
+3. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
+4. Run the project using `docker-compose -f docker-compose.development.yml up api`.
+5. Create databases and tables and run seeds with `bundle exec rails db:setup` (see tip on how to run commands in containers).
+
+Tip: to run commands in a container, you need to find the container's ID using the `docker ps` command first. Copy the ID of the container with image "amber_development_api".
+Now to run a command in that container, you can run:
+```
+$ docker exec <CONTAINER_ID> <COMMAND>
+```
+For example:
+```
+$ docker exec 4bde3ea072a2 bundle exec rspec
+```
+
+### Without Docker
 1. Install prerequisites
 2. Create a Postgres user with permission to create databases. _(optional)_
   
