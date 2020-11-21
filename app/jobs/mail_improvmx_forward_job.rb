@@ -26,9 +26,9 @@ class MailImprovmxForwardJob < ApplicationJob
   private
 
   def new_from(mail)
-    return mail.from if mail.from.first.include?('csvalpha.nl')
+    return mail.from if mail.from.first.include?('alpha.csvalpha.nl')
 
-    "#{mail.from.first} <forwarding@csvalpha.nl>"
+    "#{mail.from.first} <forwarding@alpha.csvalpha.nl>"
   end
 end
 # :nocov:
