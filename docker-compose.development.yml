@@ -16,3 +16,5 @@ services:
       - POSTGRES_HOST=db
     ports:
       - 3000:3000
+    volumes:
+      - ./app:/app/app
