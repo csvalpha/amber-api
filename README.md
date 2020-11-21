@@ -20,22 +20,19 @@ Otherwise, you need the following prerequisites installed:
 ### With Docker
 1. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
 2. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
-3. Run the project using `docker-compose -f docker-compose.development.yml up api`.
-4. Create databases and tables and run seeds with `bundle exec rails db:setup` (see tip on how to run commands in containers).
+3. Create databases and tables and run seeds with `bundle exec rails db:setup` (see tip on how to run commands in the container).
 
-Tip: to run commands in a container, you need to find the container's ID using the `docker ps` command first. Copy the ID of the container with image "amber_development_api".
-Now to run a command in that container, you can run:
+Tip: to run commands in the container, you can run the following:
 ```
-$ docker exec <CONTAINER_ID> <COMMAND>
+$ docker-compose -f docker-compose.development.yml run api <COMMAND>
 ```
 For example:
 ```
-$ docker exec 4bde3ea072a2 bundle exec rspec
+$ docker-compose -f docker-compose.development.yml run api bundle exec rspec
 ```
 
 ### Without Docker
-1. Install prerequisites
-2. Create a Postgres user with permission to create databases. _(optional)_
+1. Create a Postgres user with permission to create databases. _(optional)_
   
     - Example of doing this (it could be that you need to be the `postgres` user: do `sudo su postgres`):
 
@@ -44,16 +41,12 @@ $ docker exec 4bde3ea072a2 bundle exec rspec
       The username can be you own username, or any other name.
 
     - Configure the database by setting your environment variables according to `config/database.yml`
-4. Install gems with `bundle install`
-5. Create databases and tables and run seeds with `bundle exec rails db:setup`
-6. Copy the `.env.example` to `.env` and update the fields to reflect your environment
+2. Install gems with `bundle install`
+3. Create databases and tables and run seeds with `bundle exec rails db:setup`
+4. Copy the `.env.example` to `.env` and update the fields to reflect your environment
 
 ## Usage
-To start the server, execute:
-
-    bundle exec rails server
-
-The `docker-compose up api` command in **With Docker** step 3 above will automatically start the server.
+If you're using Docker, you can run the project by using `docker-compose -f docker-compose.development.yml up api`, otherwise run `bundle exec rails server`.
      
 ### Credentials
 Before you can start the application you will need the `master.key`. Ask a fellow developer for it, or pull it from the server via ssh.
