@@ -3,8 +3,8 @@ require 'rails_helper'
 describe V1::UsersController do
   describe 'POST /users/batch_import', version: 1 do
     let(:test_file_path) { Rails.root.join('spec', 'support', 'files', 'user_import.csv') }
-    let(:test_file_base_64) { Base64.encode64(File.read(test_file_path)).delete("\n") }
-    let(:test_file) { "data:text/csv;base64,#{test_file_base_64}" }
+    let(:test_file_base64) { Base64.encode64(File.read(test_file_path)).delete("\n") }
+    let(:test_file) { "data:text/csv;base64,#{test_file_base64}" }
     let(:record_url) { '/v1/users/batch_import' }
     let(:record_permission) { 'user.create' }
     let(:group) { FactoryBot.create(:group) }
@@ -29,7 +29,7 @@ describe V1::UsersController do
         end
 
         context 'when without parameters' do
-          let(:params) {}
+          let(:params) { nil }
 
           it_behaves_like '422 Unprocessable Entity'
           it { expect(group.users.count).to eq 0 }
