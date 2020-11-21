@@ -38,14 +38,16 @@ class V1::ApplicationResource < JSONAPI::Resource
     end
   end
 
-  def self.search(records, value)
+  def self.search(records, value) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return records if records == []
 
     final_records = []
     arel = records.first.class.arel_table
     value.each do |val|
       searchable_fields.each do |field|
-        final_records << records.where(arel[field].lower.matches("%#{val.downcase}%"))
+        val.split do |word|
+          final_records << records.where(arel[field].lower.matches("%#{word.downcase}%"))
+        end
       end
     end
     records.where(id: final_records.flatten.map(&:id))
