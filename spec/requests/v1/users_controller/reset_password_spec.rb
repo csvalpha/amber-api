@@ -9,7 +9,7 @@ describe V1::UsersController do
     subject(:request) { perform_enqueued_jobs { post(record_url, params) } }
 
     context 'when without parameters' do
-      let(:params) {}
+      let(:params) { nil }
 
       it_behaves_like '204 No Content'
       it { expect(ActionMailer::Base.deliveries.count).to eq 0 }
