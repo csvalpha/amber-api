@@ -13,7 +13,7 @@ Alpha AMBER API
 
 ## Installation
 ### With Docker
-1. Install the [Docker Engine](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+1. Install the [Docker Engine](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
 2. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
 3. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
 4. Run the project using `docker-compose -f docker-compose.development.yml up api`.
