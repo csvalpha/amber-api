@@ -4,7 +4,7 @@ gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git
 
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4'
-gem 'carrierwave', '=1.2.2'
+gem 'carrierwave', '=1.3.2'
 gem 'carrierwave-base64', '~> 2.5'
 gem 'carrierwave-bombshelter', '~> 0.2'
 gem 'case_transform', '~> 0.2'
