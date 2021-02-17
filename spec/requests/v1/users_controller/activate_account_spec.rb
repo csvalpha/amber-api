@@ -15,7 +15,7 @@ describe V1::UsersController do
     subject(:request) { post(record_url, params) }
 
     context 'when without parameters' do
-      let(:params) {}
+      let(:params) { nil }
 
       it_behaves_like '404 Not Found'
     end

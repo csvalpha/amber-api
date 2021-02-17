@@ -397,7 +397,7 @@ RSpec.describe User, type: :model do
   end
 
   describe '.archived' do
-    let(:user) {}
+    let(:user) { nil }
     let(:users) { FactoryBot.create_list(:user, 2) }
     let(:archived_user) { FactoryBot.create(:user) }
 
