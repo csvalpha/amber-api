@@ -1,5 +1,4 @@
 class ApplicationImageUploader < ApplicationUploader
-
   process resize_to_limit: [2048, 2048]
 
   def extension_whitelist
