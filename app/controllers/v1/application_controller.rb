@@ -36,7 +36,7 @@ class V1::ApplicationController < ApplicationController
 
   def user_is_not_member_of_group_error # rubocop:disable Metrics/MethodLength
     render json: {
-      'errors': [{
+      errors: [{
         title: 'User is not a member of group ',
         detail: 'User is not a member of group',
         code: '100',
