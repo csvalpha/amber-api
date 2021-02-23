@@ -68,6 +68,9 @@ RSpec/ContextWording:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/FilePath:
+  Enabled: false
+
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/v1/**/*'
