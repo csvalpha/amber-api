@@ -23,7 +23,7 @@ describe V1::UsersController do
         it { expect(json['displayName']).to eq user.full_name }
         it { expect(json['email']).to eq user.email }
         it { expect(json['groups'][0]['gid']).to eq group.id }
- 	      it { expect(json['groups'][0]['displayName']).to eq group.name }
+        it { expect(json['groups'][0]['displayName']).to eq group.name }
       end
     end
   end
