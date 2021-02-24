@@ -159,6 +159,6 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
   end
 
   def nextcloud_groups
-    current_user.active_groups.map(&:id).join(',')
+    current_user.active_groups.map { |g| { gid: g.id, displayName: g.name } }
   end
 end
