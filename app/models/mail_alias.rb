@@ -14,6 +14,7 @@ class MailAlias < ApplicationRecord
 
   before_save :set_smtp
   after_commit :sync_mail_aliases
+  before_destroy :disable_smtp
 
   scope :mail_aliases_moderated_by_user, (lambda { |user|
     joins(:moderator_group).where(moderator_group: Group.active_groups_for_user(user))
@@ -87,6 +88,12 @@ class MailAlias < ApplicationRecord
     return unless smtp_enabled_changed?
 
     SmtpJob.perform_later(self, smtp_enabled)
+  end
+
+  def disable_smtp
+    return unless smtp_enabled?
+
+    SmtpJob.perform_later(self, false)
   end
 
   def sync_mail_aliases
