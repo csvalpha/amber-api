@@ -57,5 +57,33 @@ RSpec.describe MailAliasSyncJob, type: :job do
                 'alpha.sandbox86621.eu.mailgun.org')
       end
     end
+
+    context 'when it is rate limited' do
+      context 'when it recovers' do
+        before do
+          allow(improvmx).to receive(:create_or_update_alias)
+            .once.and_raise(Improvmx::RateLimitError)
+          allow(improvmx).to receive(:create_or_update_alias).once.and_return(200)
+          job.perform(mail_alias.id)
+        end
+
+        it {
+          expect(improvmx).to have_received(:create_or_update_alias)
+            .twice
+            .with('test', [mail_alias.user.email],
+                  'alpha.sandbox86621.eu.mailgun.org')
+        }
+      end
+
+      context 'when it keeps failing' do
+        before do
+          allow(improvmx).to receive(:create_or_update_alias).and_raise(Improvmx::RateLimitError)
+        end
+
+        it {
+          expect { job.perform(mail_alias.id) }.to raise_error(Improvmx::RateLimitError)
+        }
+      end
+    end
   end
 end

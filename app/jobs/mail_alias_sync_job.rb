@@ -5,15 +5,23 @@ class MailAliasSyncJob < ApplicationJob
     @client ||= Improvmx::Client.new
 
     mail_aliases = MailAlias.with_deleted.where(id: mail_alias_ids)
-    mail_aliases.map do |m|
-      sync_alias(m)
-    rescue Improvmx::RateLimitError => e
-      sleep e.wait_seconds
-      retry
-    end
+    sync(mail_aliases)
   end
 
   private
+
+  def sync(aliases)
+    @retry = 0
+    aliases.map do |m|
+      sync_alias(m)
+    rescue Improvmx::RateLimitError => e
+      raise e unless @retry < 5
+
+      sleep e.wait_seconds
+      @retry += 1
+      retry
+    end
+  end
 
   def sync_alias(mail_alias)
     if mail_alias.deleted?
