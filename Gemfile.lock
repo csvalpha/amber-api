@@ -354,6 +354,24 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rest-client (2.1.0-x64-mingw32)
+      ffi (~> 1.9)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
+    rest-client (2.1.0-x86-mingw32)
+      ffi (~> 1.9)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
+    rest-client (2.1.0-x86-mswin32)
+      ffi (~> 1.9)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rexml (3.2.4)
     rotp (4.0.2)
       addressable (~> 2.5)
@@ -472,7 +490,7 @@ GEM
     url_mount (0.2.1)
       rack
     uuidtools (2.1.5)
-    validates_timeliness (4.1.1)
+    validates_timeliness (6.0.0.alpha1)
       timeliness (>= 0.3.10, < 1)
     vcard_parser (0.0.9)
     vcr (6.0.0)
@@ -565,7 +583,7 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   tzinfo-data
-  validates_timeliness (~> 4.0)
+  validates_timeliness (~> 6.0.alpha1)
   vcr
   vpim (~> 13.11)
   webmock
