@@ -473,7 +473,7 @@ GEM
     url_mount (0.2.1)
       rack
     uuidtools (2.1.5)
-    validates_timeliness (4.1.1)
+    validates_timeliness (5.0.0)
       timeliness (>= 0.3.10, < 1)
     vcard_parser (0.0.9)
     vcr (6.0.0)
@@ -566,7 +566,7 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   tzinfo-data
-  validates_timeliness (~> 4.0)
+  validates_timeliness (~> 5.0)
   vcr
   vpim (~> 13.11)
   webmock
