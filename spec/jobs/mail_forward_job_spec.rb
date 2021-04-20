@@ -16,10 +16,26 @@ RSpec.describe MailForwardJob, type: :job do
       job.perform(mail_alias, message_url)
     end
 
-    it do
-      expect(fake_http).to have_received(:post).with(
-        message_url, form: { to: mail_alias.user.email }
-      )
+    context 'when with open alias' do
+      let(:mail_alias) do
+        FactoryBot.create(:mail_alias, :with_user, email: 'testing@sandbox86621.eu.mailgun.org')
+      end
+
+      it do
+        expect(fake_http).to have_received(:post).with(
+          message_url, form: { to: 'testing@alpha.sandbox86621.eu.mailgun.org' }
+        )
+      end
+    end
+
+    context 'when with (semi)moderated alias' do
+      let(:mail_alias) { FactoryBot.create(:mail_alias, :with_user, :with_moderator) }
+
+      it do
+        expect(fake_http).to have_received(:post).with(
+          message_url, form: { to: mail_alias.user.email }
+        )
+      end
     end
   end
 end
