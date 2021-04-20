@@ -7,45 +7,35 @@ RSpec.describe MailAliasSyncJob, type: :job do
     let(:mail_alias) do
       FactoryBot.create(:mail_alias, :with_user, email: 'test@sandbox86621.eu.mailgun.org')
     end
-    let(:http) { class_double('HTTP') }
-    let(:fake_http) { instance_double(FakeHTTP) }
-    let(:put_response_object) { instance_double('HTTP::Response') }
-    let(:post_response_object) { instance_double('HTTP::Response') }
-    let(:put_response) { 200 }
-    let(:post_response) { 200 }
+    let(:improvmx_class) { class_double(Improvmx::Client) }
+    let(:improvmx) { instance_double(Improvmx::Client) }
 
     before do
-      stub_const('HTTP', http)
-      allow(http).to receive(:basic_auth).and_return(fake_http)
-      allow(put_response_object).to receive(:code).and_return(put_response)
-      allow(fake_http).to receive(:put).and_return(put_response_object)
-      allow(post_response_object).to receive(:code).and_return(post_response)
-      allow(fake_http).to receive(:post).and_return(post_response_object)
+      stub_const('Improvmx::Client', improvmx_class)
+      allow(improvmx_class).to receive(:new).and_return(improvmx)
+      allow(improvmx).to receive(:create_or_update_alias).and_return(200)
+      allow(improvmx).to receive(:delete_alias).and_return(200)
       job.perform(mail_alias.id)
     end
 
-    context 'when it is a new alias' do
-      let(:put_response) { 404 }
-
-      it { expect(fake_http).to have_received(:put) }
-
-      it do
-        expect(fake_http).to have_received(:post).with(
-          'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/',
-          form: { alias: 'test', forward: mail_alias.user.email }
-        )
-      end
+    context 'when it is a existing alias' do
+      it {
+        expect(improvmx).to have_received(:create_or_update_alias)
+          .with('test', [mail_alias.user.email],
+                'alpha.sandbox86621.eu.mailgun.org')
+      }
     end
 
-    context 'when it is an existing alias' do
-      it do
-        expect(fake_http).to have_received(:put).with(
-          'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/test',
-          form: { forward: mail_alias.user.email }
-        )
+    context 'when it is an destroyed alias' do
+      let(:mail_alias) do
+        FactoryBot.create(:mail_alias, :with_user, email: 'test@sandbox86621.eu.mailgun.org',
+                                                   deleted_at: Time.zone.now)
       end
 
-      it { expect(fake_http).not_to have_received(:post) }
+      it {
+        expect(improvmx).to have_received(:delete_alias).with('test',
+                                                              'alpha.sandbox86621.eu.mailgun.org')
+      }
     end
 
     context 'when it is a moderated alias' do
@@ -56,13 +46,43 @@ RSpec.describe MailAliasSyncJob, type: :job do
       let(:ingress_password) do
         Rails.application.credentials.action_mailbox.fetch(:ingress_password)
       end
+      let(:forward_url) do
+        "http://actionmailbox:#{ingress_password}" \
+          '@testhost:1337/api/rails/action_mailbox/improvmx/inbound_emails'
+      end
 
       it do
-        expect(fake_http).to have_received(:put).with(
-          'https://api.improvmx.com/v3/domains/alpha.sandbox86621.eu.mailgun.org/aliases/test',
-          form: { forward: "http://actionmailbox:#{ingress_password}" \
-                            '@testhost:1337/api/rails/action_mailbox/improvmx/inbound_emails' }
-        )
+        expect(improvmx).to have_received(:create_or_update_alias)
+          .with('test', forward_url,
+                'alpha.sandbox86621.eu.mailgun.org')
+      end
+    end
+
+    context 'when it is rate limited' do
+      context 'when it recovers' do
+        before do
+          allow(improvmx).to receive(:create_or_update_alias)
+            .once.and_raise(Improvmx::RateLimitError)
+          allow(improvmx).to receive(:create_or_update_alias).once.and_return(200)
+          job.perform(mail_alias.id)
+        end
+
+        it {
+          expect(improvmx).to have_received(:create_or_update_alias)
+            .twice
+            .with('test', [mail_alias.user.email],
+                  'alpha.sandbox86621.eu.mailgun.org')
+        }
+      end
+
+      context 'when it keeps failing' do
+        before do
+          allow(improvmx).to receive(:create_or_update_alias).and_raise(Improvmx::RateLimitError)
+        end
+
+        it {
+          expect { job.perform(mail_alias.id) }.to raise_error(Improvmx::RateLimitError)
+        }
       end
     end
   end

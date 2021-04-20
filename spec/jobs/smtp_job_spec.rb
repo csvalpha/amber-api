@@ -8,6 +8,7 @@ RSpec.describe SmtpJob, type: :job do
 
     describe '#enable_smtp' do
       let(:job) { described_class.new(mail_alias, true) }
+      let(:management_mail) { ActionMailer::Base.deliveries.second }
 
       before do
         ActionMailer::Base.deliveries = []
@@ -20,9 +21,15 @@ RSpec.describe SmtpJob, type: :job do
       end
 
       it { expect(mailgun_client).to have_received(:post) }
+      it { expect(ActionMailer::Base.deliveries.size).to eq 2 }
       it { expect(mail.bcc).to eq mail_alias.mail_addresses }
-      it { expect(mail.to).to eq ['mailbeheer@csvalpha.nl'] }
-      it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt" }
+      it { expect(mail.subject).to eq "Je kunt nu mail versturen vanaf #{mail_alias.email}!" }
+
+      it { expect(management_mail.to).to eq ['mailbeheer@csvalpha.nl'] }
+
+      it {
+        expect(management_mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt"
+      }
     end
 
     describe '#disable_smtp' do
