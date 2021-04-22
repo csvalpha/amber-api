@@ -26,6 +26,17 @@ RSpec.describe MailAliasSyncJob, type: :job do
       }
     end
 
+    context 'when it is an empty existing alias' do
+      let(:mail_alias) do
+        FactoryBot.create(:mail_alias, :with_group, email: 'test@sandbox86621.eu.mailgun.org')
+      end
+
+      it {
+        expect(improvmx).to have_received(:delete_alias).with('test',
+                                                              'alpha.sandbox86621.eu.mailgun.org')
+      }
+    end
+
     context 'when it is an destroyed alias' do
       let(:mail_alias) do
         FactoryBot.create(:mail_alias, :with_user, email: 'test@sandbox86621.eu.mailgun.org',
