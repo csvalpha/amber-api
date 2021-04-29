@@ -13,25 +13,21 @@ class SmtpJob < ApplicationJob
 
   def enable_smtp(mail_alias)
     password = SecureRandom.hex(16)
-    mailgun_client.post("/domains/#{mail_alias.domain}/credentials",
-                        login: mail_alias.email, password: password)
+    puts mail_alias.email
+    client.create_smtp(mail_alias.alias_name, password, mail_alias.domain)
 
     MailSmtpMailer.enabled_email(mail_alias, password).deliver_later
     MailSmtpMailer.notify_management_enable_email(mail_alias).deliver_later
   end
 
   def disable_smtp(mail_alias)
-    mailgun_client.delete("/domains/#{mail_alias.domain}/credentials/#{mail_alias.email}")
+    client.delete_smtp(mail_alias.alias_name, mail_alias.domain)
     MailSmtpMailer.disabled_email(mail_alias).deliver_later
   end
 
   # :nocov:
-  def mailgun_client
-    return @mailgun_client unless @mailgun_client.nil?
-
-    api_key = Rails.application.config.x.mailgun_api_key
-    api_host = Rails.application.config.x.mailgun_host
-    @mailgun_client = Mailgun::Client.new api_key, api_host
+  def client
+    @client ||= Improvmx::Client.new
   end
   # :nocov:
 end
