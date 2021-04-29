@@ -11,30 +11,8 @@ class MailReceiveJob < ApplicationJob
     mail_aliases.each do |mail_alias|
       MailForwardJob.perform_later(mail_alias, message_url)
       mail_alias.update(last_received_at: Time.zone.now)
-
-      # if mail_alias.moderation_type == 'open'
-      # || (mail_alias.moderation_type == 'semi_moderated' &&
-      #   mail_alias.mail_addresses.include?(fetched_mail.sender))
-      #   MailForwardJob.perform_later(mail_alias, message_url)
-      # else
-      #   send_mail_moderations(mail_alias, message_url, fetched_mail)
-      # end
-      #
     end
   end
-
-  # def send_mail_moderations(mail_alias, message_url, fetched_mail)
-  #   stored_mail = StoredMail.create(message_url: message_url,
-  #                                   received_at: fetched_mail.received_at,
-  #                                   sender: fetched_mail.sender, mail_alias: mail_alias,
-  #                                   subject: fetched_mail.subject)
-  #
-  #   mail_alias.moderators.each do |moderator|
-  #     MailModerationMailer.request_for_moderation_email(moderator, stored_mail).deliver_later
-  #   end
-  #   MailModerationMailer.awaiting_moderation_email(stored_mail.sender, stored_mail).deliver_later
-  #   MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail.id)
-  # end
 
   private
 
