@@ -13,7 +13,6 @@ class SmtpJob < ApplicationJob
 
   def enable_smtp(mail_alias)
     password = SecureRandom.hex(16)
-    puts mail_alias.email
     client.create_smtp(mail_alias.alias_name, password, mail_alias.domain)
 
     MailSmtpMailer.enabled_email(mail_alias, password).deliver_later
