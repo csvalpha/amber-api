@@ -12,12 +12,36 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
 
   describe 'Moderated mail is converted into stored mail' do
     context 'When for moderated address' do
-      let(:mail_alias) { FactoryBot.create(:mail_alias, :with_moderator) }
+      let(:moderator) { FactoryBot.create(:user, email: 'moderator@csvalpha.nl') }
+      let(:moderator_group) { FactoryBot.create(:group, users: [moderator]) }
+      let(:mail_alias) do
+        FactoryBot.create(:mail_alias, :with_user, moderation_type: :moderated,
+                                                   moderator_group: moderator_group)
+      end
+      let(:awaiting_moderation_email) { ActionMailer::Base.deliveries.last }
+      let(:request_for_moderation_email) { ActionMailer::Base.deliveries.first }
 
-      before { receive_mail }
+      before do
+        ActionMailer::Base.deliveries = []
+
+        perform_enqueued_jobs(except: MailModerationReminderJob) do
+          receive_mail
+        end
+      end
 
       it { expect(StoredMail.first.mail_alias).to eq mail_alias }
       it { expect(StoredMail.first.inbound_email).to eq receive_mail }
+
+      it { expect(awaiting_moderation_email.to.first).to include('someone@example.com') }
+
+      it do
+        expect(awaiting_moderation_email.subject).to include('Moderatieverzoek in behandeling:')
+      end
+
+      it { expect(request_for_moderation_email.to.first).to include('moderator@csvalpha.nl') }
+      it { expect(request_for_moderation_email.subject).to include('Moderatieverzoek:') }
+
+      it { expect(enqueued_jobs.first['job_class']).to eq 'MailModerationReminderJob' }
     end
 
     context 'When for non-moderated address' do
