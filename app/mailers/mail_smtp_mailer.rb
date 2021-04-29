@@ -3,7 +3,7 @@ class MailSmtpMailer < ApplicationMailer
   def enabled_email(mail_alias, password)
     @mail_alias = mail_alias
     @password = password
-    mail bcc: mail_alias.mail_addresses,
+    mail to: 'no-reply@csvalpha.nl', bcc: mail_alias.mail_addresses,
          subject: "Je kunt nu mail versturen vanaf #{mail_alias.email}!"
   end
 
