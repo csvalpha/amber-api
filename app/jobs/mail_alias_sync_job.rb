@@ -2,46 +2,40 @@ class MailAliasSyncJob < ApplicationJob
   queue_as :default
 
   def perform(mail_alias_ids = nil)
-    mail_aliases = MailAlias.where(id: mail_alias_ids)
+    @client ||= Improvmx::Client.new
 
-    mail_aliases.map { |m| create_or_update(m) }
+    mail_aliases = MailAlias.with_deleted.where(id: mail_alias_ids)
+    sync(mail_aliases)
   end
 
   private
 
-  def create_or_update(mail_alias)
-    update = update_alias(mail_alias)
-    return if update.code == 200
+  def sync(aliases)
+    @retry = 0
+    aliases.map do |m|
+      sync_alias(m)
+    rescue Improvmx::RateLimitError => e
+      raise e unless @retry < 5
 
-    create = create_alias(mail_alias)
-    return if create.code == 200
-
-    raise "Create/Update of alias #{mail_alias} failed.
-create response=#{create} update response=#{update}"
+      sleep e.wait_seconds
+      @retry += 1
+      retry
+    end
   end
 
-  def update_alias(mail_alias)
-    client.put("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/#{mail_alias.alias_name}",
-               form: { forward: forward_to(mail_alias) })
-  end
-
-  def create_alias(mail_alias)
-    client.post("#{api_host}/domains/alpha.#{mail_alias.domain}/aliases/",
-                form: { alias: mail_alias.alias_name, forward: forward_to(mail_alias) })
-  end
-
-  def client
-    HTTP.basic_auth(user: :api, pass: Rails.application.config.x.improvmx_api_key)
-  end
-
-  def api_host
-    'https://api.improvmx.com/v3'
+  def sync_alias(mail_alias)
+    if mail_alias.deleted?
+      @client.delete_alias(mail_alias.alias_name, "alpha.#{mail_alias.domain}")
+    else
+      @client.create_or_update_alias(mail_alias.alias_name, forward_to(mail_alias),
+                                     "alpha.#{mail_alias.domain}")
+    end
   end
 
   def forward_to(mail_alias)
     return moderation_route if mail_alias.moderated?
 
-    mail_alias.mail_addresses_str
+    mail_alias.mail_addresses
   end
 
   def moderation_route

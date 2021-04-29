@@ -14,8 +14,10 @@ class SmtpJob < ApplicationJob
   def enable_smtp(mail_alias)
     password = SecureRandom.hex(16)
     mailgun_client.post("/domains/#{mail_alias.domain}/credentials",
-                        'login': mail_alias.email, 'password': password)
+                        login: mail_alias.email, password: password)
+
     MailSmtpMailer.enabled_email(mail_alias, password).deliver_later
+    MailSmtpMailer.notify_management_enable_email(mail_alias).deliver_later
   end
 
   def disable_smtp(mail_alias)

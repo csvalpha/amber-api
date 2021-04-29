@@ -118,7 +118,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def generate_username
     value = [first_name, '.', last_name_prefix, last_name]
-            .reject(&:blank?).join('').gsub(/\s|-/, '')
+            .reject(&:blank?).join.gsub(/\s|-/, '')
             .parameterize.tr('-', '.')
     usernames_like = User.where('username LIKE ?', "#{value}%")
     value = "#{value}#{usernames_like.size}" if usernames_like.any?

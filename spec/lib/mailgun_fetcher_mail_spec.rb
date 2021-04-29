@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailgunFetcher::Mail do # rubocop:disable RSpec/FilePath
+RSpec.describe MailgunFetcher::Mail do
   let(:message_url) do
     'https://se.api.mailgun.net/v3/domains/csvalpha.nl/messages/eyJwIjpmYWxzZSwiayI6IjZjZmYzYzM1LTdkMDctNGYyMC1iYzczLTI2NjU5MGE1OGZiYiIsInMiOiI5N2MxYmJjMjU5IiwiYyI6InRhbmtiIn0='
   end

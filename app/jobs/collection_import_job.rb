@@ -28,7 +28,7 @@ class CollectionImportJob < ApplicationJob
       ).deliver_later
     else
       CollectionImportMailer.error_report_mail(
-        @user, @model, @model.errors.messages[:import_file]
+        @user, @model, Array(@model.errors.messages[:import_file])
       ).deliver_later
     end
   end
