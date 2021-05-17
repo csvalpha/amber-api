@@ -3,6 +3,9 @@ version: '3'
 services:
   db:
     image: postgres:11.2
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   api:
     build:
       context: .
@@ -11,10 +14,13 @@ services:
         - BUNDLE_INSTALL_EXCLUDE=''
     depends_on:
       - db
+    env_file: .env
     environment:
-      - POSTGRES_USER=postgres
       - POSTGRES_HOST=db
     ports:
       - 3000:3000
     volumes:
       - ./app:/app/app
+
+volumes:
+  postgres_data:
