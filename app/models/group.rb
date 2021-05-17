@@ -18,7 +18,7 @@ class Group < ApplicationRecord
   })
   scope :active_groups_for_user, (lambda { |user|
     joins(:memberships).merge(Membership.active)
-      .where('memberships.user_id = :user_id', user_id: user.id)
+      .where(memberships: { user_id: user.id })
   })
 
   validates :name, presence: true

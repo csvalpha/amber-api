@@ -3,26 +3,33 @@ require 'rails_helper'
 RSpec.describe SmtpJob, type: :job do
   describe '#perform' do
     let(:mail_alias) { FactoryBot.create(:mail_alias) }
-    let(:mailgun_client) { Mailgun::Client.new }
+    let(:client) { Improvmx::Client.new }
     let(:mail) { ActionMailer::Base.deliveries.first }
 
     describe '#enable_smtp' do
       let(:job) { described_class.new(mail_alias, true) }
+      let(:management_mail) { ActionMailer::Base.deliveries.second }
 
       before do
         ActionMailer::Base.deliveries = []
-        allow(job).to receive(:mailgun_client) { mailgun_client }
-        allow(mailgun_client).to receive(:post).and_return(true)
+        allow(job).to receive(:client) { client }
+        allow(client).to receive(:create_smtp).and_return(true)
 
         perform_enqueued_jobs do
-          VCR.use_cassette('mailgun_enable_smtp') { job.perform_now }
+          job.perform_now
         end
       end
 
-      it { expect(mailgun_client).to have_received(:post) }
+      it { expect(client).to have_received(:create_smtp) }
+      it { expect(ActionMailer::Base.deliveries.size).to eq 2 }
       it { expect(mail.bcc).to eq mail_alias.mail_addresses }
-      it { expect(mail.to).to eq ['mailbeheer@csvalpha.nl'] }
-      it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt" }
+      it { expect(mail.subject).to eq "Je kunt nu mail versturen vanaf #{mail_alias.email}!" }
+
+      it { expect(management_mail.to).to eq ['mailbeheer@csvalpha.nl'] }
+
+      it {
+        expect(management_mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt"
+      }
     end
 
     describe '#disable_smtp' do
@@ -30,15 +37,15 @@ RSpec.describe SmtpJob, type: :job do
 
       before do
         ActionMailer::Base.deliveries = []
-        allow(job).to receive(:mailgun_client) { mailgun_client }
-        allow(mailgun_client).to receive(:delete).and_return(true)
+        allow(job).to receive(:client) { client }
+        allow(client).to receive(:delete_smtp).and_return(true)
 
         perform_enqueued_jobs do
-          VCR.use_cassette('mailgun_disable_smtp') { job.perform_now }
+          job.perform_now
         end
       end
 
-      it { expect(mailgun_client).to have_received(:delete) }
+      it { expect(client).to have_received(:delete_smtp) }
       it { expect(mail.bcc).to eq mail_alias.mail_addresses }
       it { expect(mail.to).to eq ['mailbeheer@csvalpha.nl'] }
       it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} opgeheven" }
