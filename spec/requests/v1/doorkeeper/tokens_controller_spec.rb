@@ -13,13 +13,29 @@ describe Doorkeeper::TokensController do
       )
     end
 
+    let(:application) { FactoryBot.create(:application) }
     let(:request_url) { '/v1/oauth/token' }
 
     before { user }
 
+    describe 'when logging in with incorrect client credentials' do
+      subject(:request) do
+        post(request_url,
+             client_id: application.uid,
+             client_secret: "#{application.plaintext_secret}a",
+             grant_type: 'password',
+             username: 'bestuur',
+             password: 'password1234')
+      end
+
+      it_behaves_like '401 Unauthorized'
+    end
+
     describe 'when logging in with correct credentials' do
       subject(:request) do
         post(request_url,
+             client_id: application.uid,
+             client_secret: application.plaintext_secret,
              grant_type: 'password',
              username: 'bestuur',
              password: 'password1234')
@@ -69,6 +85,8 @@ describe Doorkeeper::TokensController do
     describe 'when logging in with incorrect password' do
       subject(:request) do
         post(request_url,
+             client_id: application.uid,
+             client_secret: application.plaintext_secret,
              grant_type: 'password',
              username: 'bestuur',
              password: 'another_password')
@@ -80,6 +98,8 @@ describe Doorkeeper::TokensController do
     describe 'when logging in with non existing user' do
       subject(:request) do
         post(request_url,
+             client_id: application.uid,
+             client_secret: application.plaintext_secret,
              grant_type: 'password',
              username: 'non_existing_user',
              password: 'password1234')
