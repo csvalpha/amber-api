@@ -4,6 +4,11 @@ Alpha AMBER API
 [![Depfu](https://badges.depfu.com/badges/663adb8e75ff19a32ca0d866d5fe2e85/count.svg)](https://depfu.com/github/csvalpha/amber-api?project_id=7749)
 
 ## Prerequisites
+If you're going to run the project with Docker, you only need to install the following prerequisites:
+* [Docker Engine](https://docs.docker.com/get-docker/) 
+* [Docker Compose](https://docs.docker.com/compose/install/)
+
+Otherwise, you need the following prerequisites installed:
 * [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (see `.ruby-version`, install with `rvm` or `rbenv`)
 * [PostgreSQL](http://www.postgresql.org/download/) (`~> 9.5`)
 * [Bundler](http://bundler.io/)
@@ -12,8 +17,22 @@ Alpha AMBER API
 * On macOS: Xcode (or xcode-select), see [Nokogiri docs](http://www.nokogiri.org/tutorials/installing_nokogiri.html#mac_os_x) - `xcode-select --install`
 
 ## Installation
-1. Install prerequisites
-2. Create a Postgres user with permission to create databases. _(optional)_
+### With Docker
+1. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
+2. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
+3. Create databases and tables and run seeds with `bundle exec rails db:setup` (see tip on how to run commands in the container).
+
+Tip: to run commands in the container, you can run the following:
+```
+$ docker-compose -f docker-compose.development.yml run api <COMMAND>
+```
+For example:
+```
+$ docker-compose -f docker-compose.development.yml run api bundle exec rspec
+```
+
+### Without Docker
+1. Create a Postgres user with permission to create databases. _(optional)_
   
     - Example of doing this (it could be that you need to be the `postgres` user: do `sudo su postgres`):
 
@@ -22,17 +41,14 @@ Alpha AMBER API
       The username can be you own username, or any other name.
 
     - Configure the database by setting your environment variables according to `config/database.yml`
-4. Install gems with `bundle install`
-5. Create databases and tables and run seeds with `bundle exec rails db:setup`
-6. Copy the `.env.example` to `.env` and update the fields to reflect your environment
+2. Install gems with `bundle install`
+3. Create databases and tables and run seeds with `bundle exec rails db:setup`
+4. Copy the `.env.example` to `.env` and update the fields to reflect your environment
 
 ## Usage
-To start the server, execute:
-
-    bundle exec rails server
-    
+If you're using Docker, you can run the project by using `docker-compose -f docker-compose.development.yml up api`, otherwise run `bundle exec rails server`.
+     
 ### Credentials
-
 Before you can start the application you will need the `master.key`. Ask a fellow developer for it, or pull it from the server via ssh.
 
 When the `master.key` is present, you can use `bundle exec rails credentials:edit` to open the default editor on your machine to read and edit the credentials. Be informed: these are production credentials so be careful.
