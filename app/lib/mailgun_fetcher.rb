@@ -43,7 +43,7 @@ module MailgunFetcher
         # :nocov:
         HTTP.basic_auth(user: :api,
                         pass: Rails.application.config.x.mailgun_api_key)
-            .get(@message_url).parse
+            .get(@message_url).parse(:json)
         # :nocov:
       end
     end
