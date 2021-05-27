@@ -18,7 +18,7 @@ describe Doorkeeper::TokensController do
 
     before { user }
 
-    describe 'when logging in with incorrect client credentials' do
+    describe 'when logging in with incorrect client secret' do
       subject(:request) do
         post(request_url,
              client_id: application.uid,
