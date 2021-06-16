@@ -128,9 +128,6 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   require 'sidekiq-scheduler/web'
 
-  # See https://github.com/mperham/sidekiq/wiki/Monitoring#forbidden
-  Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
-
   # See https://github.com/mperham/sidekiq/wiki/Monitoring#rails-http-basic-auth-from-routes
   require_relative '../lib/auth_constraint'
   constraints ->(request) { AuthConstraint.sidekiq?(request) } do
