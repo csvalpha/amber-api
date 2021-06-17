@@ -14,6 +14,8 @@ class V1::Forum::ThreadResource < V1::ApplicationResource
   has_one :category, always_include_linkage_data: true
   has_many :posts
 
+  filter :category
+
   def self.creatable_fields(context)
     attributes = %i[title author category]
 
