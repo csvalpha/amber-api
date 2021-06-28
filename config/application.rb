@@ -38,6 +38,11 @@ module Amber
     # is not fixed
     config.middleware.use ActionDispatch::Flash
 
+    # See https://guides.rubyonrails.org/api_app.html#using-session-middlewares
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
+
     # See https://github.com/kickstarter/rack-attack#getting-started
     config.middleware.use Rack::Attack
 
