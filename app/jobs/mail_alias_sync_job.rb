@@ -25,10 +25,10 @@ class MailAliasSyncJob < ApplicationJob
 
   def sync_alias(mail_alias)
     if mail_alias.deleted? || mail_alias.mail_addresses.empty?
-      @client.delete_alias(mail_alias.alias_name, "alpha.#{mail_alias.domain}")
+      @client.delete_alias(mail_alias.alias_name, mail_alias.domain)
     else
       @client.create_or_update_alias(mail_alias.alias_name, forward_to(mail_alias),
-                                     "alpha.#{mail_alias.domain}")
+                                     mail_alias.domain)
     end
   end
 

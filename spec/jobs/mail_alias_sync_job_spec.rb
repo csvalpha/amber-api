@@ -22,7 +22,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
       it {
         expect(improvmx).to have_received(:create_or_update_alias)
           .with('test', [mail_alias.user.email],
-                'alpha.sandbox86621.eu.mailgun.org')
+                'sandbox86621.eu.mailgun.org')
       }
     end
 
@@ -33,7 +33,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
 
       it {
         expect(improvmx).to have_received(:delete_alias).with('test',
-                                                              'alpha.sandbox86621.eu.mailgun.org')
+                                                              'sandbox86621.eu.mailgun.org')
       }
     end
 
@@ -45,7 +45,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
 
       it {
         expect(improvmx).to have_received(:delete_alias).with('test',
-                                                              'alpha.sandbox86621.eu.mailgun.org')
+                                                              'sandbox86621.eu.mailgun.org')
       }
     end
 
@@ -65,7 +65,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
       it do
         expect(improvmx).to have_received(:create_or_update_alias)
           .with('test', forward_url,
-                'alpha.sandbox86621.eu.mailgun.org')
+                'sandbox86621.eu.mailgun.org')
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
           expect(improvmx).to have_received(:create_or_update_alias)
             .twice
             .with('test', [mail_alias.user.email],
-                  'alpha.sandbox86621.eu.mailgun.org')
+                  'sandbox86621.eu.mailgun.org')
         }
       end
 
