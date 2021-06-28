@@ -18,7 +18,7 @@ RSpec.describe MailForwardJob, type: :job do
 
     it do
       expect(fake_http).to have_received(:post).with(
-        message_url, form: { to: 'testing@alpha.csvalpha.nl' }
+        message_url, form: { to: 'testing@csvalpha.nl' }
       )
     end
   end
