@@ -192,7 +192,8 @@ RSpec.describe MailAlias, type: :model do
       let(:group) { FactoryBot.create(:group, name: 'ICT-commissie') }
 
       subject(:mail_alias) do
-        FactoryBot.build_stubbed(:mail_alias, group: group, user: nil, email: 'ict@test.csvalpha.nl')
+        FactoryBot.build_stubbed(:mail_alias, group: group, user: nil,
+                                              email: 'ict@test.csvalpha.nl')
       end
 
       it { expect(mail_alias.to_s).to eq('ICT-commissie <ict@test.csvalpha.nl>') }
