@@ -38,9 +38,7 @@ class V1::Form::ClosedQuestionAnswerProcessor < JSONAPI::Authorization::Authoriz
     resource_id = params[:resource_id]
     data = params[:data]
 
-    # rubocop:disable Rails/DynamicFindBy
     resource = resource_klass.find_by_key(resource_id, context: context)
-    # rubocop:enable Rails/DynamicFindBy
 
     result = resource.replace_fields(data)
 
