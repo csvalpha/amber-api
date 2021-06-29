@@ -4,7 +4,7 @@ require Rails.root.join('spec', 'support', 'mocks', 'fake_http')
 RSpec.describe MailForwardJob, type: :job do
   describe '#perform' do
     let(:job) { described_class.new }
-    let(:mail_alias) { FactoryBot.create(:mail_alias, :with_user, email: 'testing@csvalpha.nl') }
+    let(:mail_alias) { FactoryBot.create(:mail_alias, :with_user, email: 'testing@test.csvalpha.nl') }
     let(:message_url) { 'https://example.org' }
     let(:http) { class_double('HTTP') }
     let(:fake_http) { instance_double(FakeHTTP) }
