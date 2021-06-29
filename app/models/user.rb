@@ -184,8 +184,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.last_name = id
     self.login_enabled = false
     self.archived_at = Time.zone.now
-    save
-    versions.destroy_all
+    result = save
+    versions.destroy_all if result
+    result
   end
 
   def archived?
