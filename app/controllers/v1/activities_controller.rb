@@ -2,20 +2,20 @@ require 'icalendar/tzinfo'
 
 class V1::ActivitiesController < V1::ApplicationController
   before_action :doorkeeper_authorize!, except: %i[index upcoming show ical]
-  before_action :set_model, only: %i[mail_enrolled]
+  before_action :set_model, only: %i[generate_alias]
 
-  def mail_enrolled
+  def generate_alias
     authorize @model
-    message = params.dig('data', 'attributes', 'message')
 
     return render json: no_form_error, status: :unprocessable_entity unless @model.form
 
-    unless message.try(:present?)
-      return render json: no_message_present_error, status: :unprocessable_entity
-    end
+    mail_alias = SecureRandom.hex(4)
+    forward_to = @model.form.responses.map { |r| r.user.email }
 
-    ActivityMailerJob.perform_later(current_user, @model, message)
-    head :no_content
+    MailAliasCreateJob.perform_later(mail_alias, forward_to, 'csvalpha.nl')
+    MailAliasDestroyJob.set(wait: 24.hours).perform_later(mail_alias, 'csvalpha.nl')
+
+    render json: alias_response("#{mail_alias}@csvalpha.nl")
   end
 
   def ical
@@ -31,21 +31,21 @@ class V1::ActivitiesController < V1::ApplicationController
 
   private
 
-  def no_message_present_error
-    {
-      errors: [
-        { detail: 'Message is not present',
-          source: { pointer: '/data/attributes/message' } }
-      ]
-    }
-  end
-
   def no_form_error
     {
       errors: [
         { detail: 'Form is nil',
           source: { pointer: '/data/attributes/form_id' } }
       ]
+    }
+  end
+
+  def alias_response(mail_alias)
+    {
+      data: {
+        alias: mail_alias,
+        expires_at: 24.hours.from_now
+      }
     }
   end
 

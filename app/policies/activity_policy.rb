@@ -21,7 +21,7 @@ class ActivityPolicy < ApplicationPolicy
     user_is_owner? || super
   end
 
-  def mail_enrolled?
+  def generate_alias?
     user_is_owner?
   end
 
