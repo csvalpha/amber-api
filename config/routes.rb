@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     jsonapi_resources :activities do
       jsonapi_relationships
       member do
-        post :mail_enrolled
+        post :generate_alias
       end
     end
     jsonapi_resources :articles
