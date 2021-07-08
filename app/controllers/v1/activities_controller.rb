@@ -10,7 +10,7 @@ class V1::ActivitiesController < V1::ApplicationController
     return render json: no_form_error, status: :unprocessable_entity unless @model.form
 
     mail_alias = SecureRandom.hex(4)
-    forward_to = @model.form.responses.map {|r| r.user.email }
+    forward_to = @model.form.responses.map { |r| r.user.email }
 
     MailAliasCreateJob.perform_later(mail_alias, forward_to, 'csvalpha.nl')
     MailAliasDestroyJob.set(wait: 24.hours).perform_later(mail_alias, 'csvalpha.nl')

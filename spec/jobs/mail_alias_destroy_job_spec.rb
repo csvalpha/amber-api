@@ -16,7 +16,7 @@ RSpec.describe MailAliasDestroyJob, type: :job do
     context 'it removes the alias' do
       it {
         expect(improvmx).to have_received(:delete_alias)
-                              .with('test', 'test.csvalpha.nl')
+          .with('test', 'test.csvalpha.nl')
       }
     end
   end

@@ -16,8 +16,8 @@ RSpec.describe MailAliasCreateJob, type: :job do
     context 'it creates the alias' do
       it {
         expect(improvmx).to have_received(:create_or_update_alias)
-                              .with('test', ['user@example.com', 'second@example.com'],
-                                    'test.csvalpha.nl')
+          .with('test', ['user@example.com', 'second@example.com'],
+                'test.csvalpha.nl')
       }
     end
   end
