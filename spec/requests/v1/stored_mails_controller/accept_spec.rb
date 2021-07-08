@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::StoredMailsController do
   describe 'POST /stored_mails/:id/accept', version: 1 do
-    let(:request) { perform_enqueued_jobs(except: MailForwardJob) { post(record_url) } }
+    let(:request) { post(record_url) }
     let(:record) { FactoryBot.create(:stored_mail) }
     let(:record_url) { "/v1/stored_mails/#{record.id}/accept" }
     let(:record_permission) { 'stored_mail.destroy' }
@@ -19,20 +19,15 @@ describe V1::StoredMailsController do
       end
 
       before do
-        ActionMailer::Base.deliveries = []
-
-        request
+        allow(Rails.cache).to receive(:write)
       end
 
       it_behaves_like '204 No Content'
-      it { expect(record.sender).to include accept_mail.to.first }
-      it { expect(accept_mail.subject).to include 'Mail goedgekeurd' }
       it { expect { request }.to have_enqueued_job(MailImprovmxForwardJob) }
-      it { expect { Rails.cache.fetch('improvmx_send') }.to eq true }
-
+      it { expect { request }.to have_enqueued_job(ActionMailer::MailDeliveryJob) }
     end
 
-    context 'does not send mail when already send today' do
+    context 'does not send mail when already sent today' do
       let(:accept_mail) { ActionMailer::Base.deliveries.first }
 
       include_context 'when authenticated' do
@@ -40,10 +35,7 @@ describe V1::StoredMailsController do
       end
 
       before do
-        ActionMailer::Base.deliveries = []
-
-        allow(Rails.cache).to receive(:fetch).once.and_return(true)
-        request
+        allow(Rails.cache).to receive(:exist?).once.and_return(true)
       end
 
       it_behaves_like '422 Unprocessable Entity'

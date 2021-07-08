@@ -30,17 +30,17 @@ class V1::StoredMailsController < V1::ApplicationController
   private
 
   def check_improvmx_limit
-    limit_error if Rails.cache.fetch('improvmx_send')
+    limit_error if Rails.cache.exist?('improvmx_send')
   end
 
   def limit_error
     render json: {
       errors: [{
-                 title: 'Already sent a moderated email today',
-                 detail: 'Already sent a moderated email today, try again tomorrow',
-                 code: '100',
-                 status: '422'
-               }]
+        title: 'Already sent a moderated email today',
+        detail: 'Already sent a moderated email today, try again tomorrow',
+        code: '100',
+        status: '422'
+      }]
     }, status: :unprocessable_entity
   end
 
