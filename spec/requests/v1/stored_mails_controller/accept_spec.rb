@@ -21,13 +21,15 @@ describe V1::StoredMailsController do
       before do
         ActionMailer::Base.deliveries = []
 
-        perform_enqueued_jobs do
-          request
-        end
+        request
       end
 
+      it_behaves_like '204 No Content'
       it { expect(record.sender).to include accept_mail.to.first }
       it { expect(accept_mail.subject).to include 'Mail goedgekeurd' }
+      it { expect { request }.to have_enqueued_job(MailImprovmxForwardJob) }
+      it { expect { Rails.cache.fetch('improvmx_send') }.to eq true }
+
     end
 
     context 'does not send mail when already send today' do
@@ -44,10 +46,8 @@ describe V1::StoredMailsController do
         request
       end
 
-      it_behaves_like '200 OK'
-
-      it { expect(record.sender).to include accept_mail.to.first }
-      it { expect(accept_mail.subject).to include 'Mail goedgekeurd' }
+      it_behaves_like '422 Unprocessable Entity'
+      it { expect { request }.not_to have_enqueued_job(MailImprovmxForwardJob) }
     end
   end
 end
