@@ -10,11 +10,13 @@ class V1::StoredMailResource < V1::ApplicationResource
   end
 
   def attachments
+    # :nocov:
     mail.attachments.map do |attachment|
       file = StringIO.new(attachment.to_s)
 
       { name: attachment.filename, size: file.size }
     end
+    # :nocov:
   end
 
   def self.records(options = {})
