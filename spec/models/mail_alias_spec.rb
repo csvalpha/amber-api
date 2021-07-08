@@ -157,7 +157,7 @@ RSpec.describe MailAlias, type: :model do
   describe '#domain' do
     let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@test.csvalpha.nl') }
 
-    it { expect(mail_alias.domain).to eq 'csvalpha.nl' }
+    it { expect(mail_alias.domain).to eq 'test.csvalpha.nl' }
   end
 
   describe '#moderated?' do
