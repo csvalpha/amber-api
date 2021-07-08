@@ -29,5 +29,25 @@ describe V1::StoredMailsController do
       it { expect(record.sender).to include accept_mail.to.first }
       it { expect(accept_mail.subject).to include 'Mail goedgekeurd' }
     end
+
+    context 'does not send mail when already send today' do
+      let(:accept_mail) { ActionMailer::Base.deliveries.first }
+
+      include_context 'when authenticated' do
+        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+      end
+
+      before do
+        ActionMailer::Base.deliveries = []
+
+        allow(Rails.cache).to receive(:fetch).once.and_return(true)
+        request
+      end
+
+      it_behaves_like '200 OK'
+
+      it { expect(record.sender).to include accept_mail.to.first }
+      it { expect(accept_mail.subject).to include 'Mail goedgekeurd' }
+    end
   end
 end
