@@ -30,6 +30,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   config.include ActiveJob::TestHelper
+  config.include ActionMailbox::TestHelper
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -66,8 +67,6 @@ RSpec.configure do |config|
   end
 
   config.include Requests::JsonHelpers, type: :request
-
-  config.include ActionMailbox::TestHelper, type: :mailbox
 
   config.after(:all) do
     FileUtils.rm_rf(Dir[Rails.root.join('spec', 'support', 'uploads')])

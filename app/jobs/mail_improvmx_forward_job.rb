@@ -12,11 +12,11 @@ class MailImprovmxForwardJob < ApplicationJob
                             password: Rails.application.config.x.smtp_password })
     mail = stored_mail.inbound_email.mail
     mail.to = nil
+    mail.reply_to = mail.from
+    mail.from = new_from(mail)
 
     to_addresses = stored_mail.mail_alias.mail_addresses
     while to_addresses.any?
-      mail.reply_to = mail.from
-      mail.from = new_from(mail)
       mail.bcc = to_addresses.pop(BATCH_SIZE)
 
       smtp.deliver!(mail)

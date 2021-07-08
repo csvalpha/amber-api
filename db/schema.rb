@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_18_105318) do
+ActiveRecord::Schema.define(version: 2021_07_08_123831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -473,10 +473,7 @@ ActiveRecord::Schema.define(version: 2021_02_18_105318) do
 
   create_table "stored_mails", force: :cascade do |t|
     t.datetime "deleted_at"
-    t.string "message_url"
-    t.string "sender"
     t.bigint "mail_alias_id"
-    t.string "subject"
     t.datetime "received_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -559,5 +556,5 @@ ActiveRecord::Schema.define(version: 2021_02_18_105318) do
   add_foreign_key "permissions_users", "users"
   add_foreign_key "photos", "photo_albums"
   add_foreign_key "photos", "users", column: "uploader_id"
-  add_foreign_key "stored_mails", "action_mailbox_inbound_emails", column: "inbound_email_id"
+  add_foreign_key "stored_mails", "action_mailbox_inbound_emails", column: "inbound_email_id", on_delete: :cascade
 end

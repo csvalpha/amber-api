@@ -1,17 +1,13 @@
 require 'rails_helper'
-require Rails.root.join('spec', 'support', 'mocks', 'fake_mail')
 
 describe V1::StoredMailsController do
   describe 'GET /stored_mails', version: 1 do
-    before { stub_const('MailgunFetcher::Mail', FakeMail) }
-
     let(:request) { get(record_url) }
     let(:record_url) { '/v1/stored_mails' }
     let(:records) { FactoryBot.create_list(:stored_mail, 3) }
     let(:record_permission) { 'stored_mail.read' }
 
     it_behaves_like 'an indexable model'
-    it_behaves_like 'a searchable model', %i[sender subject]
 
     describe 'when user is moderator' do
       include_context 'when authenticated' do

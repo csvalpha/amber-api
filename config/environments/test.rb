@@ -50,6 +50,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { scheme: 'http', host: 'testhost', port: 1337 }
   config.active_job.queue_adapter = :test
   config.middleware.delete Rack::Attack
+  config.x.mail_domains = %w[test.csvalpha.nl]
 
   config.after_initialize do
     Bullet.enable = true

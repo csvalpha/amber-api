@@ -50,9 +50,17 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   # See https://github.com/sj26/mailcatcher
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
+  # config.action_mailer.asset_host = 'http://localhost:4200/api'
+
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
-  config.action_mailer.asset_host = 'http://localhost:4200/api'
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.improvmx.com',
+    user_name: Rails.application.config.x.smtp_username,
+    password: Rails.application.config.x.smtp_password,
+    port: 587
+  }
 
   # Refer the Ember/UI of the Alpha website
   config.action_mailer.default_url_options = { scheme: 'http', host: 'localhost', port: 4200 }

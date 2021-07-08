@@ -3,6 +3,7 @@
   - mailers
   - mail_handlers
   - action_mailbox_routing
+  - action_mailbox_incineration
 
 schedule:
   UserCleanupJob:

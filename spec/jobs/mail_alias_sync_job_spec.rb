@@ -5,7 +5,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
   describe '#perform' do
     let(:job) { described_class.new }
     let(:mail_alias) do
-      FactoryBot.create(:mail_alias, :with_user, email: 'test@sandbox86621.eu.mailgun.org')
+      FactoryBot.create(:mail_alias, :with_user, email: 'test@test.csvalpha.nl')
     end
     let(:improvmx_class) { class_double(Improvmx::Client) }
     let(:improvmx) { instance_double(Improvmx::Client) }
@@ -22,37 +22,37 @@ RSpec.describe MailAliasSyncJob, type: :job do
       it {
         expect(improvmx).to have_received(:create_or_update_alias)
           .with('test', [mail_alias.user.email],
-                'sandbox86621.eu.mailgun.org')
+                'test.csvalpha.nl')
       }
     end
 
     context 'when it is an empty existing alias' do
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_group, email: 'test@sandbox86621.eu.mailgun.org')
+        FactoryBot.create(:mail_alias, :with_group, email: 'test@test.csvalpha.nl')
       end
 
       it {
         expect(improvmx).to have_received(:delete_alias).with('test',
-                                                              'sandbox86621.eu.mailgun.org')
+                                                              'test.csvalpha.nl')
       }
     end
 
     context 'when it is an destroyed alias' do
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_user, email: 'test@sandbox86621.eu.mailgun.org',
+        FactoryBot.create(:mail_alias, :with_user, email: 'test@test.csvalpha.nl',
                                                    deleted_at: Time.zone.now)
       end
 
       it {
         expect(improvmx).to have_received(:delete_alias).with('test',
-                                                              'sandbox86621.eu.mailgun.org')
+                                                              'test.csvalpha.nl')
       }
     end
 
     context 'when it is a moderated alias' do
       let(:mail_alias) do
         FactoryBot.create(:mail_alias, :with_user, :with_moderator,
-                          email: 'test@sandbox86621.eu.mailgun.org')
+                          email: 'test@test.csvalpha.nl')
       end
       let(:ingress_password) do
         Rails.application.credentials.action_mailbox.fetch(:ingress_password)
@@ -65,7 +65,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
       it do
         expect(improvmx).to have_received(:create_or_update_alias)
           .with('test', forward_url,
-                'sandbox86621.eu.mailgun.org')
+                'test.csvalpha.nl')
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
           expect(improvmx).to have_received(:create_or_update_alias)
             .twice
             .with('test', [mail_alias.user.email],
-                  'sandbox86621.eu.mailgun.org')
+                  'test.csvalpha.nl')
         }
       end
 
