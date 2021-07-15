@@ -17,6 +17,10 @@ class PhotoAlbumPolicy < ApplicationPolicy
     scope.exists?(id: record.id)
   end
 
+  def update?
+    record.owners.include?(user) || super
+  end
+
   def dropzone?
     user.permission?(:create, Photo)
   end
