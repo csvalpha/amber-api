@@ -24,4 +24,12 @@ class PhotoAlbumPolicy < ApplicationPolicy
   def dropzone?
     user.permission?(:create, Photo)
   end
+
+  def create_with_group?(_group)
+    true
+  end
+
+  def replace_group?(_group)
+    true
+  end
 end
