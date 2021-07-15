@@ -6,8 +6,14 @@ RSpec.describe PhotoAlbum, type: :model do
   describe '#valid?' do
     it { expect(photo_album.valid?).to be true }
 
-    context 'when without an image' do
+    context 'when without an title' do
       subject(:photo_album) { FactoryBot.build_stubbed(:photo_album, title: nil) }
+
+      it { expect(photo_album.valid?).to be false }
+    end
+
+    context 'when without an author' do
+      subject(:photo_album) { FactoryBot.build_stubbed(:photo_album, author: nil) }
 
       it { expect(photo_album.valid?).to be false }
     end

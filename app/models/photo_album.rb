@@ -2,6 +2,8 @@ require 'zip'
 
 class PhotoAlbum < ApplicationRecord
   has_many :photos, dependent: :destroy
+  belongs_to :author, class_name: 'User'
+  belongs_to :group, optional: true
 
   validates :title, presence: true
   validates :publicly_visible, inclusion: [true, false]
