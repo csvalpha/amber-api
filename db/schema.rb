@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_18_105318) do
+ActiveRecord::Schema.define(version: 2021_07_15_193110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -401,7 +401,11 @@ ActiveRecord::Schema.define(version: 2021_02_18_105318) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.boolean "publicly_visible", default: false, null: false
+    t.bigint "author_id"
+    t.bigint "group_id"
+    t.index ["author_id"], name: "index_photo_albums_on_author_id"
     t.index ["deleted_at"], name: "index_photo_albums_on_deleted_at"
+    t.index ["group_id"], name: "index_photo_albums_on_group_id"
   end
 
   create_table "photo_comments", id: :serial, force: :cascade do |t|
@@ -473,10 +477,7 @@ ActiveRecord::Schema.define(version: 2021_02_18_105318) do
 
   create_table "stored_mails", force: :cascade do |t|
     t.datetime "deleted_at"
-    t.string "message_url"
-    t.string "sender"
     t.bigint "mail_alias_id"
-    t.string "subject"
     t.datetime "received_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -559,5 +560,5 @@ ActiveRecord::Schema.define(version: 2021_02_18_105318) do
   add_foreign_key "permissions_users", "users"
   add_foreign_key "photos", "photo_albums"
   add_foreign_key "photos", "users", column: "uploader_id"
-  add_foreign_key "stored_mails", "action_mailbox_inbound_emails", column: "inbound_email_id"
+  add_foreign_key "stored_mails", "action_mailbox_inbound_emails", column: "inbound_email_id", on_delete: :cascade
 end
