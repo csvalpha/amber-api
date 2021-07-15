@@ -25,6 +25,10 @@ RSpec.describe PhotoAlbum, type: :model do
     end
   end
 
+  describe '#owners' do
+    it_behaves_like 'a model with group owners'
+  end
+
   describe '#publicly_visible' do
     before do
       FactoryBot.create(:photo_album, publicly_visible: true)
