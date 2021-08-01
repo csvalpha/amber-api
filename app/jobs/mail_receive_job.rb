@@ -30,8 +30,8 @@ class MailReceiveJob < ApplicationJob
 
   def notify_unknown_address(sender, recipient)
     send_slack_message("#{sender} send an email to #{recipient}, "\
-                                'but that alias does not exists.'\
-                                ' Sender is informed.')
+                       'but that alias does not exists.'\
+                       ' Sender is informed.')
 
     return if sender.include?('no-reply') || sender.include?('noreply')
 

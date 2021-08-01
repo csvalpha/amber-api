@@ -38,7 +38,7 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::ContactResource' 
       context 'when with valid secret' do
         let(:request_url) do
           "/webdav/#{user.id}/#{user.webdav_secret_key}" \
-          "/contacts/books/#{group.id}/#{group.users[0].id}"
+            "/contacts/books/#{group.id}/#{group.users[0].id}"
         end
         let(:xml) { Hash.from_xml(request.body) }
         let(:xml_response) { xml['multistatus']['response'] }
