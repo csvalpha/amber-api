@@ -18,8 +18,9 @@ class MailBouncedJob < ApplicationJob
 
   def handle_permanent
     send_slack_message("Message `#{@headers[:subject]}` from #{@headers[:from]}"\
-            " to #{@headers[:to]} (with recipient #{@mail[:recipient]}) has permanent failure,"\
-            " reason: #{@mail[:reason]}")
+                       " to #{@headers[:to]} (with recipient #{@mail[:recipient]})"\
+                       ' has permanent failure,'\
+                       " reason: #{@mail[:reason]}")
     return if @headers[:from].include?('no-reply') || @headers[:from].include?('noreply')
 
     MailBounceMailer.mail_bounced(@headers[:from], @headers[:to],
