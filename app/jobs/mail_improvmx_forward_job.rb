@@ -4,7 +4,7 @@ require 'http'
 class MailImprovmxForwardJob < ApplicationJob
   queue_as :mail_handlers
 
-  def perform(mail) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def perform(mail)
     # TODO: use default SMTP as soon as we use ImprovMX as default
     smtp = Mail::SMTP.new({ address: 'smtp.improvmx.com', port: '587',
                             user_name: Rails.application.config.x.smtp_username,
