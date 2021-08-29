@@ -121,7 +121,7 @@ RSpec.describe Debit::Collection, type: :model do
 
       it do
         expect(collection.errors.messages[:sepa].first).to eq 'can only generate sepa files'\
-' for collections in future'
+                                                              ' for collections in future'
       end
     end
   end

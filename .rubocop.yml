@@ -127,3 +127,6 @@ Lint/RaiseException:
 
 Lint/StructNewOverride:
   Enabled: true
+
+Naming/InclusiveLanguage:
+  Enabled: false
