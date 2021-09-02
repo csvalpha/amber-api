@@ -32,7 +32,7 @@ class V1::ActivityResource < V1::ApplicationResource
   end
 
   def self.sortable_fields(context)
-    super + [:"form.respond_until"]
+    super + [:'form.respond_until']
   end
 
   before_create do
