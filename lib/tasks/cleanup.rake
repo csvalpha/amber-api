@@ -23,7 +23,7 @@ namespace :cleanup do
       puts 'Removed old access tokens'
     else
       puts 'Please specify the -f argument if you really want to remove the old doorkeeper tokens.'\
-            ' This action cannot be undone.'
+           ' This action cannot be undone.'
     end
   end
 end
