@@ -108,10 +108,10 @@ RSpec.describe MailAlias, type: :model do
 
   describe '#downcase_email' do
     subject(:mail_alias) do
-      FactoryBot.create(:mail_alias, :with_group, email: 'Test@csvalpha.nl')
+      FactoryBot.create(:mail_alias, :with_group, email: 'Test@test.csvalpha.nl')
     end
 
-    it { expect(mail_alias.email).to eq 'test@csvalpha.nl' }
+    it { expect(mail_alias.email).to eq 'test@test.csvalpha.nl' }
   end
 
   describe '#moderators' do
@@ -149,15 +149,15 @@ RSpec.describe MailAlias, type: :model do
   end
 
   describe '#alias_name' do
-    let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }
+    let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@test.csvalpha.nl') }
 
     it { expect(mail_alias.alias_name).to eq 'test' }
   end
 
   describe '#domain' do
-    let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@csvalpha.nl') }
+    let(:mail_alias) { FactoryBot.build(:mail_alias, email: 'test@test.csvalpha.nl') }
 
-    it { expect(mail_alias.domain).to eq 'csvalpha.nl' }
+    it { expect(mail_alias.domain).to eq 'test.csvalpha.nl' }
   end
 
   describe '#moderated?' do
@@ -182,20 +182,21 @@ RSpec.describe MailAlias, type: :model do
       end
 
       subject(:mail_alias) do
-        FactoryBot.build_stubbed(:mail_alias, user: user, email: 'amber@csvalpha.nl')
+        FactoryBot.build_stubbed(:mail_alias, user: user, email: 'amber@test.csvalpha.nl')
       end
 
-      it { expect(mail_alias.to_s).to eq('Alpha Amber <amber@csvalpha.nl>') }
+      it { expect(mail_alias.to_s).to eq('Alpha Amber <amber@test.csvalpha.nl>') }
     end
 
     context 'when with group' do
       let(:group) { FactoryBot.create(:group, name: 'ICT-commissie') }
 
       subject(:mail_alias) do
-        FactoryBot.build_stubbed(:mail_alias, group: group, user: nil, email: 'ict@csvalpha.nl')
+        FactoryBot.build_stubbed(:mail_alias, group: group, user: nil,
+                                              email: 'ict@test.csvalpha.nl')
       end
 
-      it { expect(mail_alias.to_s).to eq('ICT-commissie <ict@csvalpha.nl>') }
+      it { expect(mail_alias.to_s).to eq('ICT-commissie <ict@test.csvalpha.nl>') }
     end
   end
 end

@@ -102,8 +102,6 @@ Rails.application.routes.draw do
 
   get 'coffee', to: 'coffee#index'
   get 'ical/activities', to: 'v1/activities#ical'
-  post 'mailgun', to: 'mailgun#webhook'
-  post 'mailgun/bounces', to: 'mailgun#bounces'
 
   namespace :webdav do
     match ':user_id/:key/contacts', via: :all, to: ContactSyncHandler.new(
