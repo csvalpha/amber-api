@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :mail_alias do
-    email { "#{Faker::Internet.user_name}@sandbox86621.eu.mailgun.org" }
+    email { "#{Faker::Internet.user_name}@test.csvalpha.nl" }
     moderation_type { :open }
     user
 

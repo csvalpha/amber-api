@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::StoredMailsController do
   describe 'POST /stored_mails/:id/accept', version: 1 do
-    let(:request) { perform_enqueued_jobs(except: MailForwardJob) { post(record_url) } }
+    let(:request) { perform_enqueued_jobs { post(record_url) } }
     let(:record) { FactoryBot.create(:stored_mail) }
     let(:record_url) { "/v1/stored_mails/#{record.id}/accept" }
     let(:record_permission) { 'stored_mail.destroy' }
