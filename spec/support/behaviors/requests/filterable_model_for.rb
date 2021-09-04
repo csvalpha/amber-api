@@ -4,7 +4,7 @@ shared_examples 'a filterable model for' do |filter_attributes = []|
 
     let(:filtered_request) do
       get("#{record_url}?filter[#{attr}]=#{records.first.public_send(attr).id},"\
-        "#{records.second.public_send(attr).id}")
+          "#{records.second.public_send(attr).id}")
     end
 
     subject(:request) { filtered_request }
