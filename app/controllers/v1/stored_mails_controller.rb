@@ -1,7 +1,7 @@
 class V1::StoredMailsController < V1::ApplicationController
   before_action :set_model, only: %i[accept reject]
 
-  def accept # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def accept
     authorize @model
 
     MailForwardJob.perform_later(@model)
