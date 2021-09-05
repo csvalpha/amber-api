@@ -1,16 +1,17 @@
 require 'http'
-
+# :nocov:
 class MailForwardJob < ApplicationJob
   queue_as :mail_handlers
 
-  def perform(mail_alias, message_url)
-    # See https://documentation.mailgun.com/en/latest/api-sending.html#examples
-    forward_to = mail_alias.email.gsub! '@', '@alpha.'
-
-    HTTP.basic_auth(user: :api, pass: Rails.application.config.x.mailgun_api_key)
-        .post(message_url, form: { to: forward_to })
-
-    message = "#{message_url} is forwarded to #{forward_to}"
-    SlackMessageJob.perform_later(message, channel: 'mila-log')
+  def perform(stored_mail)
+    to_addresses = stored_mail.mail_alias.mail_addresses
+    to_addresses.each do |to_address|
+      mail = stored_mail.inbound_email.mail.clone
+      mail.to = to_address
+      mail.cc = nil
+      mail.bcc = nil
+      MailForwardSendJob.perform_later(mail)
+    end
   end
 end
+# :nocov:
