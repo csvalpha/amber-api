@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_123831) do
+ActiveRecord::Schema.define(version: 2021_09_22_130714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -426,7 +426,7 @@ ActiveRecord::Schema.define(version: 2021_07_08_123831) do
     t.integer "comments_count", default: 0, null: false
     t.string "exif_make"
     t.string "exif_model"
-    t.date "exif_date_time_original"
+    t.datetime "exif_date_time_original"
     t.string "exif_exposure_time"
     t.string "exif_aperture_value"
     t.string "exif_iso_speed_ratings"
