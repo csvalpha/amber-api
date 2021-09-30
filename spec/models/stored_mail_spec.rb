@@ -7,14 +7,8 @@ RSpec.describe StoredMail, type: :model do
     describe '#valid' do
       it { expect(stored_mail).to be_valid }
 
-      context 'when without a received at' do
-        subject(:stored_mail) { FactoryBot.build_stubbed(:stored_mail, received_at: nil) }
-
-        it { expect(stored_mail).not_to be_valid }
-      end
-
-      context 'when without a sender' do
-        subject(:stored_mail) { FactoryBot.build_stubbed(:stored_mail, sender: nil) }
+      context 'when without a inbound email' do
+        subject(:stored_mail) { FactoryBot.build_stubbed(:stored_mail, inbound_email: nil) }
 
         it { expect(stored_mail).not_to be_valid }
       end
