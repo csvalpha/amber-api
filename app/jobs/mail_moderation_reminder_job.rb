@@ -10,6 +10,6 @@ class MailModerationReminderJob < ApplicationJob
       MailModerationMailer.reminder_for_moderation_email(moderator, stored_mail).deliver_later
     end
 
-    MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail_id)
+    MailModerationReminderJob.set(wait: 24.hours).perform_later(stored_mail_id) unless Rails.env.development?
   end
 end

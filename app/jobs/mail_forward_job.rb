@@ -6,11 +6,10 @@ class MailForwardJob < ApplicationJob
   def perform(stored_mail)
     to_addresses = stored_mail.mail_alias.mail_addresses
     to_addresses.each do |to_address|
-      mail = stored_mail.inbound_email.mail.clone
-      mail.to = to_address
-      mail.cc = nil
-      mail.bcc = nil
-      MailForwardSendJob.perform_later(mail)
+      # Don't send the mail to the sender
+      next if stored_mail.inbound_email.mail.from.include? to_address
+
+      MailForwardSendJob.perform_later(stored_mail, to_address)
     end
   end
 end

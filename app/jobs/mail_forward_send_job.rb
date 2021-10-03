@@ -3,10 +3,19 @@ require 'http'
 class MailForwardSendJob < ApplicationJob
   queue_as :mail_handlers
 
-  def perform(mail)
+  def perform(stored_mail, to_address)
+    smtp = Mail::SMTP.new(ActionMailer::Base.smtp_settings)
+
+    mail = stored_mail.inbound_email.mail
+
+    mail.to = to_address
+    mail.cc = nil
+    mail.bcc = nil
+
     mail.reply_to = mail.from
     mail.from = new_from(mail)
-    mail.deliver!
+
+    smtp.deliver!(mail)
   end
 
   private
