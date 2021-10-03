@@ -68,7 +68,7 @@ To test the improvmx endpoint you can setup improvmx to forward mail to your loc
 
 1. Install [ngrok](https://ngrok.com/download)
 2. Run ngrok with `./ngrok http 3000`
-3. Add an improvmx email address to `https://actionmailbox:\[action_mailbox-ingress-password]@\[ngrok-address]/rails/action_mailbox/improvmx/inbound_emails
+3. Add an improvmx email address to `https://actionmailbox:[action_mailbox-ingress-password]@[ngrok-address]/rails/action_mailbox/improvmx/inbound_emails`
 4. Add the `NGROK_HOST` to your `.env` file
 5. Start the rails server
 
