@@ -63,12 +63,12 @@ $ EDITOR="subl --wait" bundle exec rails credentials:edit
 $ EDITOR="code --wait" bundle exec rails credentials:edit
 ```
 
-## Run improvmx locally
-To test the improvmx endpoint you can setup improvmx to forward mail to your local machine. To do this you should follow the following steps.
+## Run ImprovMX locally
+To test the ImprovMX endpoint you can setup ImprovMX to forward mail to your local machine. To do this you should follow the following steps.
 
 1. Install [ngrok](https://ngrok.com/download)
 2. Run ngrok with `./ngrok http 3000`
-3. Add an improvmx email address to `https://actionmailbox:<action_mailbox-ingress-password>@<ngrok-address>/rails/action_mailbox/improvmx/inbound_emails`
+3. Add an ImprovMX email address that forwards to `https://actionmailbox:<action_mailbox-ingress-password>@<ngrok-address>/rails/action_mailbox/improvmx/inbound_emails`
 4. Add the `NGROK_HOST` to your `.env` file
 5. Start the rails server
 
