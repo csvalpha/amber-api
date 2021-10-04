@@ -4,7 +4,7 @@ class V1::StoredMailsController < V1::ApplicationController
   def accept
     authorize @model
 
-    MailImprovmxForwardJob.perform_later(@model)
+    MailForwardJob.perform_later(@model)
     MailModerationMailer.accept_email(@model.sender, @model, current_user).deliver_later
 
     @model.destroy
