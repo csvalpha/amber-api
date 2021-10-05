@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_123831) do
+ActiveRecord::Schema.define(version: 2021_07_15_193110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -401,7 +401,11 @@ ActiveRecord::Schema.define(version: 2021_07_08_123831) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.boolean "publicly_visible", default: false, null: false
+    t.bigint "author_id"
+    t.bigint "group_id"
+    t.index ["author_id"], name: "index_photo_albums_on_author_id"
     t.index ["deleted_at"], name: "index_photo_albums_on_deleted_at"
+    t.index ["group_id"], name: "index_photo_albums_on_group_id"
   end
 
   create_table "photo_comments", id: :serial, force: :cascade do |t|
