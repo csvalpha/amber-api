@@ -57,6 +57,9 @@ Rails.application.configure do
   # Refer the Ember/UI of the Alpha website
   config.action_mailer.default_url_options = { scheme: 'http', host: 'localhost', port: 4200 }
 
+  # Allow access to the api via ngrok
+  config.hosts << ENV['NGROK_HOST'] if ENV['NGROK_HOST']
+
   # Run Sidekiq inline
   require 'sidekiq/testing'
   Sidekiq::Testing.inline!
