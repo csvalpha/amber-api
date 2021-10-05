@@ -21,7 +21,7 @@ describe V1::StoredMailsController do
       end
 
       it_behaves_like '204 No Content'
-      it { expect { request }.to have_enqueued_job(MailImprovmxForwardJob) }
+      it { expect { request }.to have_enqueued_job(MailForwardJob) }
       it { expect { request }.to have_enqueued_job(ActionMailer::MailDeliveryJob) }
 
       describe 'Mail is send' do
@@ -49,7 +49,7 @@ describe V1::StoredMailsController do
       end
 
       it_behaves_like '422 Unprocessable Entity'
-      it { expect { request }.not_to have_enqueued_job(MailImprovmxForwardJob) }
+      it { expect { request }.not_to have_enqueued_job(MailForwardJob) }
     end
   end
 end
