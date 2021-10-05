@@ -6,7 +6,6 @@ describe V1::PhotoAlbumsController do
     let(:record_url) { "/v1/photo_albums/#{record.id}" }
     let(:record_permission) { 'photo_album.update' }
 
-
     it_behaves_like 'an updatable and permissible model' do
       let(:invalid_attributes) { { title: '' } }
     end
