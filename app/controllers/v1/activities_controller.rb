@@ -21,7 +21,7 @@ class V1::ActivitiesController < V1::ApplicationController
   def ical
     return head :unauthorized unless authenticate_user_by_ical_secret_key
 
-    permitted_categories = params[:categories].try(:split, ',') & Activity.categories ||
+    permitted_categories = (params[:categories].try(:split, ',') & Activity.categories) ||
                            Activity.categories
     activities_for_ical(permitted_categories).map do |act|
       calendar.add_event(act.to_ical)
