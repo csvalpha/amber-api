@@ -55,7 +55,7 @@ module Import
 
         transaction = Debit::Transaction.new(description: description, amount: amount,
                                              collection: @collection, user: user)
-        transactions << transaction && next if transaction.valid?
+        (transactions << transaction) && next if transaction.valid?
 
         @errors.add(:import_file, "Transaction #{description} for user #{user.username} is invalid")
       end
