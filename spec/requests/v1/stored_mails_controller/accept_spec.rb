@@ -12,8 +12,6 @@ describe V1::StoredMailsController do
     end
 
     context 'sends accept mail' do
-      let(:accept_mail) { ActionMailer::Base.deliveries.first }
-
       include_context 'when authenticated' do
         let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
       end
@@ -25,6 +23,18 @@ describe V1::StoredMailsController do
       it_behaves_like '204 No Content'
       it { expect { request }.to have_enqueued_job(MailImprovmxForwardJob) }
       it { expect { request }.to have_enqueued_job(ActionMailer::MailDeliveryJob) }
+
+      describe 'Mail is send' do
+        before do
+          perform_enqueued_jobs do
+            request
+          end
+        end
+
+        let(:accept_mail) { ActionMailer::Base.deliveries.first }
+
+        it { expect(accept_mail.subject).to include 'Mail goedgekeurd' }
+      end
     end
 
     context 'does not send mail when already sent today' do
