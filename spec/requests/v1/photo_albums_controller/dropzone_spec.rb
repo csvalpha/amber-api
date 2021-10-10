@@ -31,7 +31,7 @@ describe V1::PhotoAlbumsController do
         end
 
         it { expect(request.status).to eq(422) }
-        it { expect(request.body).to eq 'Afbeelding mag niet groter zijn dan 4096 x 4096' }
+        it { expect(request.body).to eq 'Afbeelding mag niet groter zijn dan 8192 x 8192' }
       end
     end
   end

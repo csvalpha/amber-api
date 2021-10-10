@@ -63,14 +63,14 @@ $ EDITOR="subl --wait" bundle exec rails credentials:edit
 $ EDITOR="code --wait" bundle exec rails credentials:edit
 ```
 
-## Run mailgun locally
-To test the mailgun endpoint you can setup mailgun to forward mail to your local machine. To do this you should follow the following steps.
+## Run ImprovMX locally
+To test the ImprovMX endpoint you can setup ImprovMX to forward mail to your local machine. To do this you should follow the following steps.
 
 1. Install [ngrok](https://ngrok.com/download)
 2. Run ngrok with `./ngrok http 3000`
-3. Add a mailgun catch-all route with as action 'store and notify' to `ngrok-address`/mailgun
-4. Get the [mailgun API key](https://app.mailgun.com/app/domains/csvalpha.nl)
-5. Start the rails server `MAILGUN_API_KEY='key_here' bundle exec rails s`
+3. Add an ImprovMX email address that forwards to `https://actionmailbox:<action_mailbox-ingress-password>@<ngrok-address>/rails/action_mailbox/improvmx/inbound_emails`
+4. Add the `NGROK_HOST` to your `.env` file
+5. Start the rails server
 
 
 ## Run specs (tests)
