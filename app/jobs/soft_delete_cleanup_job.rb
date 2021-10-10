@@ -9,6 +9,7 @@ class SoftDeleteCleanupJob < ApplicationJob
       records = model.only_deleted.where('deleted_at < ?', 2.years.ago)
       records.map(&:really_destroy!)
     end
+    HealthCheckJob.perform_now(:soft_delete_cleanup)
   end
 
   private
