@@ -1,8 +1,3 @@
-nl:
-  errors:
-    messages:
-      pixel_dimensions_error: "Afbeelding mag niet groter zijn dan %{x_size} x %{y_size}"
-      unsupported_image_type: "Dit type afbeelding wordt niet ondersteund"
 # See https://raw.githubusercontent.com/svenfuchs/rails-i18n/master/rails/locale/nl.yml
 ---
 nl:
@@ -15,57 +10,57 @@ nl:
           has_many: Kan item niet verwijderen omdat afhankelijke %{record} bestaan
   date:
     abbr_day_names:
-    - zo
-    - ma
-    - di
-    - wo
-    - do
-    - vr
-    - za
+      - zo
+      - ma
+      - di
+      - wo
+      - do
+      - vr
+      - za
     abbr_month_names:
-    -
-    - jan
-    - feb
-    - mrt
-    - apr
-    - mei
-    - jun
-    - jul
-    - aug
-    - sep
-    - okt
-    - nov
-    - dec
+      -
+      - jan
+      - feb
+      - mrt
+      - apr
+      - mei
+      - jun
+      - jul
+      - aug
+      - sep
+      - okt
+      - nov
+      - dec
     day_names:
-    - zondag
-    - maandag
-    - dinsdag
-    - woensdag
-    - donderdag
-    - vrijdag
-    - zaterdag
+      - zondag
+      - maandag
+      - dinsdag
+      - woensdag
+      - donderdag
+      - vrijdag
+      - zaterdag
     formats:
       default: "%d-%m-%Y"
       long: "%e %B %Y"
       short: "%e %b"
     month_names:
-    -
-    - januari
-    - februari
-    - maart
-    - april
-    - mei
-    - juni
-    - juli
-    - augustus
-    - september
-    - oktober
-    - november
-    - december
+      -
+      - januari
+      - februari
+      - maart
+      - april
+      - mei
+      - juni
+      - juli
+      - augustus
+      - september
+      - oktober
+      - november
+      - december
     order:
-    - :day
-    - :month
-    - :year
+      - :day
+      - :month
+      - :year
   datetime:
     distance_in_words:
       about_x_hours:
@@ -81,40 +76,42 @@ nl:
         one: bijna een jaar
         other: bijna %{count} jaar
       half_a_minute: een halve minuut
-      less_than_x_minutes:
-        one: minder dan een minuut
-        other: minder dan %{count} minuten
       less_than_x_seconds:
         one: minder dan een seconde
         other: minder dan %{count} seconden
+      less_than_x_minutes:
+        one: minder dan een minuut
+        other: minder dan %{count} minuten
       over_x_years:
         one: meer dan een jaar
         other: meer dan %{count} jaar
-      x_days:
-        one: 1 dag
-        other: "%{count} dagen"
-      x_minutes:
-        one: 1 minuut
-        other: "%{count} minuten"
-      x_months:
-        one: 1 maand
-        other: "%{count} maanden"
       x_seconds:
         one: 1 seconde
         other: "%{count} seconden"
+      x_minutes:
+        one: 1 minuut
+        other: "%{count} minuten"
+      x_days:
+        one: 1 dag
+        other: "%{count} dagen"
+      x_months:
+        one: 1 maand
+        other: "%{count} maanden"
+      x_years:
+        one: 1 jaar
+        other: "%{count} jaar"
     prompts:
-      day: dag
-      hour: uur
-      minute: minuut
-      month: maand
       second: seconde
+      minute: minuut
+      hour: uur
+      day: dag
+      month: maand
       year: jaar
   errors:
     format: "%{attribute} %{message}"
     messages:
       accepted: moet worden geaccepteerd
       blank: moet opgegeven zijn
-      present: moet leeg zijn
       confirmation: komt niet overeen met %{attribute}
       empty: moet opgegeven zijn
       equal_to: moet gelijk zijn aan %{count}
@@ -126,10 +123,13 @@ nl:
       invalid: is ongeldig
       less_than: moet minder zijn dan %{count}
       less_than_or_equal_to: moet minder dan of gelijk zijn aan %{count}
-      model_invalid: "Validatie mislukt: %{errors}"
+      model_invalid: 'Validatie mislukt: %{errors}'
       not_a_number: is geen getal
       not_an_integer: moet een geheel getal zijn
       odd: moet oneven zijn
+      other_than: moet anders zijn dan %{count}
+      pixel_dimensions_error: 'Afbeelding mag niet groter zijn dan %{x_size} x %{y_size}'
+      present: moet leeg zijn
       required: moet bestaan
       taken: is al in gebruik
       too_long:
@@ -141,7 +141,7 @@ nl:
       wrong_length:
         one: heeft onjuiste lengte (moet 1 teken lang zijn)
         other: heeft onjuiste lengte (moet %{count} tekens lang zijn)
-      other_than: moet anders zijn dan %{count}
+      unsupported_image_type: Dit type afbeelding wordt niet ondersteund
     template:
       body: 'Er zijn problemen met de volgende velden:'
       header:
