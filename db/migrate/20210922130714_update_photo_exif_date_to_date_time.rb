@@ -1,5 +1,3 @@
-require 'exifr/jpeg'
-
 class UpdatePhotoExifDateToDateTime < ActiveRecord::Migration[6.1]
   def up
     change_column :photos, :exif_date_time_original, :datetime

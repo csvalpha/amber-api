@@ -37,6 +37,8 @@ class Photo < ApplicationRecord
     end
   end
 
+  private
+
   def jpeg?
     image.file.extension.casecmp('jpg').zero? || image.file.extension.casecmp('jpeg').zero?
   end
