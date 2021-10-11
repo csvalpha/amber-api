@@ -65,11 +65,7 @@ module Amber
     config.x.slack_channel = '#monitoring'
     config.x.slack_webhook = credentials.dig(Rails.env.to_sym, :slack_webhook) || ''
 
-    config.x.mailgun_api_key = credentials.dig(Rails.env.to_sym, :mailgun_api_key)
-    config.x.mailgun_validation_key = credentials.dig(Rails.env.to_sym, :mailgun_validation_key)
-    config.x.mailgun_host = 'api.eu.mailgun.net'
     config.x.mail_domains = %w[csvalpha.nl societeitflux.nl]
-
     config.x.improvmx_api_key = credentials.dig(Rails.env.to_sym, :improvmx_api_key)
     config.x.smtp_username = credentials.dig(:production, :smtp_username)
     config.x.smtp_password = credentials.dig(:production, :smtp_password)
