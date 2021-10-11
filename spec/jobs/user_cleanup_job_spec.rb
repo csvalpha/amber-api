@@ -30,10 +30,6 @@ RSpec.describe UserCleanupJob, type: :job do
       perform_enqueued_jobs do
         described_class.perform_now
       end
-
-      user.reload
-      almost_archive_user&.reload
-      user_to_be_archived&.reload
     end
 
     context 'when with will archive and archived users' do
