@@ -18,8 +18,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :board_room_presences, dependent: :delete_all
   has_many :photo_comments, foreign_key: :author_id
   has_many :mail_aliases, dependent: :delete_all
-  has_many :read_threads, dependent: :delete_all
+  has_many :read_threads, class_name: 'Forum::ReadThread', dependent: :delete_all
   has_many :mandates, class_name: 'Debit::Mandate', dependent: :delete_all
+  has_many :transactions, class_name: 'Debit::Transaction', dependent: :delete_all
   has_many :group_mail_aliases, through: :active_groups, source: :mail_aliases
 
   # See https://github.com/doorkeeper-gem/doorkeeper#active-record
@@ -75,9 +76,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :generate_ical_secret_key
   after_commit :sync_mail_aliases
 
-#   before_destroy do
-#     throw(:abort)
-#   end
+  #   before_destroy do
+  #     throw(:abort)
+  #   end
 
   scope :activated, (-> { where('activated_at < ?', Time.zone.now) })
   scope :contactsync_users, (-> { where.not(webdav_secret_key: nil) })
