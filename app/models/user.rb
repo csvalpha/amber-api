@@ -170,7 +170,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     save
   end
 
-
   def self.activation_token_hash
     { activation_token: SecureRandom.urlsafe_base64, activation_token_valid_till: 1.day.from_now }
   end

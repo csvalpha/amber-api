@@ -3,7 +3,9 @@ class UserArchiveJob < ApplicationJob
   ARCHIVE_USER_ID = 0
 
   def perform(user_id)
+    return if user_id == ARCHIVE_USER_ID
     create_global_archive_user
+
     user = User.find(user_id)
 
     migrate_keep_entities(user)
