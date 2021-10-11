@@ -43,9 +43,7 @@ RSpec.describe UserCleanupJob, type: :job do
       it { expect(email.body.to_s).to include(almost_archive_user.full_name) }
       it { expect(email.body.to_s).not_to include(user.full_name) }
       it { expect(email.body.to_s).to include('Er is 1 gebruiker gearchiveerd.') }
-      it { expect(user_to_be_archived.full_name).to include 'Gearchiveerde gebruiker' }
-      it { expect(almost_archive_user.full_name).not_to include 'Gearchiveerde gebruiker' }
-      it { expect(user.full_name).not_to include 'Gearchiveerde gebruiker' }
+      it { expect(UserArchiveJob).to(have_been_enqueued.with(user_to_be_archived.id))}
     end
 
     context 'when without archive or will archive users' do
