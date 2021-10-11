@@ -4,7 +4,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one_time_password
 
   mount_base64_uploader :avatar, AvatarUploader
-  has_paper_trail skip: %i[avatar], unless: proc { |o| o.archived? }
+  has_paper_trail skip: %i[avatar]
 
   has_many :memberships, inverse_of: :user, dependent: :delete_all
   has_many :groups, through: :memberships
@@ -33,16 +33,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   has_secure_password(validations: false)
   # General fields
-  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w.]+\z/ },
-                       unless: :archived?
-  validates :email, presence: true, uniqueness: true, unless: :archived?
-  validates :password, length: { minimum: 12 }, allow_nil: true, unless: :archived?
+  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w.]+\z/ }
+  validates :email, presence: true, uniqueness: true
+  validates :password, length: { minimum: 12 }, allow_nil: true
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :address, presence: true, unless: :archived?
-  validates :postcode, presence: true, unless: :archived?
-  validates :city, presence: true, unless: :archived?
-  validates :vegetarian, inclusion: [true, false], unless: :archived?
+  validates :address, presence: true
+  validates :postcode, presence: true
+  validates :city, presence: true
+  validates :vegetarian, inclusion: [true, false]
   validates :phone_number, phone: { possible: true, allow_blank: true }
 
   # Technical fields
@@ -53,20 +52,20 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Preferences
   validates :almanak_subscription_preference, presence: true, inclusion: {
     in: %w[physical digital no_subscription]
-  }, unless: :archived?
+  }
   validates :digtus_subscription_preference, presence: true, inclusion: {
     in: %w[physical digital no_subscription]
-  }, unless: :archived?
+  }
 
   # Privacy fields
   validates :picture_publication_preference, not_renullable: true, inclusion: {
     in: %w[always_publish always_ask never_publish], allow_nil: true
-  }, unless: :archived?
-  validates :ifes_data_sharing_preference, not_renullable: true, unless: :archived?
-  validates :info_in_almanak, not_renullable: true, unless: :archived?
+  }
+  validates :ifes_data_sharing_preference, not_renullable: true
+  validates :info_in_almanak, not_renullable: true
   validates :user_details_sharing_preference, not_renullable: true, inclusion: {
     in: %w[hidden members_only all_users], allow_nil: true
-  }, unless: :archived?
+  }
 
   # Other
   validates :emergency_number, phone: { possible: true, allow_blank: true }
@@ -176,21 +175,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     save
   end
 
-  def archive!
-    attributes.each_key do |attribute|
-      self[attribute] = nil unless %w[deleted_at updated_at created_at login_enabled id]
-                                   .include? attribute
-    end
-    self.first_name = 'Gearchiveerde gebruiker'
-    self.last_name = id
-    self.login_enabled = false
-    self.archived_at = Time.zone.now
-    save & versions.destroy_all
-  end
-
-  def archived?
-    archived_at?
-  end
 
   def self.activation_token_hash
     { activation_token: SecureRandom.urlsafe_base64, activation_token_valid_till: 1.day.from_now }

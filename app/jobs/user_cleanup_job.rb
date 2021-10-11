@@ -11,7 +11,7 @@ class UserCleanupJob < ApplicationJob
 
       if last_active_group.end_date < 20.months.ago
         removed_users << user
-        user.archive!
+        UserArchiveJob.perform_now(user.id)
       elsif last_active_group.end_date < 18.months.ago
         will_remove_users << user
       end
