@@ -112,7 +112,7 @@ GEM
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     consistency_fail (0.3.7)
-    counter_culture (2.9.0)
+    counter_culture (3.0.0)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
     crack (0.4.5)
@@ -540,7 +540,7 @@ DEPENDENCIES
   case_transform (~> 0.2)
   colorize
   consistency_fail
-  counter_culture (~> 2.0)
+  counter_culture (~> 3.0)
   dav4rack_ext (~> 1.0)
   doorkeeper (~> 5.2)
   doorkeeper-i18n (~> 5.2)
