@@ -30,6 +30,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
                            foreign_key: :resource_owner_id,
                            dependent: :delete_all
 
+  has_many :webauthn_credentials, class_name: 'Webauthn::Credential', dependent: :destroy
+
   has_secure_password(validations: false)
   # General fields
   validates :username, presence: true, uniqueness: true, format: { with: /\A[\w.]+\z/ },
@@ -105,6 +107,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     where(archived_at: nil)
   })
+
+  after_initialize do
+    self.webauthn_id ||= WebAuthn.generate_user_id
+  end
 
   def full_name
     [first_name, last_name_prefix, last_name].reject(&:blank?).join(' ')

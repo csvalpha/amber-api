@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_130714) do
+ActiveRecord::Schema.define(version: 2021_12_07_134352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -525,6 +525,7 @@ ActiveRecord::Schema.define(version: 2021_09_22_130714) do
     t.string "user_details_sharing_preference"
     t.boolean "allow_tomato_sharing"
     t.string "webdav_secret_key"
+    t.string "webauthn_id"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login_enabled"], name: "index_users_on_login_enabled"
@@ -540,6 +541,26 @@ ActiveRecord::Schema.define(version: 2021_09_22_130714) do
     t.datetime "created_at"
     t.text "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  end
+
+  create_table "webauthn_challenges", force: :cascade do |t|
+    t.string "challenge", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_webauthn_challenges_on_user_id"
+  end
+
+  create_table "webauthn_credentials", force: :cascade do |t|
+    t.string "nickname"
+    t.string "external_id", null: false
+    t.string "public_key", null: false
+    t.bigint "sign_count", default: 0, null: false
+    t.bigint "user_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_webauthn_credentials_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -561,4 +582,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_130714) do
   add_foreign_key "photos", "photo_albums"
   add_foreign_key "photos", "users", column: "uploader_id"
   add_foreign_key "stored_mails", "action_mailbox_inbound_emails", column: "inbound_email_id", on_delete: :cascade
+  add_foreign_key "webauthn_challenges", "users"
+  add_foreign_key "webauthn_credentials", "users"
 end

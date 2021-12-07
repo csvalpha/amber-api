@@ -67,6 +67,11 @@ Rails.application.routes.draw do
 
     jsonapi_resources :quickpost_messages
 
+    namespace :webauthn do
+      jsonapi_resources :credentials
+      resource :challenges, only: [:create]
+    end
+
     namespace :debit do
       jsonapi_resources :collections do
         jsonapi_relationships

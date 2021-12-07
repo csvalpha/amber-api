@@ -24,6 +24,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   has_many :group_mail_aliases
   has_many :permissions
   has_many :user_permissions
+  has_many :webauthn_credentials, always_include_linkage_data: true
 
   filter :upcoming_birthdays, apply: lambda { |records, _value, options|
     context = options[:context]
@@ -59,7 +60,8 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
       allowed_keys += %i[login_enabled otp_required activated_at emergency_contact
                          emergency_number ifes_data_sharing_preference info_in_almanak
                          almanak_subscription_preference digtus_subscription_preference
-                         user_details_sharing_preference allow_tomato_sharing]
+                         user_details_sharing_preference allow_tomato_sharing
+                         webauthn_credentials]
     end
     allowed_keys += %i[archived_at picture_publication_preference] if read_or_me?
     if read_user_details? && !application_is_tomato?

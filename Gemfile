@@ -42,6 +42,7 @@ gem 'sidekiq-scheduler', '~> 3.0'
 gem 'slack-notifier', '~> 2.0'
 gem 'validates_timeliness', '~> 5.0'
 gem 'vpim', '~> 13.11'
+gem 'webauthn', '~> 2.5'
 
 group :development, :test do
   gem 'awesome_print'
