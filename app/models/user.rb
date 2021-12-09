@@ -131,6 +131,17 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     value
   end
 
+  def mfa_methods
+    methods = []
+    methods.push('otp') if otp_required?
+    methods.push('webauthn') if webauthn_credentials.any?
+    methods
+  end
+
+  def mfa_required?
+    otp_required? || webauthn_credentials.any?
+  end
+
   def permission?(action, record)
     @permission_cache ||= {}
 

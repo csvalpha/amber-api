@@ -1,4 +1,32 @@
-OTP_HEADER = 'X-Amber-OTP'.freeze
+MFA_HEADER = 'X-Amber-MFA'.freeze
+MFA_METHODS_HEADER = 'X-Amber-MFA-Methods'
+MFA_ERROR_HEADER = 'X-Amber-MFA-Error'
+
+def check_webauthn(data, user)
+  webauthn_credential = WebAuthn::Credential.from_get(data)
+  challenge = Webauthn::Challenge.find_by(user: user)
+  credential = user.webauthn_credentials.find_by(external_id: Base64.strict_encode64(webauthn_credential.raw_id))
+
+  return false if challenge.nil? or challenge.expired?
+
+  begin
+    webauthn_credential.verify(
+      challenge.challenge,
+      public_key: credential.public_key,
+      sign_count: credential.sign_count
+    )
+
+    credential.update!(sign_count: webauthn_credential.sign_count)
+
+    return true
+  rescue WebAuthn::Error => e
+    # Ignored
+  ensure
+    challenge.destroy
+  end
+
+  false
+end
 
 Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   orm :active_record
@@ -17,16 +45,26 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
     user = User.activated.login_enabled.find_by(username: params[:username])
 
     if user.try(:authenticate, params[:password])
-      if user.otp_required?
-        one_time_password = request.headers[OTP_HEADER]
-        if !one_time_password
-          response.headers[OTP_HEADER] = 'required'
-          nil
-        elsif user.authenticate_otp(one_time_password, drift: 10)
-          user
-        else
-          response.headers[OTP_HEADER] = 'invalid'
-          nil
+      if user.mfa_required?
+        response.headers[MFA_HEADER] = 'required'
+        response.headers[MFA_METHODS_HEADER] = user.mfa_methods.join(',')
+
+        if params[:webauthn]
+          puts "webauthn check"
+          webauthn_data = JSON.parse params[:webauthn]
+          if check_webauthn(webauthn_data, user)
+            user
+          else
+            response.headers[MFA_ERROR_HEADER] = 'webauthn_failed'
+            nil
+          end
+        elsif params[:otp]
+          if user.authenticate_otp(params[:otp], drift: 10)
+            user
+          else
+            response.headers[MFA_ERROR_HEADER] = 'otp_failed'
+            nil
+          end
         end
       else
         user

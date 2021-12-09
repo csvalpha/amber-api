@@ -70,6 +70,10 @@ Rails.application.routes.draw do
     namespace :webauthn do
       jsonapi_resources :credentials
       resource :challenges, only: [:create]
+
+      namespace :login do
+        resource :challenges, only: [:create]
+      end
     end
 
     namespace :debit do
