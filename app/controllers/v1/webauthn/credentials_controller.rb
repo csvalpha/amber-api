@@ -25,13 +25,13 @@ module V1::Webauthn
           public_key: webauthn_credential.public_key,
           sign_count: webauthn_credential.sign_count
         )
-          render json: { status: "ok" }, status: :ok
+          render json: { status: 'ok' }, status: :ok
         else
-          render json: {error: "Couldn't add your Security Key"}, status: :unprocessable_entity
+          render json: { error: "Couldn't add your Security Key" }, status: :unprocessable_entity
         end
       rescue WebAuthn::Error => e
-        render json: {error: "Verification failed: #{e.message}"}, status: :unprocessable_entity
-      ensure
+        render json: { error: "Verification failed: #{e.message}" }, status: :unprocessable_entity
+
         # challenge.destroy!
       end
     end
@@ -41,7 +41,5 @@ module V1::Webauthn
     def challenge
       @challenge ||= Webauthn::Challenge.find_by(user: current_user)
     end
-
   end
-
 end

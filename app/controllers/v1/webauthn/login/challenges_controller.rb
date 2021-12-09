@@ -19,7 +19,7 @@ class V1::Webauthn::Login::ChallengesController < V1::ApplicationController
     if record.save!
       render json: get_options, status: :ok
     else
-      render json: {error: record.errors }, status: :unprocessable_entity
+      render json: { error: record.errors }, status: :unprocessable_entity
     end
   end
 end

@@ -15,7 +15,8 @@ RSpec.describe V1::UserResource, type: :resource do
       %i[login_enabled otp_required activated_at emergency_contact
          emergency_number ifes_data_sharing_preference info_in_almanak
          almanak_subscription_preference digtus_subscription_preference
-         user_details_sharing_preference allow_tomato_sharing]
+         user_details_sharing_preference allow_tomato_sharing
+         webauthn_credentials]
     end
     let(:read_fields) do
       %i[archived_at picture_publication_preference]

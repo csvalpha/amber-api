@@ -1,7 +1,7 @@
 class Webauthn::CredentialPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-        scope.where(user_id: user)
+      scope.where(user_id: user)
     end
   end
 

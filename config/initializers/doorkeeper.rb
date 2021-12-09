@@ -50,7 +50,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
         response.headers[MFA_METHODS_HEADER] = user.mfa_methods.join(',')
 
         if params[:webauthn]
-          puts "webauthn check"
+          puts 'webauthn check'
           webauthn_data = JSON.parse params[:webauthn]
           if check_webauthn(webauthn_data, user)
             user

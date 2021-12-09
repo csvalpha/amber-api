@@ -11,5 +11,4 @@ class Webauthn::Challenge < ActiveRecord::Base
   after_initialize do
     self.created_at = Time.zone.now
   end
-
 end
