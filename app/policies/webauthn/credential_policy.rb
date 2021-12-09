@@ -15,7 +15,7 @@ module Webauthn
     end
 
     def create?
-      current_user
+      user
     end
   end
 end

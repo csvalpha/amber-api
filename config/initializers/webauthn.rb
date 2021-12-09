@@ -1,7 +1,7 @@
 WebAuthn.configure do |config|
   # This value needs to match `window.location.origin` evaluated by
   # the User Agent during registration and authentication ceremonies.
-  config.origin = 'http://localhost:4200'
+  config.origin = Rails.application.config.x.webauthn_origin
 
   # Relying Party name for display purposes
   config.rp_name = 'C.S.V. Alpha'

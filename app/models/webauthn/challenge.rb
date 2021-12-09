@@ -1,5 +1,5 @@
 module Webauthn
-  class Challenge < ApplicationRecord
+  class Challenge < ActiveRecord::Base
     validates :challenge, :user_id, :created_at, presence: true
     validates :challenge, uniqueness: true
 

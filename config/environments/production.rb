@@ -95,4 +95,7 @@ Rails.application.configure do
     port: 587
   }
   config.action_mailer.asset_host = "https://#{config.action_mailer.default_url_options[:host]}/api"
+
+  config.x.webauthn_origin = "https://csvalpha.nl"
+
 end

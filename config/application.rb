@@ -78,5 +78,6 @@ module Amber
     config.x.daily_verse_user = credentials.dig(Rails.env.to_sym, :daily_verse_user)
     config.x.daily_verse_password = credentials.dig(Rails.env.to_sym, :daily_verse_password)
     config.x.healthcheck_ids      = credentials.dig(Rails.env.to_sym, :healthcheck_ids)
+    config.x.webauthn_origin = "http://localhost:4200"
   end
 end
