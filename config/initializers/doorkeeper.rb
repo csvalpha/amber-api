@@ -1,13 +1,14 @@
 MFA_HEADER = 'X-Amber-MFA'.freeze
-MFA_METHODS_HEADER = 'X-Amber-MFA-Methods'
-MFA_ERROR_HEADER = 'X-Amber-MFA-Error'
+MFA_METHODS_HEADER = 'X-Amber-MFA-Methods'.freeze
+MFA_ERROR_HEADER = 'X-Amber-MFA-Error'.freeze
 
-def check_webauthn(data, user)
+def check_webauthn(data, user) # rubocop:disable Metrics/MethodLength
   webauthn_credential = WebAuthn::Credential.from_get(data)
   challenge = Webauthn::Challenge.find_by(user: user)
-  credential = user.webauthn_credentials.find_by(external_id: Base64.strict_encode64(webauthn_credential.raw_id))
+  external_id = Base64.strict_encode64(webauthn_credential.raw_id)
+  credential = user.webauthn_credentials.find_by(external_id: external_id)
 
-  return false if challenge.nil? or challenge.expired?
+  return false if challenge.nil? || challenge.expired?
 
   begin
     webauthn_credential.verify(
@@ -19,7 +20,7 @@ def check_webauthn(data, user)
     credential.update!(sign_count: webauthn_credential.sign_count)
 
     return true
-  rescue WebAuthn::Error => e
+  rescue WebAuthn::Error
     # Ignored
   ensure
     challenge.destroy
@@ -41,6 +42,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   # See https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow
   grant_flows %w[password authorization_code client_credentials]
 
+  # rubocop:disable Metrics/BlockNesting
   resource_owner_from_credentials do
     user = User.activated.login_enabled.find_by(username: params[:username])
 
@@ -50,7 +52,6 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
         response.headers[MFA_METHODS_HEADER] = user.mfa_methods.join(',')
 
         if params[:webauthn]
-          puts 'webauthn check'
           webauthn_data = JSON.parse params[:webauthn]
           if check_webauthn(webauthn_data, user)
             user
@@ -71,6 +72,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
       end
     end
   end
+  # rubocop:enable Metrics/BlockNesting
 
   resource_owner_authenticator do
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token

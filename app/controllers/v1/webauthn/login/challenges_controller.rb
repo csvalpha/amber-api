@@ -1,7 +1,7 @@
 class V1::Webauthn::Login::ChallengesController < V1::ApplicationController
   skip_before_action :doorkeeper_authorize!
 
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     user = User.find_by(username: params[:username])
 
     unless user

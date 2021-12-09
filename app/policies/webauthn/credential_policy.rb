@@ -1,19 +1,21 @@
-class Webauthn::CredentialPolicy < ApplicationPolicy
-  class Scope < ApplicationPolicy::Scope
-    def resolve
-      scope.where(user_id: user)
+module Webauthn
+  class CredentialPolicy < ApplicationPolicy
+    class Scope < ApplicationPolicy::Scope
+      def resolve
+        scope.where(user_id: user)
+      end
     end
-  end
 
-  def index?
-    true
-  end
+    def index?
+      true
+    end
 
-  def show?
-    scope.exists?(id: record.id)
-  end
+    def show?
+      scope.exists?(id: record.id)
+    end
 
-  def create?
-    current_user
+    def create?
+      current_user
+    end
   end
 end

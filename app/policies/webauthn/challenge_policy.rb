@@ -1,5 +1,7 @@
-class Webauthn::ChallengePolicy < ApplicationPolicy
-  def create?
-    current_user
+module Webauthn
+  class ChallengePolicy < ApplicationPolicy
+    def create?
+      user
+    end
   end
 end

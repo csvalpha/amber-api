@@ -3,10 +3,10 @@ module V1::Webauthn
     before_action :doorkeeper_authorize!
     after_action :verify_authorized, only: :create
 
-    def create
+    def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       authorize Webauthn::Credential
 
-      if challenge.nil? or challenge.expired?
+      if challenge.nil? || challenge.expired?
         head :forbidden
         return
       end

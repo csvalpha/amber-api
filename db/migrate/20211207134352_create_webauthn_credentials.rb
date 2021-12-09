@@ -4,7 +4,7 @@ class CreateWebauthnCredentials < ActiveRecord::Migration[6.1]
 
     create_table :webauthn_credentials do |t|
       t.string :nickname
-      t.string :external_id, null: false
+      t.string :external_id, null: false, unique: true
       t.string :public_key, null: false
       t.bigint :sign_count, null: false, default: 0
 
@@ -15,7 +15,7 @@ class CreateWebauthnCredentials < ActiveRecord::Migration[6.1]
     end
 
     create_table :webauthn_challenges do |t|
-      t.string :challenge, null: false
+      t.string :challenge, null: false, unique: true
       t.references :user, foreign_key: true, null: false
 
       t.timestamps

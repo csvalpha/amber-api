@@ -28,7 +28,8 @@ WebAuthn.configure do |config|
   #
   # config.encoding = :base64url
 
-  # Possible values: "ES256", "ES384", "ES512", "PS256", "PS384", "PS512", "RS256", "RS384", "RS512", "RS1"
+  # Possible values: "ES256", "ES384", "ES512", "PS256",
+  #                    "PS384", "PS512", "RS256", "RS384", "RS512", "RS1"
   # Default: ["ES256", "PS256", "RS256"]
   #
   # config.algorithms << "ES384"

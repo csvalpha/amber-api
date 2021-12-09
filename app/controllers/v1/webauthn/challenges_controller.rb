@@ -2,7 +2,7 @@ class V1::Webauthn::ChallengesController < V1::ApplicationController
   before_action :doorkeeper_authorize!
   after_action :verify_authorized
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     authorize Webauthn::Challenge
 
     create_options = WebAuthn::Credential.options_for_create(
