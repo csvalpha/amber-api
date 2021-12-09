@@ -68,7 +68,7 @@ Rails.application.routes.draw do
     jsonapi_resources :quickpost_messages
 
     namespace :webauthn do
-      jsonapi_resources :credentials, only: %w[index show create]
+      jsonapi_resources :credentials, only: %w[index show create destroy]
       resource :challenges, only: [:create]
 
       namespace :login do

@@ -14,6 +14,10 @@ module Webauthn
       scope.exists?(id: record.id)
     end
 
+    def destroy?
+      record.user == user
+    end
+
     def create?
       user
     end
