@@ -1,4 +1,4 @@
-FROM ruby:2.7.5-alpine
+FROM ruby:3.1.0-alpine
 
 ARG BUNDLE_INSTALL_EXCLUDE='development test'
 EXPOSE 3000
