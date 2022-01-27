@@ -4,7 +4,7 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
   subject(:receive_mail) do
     receive_inbound_email_from_mail(
       from: 'someone@example.com',
-      'Delivered-To': mail_alias.email,
+      to: mail_alias.email,
       subject: 'Sample Subject',
       body: "I'm a sample body"
     )
@@ -16,7 +16,7 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
       let(:moderator_group) { FactoryBot.create(:group, users: [moderator]) }
       let(:mail_alias) do
         FactoryBot.create(:mail_alias, :with_user, moderation_type: :moderated,
-                                                   moderator_group: moderator_group)
+                          moderator_group: moderator_group)
       end
       let(:awaiting_moderation_email) { ActionMailer::Base.deliveries.last }
       let(:request_for_moderation_email) { ActionMailer::Base.deliveries.first }
