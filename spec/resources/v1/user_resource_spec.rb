@@ -85,7 +85,7 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when without read permission and
-             user_details_sharing_preference set to members_only' do
+ user_details_sharing_preference set to members_only' do
       let(:another_user) do
         FactoryBot.create(:user, user_details_sharing_preference: 'members_only')
       end

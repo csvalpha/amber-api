@@ -1,8 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/DescribeClass
 describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::AddressbookCollectionResource' do
-  # rubocop:enable RSpec/DescribeClass
   describe 'PROPFIND /webdav/:user_id/:key/contacts/books', version: 1 do
     let(:users) { FactoryBot.create_list(:user, 4, :webdav_enabled, activated_at: Time.zone.now) }
     let(:user) { users.first }
