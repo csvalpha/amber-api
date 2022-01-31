@@ -396,38 +396,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.archived' do
-    let(:user) { nil }
-    let(:users) { FactoryBot.create_list(:user, 2) }
-    let(:archived_user) { FactoryBot.create(:user) }
-
-    before do
-      users
-      archived_user.archive!
-    end
-
-    context 'when archived true' do
-      it { expect(described_class.archived(true).size).to eq 1 }
-      it { expect(described_class.archived(true)).to include archived_user }
-    end
-
-    context 'when archived true implicit' do
-      it { expect(described_class.archived.size).to eq 1 }
-      it { expect(described_class.archived).to include archived_user }
-    end
-
-    context 'when archived false' do
-      it { expect(described_class.archived(false).size).to eq 2 }
-      it { expect(described_class.archived(false)).to include users.first }
-    end
-  end
-
-  describe '#destroy' do
-    subject(:user) { FactoryBot.create(:user) }
-
-    it { expect(user.destroy).to be false }
-  end
-
   describe 'self.to_csv' do
     subject(:user) do
       FactoryBot.create(:user, first_name: 'Erik', last_name_prefix: 'de', last_name: 'Vries')
@@ -655,38 +623,6 @@ RSpec.describe User, type: :model do
 
         it 'is activated' do
           expect(user.activated_at).to be < Time.zone.now
-        end
-      end
-    end
-  end
-
-  describe '#archive!' do
-    context 'when archiving a user' do
-      with_versioning do
-        subject(:user) { FactoryBot.create(:user) }
-
-        let(:nil_attributes) do
-          %w[email username password_digest deleted_at last_name_prefix birthday
-             address postcode city phone_number food_preferences iban iban_holder study
-             start_study activated_at activation_token avatar activation_token_valid_till
-             sidekiq_access vegetarian picture_publication_preference emergency_contact
-             emergency_number ifes_data_sharing_preference info_in_almanak
-             almanak_subscription_preference digtus_subscription_preference]
-        end
-
-        before { user.archive! && user.reload }
-
-        it { expect(user.archive!).to be true }
-        it { expect(user.full_name).to eq "Gearchiveerde gebruiker #{user.id}" }
-        it { expect(user.archived_at).not_to be_nil }
-        it { expect(user.login_enabled).to be false }
-        it { expect(user.versions).to be_empty }
-        it { expect { user.archive! }.not_to(change(user, :id)) }
-
-        it do
-          nil_attributes.each do |attribute|
-            expect(user[attribute]).to be_nil
-          end
         end
       end
     end

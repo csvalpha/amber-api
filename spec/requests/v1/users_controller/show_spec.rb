@@ -20,7 +20,7 @@ describe V1::UsersController do
         let(:conditional_permission) { 'user.read' }
         let(:record_permission) { nil }
         let(:conditional_attributes) do
-          %w[archived_at picture_publication_preference]
+          %w[picture_publication_preference]
         end
       end
 
@@ -50,7 +50,7 @@ describe V1::UsersController do
         let(:conditional_permission) { 'user.read' }
         let(:record_permission) { nil }
         let(:conditional_attributes) do
-          %w[archived_at picture_publication_preference]
+          %w[picture_publication_preference]
         end
       end
 
@@ -73,7 +73,7 @@ describe V1::UsersController do
         let(:conditional_permission) { 'user.read' }
         let(:record_permission) { nil }
         let(:conditional_attributes) do
-          %w[archived_at picture_publication_preference]
+          %w[picture_publication_preference]
         end
       end
     end
@@ -85,8 +85,8 @@ describe V1::UsersController do
         let(:conditional_permission) { 'user.read' }
         let(:record_permission) { nil }
         let(:conditional_attributes) do
-          %w[archived_at picture_publication_preference email birthday address
-             postcode city phone_number food_preferences vegetarian archived_at study start_study]
+          %w[picture_publication_preference email birthday address
+             postcode city phone_number food_preferences vegetarian study start_study]
         end
       end
     end
@@ -98,7 +98,7 @@ describe V1::UsersController do
 
       authenticated_attributes = %w[
         email birthday address postcode phone_number study
-        food_preferences vegetarian start_study ical_secret_key webdav_secret_key archived_at
+        food_preferences vegetarian start_study ical_secret_key webdav_secret_key
         city picture_publication_preference info_in_almanak
         almanak_subscription_preference digtus_subscription_preference
         emergency_contact emergency_number ifes_data_sharing_preference

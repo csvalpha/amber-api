@@ -22,7 +22,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
     return head :forbidden if @model == current_user
 
-    @model.archive!
+    UserArchiveJob.perform_later(@model.id)
     head :no_content
   end
 
