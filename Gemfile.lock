@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/csvalpha/dav4rack.git
   revision: 6b894abf7f6db79dafcc63f6dd96646e389f08e5
-  ref: parent_collection
+  ref: 6b894ab
   specs:
     dav4rack (0.2.11)
       addressable (~> 2.8.0)
