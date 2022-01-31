@@ -14,8 +14,6 @@ class Photo < ApplicationRecord
 
   validates :image, presence: true
   validates :original_filename, presence: true
-  validates :uploader, presence: true
-  validates :photo_album, presence: true
 
   scope :with_comments, (lambda {
     joins(:comments).distinct

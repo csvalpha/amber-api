@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe V1::PhotoResource, type: :resource do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   let(:context) { { user: user } }
   let(:options) { { context: context } }
 
   describe '#amount_of_comments' do
-    let(:photo) { FactoryBot.create(:photo) }
+    let(:photo) { create(:photo) }
     let(:resource) { described_class.new(photo, context) }
 
     context 'when without comments' do
@@ -14,12 +14,12 @@ RSpec.describe V1::PhotoResource, type: :resource do
     end
 
     context 'when with comments' do
-      let(:photo) { FactoryBot.create(:photo) }
+      let(:photo) { create(:photo) }
 
       before do
-        FactoryBot.create(:photo_comment, photo: photo)
-        FactoryBot.create(:photo_comment, photo: photo)
-        FactoryBot.create(:photo_comment, photo: photo)
+        create(:photo_comment, photo: photo)
+        create(:photo_comment, photo: photo)
+        create(:photo_comment, photo: photo)
         photo.reload
       end
 

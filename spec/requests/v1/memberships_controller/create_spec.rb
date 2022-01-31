@@ -3,8 +3,8 @@ require 'rails_helper'
 describe V1::MembershipsController do
   describe 'POST /memberships', version: 1 do
     let(:record) do
-      FactoryBot.build(:membership, group: FactoryBot.create(:group),
-                                    user: FactoryBot.create(:user))
+      build(:membership, group: create(:group),
+                         user: create(:user))
     end
     let(:record_url) { '/v1/memberships' }
     let(:record_permission) { 'membership.create' }
@@ -27,9 +27,9 @@ describe V1::MembershipsController do
 
     describe 'when start date is not given' do
       let(:record) do
-        FactoryBot.build(:membership, start_date: nil,
-                                      group: FactoryBot.create(:group),
-                                      user: FactoryBot.create(:user))
+        build(:membership, start_date: nil,
+                           group: create(:group),
+                           user: create(:user))
       end
       let(:valid_relationships) do
         {
@@ -48,7 +48,7 @@ describe V1::MembershipsController do
       end
 
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       subject(:request) { valid_request }
@@ -62,7 +62,7 @@ describe V1::MembershipsController do
     describe 'when the group is not given' do
       include_context 'when authenticated'
 
-      let(:record) { FactoryBot.build(:membership, group: nil, user: FactoryBot.create(:user)) }
+      let(:record) { build(:membership, group: nil, user: create(:user)) }
       let(:invalid_attributes) { record.attributes }
       let(:invalid_relationships) do
         {
@@ -86,7 +86,7 @@ describe V1::MembershipsController do
 
       context 'when with permission' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
         it_behaves_like '422 Unprocessable Entity'

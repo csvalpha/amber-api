@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::BoardRoomPresenceResource, type: :resource do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   let(:context) { { user: user } }
   let(:options) { { context: context } }
 
@@ -10,11 +10,11 @@ RSpec.describe V1::BoardRoomPresenceResource, type: :resource do
 
     describe 'current' do
       let(:filter) { { current: true } }
-      let(:record) { FactoryBot.create(:board_room_presence) }
+      let(:record) { create(:board_room_presence) }
 
       before do
         record
-        FactoryBot.create(:board_room_presence, :future)
+        create(:board_room_presence, :future)
       end
 
       it { expect(filtered.first.id).to eq record.id }
@@ -23,11 +23,11 @@ RSpec.describe V1::BoardRoomPresenceResource, type: :resource do
 
     describe 'future' do
       let(:filter) { { future: true } }
-      let(:record) { FactoryBot.create(:board_room_presence, :future) }
+      let(:record) { create(:board_room_presence, :future) }
 
       before do
         record
-        FactoryBot.create(:board_room_presence)
+        create(:board_room_presence)
       end
 
       it { expect(filtered.first.id).to eq record.id }
@@ -38,9 +38,9 @@ RSpec.describe V1::BoardRoomPresenceResource, type: :resource do
       let(:filter) { { current_and_future: true } }
 
       before do
-        FactoryBot.create(:board_room_presence, :future)
-        FactoryBot.create(:board_room_presence, :history)
-        FactoryBot.create(:board_room_presence)
+        create(:board_room_presence, :future)
+        create(:board_room_presence, :history)
+        create(:board_room_presence)
       end
 
       it { expect(filtered.size).to eq 2 }

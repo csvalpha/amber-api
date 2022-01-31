@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Import::Transaction, type: :model do
-  let(:user) { FactoryBot.create(:user, username: 'bestuurder') }
+  let(:user) { create(:user, username: 'bestuurder') }
   let(:test_file) { Rails.root.join('spec', 'support', 'files', 'collection_import.csv') }
-  let(:collection) { FactoryBot.create(:collection) }
+  let(:collection) { create(:collection) }
   let(:importer) { described_class.new(test_file, collection) }
   let(:errors) { collection.errors.messages[:import_file] }
 

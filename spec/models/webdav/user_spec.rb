@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Webdav::User, type: :model do
-  let(:user) { FactoryBot.create(:user) }
-  let(:group) { FactoryBot.create(:group, users: [user]) }
+  let(:user) { create(:user) }
+  let(:group) { create(:group, users: [user]) }
 
   subject(:webdav_user) { described_class.new(user, group.id) }
 

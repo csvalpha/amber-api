@@ -3,15 +3,15 @@ require 'rails_helper'
 RSpec.describe PollPolicy, type: :policy do
   subject(:policy) { described_class }
 
-  let(:user) { FactoryBot.build(:user) }
+  let(:user) { build(:user) }
 
   permissions :update? do
     describe 'when poll is not owned' do
-      it { expect(policy).not_to permit(user, FactoryBot.build(:poll)) }
+      it { expect(policy).not_to permit(user, build(:poll)) }
     end
 
     describe 'when poll is owned' do
-      it { expect(policy).to permit(user, FactoryBot.build(:poll, author: user)) }
+      it { expect(policy).to permit(user, build(:poll, author: user)) }
     end
   end
 

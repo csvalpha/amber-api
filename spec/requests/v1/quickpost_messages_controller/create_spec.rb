@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::QuickpostMessagesController do
   describe 'POST /quickpost_messages', version: 1 do
-    let(:record) { FactoryBot.build_stubbed(:quickpost_message) }
+    let(:record) { build_stubbed(:quickpost_message) }
     let(:record_url) { '/v1/quickpost_messages' }
     let(:record_permission) { 'quickpost_message.create' }
 

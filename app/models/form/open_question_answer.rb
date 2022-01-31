@@ -6,7 +6,6 @@ module Form
     validates :answer, presence: true, numericality: true, if: (proc do
       question.try(:field_type) == 'number'
     end)
-    validates :question, presence: true
     validates :response, presence: true, uniqueness: { scope: :question }
   end
 end

@@ -3,7 +3,7 @@ shared_examples 'an indexable model' do
     before { records }
 
     include_context 'when authenticated' do
-      let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+      let(:user) { create(:user, user_permission_list: [record_permission]) }
     end
 
     it_behaves_like '200 OK'

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Forum::ThreadsController do
   describe 'PUT /forum/threads/:id', version: 1 do
-    let(:record) { FactoryBot.create(:thread) }
+    let(:record) { create(:thread) }
     let(:record_url) { "/v1/forum/threads/#{record.id}" }
     let(:record_permission) { 'forum/thread.update' }
 
@@ -12,7 +12,7 @@ describe V1::Forum::ThreadsController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       subject(:request) { put(record_url) }

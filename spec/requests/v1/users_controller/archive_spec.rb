@@ -3,7 +3,7 @@ require 'rails_helper'
 describe V1::UsersController do
   describe 'POST /users/:id/archive', version: 1 do
     let(:record_permission) { 'user.destroy' }
-    let(:record) { FactoryBot.create(:user) }
+    let(:record) { create(:user) }
     let(:record_url) { "/v1/users/#{record.id}/archive" }
 
     subject(:request) { post(record_url) }
@@ -22,7 +22,7 @@ describe V1::UsersController do
 
         context 'when with permission' do
           include_context 'when authenticated' do
-            let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+            let(:user) { create(:user, user_permission_list: [record_permission]) }
           end
 
           it_behaves_like '204 No Content'
@@ -32,7 +32,7 @@ describe V1::UsersController do
 
         context 'when in group record with permission' do
           before do
-            FactoryBot.create(:group, users: [user], permission_list: [record_permission])
+            create(:group, users: [user], permission_list: [record_permission])
           end
 
           it_behaves_like '204 No Content'
@@ -42,7 +42,7 @@ describe V1::UsersController do
       end
 
       describe 'when user archives itself' do
-        let(:record) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:record) { create(:user, user_permission_list: [record_permission]) }
 
         include_context 'when authenticated' do
           let(:user) { record }

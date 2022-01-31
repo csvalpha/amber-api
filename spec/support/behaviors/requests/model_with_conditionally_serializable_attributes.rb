@@ -2,7 +2,7 @@ shared_examples 'a model with conditionally serializable attributes' do
   context 'when authenticated' do
     context 'when with record permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       it_behaves_like '200 OK'
@@ -11,8 +11,8 @@ shared_examples 'a model with conditionally serializable attributes' do
       context 'when also with conditional permission' do
         include_context 'when authenticated' do
           let(:user) do
-            FactoryBot.create(:user,
-                              user_permission_list: [record_permission, conditional_permission])
+            create(:user,
+                   user_permission_list: [record_permission, conditional_permission])
           end
         end
 
@@ -25,7 +25,7 @@ shared_examples 'a model with conditionally serializable attributes' do
       include_context 'when authenticated'
 
       let(:group) do
-        FactoryBot.create(:group, users: [user], permission_list: [record_permission])
+        create(:group, users: [user], permission_list: [record_permission])
       end
 
       before { group }
@@ -35,8 +35,8 @@ shared_examples 'a model with conditionally serializable attributes' do
 
       context 'when also with conditional permission' do
         let(:group) do
-          FactoryBot.create(:group, users: [user],
-                                    permission_list: [record_permission, conditional_permission])
+          create(:group, users: [user],
+                         permission_list: [record_permission, conditional_permission])
         end
 
         it_behaves_like '200 OK'

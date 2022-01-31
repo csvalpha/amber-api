@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::ActivitiesController do
   describe 'GET /activities', version: 1 do
-    let(:records) { FactoryBot.create_list(:activity, 7, :with_form) }
+    let(:records) { create_list(:activity, 7, :with_form) }
     let(:record_url) { '/v1/activities' }
     let(:record_permission) { 'activity.read' }
 

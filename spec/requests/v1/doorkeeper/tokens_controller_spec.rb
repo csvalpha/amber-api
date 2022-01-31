@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Doorkeeper::TokensController do
   describe 'POST /v1/oauth/token' do
     let(:user) do
-      FactoryBot.create(
+      create(
         :user,
         username: 'bestuur',
         password: 'password1234',
@@ -13,8 +13,8 @@ describe Doorkeeper::TokensController do
       )
     end
 
-    let(:public_application) { FactoryBot.create(:application, confidential: false) }
-    let(:application) { FactoryBot.create(:application) }
+    let(:public_application) { create(:application, confidential: false) }
+    let(:application) { create(:application) }
     let(:request_url) { '/v1/oauth/token' }
 
     before { user }

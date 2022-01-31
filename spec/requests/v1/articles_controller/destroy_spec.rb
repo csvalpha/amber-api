@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::ArticlesController do
   describe 'DELETE /articles/:id', version: 1 do
-    let(:record) { FactoryBot.create(:article) }
+    let(:record) { create(:article) }
     let(:record_url) { "/v1/articles/#{record.id}" }
     let(:record_permission) { 'article.destroy' }
 

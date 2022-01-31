@@ -3,8 +3,6 @@ class Poll < ApplicationRecord
   has_many :responses, through: :form, class_name: 'Form::Response'
   belongs_to :author, class_name: 'User'
 
-  validates :author, presence: true
-  validates :form, presence: true
   validate :form_has_at_most_one_question
   validate :form_only_has_closed_question
 

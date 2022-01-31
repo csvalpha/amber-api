@@ -2,7 +2,7 @@ shared_examples 'a re-creatable model' do
   context 'when authenticated' do
     include_context 'when authenticated' do
       let(:user) do
-        FactoryBot.create(:user, user_permission_list: [record_permission])
+        create(:user, user_permission_list: [record_permission])
       end
     end
 

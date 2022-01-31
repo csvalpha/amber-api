@@ -7,7 +7,7 @@ describe V1::UsersController do
     let(:test_file) { "data:text/csv;base64,#{test_file_base64}" }
     let(:record_url) { '/v1/users/batch_import' }
     let(:record_permission) { 'user.create' }
-    let(:group) { FactoryBot.create(:group) }
+    let(:group) { create(:group) }
     let(:live_run) { nil }
     let(:params) { { group: group.id, file: test_file, live_run: live_run } }
 
@@ -25,7 +25,7 @@ describe V1::UsersController do
 
       context 'when with permission' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
         context 'when without parameters' do
@@ -71,7 +71,7 @@ describe V1::UsersController do
             Rails.root.join('spec', 'support', 'files', 'duplicate_user_import.csv')
           end
 
-          before { FactoryBot.create(:user, email: 'uniq@example.com') }
+          before { create(:user, email: 'uniq@example.com') }
 
           it { expect { request }.not_to(change { group.users.count }) }
           it { expect(request.body).to include 'Email is al in gebruik' }

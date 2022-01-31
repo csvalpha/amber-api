@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'GET /users', version: 1 do
-    let(:records) { FactoryBot.create_list(:user, 3) }
+    let(:records) { create_list(:user, 3) }
     let(:record_url) { '/v1/users' }
     let(:record_permission) { 'user.read' }
     let(:request) { get(record_url) }
@@ -19,8 +19,8 @@ describe V1::UsersController do
 
     context 'when with filter me' do
       include_context 'when authenticated' do
-        let(:group) { FactoryBot.create(:group) }
-        let(:user) { FactoryBot.create(:user, groups: [group]) }
+        let(:group) { create(:group) }
+        let(:user) { create(:user, groups: [group]) }
       end
       let(:record_url) { '/v1/users?filter[me]' }
 
@@ -29,8 +29,8 @@ describe V1::UsersController do
       context 'when including active groups' do
         let(:record_url) { '/v1/users?filter[me]&include="active_groups"' }
         let(:user) do
-          FactoryBot.create(:user, groups: [group],
-                                   user_permission_list: %w[user.read group.read])
+          create(:user, groups: [group],
+                        user_permission_list: %w[user.read group.read])
         end
 
         it do

@@ -2,11 +2,11 @@ require 'rails_helper'
 
 describe V1::ActivitiesController, type: :controller do
   describe 'GET /ical/activities' do
-    let(:activity) { FactoryBot.create(:activity) }
+    let(:activity) { create(:activity) }
     let(:permissions) { ['activity.read'] }
     let(:user) do
-      FactoryBot.create(:user, activated_at: Time.zone.now,
-                               user_permission_list: permissions)
+      create(:user, activated_at: Time.zone.now,
+                    user_permission_list: permissions)
     end
 
     before { activity }
@@ -18,9 +18,9 @@ describe V1::ActivitiesController, type: :controller do
     context 'when authenticated' do
       describe 'with disabled but correct ical secret key key' do
         let(:user) do
-          FactoryBot.create(:user,
-                            login_enabled: false,
-                            user_permission_list: permissions)
+          create(:user,
+                 login_enabled: false,
+                 user_permission_list: permissions)
         end
 
         subject(:request) { get('ical', params: { user_id: user.id, key: user.ical_secret_key }) }
@@ -35,7 +35,7 @@ describe V1::ActivitiesController, type: :controller do
       end
 
       describe 'with unactivated account' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: permissions) }
+        let(:user) { create(:user, user_permission_list: permissions) }
 
         subject(:request) { get('ical', params: { user_id: user.id, key: user.ical_secret_key }) }
 
@@ -43,7 +43,7 @@ describe V1::ActivitiesController, type: :controller do
       end
 
       describe 'without permission' do
-        let(:user) { FactoryBot.create(:user, activated_at: Time.zone.now) }
+        let(:user) { create(:user, activated_at: Time.zone.now) }
 
         subject(:request) { get('ical', params: { user_id: user.id, key: user.ical_secret_key }) }
 
@@ -74,11 +74,11 @@ describe V1::ActivitiesController, type: :controller do
                                 categories: 'algemeen,sociëteit,vorming,not_a_valid_category' })
         end
 
-        let(:activity) { FactoryBot.create(:activity, category: 'algemeen') }
-        let(:second_activity) { FactoryBot.create(:activity, category: 'vorming') }
+        let(:activity) { create(:activity, category: 'algemeen') }
+        let(:second_activity) { create(:activity, category: 'vorming') }
 
         let(:filtered_activity) do
-          FactoryBot.create(:activity, title: 'thisshouldbefiltered218', category: 'choose')
+          create(:activity, title: 'thisshouldbefiltered218', category: 'choose')
         end
 
         let(:ical_events) do

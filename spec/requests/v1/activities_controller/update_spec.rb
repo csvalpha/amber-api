@@ -3,7 +3,7 @@ require 'rails_helper'
 describe V1::ActivitiesController do
   describe 'PUT /activities/:id', version: 1 do
     let(:record_permission) { 'activity.update' }
-    let(:record) { FactoryBot.create(:activity, :with_form) }
+    let(:record) { create(:activity, :with_form) }
     let(:record_url) { "/v1/activities/#{record.id}" }
 
     # it_behaves_like 'an updatable and permissible model', response: :ok do
@@ -21,7 +21,7 @@ describe V1::ActivitiesController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       subject(:request) do

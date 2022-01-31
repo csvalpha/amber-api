@@ -4,8 +4,6 @@ class ArticleComment < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   validates :content, presence: true, length: { minimum: 1, maximum: 500 }
-  validates :author, presence: true
-  validates :article, presence: true
 
   scope :publicly_visible, (lambda {
     joins(:article).where(articles: { publicly_visible: true })

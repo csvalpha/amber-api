@@ -2,11 +2,11 @@ require 'rails_helper'
 
 describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::AddressbookResource' do
   describe 'PROPFIND /webdav/:user_id/:key/contacts/books/:group_id', version: 1 do
-    let(:users) { FactoryBot.create_list(:user, 4, :webdav_enabled, activated_at: Time.zone.now) }
+    let(:users) { create_list(:user, 4, :webdav_enabled, activated_at: Time.zone.now) }
     let(:user) { users.first }
-    let(:group) { FactoryBot.create(:group, users: users) }
+    let(:group) { create(:group, users: users) }
     let(:not_member_group) do
-      FactoryBot.create(:group, users: FactoryBot.create_list(:user, 3))
+      create(:group, users: create_list(:user, 3))
     end
 
     before { group && not_member_group }

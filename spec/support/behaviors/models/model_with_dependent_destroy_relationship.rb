@@ -1,7 +1,7 @@
 shared_examples 'a model with dependent destroy relationship' do |relationship|
   let(:model_name) { described_class.to_s.underscore.split('/').last }
-  let(:model) { FactoryBot.create(model_name) }
-  let(:relation) { FactoryBot.create(relationship, model_name => model) }
+  let(:model) { create(model_name) }
+  let(:relation) { create(relationship, model_name => model) }
 
   before do
     model

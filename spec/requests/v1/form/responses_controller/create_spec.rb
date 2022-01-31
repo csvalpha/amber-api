@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Form::ResponsesController do
   describe 'POST /form/responses/:id', version: 1 do
-    let(:record) { FactoryBot.create(:response) }
+    let(:record) { create(:response) }
     let(:record_url) { '/v1/form/responses' }
     let(:record_permission) { 'form/response.create' }
 
@@ -17,9 +17,9 @@ describe V1::Form::ResponsesController do
 
     it_behaves_like 'a re-creatable model' do
       let(:user) do
-        FactoryBot.create(:user, user_permission_list: [record_permission])
+        create(:user, user_permission_list: [record_permission])
       end
-      let(:record) { FactoryBot.create(:response, user: user) }
+      let(:record) { create(:response, user: user) }
       let(:valid_relationships) do
         { form: { data: { id: record.form_id, type: 'forms' } } }
       end
@@ -28,7 +28,7 @@ describe V1::Form::ResponsesController do
     end
 
     context 'when authenticated' do
-      let(:another_user) { FactoryBot.create(:user) }
+      let(:another_user) { create(:user) }
       let(:valid_request) do
         post(
           record_url,
@@ -42,7 +42,7 @@ describe V1::Form::ResponsesController do
       end
 
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       before { valid_request }

@@ -1,6 +1,6 @@
 shared_examples 'a creatable model with group' do
   include_context 'when authenticated' do
-    let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+    let(:user) { create(:user, user_permission_list: [record_permission]) }
   end
   let(:request) do
     post(record_url,
@@ -19,7 +19,7 @@ shared_examples 'a creatable model with group' do
 
   context 'when in group' do
     before do
-      FactoryBot.create(:membership, user: user, group: record.group)
+      create(:membership, user: user, group: record.group)
     end
 
     it_behaves_like '201 Created'

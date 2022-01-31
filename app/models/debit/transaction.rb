@@ -5,8 +5,6 @@ module Debit
 
     validates :description, presence: true
     validates :amount, presence: true
-    validates :user, presence: true
-    validates :collection, presence: true
 
     scope :transactions_for, (->(user) { where(user: user) })
   end

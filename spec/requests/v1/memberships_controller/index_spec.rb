@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::MembershipsController do
   describe 'GET /memberships', version: 1 do
-    let(:records) { FactoryBot.create_list(:membership, 3) }
+    let(:records) { create_list(:membership, 3) }
     let(:record_url) { '/v1/memberships' }
     let(:record_permission) { 'membership.read' }
 
@@ -14,7 +14,7 @@ describe V1::MembershipsController do
 
     context 'when authenticated and with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       it_behaves_like 'a filterable model'

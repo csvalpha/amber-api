@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe CollectionImportJob, type: :job do
   describe '#perform' do
-    let(:user) { FactoryBot.create(:user) }
-    let(:collection) { FactoryBot.create(:collection) }
+    let(:user) { create(:user) }
+    let(:collection) { create(:collection) }
     let(:test_file) { Rails.root.join('spec', 'support', 'files', 'collection_import.csv') }
     let(:encoded_file) { Base64.strict_encode64(File.read(test_file)) }
     let(:base64_data) { "data:text/csv;base64,#{encoded_file}" }
-    let(:transaction_user) { FactoryBot.create(:user, username: 'bestuurder') }
+    let(:transaction_user) { create(:user, username: 'bestuurder') }
     let(:mail) { ActionMailer::Base.deliveries.first }
 
     subject(:job) do

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Debit::CollectionsController do
   describe 'GET /debit/collections/:id/sepa', version: 1 do
-    let(:record) { FactoryBot.create(:collection) }
+    let(:record) { create(:collection) }
     let(:record_url) { "/v1/debit/collections/#{record.id}/sepa" }
     let(:record_permission) { 'debit/collection.create' }
     let(:request) { get(record_url) }
@@ -13,7 +13,7 @@ describe V1::Debit::CollectionsController do
 
     context 'when authenticated' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user) }
+        let(:user) { create(:user) }
       end
 
       it_behaves_like '403 Forbidden'
@@ -21,7 +21,7 @@ describe V1::Debit::CollectionsController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       context 'when on non existing collection' do
@@ -36,16 +36,16 @@ describe V1::Debit::CollectionsController do
 
       context 'when without mandate' do
         before do
-          FactoryBot.create(:transaction, collection: record)
+          create(:transaction, collection: record)
         end
 
         it_behaves_like '422 Unprocessable Entity'
       end
 
       context 'when with transaction and mandate' do
-        let(:transaction) { FactoryBot.create(:transaction, collection: record) }
+        let(:transaction) { create(:transaction, collection: record) }
 
-        before { FactoryBot.create(:mandate, user: transaction.user) }
+        before { create(:mandate, user: transaction.user) }
 
         it_behaves_like '200 OK'
       end

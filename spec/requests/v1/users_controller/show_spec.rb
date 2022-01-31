@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'GET /users/:id', version: 1 do
-    let(:record) { FactoryBot.create(:user, user_details_sharing_preference: 'hidden') }
+    let(:record) { create(:user, user_details_sharing_preference: 'hidden') }
     let(:record_url) { "/v1/users/#{record.id}" }
     let(:record_permission) { 'user.read' }
 
@@ -37,7 +37,7 @@ describe V1::UsersController do
     end
 
     context 'when user_details_sharing_preference is set to nil' do
-      let(:record) { FactoryBot.create(:user, user_details_sharing_preference: nil) }
+      let(:record) { create(:user, user_details_sharing_preference: nil) }
 
       it_behaves_like 'a model with conditionally serializable attributes' do
         let(:conditional_permission) { 'user.update' }
@@ -67,7 +67,7 @@ describe V1::UsersController do
     end
 
     context 'when user_details_sharing_preference is set to all_users' do
-      let(:record) { FactoryBot.create(:user, user_details_sharing_preference: 'all_users') }
+      let(:record) { create(:user, user_details_sharing_preference: 'all_users') }
 
       it_behaves_like 'a model with conditionally serializable attributes' do
         let(:conditional_permission) { 'user.read' }
@@ -79,7 +79,7 @@ describe V1::UsersController do
     end
 
     context 'when user_details_sharing_preference is set to members_only' do
-      let(:record) { FactoryBot.create(:user, user_details_sharing_preference: 'members_only') }
+      let(:record) { create(:user, user_details_sharing_preference: 'members_only') }
 
       it_behaves_like 'a model with conditionally serializable attributes' do
         let(:conditional_permission) { 'user.read' }
