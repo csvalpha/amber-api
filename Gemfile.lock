@@ -1,4 +1,16 @@
 GIT
+  remote: https://github.com/csvalpha/dav4rack.git
+  revision: 6b894abf7f6db79dafcc63f6dd96646e389f08e5
+  ref: 6b894ab
+  specs:
+    dav4rack (0.2.11)
+      addressable (~> 2.8.0)
+      nokogiri (~> 1.12.5)
+      rack (~> 2.2.3)
+      uuidtools (~> 2.1.5)
+      webrick (~> 1.7.0)
+
+GIT
   remote: https://github.com/heapsource/active_model_otp.git
   revision: 6ed9927ac2457b3fa7d59931f7758cac209c3b71
   ref: 6ed9927
@@ -118,10 +130,6 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    dav4rack (0.3.0)
-      nokogiri (>= 1.4.2)
-      rack (>= 1.1.0)
-      uuidtools (~> 2.1.1)
     dav4rack_ext (1.0.0)
       dav4rack
       http_router
@@ -247,6 +255,7 @@ GEM
     minitest (5.15.0)
     msgpack (1.4.4)
     msgpack (1.4.4-java)
+    multipart-post (2.1.1)
     nenv (0.3.0)
     netrc (0.11.0)
     nio4r (2.5.8)
@@ -484,7 +493,8 @@ GEM
     url_mount (0.2.1)
       rack
     uuidtools (2.1.5)
-    validates_timeliness (5.0.0)
+    validates_timeliness (6.0.0.beta2)
+      activemodel (>= 6.0.0, < 7)
       timeliness (>= 0.3.10, < 1)
     vcard_parser (0.0.9)
     vcr (6.0.0)
@@ -493,6 +503,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    webrick (1.7.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-driver (0.7.5-java)
@@ -523,6 +534,7 @@ DEPENDENCIES
   colorize
   consistency_fail
   counter_culture (~> 3.0)
+  dav4rack!
   dav4rack_ext (~> 1.0)
   doorkeeper (~> 5.2)
   doorkeeper-i18n (~> 5.2)
@@ -577,10 +589,10 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   tzinfo-data
-  validates_timeliness (~> 5.0)
+  validates_timeliness (~> 6.0.0.beta2)
   vcr
   vpim (~> 13.11)
   webmock
 
 BUNDLED WITH
-   2.1.4
+   2.2.32
