@@ -4,7 +4,7 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
   subject(:receive_mail) do
     receive_inbound_email_from_mail(
       from: 'someone@example.com',
-      'Delivered-To': mail_alias.email,
+      to: mail_alias.email,
       subject: 'Sample Subject',
       body: "I'm a sample body"
     )
