@@ -22,7 +22,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    (me? && !record.archived?) || super
+    me? || super
   end
 
   def archive?

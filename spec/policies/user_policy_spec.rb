@@ -47,20 +47,6 @@ RSpec.describe UserPolicy, type: :policy do
 
       it { expect(policy).to permit(permitted_user, user) }
     end
-
-    describe 'when user is archived' do
-      let(:user) { FactoryBot.build_stubbed(:user, archived_at: Date.yesterday) }
-
-      it { expect(policy).not_to permit(user, user) }
-
-      describe 'when with permission' do
-        let(:permitted_user) do
-          FactoryBot.create(:user, user_permission_list: [record_permission])
-        end
-
-        it { expect(policy).to permit(permitted_user, user) }
-      end
-    end
   end
 
   describe '#create_with_user_permissions?' do

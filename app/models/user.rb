@@ -4,22 +4,23 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_one_time_password
 
   mount_base64_uploader :avatar, AvatarUploader
-  has_paper_trail skip: %i[avatar], unless: proc { |o| o.archived? }
+  has_paper_trail skip: %i[avatar]
 
-  has_many :memberships, inverse_of: :user
+  has_many :memberships, inverse_of: :user, dependent: :delete_all
   has_many :groups, through: :memberships
   has_many :active_groups, (lambda {
     where('start_date <= :now AND (end_date > :now OR
       memberships.end_date IS NULL)', now: Time.zone.now)
   }), through: :memberships, source: :group
-  has_many :permissions_users, class_name: 'PermissionsUsers'
+  has_many :permissions_users, class_name: 'PermissionsUsers', dependent: :delete_all
   has_many :user_permissions, through: :permissions_users, source: :permission
-  has_many :article_comments
-  has_many :board_room_presences
-  has_many :photo_comments
-  has_many :mail_aliases
-  has_many :read_threads
-  has_many :mandates, class_name: 'Debit::Mandate'
+  has_many :article_comments, foreign_key: :author_id
+  has_many :board_room_presences, dependent: :delete_all
+  has_many :photo_comments, foreign_key: :author_id
+  has_many :mail_aliases, dependent: :delete_all
+  has_many :read_threads, class_name: 'Forum::ReadThread', dependent: :delete_all
+  has_many :mandates, class_name: 'Debit::Mandate', dependent: :delete_all
+  has_many :transactions, class_name: 'Debit::Transaction', dependent: :delete_all
   has_many :group_mail_aliases, through: :active_groups, source: :mail_aliases
 
   # See https://github.com/doorkeeper-gem/doorkeeper#active-record
@@ -32,16 +33,15 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   has_secure_password(validations: false)
   # General fields
-  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w.]+\z/ },
-                       unless: :archived?
-  validates :email, presence: true, uniqueness: true, unless: :archived?
-  validates :password, length: { minimum: 12 }, allow_nil: true, unless: :archived?
+  validates :username, presence: true, uniqueness: true, format: { with: /\A[\w.]+\z/ }
+  validates :email, presence: true, uniqueness: true
+  validates :password, length: { minimum: 12 }, allow_nil: true
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :address, presence: true, unless: :archived?
-  validates :postcode, presence: true, unless: :archived?
-  validates :city, presence: true, unless: :archived?
-  validates :vegetarian, inclusion: [true, false], unless: :archived?
+  validates :address, presence: true
+  validates :postcode, presence: true
+  validates :city, presence: true
+  validates :vegetarian, inclusion: [true, false]
   validates :phone_number, phone: { possible: true, allow_blank: true }
 
   # Technical fields
@@ -52,20 +52,20 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Preferences
   validates :almanak_subscription_preference, presence: true, inclusion: {
     in: %w[physical digital no_subscription]
-  }, unless: :archived?
+  }
   validates :digtus_subscription_preference, presence: true, inclusion: {
     in: %w[physical digital no_subscription]
-  }, unless: :archived?
+  }
 
   # Privacy fields
   validates :picture_publication_preference, not_renullable: true, inclusion: {
     in: %w[always_publish always_ask never_publish], allow_nil: true
-  }, unless: :archived?
-  validates :ifes_data_sharing_preference, not_renullable: true, unless: :archived?
-  validates :info_in_almanak, not_renullable: true, unless: :archived?
+  }
+  validates :ifes_data_sharing_preference, not_renullable: true
+  validates :info_in_almanak, not_renullable: true
   validates :user_details_sharing_preference, not_renullable: true, inclusion: {
     in: %w[hidden members_only all_users], allow_nil: true
-  }, unless: :archived?
+  }
 
   # Other
   validates :emergency_number, phone: { possible: true, allow_blank: true }
@@ -74,10 +74,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_save :revoke_all_access_tokens, unless: :login_enabled?
   before_create :generate_ical_secret_key
   after_commit :sync_mail_aliases
-
-  before_destroy do
-    throw(:abort)
-  end
 
   scope :activated, (-> { where('activated_at < ?', Time.zone.now) })
   scope :contactsync_users, (-> { where.not(webdav_secret_key: nil) })
@@ -99,11 +95,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   })
   scope :active_users_for_group, (lambda { |group|
     joins(:memberships).merge(Membership.active.where(group: group))
-  })
-  scope :archived, (lambda { |bool = true|
-    return where.not(archived_at: nil) if bool
-
-    where(archived_at: nil)
   })
 
   def full_name
@@ -173,22 +164,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.activation_token = nil
     self.activated_at = Time.zone.now
     save
-  end
-
-  def archive!
-    attributes.each_key do |attribute|
-      self[attribute] = nil unless %w[deleted_at updated_at created_at login_enabled id]
-                                   .include? attribute
-    end
-    self.first_name = 'Gearchiveerde gebruiker'
-    self.last_name = id
-    self.login_enabled = false
-    self.archived_at = Time.zone.now
-    save & versions.destroy_all
-  end
-
-  def archived?
-    archived_at?
   end
 
   def self.activation_token_hash

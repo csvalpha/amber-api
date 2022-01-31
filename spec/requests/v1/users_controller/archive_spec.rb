@@ -11,14 +11,14 @@ describe V1::UsersController do
     describe 'when archiving user' do
       context 'when not authenticated' do
         it_behaves_like '401 Unauthorized'
-        it { expect { request }.not_to(change { record.class.count }) }
+        it { expect { request }.not_to have_enqueued_job(UserArchiveJob) }
       end
 
       context 'when authenticated' do
         include_context 'when authenticated'
 
         it_behaves_like '403 Forbidden'
-        it { expect { request }.not_to(change { record.class.count }) }
+        it { expect { request }.not_to have_enqueued_job(UserArchiveJob) }
 
         context 'when with permission' do
           include_context 'when authenticated' do
@@ -26,8 +26,7 @@ describe V1::UsersController do
           end
 
           it_behaves_like '204 No Content'
-          it { expect { request }.not_to(change { record.class.count }) }
-          it { expect { request }.to(change { record.reload.archived_at }) }
+          it { expect { request }.to have_enqueued_job(UserArchiveJob).with(record.id) }
         end
 
         context 'when in group record with permission' do
@@ -36,8 +35,7 @@ describe V1::UsersController do
           end
 
           it_behaves_like '204 No Content'
-          it { expect { request }.not_to(change { record.class.count }) }
-          it { expect { request }.to(change { record.reload.archived_at }) }
+          it { expect { request }.to have_enqueued_job(UserArchiveJob).with(record.id) }
         end
       end
 
