@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
+gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '6b894ab'
 
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4'
@@ -40,7 +41,7 @@ gem 'sepa_king', '~> 0.11'
 gem 'sidekiq', '~> 6.0'
 gem 'sidekiq-scheduler', '~> 3.0'
 gem 'slack-notifier', '~> 2.0'
-gem 'validates_timeliness', '~> 5.0'
+gem 'validates_timeliness', '~> 6.0.0.beta2'
 gem 'vpim', '~> 13.11'
 
 group :development, :test do
