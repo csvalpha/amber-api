@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class MailModerationMailer < ApplicationMailer
   def request_for_moderation_email(moderator, stored_mail)
     @user = moderator
