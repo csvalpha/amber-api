@@ -18,7 +18,7 @@ RSpec.describe V1::UserResource, type: :resource do
          user_details_sharing_preference allow_tomato_sharing]
     end
     let(:read_fields) do
-      %i[archived_at picture_publication_preference]
+      %i[picture_publication_preference]
     end
     let(:user_details_fields) do
       %i[email birthday address postcode city phone_number food_preferences vegetarian
@@ -85,7 +85,7 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when without read permission and
-             user_details_sharing_preference set to members_only' do
+ user_details_sharing_preference set to members_only' do
       let(:another_user) do
         FactoryBot.create(:user, user_details_sharing_preference: 'members_only')
       end
@@ -234,29 +234,6 @@ RSpec.describe V1::UserResource, type: :resource do
 
       it { expect(filtered.size).to eq 1 }
       it { expect(filtered.first).to eq member }
-    end
-
-    describe 'archived' do
-      let(:archived_user) { FactoryBot.create(:user) }
-
-      before do
-        archived_user.archive!
-        FactoryBot.create(:user)
-      end
-
-      context 'when archived' do
-        let(:filter) { { archived: 'true' } }
-
-        it { expect(filtered.size).to eq 1 }
-        it { expect(filtered.first).to eq archived_user }
-      end
-
-      context 'when not archived' do
-        let(:filter) { { archived: 'false' } }
-
-        it { expect(filtered.size).to eq 2 }
-        it { expect(filtered).to include user }
-      end
     end
   end
 end
