@@ -75,10 +75,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :generate_ical_secret_key
   after_commit :sync_mail_aliases
 
-  #   before_destroy do
-  #     throw(:abort)
-  #   end
-
   scope :activated, (-> { where('activated_at < ?', Time.zone.now) })
   scope :contactsync_users, (-> { where.not(webdav_secret_key: nil) })
   scope :tomato_users, (-> { where(allow_tomato_sharing: true) })
