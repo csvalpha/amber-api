@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::PrincipalResource' do
   describe 'PROPFIND /webdav/:user_id/:key/contacts', version: 1 do
     let(:user) do
-      FactoryBot.create(:user, :webdav_enabled, activated_at: Time.zone.now)
+      create(:user, :webdav_enabled, activated_at: Time.zone.now)
     end
 
     context 'when requesting resourcetype and current-user-principal' do

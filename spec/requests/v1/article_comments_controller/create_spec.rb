@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::ArticleCommentsController do
   describe 'POST /article_comments', version: 1 do
-    let(:record) { FactoryBot.create(:article_comment) }
+    let(:record) { create(:article_comment) }
     let(:record_url) { '/v1/article_comments' }
     let(:record_permission) { 'article_comment.create' }
 
@@ -21,7 +21,7 @@ describe V1::ArticleCommentsController do
     end
 
     context 'when authenticated' do
-      let(:another_user) { FactoryBot.create(:user) }
+      let(:another_user) { create(:user) }
       let(:valid_request) do
         post(
           record_url,
@@ -38,7 +38,7 @@ describe V1::ArticleCommentsController do
       end
 
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       before { valid_request }

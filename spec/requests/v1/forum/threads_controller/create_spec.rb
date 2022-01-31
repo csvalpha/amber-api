@@ -3,7 +3,7 @@ require 'rails_helper'
 describe V1::Forum::ThreadsController do
   describe 'POST /forum/threads', version: 1 do
     it_behaves_like 'a creatable and permissible model' do
-      let(:record) { FactoryBot.create(:thread) }
+      let(:record) { create(:thread) }
       let(:record_url) { '/v1/forum/threads' }
       let(:record_permission) { 'forum/thread.create' }
       let(:invalid_attributes) { { title: '' } }

@@ -1,43 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe Article, type: :model do
-  subject(:article) { FactoryBot.build(:article) }
+  subject(:article) { build(:article) }
 
   describe '#valid' do
     it { expect(article).to be_valid }
 
     context 'when without a title' do
-      subject(:article) { FactoryBot.build_stubbed(:article, title: nil) }
+      subject(:article) { build_stubbed(:article, title: nil) }
 
       it { expect(article).not_to be_valid }
     end
 
     context 'when without content' do
-      subject(:article) { FactoryBot.build(:article, content: nil) }
+      subject(:article) { build(:article, content: nil) }
 
       it { expect(article).not_to be_valid }
     end
 
     context 'when without an author' do
-      subject(:article) { FactoryBot.build_stubbed(:article, author: nil) }
+      subject(:article) { build_stubbed(:article, author: nil) }
 
       it { expect(article).not_to be_valid }
     end
 
     context 'when without a group' do
-      subject(:article) { FactoryBot.build_stubbed(:article, group: nil) }
+      subject(:article) { build_stubbed(:article, group: nil) }
 
       it { expect(article).to be_valid true }
     end
 
     context 'when without public visibility' do
-      subject(:article) { FactoryBot.build(:article, publicly_visible: nil) }
+      subject(:article) { build(:article, publicly_visible: nil) }
 
       it { expect(article).not_to be_valid }
     end
 
     context 'when without pinned' do
-      subject(:article) { FactoryBot.build(:article, pinned: nil) }
+      subject(:article) { build(:article, pinned: nil) }
 
       it { expect(article).not_to be_valid }
     end
@@ -49,9 +49,9 @@ RSpec.describe Article, type: :model do
 
   describe '#publicly_visible' do
     before do
-      FactoryBot.create(:article, publicly_visible: true)
-      FactoryBot.create(:article, publicly_visible: true)
-      FactoryBot.create(:article, publicly_visible: false)
+      create(:article, publicly_visible: true)
+      create(:article, publicly_visible: true)
+      create(:article, publicly_visible: false)
     end
 
     it { expect(described_class.publicly_visible.count).to be 2 }
@@ -60,15 +60,15 @@ RSpec.describe Article, type: :model do
 
   describe '#pinned' do
     context 'when other already pinned' do
-      subject(:article) { FactoryBot.build(:article, pinned: true) }
+      subject(:article) { build(:article, pinned: true) }
 
-      before { FactoryBot.create(:article, pinned: true) }
+      before { create(:article, pinned: true) }
 
       it { expect(article).not_to be_valid }
     end
 
     context 'when none already pinned' do
-      subject(:article) { FactoryBot.build(:article, pinned: true) }
+      subject(:article) { build(:article, pinned: true) }
 
       it { expect(article).to be_valid }
     end

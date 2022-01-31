@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Form::Response, type: :model do
-  subject(:response) { FactoryBot.build(:response) }
+  subject(:response) { build(:response) }
 
   describe '#valid' do
     it { expect(response).to be_valid }
 
     context 'when without an user' do
-      subject(:response) { FactoryBot.build(:response, user: nil) }
+      subject(:response) { build(:response, user: nil) }
 
       it { expect(response).not_to be_valid }
     end
 
     context 'when without a form' do
-      subject(:response) { FactoryBot.build(:response, form: nil) }
+      subject(:response) { build(:response, form: nil) }
 
       it { expect(response).not_to be_valid }
     end
@@ -22,7 +22,7 @@ RSpec.describe Form::Response, type: :model do
       before { response.save }
 
       let(:another_response) do
-        FactoryBot.build(:response, form: response.form, user: response.user)
+        build(:response, form: response.form, user: response.user)
       end
 
       it { expect(another_response).not_to be_valid }
@@ -33,7 +33,7 @@ RSpec.describe Form::Response, type: :model do
         response.form.update(respond_from: 2.days.ago, respond_until: Date.yesterday)
       end
 
-      subject(:response) { FactoryBot.build(:response) }
+      subject(:response) { build(:response) }
 
       it { expect(response).not_to be_valid }
     end
@@ -44,7 +44,7 @@ RSpec.describe Form::Response, type: :model do
 
     describe 'with a required open question' do
       let(:open_question) do
-        FactoryBot.create(:open_question, form: response.form, required: true)
+        create(:open_question, form: response.form, required: true)
       end
 
       before { open_question }
@@ -53,7 +53,7 @@ RSpec.describe Form::Response, type: :model do
 
       describe 'when it is answered' do
         let(:open_question_answer) do
-          FactoryBot.create(:open_question_answer, question: open_question, response: response)
+          create(:open_question_answer, question: open_question, response: response)
         end
 
         before do
@@ -74,7 +74,7 @@ RSpec.describe Form::Response, type: :model do
 
     describe 'with an optional open question' do
       let(:open_question) do
-        FactoryBot.create(:open_question, form: response.form, required: false)
+        create(:open_question, form: response.form, required: false)
       end
 
       before { open_question }
@@ -84,7 +84,7 @@ RSpec.describe Form::Response, type: :model do
 
     describe 'with a required closed question' do
       let(:closed_question) do
-        FactoryBot.create(:closed_question, :with_options, form: response.form, required: true)
+        create(:closed_question, :with_options, form: response.form, required: true)
       end
 
       before { closed_question }
@@ -93,10 +93,10 @@ RSpec.describe Form::Response, type: :model do
 
       describe 'when it is answered' do
         let(:closed_question_answer) do
-          FactoryBot.create(:closed_question_answer,
-                            option: closed_question.options.first,
-                            question: closed_question,
-                            response: response)
+          create(:closed_question_answer,
+                 option: closed_question.options.first,
+                 question: closed_question,
+                 response: response)
         end
 
         before do
@@ -117,7 +117,7 @@ RSpec.describe Form::Response, type: :model do
 
     describe 'with an optional closed question' do
       let(:open_question) do
-        FactoryBot.create(:closed_question, form: response.form, required: false)
+        create(:closed_question, form: response.form, required: false)
       end
 
       before { open_question }
@@ -191,9 +191,9 @@ RSpec.describe Form::Response, type: :model do
 
   describe '.completed' do
     before do
-      FactoryBot.create(:response).update(completed: true)
-      FactoryBot.create(:response).update(completed: true)
-      FactoryBot.create(:response).update(completed: false)
+      create(:response).update(completed: true)
+      create(:response).update(completed: true)
+      create(:response).update(completed: false)
     end
 
     it { expect(described_class.completed.count).to be 2 }
@@ -207,7 +207,7 @@ RSpec.describe Form::Response, type: :model do
 
     describe 'when form has expired' do
       subject(:response) do
-        FactoryBot.build(:response, form: FactoryBot.create(:expired_form))
+        build(:response, form: create(:expired_form))
       end
 
       before { response.destroy }
@@ -219,14 +219,14 @@ RSpec.describe Form::Response, type: :model do
   describe '#save' do
     it_behaves_like 'a model with dependent destroy relationship' do
       let(:relation) do
-        FactoryBot.create(:closed_question_answer)
+        create(:closed_question_answer)
       end
       let(:model) { relation.form }
     end
 
     it_behaves_like 'a model with dependent destroy relationship' do
       let(:relation) do
-        FactoryBot.create(:open_question_answer)
+        create(:open_question_answer)
       end
       let(:model) { relation.form }
     end

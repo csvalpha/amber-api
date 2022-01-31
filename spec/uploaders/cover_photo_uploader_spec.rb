@@ -5,7 +5,7 @@ describe CoverPhotoUploader do
   include CarrierWave::Test::Matchers
 
   let(:path_to_file) { Rails.root.join('spec', 'support', 'files', 'pixel.jpg') }
-  let(:group) { FactoryBot.build_stubbed(:group) }
+  let(:group) { build_stubbed(:group) }
 
   subject(:group_cover_photo_uploader) { described_class.new(group) }
 

@@ -8,9 +8,9 @@ describe V1::PhotoAlbumsController do
     it_behaves_like 'a creatable and permissible model',
                     incorrect_data_response_behaves_like:
                     '422 Unprocessable Entity in Plain Text' do
-      let(:record) { FactoryBot.create(:photo) }
+      let(:record) { create(:photo) }
       let(:valid_request) do
-        post(record_url, file: FactoryBot.attributes_for(:photo)[:image])
+        post(record_url, file: attributes_for(:photo)[:image])
       end
       let(:invalid_request) do
         post(record_url, file: nil)
@@ -20,14 +20,14 @@ describe V1::PhotoAlbumsController do
     describe 'when using a too large large photo' do
       context 'when with permission' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
         let(:record) do
-          FactoryBot.build(:photo, :invalid, photo_album: FactoryBot.create(:photo_album))
+          build(:photo, :invalid, photo_album: create(:photo_album))
         end
         let(:request) do
-          post(record_url, file: FactoryBot.attributes_for(:photo, :invalid)[:image])
+          post(record_url, file: attributes_for(:photo, :invalid)[:image])
         end
 
         it { expect(request.status).to eq(422) }

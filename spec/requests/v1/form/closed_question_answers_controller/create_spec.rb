@@ -6,7 +6,7 @@ describe V1::Form::ClosedQuestionAnswersController do
     let(:record_permission) { 'form/closed_question_answer.create' }
 
     it_behaves_like 'a creatable and permissible model' do
-      let(:record) { FactoryBot.build(:closed_question_answer) }
+      let(:record) { build(:closed_question_answer) }
       let(:valid_attributes) { record.attributes.except(:question_id) }
       let(:valid_relationships) do
         {
@@ -24,12 +24,12 @@ describe V1::Form::ClosedQuestionAnswersController do
     describe 'when it is checkbox typed' do
       it_behaves_like 'a re-creatable model' do
         let(:question) do
-          FactoryBot.create(:closed_question, :with_options, field_type: :checkbox)
+          create(:closed_question, :with_options, field_type: :checkbox)
         end
-        let(:response) { FactoryBot.create(:response, form: question.form) }
+        let(:response) { create(:response, form: question.form) }
         let(:answers) do
           question.options.map do |option|
-            FactoryBot.create(:closed_question_answer, option: option, response: response)
+            create(:closed_question_answer, option: option, response: response)
           end
         end
         let(:record) { answers.sample }
@@ -51,17 +51,17 @@ describe V1::Form::ClosedQuestionAnswersController do
 
     describe 'when it is radio typed' do
       it_behaves_like 'a re-creatable model' do
-        let(:question) { FactoryBot.create(:closed_question, :with_options, field_type: :radio) }
-        let(:response) { FactoryBot.create(:response, form: question.form) }
+        let(:question) { create(:closed_question, :with_options, field_type: :radio) }
+        let(:response) { create(:response, form: question.form) }
         let(:previous_answer) do
-          FactoryBot.create(:closed_question_answer,
-                            option: question.options.first,
-                            response: response)
+          create(:closed_question_answer,
+                 option: question.options.first,
+                 response: response)
         end
         let(:record) do
-          FactoryBot.build(:closed_question_answer,
-                           option: question.options.second,
-                           response: response)
+          build(:closed_question_answer,
+                option: question.options.second,
+                response: response)
         end
         let(:valid_relationships) do
           {

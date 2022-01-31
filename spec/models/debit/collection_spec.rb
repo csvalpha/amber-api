@@ -1,25 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Debit::Collection, type: :model do
-  subject(:collection) { FactoryBot.build_stubbed(:collection) }
+  subject(:collection) { build_stubbed(:collection) }
 
   describe '#valid' do
     it { expect(collection).to be_valid }
 
     context 'when without a name' do
-      subject(:collection) { FactoryBot.build_stubbed(:collection, name: nil) }
+      subject(:collection) { build_stubbed(:collection, name: nil) }
 
       it { expect(collection).not_to be_valid }
     end
 
     context 'when without a date' do
-      subject(:collection) { FactoryBot.build_stubbed(:collection, date: nil) }
+      subject(:collection) { build_stubbed(:collection, date: nil) }
 
       it { expect(collection).not_to be_valid }
     end
 
     context 'when without an author' do
-      subject(:collection) { FactoryBot.build_stubbed(:collection, author: nil) }
+      subject(:collection) { build_stubbed(:collection, author: nil) }
 
       it { expect(collection).not_to be_valid }
     end
@@ -30,9 +30,9 @@ RSpec.describe Debit::Collection, type: :model do
   end
 
   describe '#total_transaction_amount' do
-    let(:transaction) { FactoryBot.create(:transaction) }
+    let(:transaction) { create(:transaction) }
     let(:another_transaction) do
-      FactoryBot.create(:transaction, collection: transaction.collection)
+      create(:transaction, collection: transaction.collection)
     end
     let(:collection) { transaction.collection }
     let(:total_transaction_amount) { transaction.amount + another_transaction.amount }
@@ -46,7 +46,7 @@ RSpec.describe Debit::Collection, type: :model do
     context 'when with user without mandate' do
       context 'when user has amount to be collected' do
         before do
-          FactoryBot.create(:transaction, collection: collection)
+          create(:transaction, collection: collection)
           collection.to_sepa
         end
 
@@ -61,7 +61,7 @@ RSpec.describe Debit::Collection, type: :model do
 
       context 'when user has zero amount' do
         before do
-          FactoryBot.create(:transaction, collection: collection, amount: 0)
+          create(:transaction, collection: collection, amount: 0)
           collection.to_sepa
         end
 
@@ -74,11 +74,11 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has zero amount in collection' do
-      let(:transaction) { FactoryBot.create(:transaction, collection: collection, amount: 2) }
+      let(:transaction) { create(:transaction, collection: collection, amount: 2) }
 
       before do
-        FactoryBot.create(:transaction, collection: collection, user: transaction.user, amount: -2)
-        FactoryBot.create(:mandate, user: transaction.user)
+        create(:transaction, collection: collection, user: transaction.user, amount: -2)
+        create(:mandate, user: transaction.user)
       end
 
       it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
@@ -86,10 +86,10 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has negative amount in collection' do
-      let(:transaction) { FactoryBot.create(:transaction, collection: collection, amount: -2) }
+      let(:transaction) { create(:transaction, collection: collection, amount: -2) }
 
       before do
-        FactoryBot.create(:mandate, user: transaction.user)
+        create(:mandate, user: transaction.user)
         collection.to_sepa
       end
 
@@ -103,9 +103,9 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has mandate and amount' do
-      let(:transaction) { FactoryBot.create(:transaction, collection: collection, amount: 2) }
+      let(:transaction) { create(:transaction, collection: collection, amount: 2) }
 
-      before { FactoryBot.create(:mandate, user: transaction.user, iban: 'NL 44 RABO 0123456789') }
+      before { create(:mandate, user: transaction.user, iban: 'NL 44 RABO 0123456789') }
 
       it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
       it { expect(collection.to_sepa.transactions.size).to eq 1 }
@@ -113,7 +113,7 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when collection date has passed' do
-      let(:collection) { FactoryBot.create(:collection, date: 0.days.ago) }
+      let(:collection) { create(:collection, date: 0.days.ago) }
 
       before { collection.to_sepa }
 

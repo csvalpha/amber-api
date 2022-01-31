@@ -5,7 +5,5 @@ module Forum
     counter_culture :thread, column_name: :posts_count
 
     validates :message, presence: true
-    validates :author, presence: true
-    validates :thread, presence: true
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::GroupsController do
   describe 'GET /groups', version: 1 do
-    let(:records) { FactoryBot.create_list(:group, 3) }
+    let(:records) { create_list(:group, 3) }
     let(:record_url) { '/v1/groups' }
     let(:record_permission) { 'group.read' }
 
@@ -14,7 +14,7 @@ describe V1::GroupsController do
     describe 'conditionally serializable attributes' do
       context 'when authenticated' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
         before do
           records

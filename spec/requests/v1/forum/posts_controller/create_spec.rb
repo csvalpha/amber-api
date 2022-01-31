@@ -3,7 +3,7 @@ require 'rails_helper'
 describe V1::Forum::PostsController do
   describe 'POST /forum/posts', version: 1 do
     it_behaves_like 'a creatable and permissible model' do
-      let(:record) { FactoryBot.create(:post) }
+      let(:record) { create(:post) }
       let(:record_url) { '/v1/forum/posts' }
       let(:record_permission) { 'forum/post.create' }
       let(:invalid_attributes) { { message: '' } }

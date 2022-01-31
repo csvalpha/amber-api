@@ -5,7 +5,7 @@ describe PhotoUploader do
   include CarrierWave::Test::Matchers
 
   let(:path_to_file) { Rails.root.join('spec', 'support', 'files', 'pixel.jpg') }
-  let(:photo) { FactoryBot.create(:photo) }
+  let(:photo) { create(:photo) }
 
   subject(:photo_uploader) { described_class.new(photo) }
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'GET /users/:id/generate_otp_secret', version: 1 do
-    let(:record) { FactoryBot.create(:user) }
+    let(:record) { create(:user) }
     let(:record_url) { "/v1/users/#{record.id}/generate_otp_secret" }
 
     subject(:request) { post(record_url) }
@@ -21,7 +21,7 @@ describe V1::UsersController do
         it { expect { request && user.reload }.to(change(user, :otp_secret_key)) }
 
         describe 'when already requiring OTP' do
-          let(:record) { FactoryBot.create(:user, otp_required: true) }
+          let(:record) { create(:user, otp_required: true) }
 
           it_behaves_like '422 Unprocessable Entity'
         end

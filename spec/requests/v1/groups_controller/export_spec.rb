@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe V1::GroupsController do
   describe 'GET /groups/:id/export', version: 1 do
-    let(:users) { FactoryBot.create_list(:user, 3) }
-    let(:record) { FactoryBot.create(:group, users: users) }
+    let(:users) { create_list(:user, 3) }
+    let(:record) { create(:group, users: users) }
     let(:record_url) { "/v1/groups/#{record.id}/export?description=blahblah" }
     let(:record_permission) { 'group.read' }
     let(:request) { get(record_url) }
@@ -19,7 +19,7 @@ describe V1::GroupsController do
 
       context 'when with permission' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
         it_behaves_like '200 OK'

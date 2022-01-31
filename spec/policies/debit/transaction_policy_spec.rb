@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Debit::TransactionPolicy, type: :policy do
-  let(:user) { FactoryBot.build_stubbed(:user) }
+  let(:user) { build_stubbed(:user) }
 
   subject(:policy) { described_class.new(user, nil) }
 

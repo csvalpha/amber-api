@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe StoredMailPolicy, type: :policy do
-  let(:user) { FactoryBot.create(:user) }
-  let(:moderator_group) { FactoryBot.create(:group, users: [user]) }
+  let(:user) { create(:user) }
+  let(:moderator_group) { create(:group, users: [user]) }
   let(:mail_alias) do
-    FactoryBot.create(:mail_alias, :with_group,
-                      moderation_type: :moderated, moderator_group: moderator_group)
+    create(:mail_alias, :with_group,
+           moderation_type: :moderated, moderator_group: moderator_group)
   end
-  let(:stored_mail) { FactoryBot.build_stubbed(:stored_mail, mail_alias: mail_alias) }
+  let(:stored_mail) { build_stubbed(:stored_mail, mail_alias: mail_alias) }
 
   action_permission_map =
     {
@@ -26,16 +26,16 @@ RSpec.describe StoredMailPolicy, type: :policy do
       end
 
       context 'when user is not moderator' do
-        subject(:policy) { described_class.new(user, FactoryBot.build_stubbed(:stored_mail)) }
+        subject(:policy) { described_class.new(user, build_stubbed(:stored_mail)) }
 
         it { expect(policy.public_send(action)).to be false }
       end
 
       context 'with permission' do
         context 'when user is not moderator' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [permission]) }
+          let(:user) { create(:user, user_permission_list: [permission]) }
 
-          subject(:policy) { described_class.new(user, FactoryBot.build_stubbed(:stored_mail)) }
+          subject(:policy) { described_class.new(user, build_stubbed(:stored_mail)) }
 
           it { expect(policy.public_send(action)).to be true }
         end

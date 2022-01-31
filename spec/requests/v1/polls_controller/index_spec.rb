@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::PollsController do
   describe 'GET /polls', version: 1 do
-    let(:records) { FactoryBot.create_list(:poll, 7) }
+    let(:records) { create_list(:poll, 7) }
     let(:record_url) { '/v1/polls' }
     let(:record_permission) { 'poll.read' }
 
@@ -13,7 +13,7 @@ describe V1::PollsController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       let(:filtered_request) do
@@ -22,9 +22,9 @@ describe V1::PollsController do
 
       let(:new_records) do
         [
-          FactoryBot.create(:poll),
-          FactoryBot.create(:poll),
-          FactoryBot.create(:poll)
+          create(:poll),
+          create(:poll),
+          create(:poll)
         ]
       end
 
@@ -33,11 +33,11 @@ describe V1::PollsController do
       before do
         records.map(&:destroy)
         new_records
-        FactoryBot.create(:closed_question, form: new_records.first.form)
-        FactoryBot.create(:closed_question, form: new_records.second.form,
-                                            question: 'searchforthisvalue')
-        FactoryBot.create(:closed_question, form: new_records.last.form,
-                                            question: 'searchforthisvalueandsomething')
+        create(:closed_question, form: new_records.first.form)
+        create(:closed_question, form: new_records.second.form,
+                                 question: 'searchforthisvalue')
+        create(:closed_question, form: new_records.last.form,
+                                 question: 'searchforthisvalueandsomething')
       end
 
       it_behaves_like '200 OK'

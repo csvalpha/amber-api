@@ -6,7 +6,6 @@ module Form
 
     validates :option, presence: true
     validates :position, presence: true, numericality: { only_integer: true }
-    validates :question, presence: true
 
     validate :no_changes_allowed_on_present_responses
 

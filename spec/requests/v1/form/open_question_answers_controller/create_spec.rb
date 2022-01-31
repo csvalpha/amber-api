@@ -7,7 +7,7 @@ describe V1::Form::OpenQuestionAnswersController do
 
     it_behaves_like 'a creatable and permissible model' do
       let(:record) do
-        FactoryBot.build(:open_question_answer, question: FactoryBot.create(:open_question))
+        build(:open_question_answer, question: create(:open_question))
       end
       let(:valid_relationships) do
         {
@@ -19,7 +19,7 @@ describe V1::Form::OpenQuestionAnswersController do
     end
 
     it_behaves_like 'a re-creatable model' do
-      let(:record) { FactoryBot.create(:open_question_answer) }
+      let(:record) { create(:open_question_answer) }
       let(:valid_relationships) do
         {
           response: { data: { id: record.response_id, type: 'responses' } },

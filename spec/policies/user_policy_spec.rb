@@ -3,17 +3,17 @@ require 'rails_helper'
 RSpec.describe UserPolicy, type: :policy do
   subject(:policy) { described_class }
 
-  let(:user) { FactoryBot.build_stubbed(:user) }
+  let(:user) { build_stubbed(:user) }
 
   permissions :index? do
     describe 'when authenticated' do
-      it { expect(policy).to permit(user, FactoryBot.create(:user)) }
+      it { expect(policy).to permit(user, create(:user)) }
     end
   end
 
   permissions :show? do
     describe 'when authenticated' do
-      it { expect(policy).to permit(user, FactoryBot.create(:user)) }
+      it { expect(policy).to permit(user, create(:user)) }
     end
 
     describe 'when with tomato application' do
@@ -21,12 +21,12 @@ RSpec.describe UserPolicy, type: :policy do
 
       it do
         expect(policy).to permit(application,
-                                 FactoryBot.create(:user, allow_tomato_sharing: true))
+                                 create(:user, allow_tomato_sharing: true))
       end
 
       it do
         expect(policy).not_to permit(application,
-                                     FactoryBot.create(:user, allow_tomato_sharing: false))
+                                     create(:user, allow_tomato_sharing: false))
       end
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe UserPolicy, type: :policy do
     let(:record_permission) { 'user.update' }
 
     describe 'when user is not itself' do
-      it { expect(policy).not_to permit(user, FactoryBot.build_stubbed(:user)) }
+      it { expect(policy).not_to permit(user, build_stubbed(:user)) }
     end
 
     describe 'when user is itself' do
@@ -43,7 +43,7 @@ RSpec.describe UserPolicy, type: :policy do
     end
 
     describe 'when with permission' do
-      let(:permitted_user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+      let(:permitted_user) { create(:user, user_permission_list: [record_permission]) }
 
       it { expect(policy).to permit(permitted_user, user) }
     end

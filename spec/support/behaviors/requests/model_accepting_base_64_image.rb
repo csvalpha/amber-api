@@ -5,7 +5,7 @@ shared_examples 'a model accepting a base 64 image as' do |attr|
   end
   let(:model_name) { described_class.to_s.downcase }
 
-  subject(:model) { FactoryBot.create(described_class.to_s.downcase) }
+  subject(:model) { create(described_class.to_s.downcase) }
 
   context 'when passing a valid image' do
     it do
@@ -17,7 +17,7 @@ shared_examples 'a model accepting a base 64 image as' do |attr|
 
   context 'when passing another valid image' do
     subject(:model) do
-      FactoryBot.create(model_name, attr => "data:image/jpeg;base64,#{white_pixel}")
+      create(model_name, attr => "data:image/jpeg;base64,#{white_pixel}")
     end
 
     before { model.instance_variable_set(:"@#{attr}_secure_token", nil) }

@@ -1,27 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe QuickpostMessage, type: :model do
-  subject(:quickpost_message) { FactoryBot.build(:quickpost_message) }
+  subject(:quickpost_message) { build(:quickpost_message) }
 
   describe '#valid?' do
     it { expect(quickpost_message.valid?).to be true }
 
     context 'when with an empty message' do
-      subject(:quickpost_message) { FactoryBot.build(:quickpost_message, message: '') }
+      subject(:quickpost_message) { build(:quickpost_message, message: '') }
 
       it { expect(quickpost_message.valid?).to be false }
     end
 
     context 'when with a too long message' do
       subject(:quickpost_message) do
-        FactoryBot.build(:quickpost_message, message: Faker::Lorem.characters(number: 501))
+        build(:quickpost_message, message: Faker::Lorem.characters(number: 501))
       end
 
       it { expect(quickpost_message.valid?).to be false }
     end
 
     context 'when without a user' do
-      subject(:quickpost_message) { FactoryBot.build(:quickpost_message, author: nil) }
+      subject(:quickpost_message) { build(:quickpost_message, author: nil) }
 
       it { expect(quickpost_message.valid?).to be false }
     end

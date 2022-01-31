@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'GET /users/:id/activate_webdav', version: 1 do
-    let(:record) { FactoryBot.create(:user) }
+    let(:record) { create(:user) }
     let(:record_url) { "/v1/users/#{record.id}/activate_webdav" }
 
     subject(:request) { post(record_url) }

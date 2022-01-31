@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Import::User, type: :model do
   let(:test_file_path) { Rails.root.join('spec', 'support', 'files', 'user_import.csv') }
   let(:test_file) { File.open(test_file_path) }
-  let(:group) { FactoryBot.create(:group) }
+  let(:group) { create(:group) }
   let(:live_run) { true }
   let(:required_columns) { Import::User::REQUIRED_COLUMNS }
 

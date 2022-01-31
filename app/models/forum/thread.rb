@@ -8,8 +8,6 @@ module Forum
     counter_culture :category, column_name: :threads_count
 
     validates :title, presence: true
-    validates :author, presence: true
-    validates :category, presence: true
 
     def closed?
       !closed_at.nil?

@@ -7,7 +7,6 @@ class Article < ApplicationRecord
   has_many :comments, class_name: 'ArticleComment', dependent: :destroy,
                       counter_cache: :comments_count
 
-  validates :author, presence: true
   validates :title, presence: true
   validates :content, presence: true
   validates :publicly_visible, inclusion: [true, false]

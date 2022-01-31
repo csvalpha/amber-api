@@ -8,8 +8,7 @@ module Form
     has_many :closed_question_answers, dependent: :destroy
     has_many :closed_questions, through: :closed_question_answers, source: :question
 
-    validates :form, presence: true
-    validates :user, presence: true, uniqueness: { scope: :form }
+    validates :user, uniqueness: { scope: :form }
     validate :form_allows_responses?
 
     after_create :update_completed_status!

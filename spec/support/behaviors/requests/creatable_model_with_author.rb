@@ -1,9 +1,9 @@
 shared_examples 'a creatable model with author' do
   include_context 'when authenticated' do
-    let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+    let(:user) { create(:user, user_permission_list: [record_permission]) }
   end
 
-  let(:another_user) { FactoryBot.create(:user) }
+  let(:another_user) { create(:user) }
   let(:request) do
     post(record_url,
          data: {

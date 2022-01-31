@@ -1,6 +1,6 @@
 shared_examples 'a publicly visible index request' do
-  let(:public_record) { FactoryBot.create(model_name, :public) }
-  let(:private_record) { FactoryBot.create(model_name) }
+  let(:public_record) { create(model_name, :public) }
+  let(:private_record) { create(model_name) }
 
   let(:filtered_url) do
     "#{record_url}?filter[id]=#{public_record.id},#{private_record.id}"
@@ -26,7 +26,7 @@ shared_examples 'a publicly visible index request' do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       it_behaves_like '200 OK'

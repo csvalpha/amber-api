@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'POST /users/reset_password', version: 1 do
-    let(:record) { FactoryBot.create(:user, login_enabled: true) }
+    let(:record) { create(:user, login_enabled: true) }
     let(:record_url) { '/v1/users/reset_password' }
     let(:params) { { email: record.email } }
 
@@ -23,7 +23,7 @@ describe V1::UsersController do
     end
 
     context 'when with inactive user' do
-      let(:record) { FactoryBot.create(:user, login_enabled: false) }
+      let(:record) { create(:user, login_enabled: false) }
 
       it_behaves_like '204 No Content'
       it { expect(ActionMailer::Base.deliveries.count).to eq 0 }

@@ -6,7 +6,7 @@ describe V1::Forum::ThreadsController do
   after { Bullet.enable = true }
 
   describe 'GET /forum/threads', version: 1 do
-    let(:records) { FactoryBot.create_list(:thread, 3) }
+    let(:records) { create_list(:thread, 3) }
     let(:record_url) { '/v1/forum/threads' }
     let(:record_permission) { 'forum/thread.read' }
     let(:request) { get(record_url) }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Debit::TransactionsController do
   describe 'POST /debit/transactions', version: 1 do
-    let(:record) { FactoryBot.create(:transaction) }
+    let(:record) { create(:transaction) }
     let(:record_url) { '/v1/debit/transactions' }
     let(:record_permission) { 'debit/transaction.create' }
 

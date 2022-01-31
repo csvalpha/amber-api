@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'GET /users/:id/activate_otp', version: 1 do
-    let(:record) { FactoryBot.create(:user) }
+    let(:record) { create(:user) }
     let(:record_url) { "/v1/users/#{record.id}/activate_otp" }
 
     subject(:request) { post(record_url, one_time_password: record.otp_code) }

@@ -4,24 +4,24 @@ describe V1::StoredMailsController do
   describe 'GET /stored_mails', version: 1 do
     let(:request) { get(record_url) }
     let(:record_url) { '/v1/stored_mails' }
-    let(:records) { FactoryBot.create_list(:stored_mail, 3) }
+    let(:records) { create_list(:stored_mail, 3) }
     let(:record_permission) { 'stored_mail.read' }
 
     it_behaves_like 'an indexable model'
 
     describe 'when user is moderator' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user) }
+        let(:user) { create(:user) }
       end
-      let(:moderator_group) { FactoryBot.create(:group, users: [user]) }
+      let(:moderator_group) { create(:group, users: [user]) }
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_group, :with_moderator,
-                          moderator_group: moderator_group)
+        create(:mail_alias, :with_group, :with_moderator,
+               moderator_group: moderator_group)
       end
 
       before do
-        FactoryBot.create(:stored_mail)
-        FactoryBot.create_list(:stored_mail, 2, mail_alias: mail_alias)
+        create(:stored_mail)
+        create_list(:stored_mail, 2, mail_alias: mail_alias)
       end
 
       it_behaves_like '200 OK'

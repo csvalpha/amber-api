@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Debit::MandatesController do
   describe 'PUT /debit/mandates/:id', version: 1 do
-    let(:record) { FactoryBot.create(:mandate) }
+    let(:record) { create(:mandate) }
     let(:record_url) { "/v1/debit/mandates/#{record.id}" }
 
     let(:record_permission) { 'debit/mandate.update' }

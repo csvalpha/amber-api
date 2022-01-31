@@ -39,7 +39,7 @@ shared_examples 'a creatable and permissible model' do |incorrect_data_response_
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       it_behaves_like '201 Created'
@@ -55,7 +55,7 @@ shared_examples 'a creatable and permissible model' do |incorrect_data_response_
 
     context 'when in group with permission' do
       before do
-        FactoryBot.create(:group, users: [user], permission_list: [record_permission])
+        create(:group, users: [user], permission_list: [record_permission])
       end
 
       it_behaves_like '201 Created'

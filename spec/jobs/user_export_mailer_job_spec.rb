@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe UserExportMailerJob, type: :job do
   describe '#perform' do
-    let(:exporting_user) { FactoryBot.create(:user) }
-    let(:group) { FactoryBot.create(:group, users: [exporting_user]) }
+    let(:exporting_user) { create(:user) }
+    let(:group) { create(:group, users: [exporting_user]) }
     let(:fields) { %i[id first_name city] }
     let(:description) { "#{Faker::Movies::HarryPotter.quote} -- Random string with l'apostrophe" }
 

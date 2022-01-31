@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::PollsController do
   describe 'POST /polls/:id', version: 1 do
-    let(:record) { FactoryBot.create(:poll) }
+    let(:record) { create(:poll) }
     let(:record_url) { '/v1/polls' }
     let(:record_permission) { 'poll.create' }
 
@@ -21,7 +21,7 @@ describe V1::PollsController do
     end
 
     context 'when authenticated' do
-      let(:another_user) { FactoryBot.create(:user) }
+      let(:another_user) { create(:user) }
       let(:request) do
         post(record_url,
              data: {
@@ -36,7 +36,7 @@ describe V1::PollsController do
       end
 
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       before do

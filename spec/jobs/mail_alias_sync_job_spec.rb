@@ -5,7 +5,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
   describe '#perform' do
     let(:job) { described_class.new }
     let(:mail_alias) do
-      FactoryBot.create(:mail_alias, :with_user, email: 'test@test.csvalpha.nl')
+      create(:mail_alias, :with_user, email: 'test@test.csvalpha.nl')
     end
     let(:improvmx_class) { class_double(Improvmx::Client) }
     let(:improvmx) { instance_double(Improvmx::Client) }
@@ -28,7 +28,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
 
     context 'when it is an empty existing alias' do
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_group, email: 'test@test.csvalpha.nl')
+        create(:mail_alias, :with_group, email: 'test@test.csvalpha.nl')
       end
 
       it {
@@ -39,8 +39,8 @@ RSpec.describe MailAliasSyncJob, type: :job do
 
     context 'when it is an destroyed alias' do
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_user, email: 'test@test.csvalpha.nl',
-                                                   deleted_at: Time.zone.now)
+        create(:mail_alias, :with_user, email: 'test@test.csvalpha.nl',
+                                        deleted_at: Time.zone.now)
       end
 
       it {
@@ -51,8 +51,8 @@ RSpec.describe MailAliasSyncJob, type: :job do
 
     context 'when it is a moderated alias' do
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_user, :with_moderator,
-                          email: 'test@test.csvalpha.nl')
+        create(:mail_alias, :with_user, :with_moderator,
+               email: 'test@test.csvalpha.nl')
       end
       let(:ingress_password) do
         Rails.application.credentials.action_mailbox.fetch(:ingress_password)

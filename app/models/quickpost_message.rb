@@ -2,7 +2,6 @@ class QuickpostMessage < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   validates :message, presence: true, length: { minimum: 1, maximum: 500 }
-  validates :author, presence: true
 
   after_create :publish_to_message_bus
 

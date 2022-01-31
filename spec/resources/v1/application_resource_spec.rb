@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe V1::ApplicationResource, type: :resource do
-  let(:user) { FactoryBot.create(:user, first_name: 'John', last_name: 'Doe') }
+  let(:user) { create(:user, first_name: 'John', last_name: 'Doe') }
   let(:other_user) do
-    FactoryBot.create(:user, first_name: 'Jan', last_name_prefix: 'de', last_name: 'Vries')
+    create(:user, first_name: 'Jan', last_name_prefix: 'de', last_name: 'Vries')
   end
   let(:context) { { user: user } }
   let(:options) { { context: context } }

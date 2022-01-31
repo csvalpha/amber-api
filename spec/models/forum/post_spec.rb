@@ -1,25 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Forum::Post, type: :model do
-  subject(:post) { FactoryBot.build_stubbed(:post) }
+  subject(:post) { build_stubbed(:post) }
 
   describe '#valid' do
     it { expect(post.valid?).to be true }
 
     context 'when without a message' do
-      subject(:post) { FactoryBot.build_stubbed(:post, message: nil) }
+      subject(:post) { build_stubbed(:post, message: nil) }
 
       it { expect(post.valid?).to be false }
     end
 
     context 'when without an author' do
-      subject(:post) { FactoryBot.build_stubbed(:post, author: nil) }
+      subject(:post) { build_stubbed(:post, author: nil) }
 
       it { expect(post.valid?).to be false }
     end
 
     context 'when without a thread' do
-      subject(:post) { FactoryBot.build_stubbed(:post, thread: nil) }
+      subject(:post) { build_stubbed(:post, thread: nil) }
 
       it { expect(post.valid?).to be false }
     end
@@ -27,7 +27,7 @@ RSpec.describe Forum::Post, type: :model do
 
   describe '#save' do
     context 'when it updates' do
-      subject(:post) { FactoryBot.create(:post) }
+      subject(:post) { create(:post) }
 
       before { post.message = post.message += '_updated' }
 

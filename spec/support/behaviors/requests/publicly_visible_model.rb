@@ -8,7 +8,7 @@ shared_examples 'a publicly visible model' do
 
     context 'when authenticated' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
       it_behaves_like '200 OK'
     end
@@ -23,7 +23,7 @@ shared_examples 'a publicly visible model' do
 
     context 'when authenticated' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
       it_behaves_like '200 OK'
     end

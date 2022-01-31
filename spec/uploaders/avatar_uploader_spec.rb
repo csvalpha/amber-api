@@ -5,7 +5,7 @@ describe AvatarUploader do
   include CarrierWave::Test::Matchers
 
   let(:path_to_file) { Rails.root.join('spec', 'support', 'files', 'pixel.jpg') }
-  let(:user) { FactoryBot.build_stubbed(:user) }
+  let(:user) { build_stubbed(:user) }
 
   subject(:user_avatar_uploader) { described_class.new(user) }
 

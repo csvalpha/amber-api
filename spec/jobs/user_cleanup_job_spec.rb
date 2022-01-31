@@ -2,20 +2,20 @@ require 'rails_helper'
 
 RSpec.describe UserCleanupJob, type: :job do
   describe '#perform' do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
     let(:almost_archive_user) do
-      FactoryBot.create(:user, memberships: [
-                          FactoryBot.create(:membership,
-                                            start_date: 19.months.ago,
-                                            end_date: 18.months.ago)
-                        ])
+      create(:user, memberships: [
+               create(:membership,
+                      start_date: 19.months.ago,
+                      end_date: 18.months.ago)
+             ])
     end
     let(:user_to_be_archived) do
-      FactoryBot.create(:user, memberships: [
-                          FactoryBot.create(:membership,
-                                            start_date: 22.months.ago,
-                                            end_date: 21.months.ago)
-                        ])
+      create(:user, memberships: [
+               create(:membership,
+                      start_date: 22.months.ago,
+                      end_date: 21.months.ago)
+             ])
     end
 
     let(:email) { ActionMailer::Base.deliveries.first }

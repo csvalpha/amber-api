@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe V1::StaticPageResource, type: :resource do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   let(:context) { { user: user } }
   let(:options) { { context: context } }
-  let(:record) { FactoryBot.create(:static_page) }
+  let(:record) { create(:static_page) }
   let(:resource) { described_class.new(record, context) }
 
   describe '#find_by_keys' do

@@ -3,15 +3,15 @@ require 'rails_helper'
 RSpec.describe ActivityPolicy, type: :policy do
   subject(:policy) { described_class }
 
-  let(:user) { FactoryBot.build(:user) }
+  let(:user) { build(:user) }
 
   permissions :update? do
     describe 'when activity is not owned' do
-      it { expect(policy).not_to permit(user, FactoryBot.build(:activity)) }
+      it { expect(policy).not_to permit(user, build(:activity)) }
     end
 
     describe 'when activity is owned' do
-      it { expect(policy).to permit(user, FactoryBot.build(:activity, author: user)) }
+      it { expect(policy).to permit(user, build(:activity, author: user)) }
     end
   end
 

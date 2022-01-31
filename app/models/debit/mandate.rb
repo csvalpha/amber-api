@@ -2,7 +2,7 @@ module Debit
   class Mandate < ApplicationRecord
     belongs_to :user
 
-    validates :start_date, :user, presence: true
+    validates :start_date, presence: true
     validates :iban, :iban_holder, presence: true
     validates_datetime :end_date, after: :start_date, allow_nil: true
 
