@@ -13,7 +13,7 @@ class MailModerationMailer < ApplicationMailer
   end
 
   def awaiting_moderation_email(sender, stored_mail)
-    @user = Struct(:full_name, :email).new(sender, sender)
+    @user = Struct.new(:full_name, :email).new(sender, sender)
     @mail_alias = stored_mail.mail_alias
     @subject = stored_mail.subject
     @received_at = stored_mail.received_at
