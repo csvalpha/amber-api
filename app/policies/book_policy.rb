@@ -1,0 +1,2 @@
+class BookPolicy < ApplicationPolicy
+end

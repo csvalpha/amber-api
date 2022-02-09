@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
-gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '6b894ab'
+gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '8541e53'
 
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4'
@@ -18,6 +18,7 @@ gem 'friendly_id', '~> 5.2'
 gem 'http', '~> 5.0'
 gem 'iban-tools', '~> 1.1.0'
 gem 'icalendar', '~> 2.4'
+gem "isbn_validation", "~> 1.2"
 gem 'improvmx', '~> 0.2.0'
 gem 'jsonapi-authorization', '~> 3.0'
 gem 'jsonapi-resources', '~> 0.9.1.beta2'

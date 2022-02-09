@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     jsonapi_resources :articles
     jsonapi_resources :article_comments
     jsonapi_resources :board_room_presences
+    jsonapi_resources :books
     jsonapi_resources :groups do
       jsonapi_relationships
       member do
