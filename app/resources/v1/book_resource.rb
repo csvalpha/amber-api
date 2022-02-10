@@ -10,7 +10,7 @@ class V1::BookResource < V1:: ApplicationResource
   end
 
   def self.searchable_fields
-    %i[title author description]
+    %i[title author description isbn]
   end
 
   def self.sortable_fields(_context)
