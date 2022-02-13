@@ -1,5 +1,5 @@
 class BookPolicy < ApplicationPolicy
-  def generate_alias?
+  def isbn_lookup?
     create? or update?
   end
 end
