@@ -1,4 +1,4 @@
-class V1::BookResource < V1:: ApplicationResource
+class V1::BookResource < V1::ApplicationResource
   attributes :title, :author, :description, :isbn, :cover_photo, :cover_photo_url
 
   def cover_photo_url
@@ -15,9 +15,5 @@ class V1::BookResource < V1:: ApplicationResource
 
   def self.searchable_fields
     %i[title author description isbn]
-  end
-
-  def self.sortable_fields(_context)
-    super
   end
 end
