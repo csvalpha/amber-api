@@ -52,7 +52,7 @@ jobs:
 
       - name: Lint
         run: |
-          docker run -t app bin/ci.sh lint
+          docker run app bin/ci.sh lint
 
   test:
     name: Test
@@ -87,5 +87,4 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
-          docker run -e RAILS_ENV=test -e POSTGRES_USER=postgres -e RAILS_MASTER_KEY -t app --network=host \
-            bin/ci.sh spec
+          docker run -e RAILS_ENV=test -e POSTGRES_USER=postgres -e RAILS_MASTER_KEY --network=host app bin/ci.sh spec
