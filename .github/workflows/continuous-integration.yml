@@ -87,5 +87,5 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
-          docker run -e RAILS_ENV=test -e POSTGRES_USER=postgres -e RAILS_MASTER_KEY -t app --network host \
+          docker run -e RAILS_ENV=test -e POSTGRES_USER=postgres -e RAILS_MASTER_KEY -t app --network=host \
             bin/ci.sh spec
