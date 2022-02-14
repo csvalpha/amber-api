@@ -41,9 +41,9 @@ jobs:
         with:
           ref: ${{ inputs.sha }}
 
-#      - name: Add problem matchers
-#        run: |
-#          echo '::add-matcher::.github/problem-matchers/rubocop.json'
+      - name: Add problem matchers
+        run: |
+          echo '::add-matcher::.github/problem-matchers/rubocop.json'
 
       - name: Load test image
         uses: guidojw/actions/load-docker-image@2b1dea8cbd9e44491c269e771b75636026caf8ca # renovate: tag=v1.1.0
@@ -74,9 +74,9 @@ jobs:
         with:
           ref: ${{ inputs.sha }}
 
-#      - name: Add problem matchers
-#        run: |
-#          echo '::add-matcher::.github/problem-matchers/rspec.json'
+      - name: Add problem matchers
+        run: |
+          echo '::add-matcher::.github/problem-matchers/rspec.json'
 
       - name: Load test image
         uses: guidojw/actions/load-docker-image@2b1dea8cbd9e44491c269e771b75636026caf8ca # renovate: tag=v1.1.0

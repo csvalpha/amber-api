@@ -2,18 +2,13 @@
   "problemMatcher": [
     {
       "owner": "rspec",
+      "severity": "error",
       "pattern": [
         {
-          "regexp": "^/opt/app/([^\\s].*)$",
-          "file": 1
-        },
-        {
-          "regexp": "^\\s+(\\d+):(\\d+)\\s+(error|warning|info)\\s+(.*)\\s\\s+(.*)$",
-          "line": 1,
-          "column": 2,
-          "severity": 3,
-          "message": 4,
-          "code": 5
+          "regexp": "^rspec (.*):(.*) # (.*)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
         }
       ]
     }
