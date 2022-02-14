@@ -54,8 +54,9 @@ RSpec.describe Article, type: :model do
       create(:article, publicly_visible: false)
     end
 
-    it { expect(described_class.publicly_visible.count).to be 2 }
+    it { expect(described_class.publicly_visible.count).to be 1 }
     it { expect(described_class.count - described_class.publicly_visible.count).to be 1 }
+
   end
 
   describe '#pinned' do
