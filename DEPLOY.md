@@ -1,7 +1,7 @@
 ## Deploying
 Deployments are done using GitHub Actions. To deploy a branch, follow the following steps:
 
-* Go to the Continuous Delivery [workflow page](https://github.com/csvalpha/amber-ui/actions/workflows/continuous-delivery.yml).
+* Go to the Continuous Delivery [workflow page](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml).
 * Open the "Run workflow" modal.
 * Choose a branch and if you want to merge the changes on the staging branch into the master branch (only possible when the branch chosen in previous step is master).
 * Click the green button "Run workflow".

@@ -73,10 +73,10 @@ module Amber
     config.x.sentry_dsn = credentials.dig(Rails.env.to_sym, :sentry_dsn)
 
     config.x.camo_host = credentials.dig(Rails.env.to_sym, :camo_host)
-    config.x.camo_key = credentials.dig(Rails.env.to_sym, :camo_key)
+    config.x.camo_key = credentials.dig(Rails.env.to_sym, :camo_key) || ''
 
     config.x.daily_verse_user = credentials.dig(Rails.env.to_sym, :daily_verse_user)
     config.x.daily_verse_password = credentials.dig(Rails.env.to_sym, :daily_verse_password)
-    config.x.healthcheck_ids      = credentials.dig(Rails.env.to_sym, :healthcheck_ids)
+    config.x.healthcheck_ids = credentials.dig(Rails.env.to_sym, :healthcheck_ids)
   end
 end

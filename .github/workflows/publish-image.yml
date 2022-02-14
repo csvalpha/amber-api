@@ -9,8 +9,6 @@ on:
         required: false
         type: string
     secrets:
-      rails_master_key:
-        required: true
       sentry_auth_token:
         required: true
   workflow_dispatch:
@@ -38,11 +36,6 @@ jobs:
             echo '::set-output name=tag::latest'
           else
             echo '::set-output name=tag::'$GITHUB_REF_NAME
-          fi
-
-          if [ $GITHUB_REF_NAME = 'staging' ] || [ $GITHUB_REF_NAME = 'master' ]; then
-            BUILD_ARGS='RAILS_MASTER_KEY='"$RAILS_MASTER_KEY"
-            echo '::set-output name=build_args::'$BUILD_ARGS
           fi
 
   publish:

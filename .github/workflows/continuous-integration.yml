@@ -9,9 +9,6 @@ on:
       sha:
         required: false
         type: string
-    secrets:
-      rails_master_key:
-        required: true
 
 jobs:
   build:
@@ -87,5 +84,4 @@ jobs:
 #        env:
 #          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
-          docker run -e POSTGRES_USER=postgres -e POSTGRES_HOST=localhost --network=host app \
-            bin/ci.sh spec
+          docker run -e POSTGRES_USER=postgres -e POSTGRES_HOST=localhost --network=host app bin/ci.sh spec
