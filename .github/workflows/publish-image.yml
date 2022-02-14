@@ -25,12 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.get_metadata.outputs.tag }}
-      build_args: ${{ steps.get_metadata.outputs.build_args }}
     steps:
       - name: Get metadata
         id: get_metadata
-        env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           if [ $GITHUB_REF_NAME = 'master' ]; then
             echo '::set-output name=tag::latest'
@@ -65,7 +62,6 @@ jobs:
         with:
           push: true
           context: .
-          build-args: ${{ needs.metadata.outputs.build_args }}
           cache-from: type=gha,scope=main
           cache-to: type=gha,scope=main
           tags: |
