@@ -1,6 +1,7 @@
 Alpha AMBER API
 ================
-[![Build status](https://badge.buildkite.com/7bb7573780e61f69cb8d834590a0c2125ed5a5ee588fb5380e.svg)](https://buildkite.com/csv-alpha/amber-api)
+[![Continuous Integration](https://github.com/csvalpha/amber-api/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/csvalpha/amber-api/actions/workflows/continuous-integration.yml)
+[![Continuous Delivery](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml/badge.svg)](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml)
 [![Depfu](https://badges.depfu.com/badges/663adb8e75ff19a32ca0d866d5fe2e85/count.svg)](https://depfu.com/github/csvalpha/amber-api?project_id=7749)
 
 ## Prerequisites
@@ -94,8 +95,8 @@ To run RuboCop, execute:
 
     bundle exec rubocop
 
-## Buildkite (automated testing)
-Buildkite is a test service which automatically tests the application after a commit has been pushed. Buildkite will run RuboCop and RSpec (see `.buildkite/pipeline.yml`) and will fail if one of these fails.
+## GitHub Actions (automated testing)
+GitHub Actions is a CI/CD service which automatically tests the application after a commit has been pushed. GitHub Actions will run RuboCop and RSpec (see `.github/workflows/continuous-integration.yml`) and will fail if one of these fails.
 
 ## Deploying
 See [DEPLOY.md](https://github.com/csvalpha/amber-api/blob/master/DEPLOY.md) for that.
