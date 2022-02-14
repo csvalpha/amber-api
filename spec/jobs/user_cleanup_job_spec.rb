@@ -6,8 +6,8 @@ RSpec.describe UserCleanupJob, type: :job do
     let(:almost_archive_user) do
       create(:user, memberships: [
                create(:membership,
-                      start_date: 19.months.ago,
-                      end_date: 18.months.ago)
+                      start_date: 20.months.ago,
+                      end_date: 19.months.ago)
              ])
     end
     let(:user_to_be_archived) do
