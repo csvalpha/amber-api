@@ -63,6 +63,7 @@ jobs:
         image: postgres:11.2
         env:
           TZ: Europe/Amsterdam
+          PGTZ: Europe/Amsterdam
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
