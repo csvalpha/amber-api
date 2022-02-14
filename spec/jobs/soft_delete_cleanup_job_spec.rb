@@ -4,9 +4,9 @@ RSpec.describe SoftDeleteCleanupJob, type: :job do
   describe '#perform' do
     subject(:job) { described_class.perform_now }
 
-    let(:record) { FactoryBot.create(:activity) }
-    let(:destroyed_record) { FactoryBot.create(:activity, deleted_at: 1.day.ago) }
-    let(:old_record) { FactoryBot.create(:activity, deleted_at: 2.years.ago) }
+    let(:record) { create(:activity) }
+    let(:destroyed_record) { create(:activity, deleted_at: 1.day.ago) }
+    let(:old_record) { create(:activity, deleted_at: 2.years.ago) }
 
     before do
       record

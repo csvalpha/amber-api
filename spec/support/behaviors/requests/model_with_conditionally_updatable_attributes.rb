@@ -41,7 +41,7 @@ shared_examples 'a model with conditionally updatable attributes' do |unrestrict
 
   describe 'when with permission' do
     before do
-      user.update(user_permissions: [FactoryBot.create(:permission, name: record_permission)])
+      user.update(user_permissions: [create(:permission, name: record_permission)])
       request
       record.reload
     end

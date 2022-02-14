@@ -1,45 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe Photo, type: :model do
-  subject(:photo) { FactoryBot.build_stubbed(:photo) }
+  subject(:photo) { build_stubbed(:photo) }
 
   describe '#valid?' do
     it { expect(photo).to be_valid }
 
     context 'when without an image' do
-      subject(:photo) { FactoryBot.build_stubbed(:photo, image: nil) }
+      subject(:photo) { build_stubbed(:photo, image: nil) }
 
       it { expect(photo).not_to be_valid }
     end
 
     context 'when without an original filename' do
-      subject(:photo) { FactoryBot.build_stubbed(:photo, original_filename: nil) }
+      subject(:photo) { build_stubbed(:photo, original_filename: nil) }
 
       it { expect(photo).not_to be_valid }
     end
 
     context 'when without an photo album' do
-      subject(:photo) { FactoryBot.build_stubbed(:photo, photo_album: nil) }
+      subject(:photo) { build_stubbed(:photo, photo_album: nil) }
 
       it { expect(photo).not_to be_valid }
     end
 
     context 'when without an uploader' do
-      subject(:photo) { FactoryBot.build_stubbed(:photo, uploader: nil) }
+      subject(:photo) { build_stubbed(:photo, uploader: nil) }
 
       it { expect(photo).not_to be_valid }
     end
   end
 
   describe '#with_comments' do
-    let(:photo_with_comments) { FactoryBot.create(:photo) }
-    let(:photo_with_one_comment) { FactoryBot.create(:photo) }
+    let(:photo_with_comments) { create(:photo) }
+    let(:photo_with_one_comment) { create(:photo) }
 
     before do
-      FactoryBot.create(:photo_comment, photo: photo_with_comments)
-      FactoryBot.create(:photo_comment, photo: photo_with_comments)
-      FactoryBot.create(:photo_comment, photo: photo_with_one_comment)
-      FactoryBot.create(:photo)
+      create(:photo_comment, photo: photo_with_comments)
+      create(:photo_comment, photo: photo_with_comments)
+      create(:photo_comment, photo: photo_with_one_comment)
+      create(:photo)
     end
 
     it { expect(described_class.count).to be 3 }
@@ -47,13 +47,13 @@ RSpec.describe Photo, type: :model do
   end
 
   describe '#publicly_visible' do
-    let(:public_album) { FactoryBot.create(:photo_album, publicly_visible: true) }
-    let(:private_album) { FactoryBot.create(:photo_album, publicly_visible: false) }
+    let(:public_album) { create(:photo_album, publicly_visible: true) }
+    let(:private_album) { create(:photo_album, publicly_visible: false) }
 
     before do
-      FactoryBot.create(:photo, photo_album: public_album)
-      FactoryBot.create(:photo, photo_album: public_album)
-      FactoryBot.create(:photo, photo_album: private_album)
+      create(:photo, photo_album: public_album)
+      create(:photo, photo_album: public_album)
+      create(:photo, photo_album: private_album)
     end
 
     it { expect(described_class.publicly_visible.count).to be 2 }
@@ -61,7 +61,7 @@ RSpec.describe Photo, type: :model do
   end
 
   describe '#extract_exif' do
-    subject(:photo) { FactoryBot.create(:photo) }
+    subject(:photo) { create(:photo) }
 
     it { expect(photo.exif_make).to eq 'Nikon' }
     it { expect(photo.exif_model).to eq 'Nikon D500' }
@@ -74,7 +74,7 @@ RSpec.describe Photo, type: :model do
   end
 
   describe '#extract_exif_on_png' do
-    subject(:photo) { FactoryBot.create(:photo, :png) }
+    subject(:photo) { create(:photo, :png) }
 
     it { expect(photo.exif_make).to be nil }
   end

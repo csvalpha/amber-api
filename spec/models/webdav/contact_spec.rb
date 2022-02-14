@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Webdav::Contact, type: :model do
-  let(:user) { FactoryBot.build_stubbed(:user) }
+  let(:user) { build_stubbed(:user) }
 
   subject(:contact) { described_class.new(user) }
 
@@ -14,7 +14,7 @@ RSpec.describe Webdav::Contact, type: :model do
   end
 
   describe '#update_from_vcard()' do
-    let(:other_user) { FactoryBot.build_stubbed(:user) }
+    let(:other_user) { build_stubbed(:user) }
     let(:other_vcard) { described_class.user_to_vcard(other_user) }
 
     it { expect { contact.update_from_vcard(other_vcard) }.not_to(change(user, :first_name)) }

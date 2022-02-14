@@ -1,7 +1,7 @@
 shared_examples 'a searchable model' do |filterable_fields|
   context 'when with permission' do
     include_context 'when authenticated' do
-      let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+      let(:user) { create(:user, user_permission_list: [record_permission]) }
     end
 
     let(:filtered_request) do
@@ -14,9 +14,9 @@ shared_examples 'a searchable model' do |filterable_fields|
     filterable_fields.each do |field|
       let(:new_records) do
         [
-          FactoryBot.create(factory, field => 'searchforthisvalueandsomethingmore'),
-          FactoryBot.create(factory, field => 'searchforthisvalue'),
-          FactoryBot.create(factory)
+          create(factory, field => 'searchforthisvalueandsomethingmore'),
+          create(factory, field => 'searchforthisvalue'),
+          create(factory)
         ]
       end
 

@@ -9,7 +9,6 @@ module Form
     validates :field_type, inclusion: %w[checkbox radio]
     validates :required, inclusion: [true, false]
     validates :position, presence: true, numericality: { only_integer: true }
-    validates :form, presence: true
 
     validate :no_changes_allowed_on_present_responses
 

@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class MailModerationMailer < ApplicationMailer
   def request_for_moderation_email(moderator, stored_mail)
     @user = moderator
@@ -15,7 +13,7 @@ class MailModerationMailer < ApplicationMailer
   end
 
   def awaiting_moderation_email(sender, stored_mail)
-    @user = OpenStruct.new(full_name: sender, email: sender)
+    @user = Struct.new(:full_name, :email).new(sender, sender)
     @mail_alias = stored_mail.mail_alias
     @subject = stored_mail.subject
     @received_at = stored_mail.received_at
@@ -25,7 +23,7 @@ class MailModerationMailer < ApplicationMailer
   end
 
   def accept_email(sender, stored_mail, approver)
-    @user = OpenStruct.new(full_name: sender, email: sender)
+    @user = Struct.new(:full_name, :email).new(sender, sender)
     @mail_alias = stored_mail.mail_alias
     @subject = stored_mail.subject
     @approver = approver
@@ -34,7 +32,7 @@ class MailModerationMailer < ApplicationMailer
   end
 
   def reject_email(sender, stored_mail, approver)
-    @user = OpenStruct.new(full_name: sender, email: sender)
+    @user = Struct.new(:full_name, :email).new(sender, sender)
     @mail_alias = stored_mail.mail_alias
     @subject = stored_mail.subject
     @approver = approver

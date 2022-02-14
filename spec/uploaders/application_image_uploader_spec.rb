@@ -9,7 +9,7 @@ describe ApplicationImageUploader do
   let(:gif_as_jpg_file) { Rails.root.join('spec', 'support', 'files', 'gif_disguised.jpg') }
   let(:jpg_as_gif_file) { Rails.root.join('spec', 'support', 'files', 'jpg_disguised.gif') }
 
-  let(:user) { FactoryBot.build_stubbed(:user) }
+  let(:user) { build_stubbed(:user) }
 
   subject(:application_image_uploader) { described_class.new(user) }
 

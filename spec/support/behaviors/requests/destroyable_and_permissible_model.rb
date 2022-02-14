@@ -14,7 +14,7 @@ shared_examples 'a destroyable and permissible model' do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       it_behaves_like '204 No Content'
@@ -23,7 +23,7 @@ shared_examples 'a destroyable and permissible model' do
 
     context 'when in group record with permission' do
       before do
-        FactoryBot.create(:group, users: [user], permission_list: [record_permission])
+        create(:group, users: [user], permission_list: [record_permission])
       end
 
       it_behaves_like '204 No Content'

@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe Webdav::Addressbook, type: :model do
   let(:users) do
     [
-      FactoryBot.create(:user, :webdav_enabled),
-      FactoryBot.create(:user),
-      FactoryBot.create(:user, :webdav_enabled)
+      create(:user, :webdav_enabled),
+      create(:user),
+      create(:user, :webdav_enabled)
     ]
   end
-  let(:group) { FactoryBot.create(:group, users: users) }
+  let(:group) { create(:group, users: users) }
 
   subject(:addressbook) { described_class.new(group) }
 
@@ -51,7 +51,7 @@ RSpec.describe Webdav::Addressbook, type: :model do
   end
 
   describe '#create_contact' do
-    let(:new_contact) { Webdav::Contact.new(FactoryBot.build_stubbed(:user)) }
+    let(:new_contact) { Webdav::Contact.new(build_stubbed(:user)) }
 
     before { users }
 

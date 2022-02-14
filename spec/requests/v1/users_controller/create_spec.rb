@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'POST /users/:id', version: 1 do
-    let(:record) { FactoryBot.build(:user) }
+    let(:record) { build(:user) }
     let(:record_url) { '/v1/users' }
     let(:record_permission) { 'user.create' }
 
@@ -25,15 +25,15 @@ describe V1::UsersController do
 
       context 'when authenticated' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
         context 'when the user is login_enabled' do
           let(:record) do
-            FactoryBot.build(:user, first_name: 'jan',
-                                    last_name_prefix: 'de',
-                                    last_name: 'vries',
-                                    login_enabled: true)
+            build(:user, first_name: 'jan',
+                         last_name_prefix: 'de',
+                         last_name: 'vries',
+                         login_enabled: true)
           end
           let(:email) { ActionMailer::Base.deliveries.last }
 
@@ -67,10 +67,10 @@ describe V1::UsersController do
 
         context 'when the user is not login_enabled' do
           let(:record) do
-            FactoryBot.build(:user, first_name: 'jan',
-                                    last_name_prefix: 'de',
-                                    last_name: 'vries',
-                                    login_enabled: false)
+            build(:user, first_name: 'jan',
+                         last_name_prefix: 'de',
+                         last_name: 'vries',
+                         login_enabled: false)
           end
           let(:email) { ActionMailer::Base.deliveries.last }
 

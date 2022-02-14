@@ -3,7 +3,6 @@ module Form
     belongs_to :option, class_name: 'ClosedQuestionOption'
     belongs_to :question, class_name: 'ClosedQuestion'
 
-    validates :option, presence: true
     validates :response, presence: true, uniqueness: { scope: :option }
     validates :question, uniqueness: { scope: :response }, if: :radio_question?
     validate :option_belongs_to_question?

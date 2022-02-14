@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::GroupResource, type: :resource do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   let(:context) { { user: user } }
   let(:options) { { context: context } }
 
@@ -13,7 +13,7 @@ RSpec.describe V1::GroupResource, type: :resource do
     let(:authenticated_fields) do
       %i[description description_camofied kind recognized_at_gma rejected_at_gma administrative]
     end
-    let(:group) { FactoryBot.create(:group) }
+    let(:group) { create(:group) }
     let(:resource) { described_class.new(group, context) }
 
     context 'when unauthenticated' do
@@ -34,8 +34,8 @@ RSpec.describe V1::GroupResource, type: :resource do
 
     describe 'kind' do
       let(:filter) { { kind: ['bestuur'] } }
-      let(:group) { FactoryBot.create(:group, kind: 'bestuur') }
-      let(:other_group) { FactoryBot.create(:group, kind: 'commissie') }
+      let(:group) { create(:group, kind: 'bestuur') }
+      let(:other_group) { create(:group, kind: 'commissie') }
 
       before do
         group
@@ -48,8 +48,8 @@ RSpec.describe V1::GroupResource, type: :resource do
 
     describe 'administrative' do
       let(:filter) { { administrative: ['true'] } }
-      let(:group) { FactoryBot.create(:group, administrative: true) }
-      let(:other_group) { FactoryBot.create(:group, administrative: false) }
+      let(:group) { create(:group, administrative: true) }
+      let(:other_group) { create(:group, administrative: false) }
 
       before do
         group

@@ -2,8 +2,6 @@ class Membership < ApplicationRecord
   belongs_to :group
   belongs_to :user
 
-  validates :group, presence: true
-  validates :user, presence: true
   validates :start_date, presence: true
   validates_date :start_date
   validates_date :end_date, after: :start_date, allow_nil: true

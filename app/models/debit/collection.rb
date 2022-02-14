@@ -8,7 +8,6 @@ module Debit
 
     validates :name, presence: true
     validates :date, presence: true
-    validates :author, presence: true
 
     def total_transaction_amount
       transactions.sum(:amount)

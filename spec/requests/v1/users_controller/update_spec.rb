@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::UsersController do
   describe 'PUT /users/:id', version: 1 do
-    let(:record) { FactoryBot.create(:user) }
+    let(:record) { create(:user) }
     let(:record_url) { "/v1/users/#{record.id}" }
     let(:record_permission) { 'user.update' }
 
@@ -42,7 +42,7 @@ describe V1::UsersController do
     describe 'updating name' do
       include_context 'when authenticated' do
         let(:user) do
-          FactoryBot.create(:user, user_permission_list: [record_permission])
+          create(:user, user_permission_list: [record_permission])
         end
       end
 
@@ -66,8 +66,8 @@ describe V1::UsersController do
 
       include_context 'when authenticated' do
         let(:user) do
-          FactoryBot.create(:user, user_permission_list: [record_permission],
-                                   password: old_password)
+          create(:user, user_permission_list: [record_permission],
+                        password: old_password)
         end
       end
 
@@ -126,7 +126,7 @@ describe V1::UsersController do
 
       context 'with another user' do
         let(:another_user) do
-          FactoryBot.create(:user, password: old_password)
+          create(:user, password: old_password)
         end
         let(:valid_attributes) { { password: new_password, old_password: old_password } }
         let(:record_url) { "/v1/users/#{another_user.id}" }
@@ -157,7 +157,7 @@ describe V1::UsersController do
 
       context 'with another user' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
         let(:valid_attributes) { { login_enabled: false } }

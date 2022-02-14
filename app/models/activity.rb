@@ -6,7 +6,6 @@ class Activity < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :group, optional: true
 
-  validates :author, presence: true
   validates :category, presence: true, inclusion: { in: ->(_) { Activity.categories } }
   validates :description, presence: true
   validates :form, uniqueness: true, allow_nil: true

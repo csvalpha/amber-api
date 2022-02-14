@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::PhotoAlbumsController do
   describe 'GET /photo_albums', version: 1 do
-    let(:records) { FactoryBot.create_list(:photo_album, 3) }
+    let(:records) { create_list(:photo_album, 3) }
     let(:record_url) { '/v1/photo_albums' }
     let(:record_permission) { 'photo_album.read' }
     let(:request) { get(record_url) }

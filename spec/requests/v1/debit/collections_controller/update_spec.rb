@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Debit::CollectionsController do
   describe 'PUT /debit/collections/:id', version: 1 do
-    let(:record) { FactoryBot.create(:collection) }
+    let(:record) { create(:collection) }
     let(:record_url) { "/v1/debit/collections/#{record.id}" }
 
     let(:record_permission) { 'debit/collection.update' }
@@ -13,7 +13,7 @@ describe V1::Debit::CollectionsController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       subject(:request) { put(record_url) }

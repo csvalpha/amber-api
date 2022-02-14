@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::UserResource, type: :resource do
-  let(:user) { FactoryBot.create(:user, user_details_sharing_preference: 'hidden') }
+  let(:user) { create(:user, user_details_sharing_preference: 'hidden') }
   let(:context) { { user: user } }
   let(:options) { { context: context } }
 
@@ -18,7 +18,7 @@ RSpec.describe V1::UserResource, type: :resource do
          user_details_sharing_preference allow_tomato_sharing]
     end
     let(:read_fields) do
-      %i[archived_at picture_publication_preference]
+      %i[picture_publication_preference]
     end
     let(:user_details_fields) do
       %i[email birthday address postcode city phone_number food_preferences vegetarian
@@ -27,7 +27,7 @@ RSpec.describe V1::UserResource, type: :resource do
     let(:tomato_fields) do
       %i[email birthday]
     end
-    let(:another_user) { FactoryBot.create(:user, user_details_sharing_preference: 'hidden') }
+    let(:another_user) { create(:user, user_details_sharing_preference: 'hidden') }
     let(:resource) { described_class.new(another_user, context) }
 
     context 'when without permission' do
@@ -35,14 +35,14 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when with update permission' do
-      let(:user) { FactoryBot.create(:user, user_permission_list: ['user.update']) }
+      let(:user) { create(:user, user_permission_list: ['user.update']) }
       let(:fields) { basic_fields + update_fields }
 
       it { expect(resource.fetchable_fields).to match_array(fields + user_details_fields) }
     end
 
     context 'when with read permission' do
-      let(:user) { FactoryBot.create(:user, user_permission_list: ['user.read']) }
+      let(:user) { create(:user, user_permission_list: ['user.read']) }
       let(:fields) { basic_fields + read_fields }
 
       it { expect(resource.fetchable_fields).to match_array(fields) }
@@ -50,7 +50,7 @@ RSpec.describe V1::UserResource, type: :resource do
 
     context 'when with user_details_sharing_preference set to hidden' do
       let(:another_user) do
-        FactoryBot.create(:user, user_details_sharing_preference: 'hidden')
+        create(:user, user_details_sharing_preference: 'hidden')
       end
       let(:fields) { basic_fields }
 
@@ -58,9 +58,9 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when with read permission and user_details_sharing_preference set to members_only' do
-      let(:user) { FactoryBot.create(:user, user_permission_list: ['user.read']) }
+      let(:user) { create(:user, user_permission_list: ['user.read']) }
       let(:another_user) do
-        FactoryBot.create(:user, user_details_sharing_preference: 'members_only')
+        create(:user, user_details_sharing_preference: 'members_only')
       end
       let(:fields) { basic_fields + read_fields + user_details_fields }
 
@@ -68,9 +68,9 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when with read permission and user_details_sharing_preference set to all_users' do
-      let(:user) { FactoryBot.create(:user, user_permission_list: ['user.read']) }
+      let(:user) { create(:user, user_permission_list: ['user.read']) }
       let(:another_user) do
-        FactoryBot.create(:user, user_details_sharing_preference: 'all_users')
+        create(:user, user_details_sharing_preference: 'all_users')
       end
       let(:fields) { basic_fields + read_fields + user_details_fields }
 
@@ -78,16 +78,16 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when without read permission and user_details_sharing_preference set to all_users' do
-      let(:another_user) { FactoryBot.create(:user, user_details_sharing_preference: 'all_users') }
+      let(:another_user) { create(:user, user_details_sharing_preference: 'all_users') }
       let(:fields) { basic_fields + user_details_fields }
 
       it { expect(resource.fetchable_fields).to match_array(fields) }
     end
 
     context 'when without read permission and
-             user_details_sharing_preference set to members_only' do
+ user_details_sharing_preference set to members_only' do
       let(:another_user) do
-        FactoryBot.create(:user, user_details_sharing_preference: 'members_only')
+        create(:user, user_details_sharing_preference: 'members_only')
       end
       let(:fields) { basic_fields }
 
@@ -105,20 +105,20 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when with application' do
-      let(:application) { FactoryBot.create(:application) }
+      let(:application) { create(:application) }
       let(:context) { { user: user, application: application } }
 
       it { expect(resource.fetchable_fields).to match_array(basic_fields) }
 
       context 'when with tomato scope' do
-        let(:application) { FactoryBot.create(:application, scopes: 'public tomato') }
+        let(:application) { create(:application, scopes: 'public tomato') }
 
         context 'when without allowance' do
           it { expect(resource.fetchable_fields).to match_array(basic_fields) }
         end
 
         context 'when with allowance' do
-          let(:another_user) { FactoryBot.create(:user, allow_tomato_sharing: true) }
+          let(:another_user) { create(:user, allow_tomato_sharing: true) }
 
           it { expect(resource.fetchable_fields).to match_array(basic_fields + tomato_fields) }
         end
@@ -127,7 +127,7 @@ RSpec.describe V1::UserResource, type: :resource do
   end
 
   describe '#createable_fields' do
-    let(:another_user) { FactoryBot.create(:user) }
+    let(:another_user) { create(:user) }
     let(:context) { { user: user, model: another_user } }
     let(:creatable_fields) { described_class.creatable_fields(context) }
     let(:basic_fields) do
@@ -156,7 +156,7 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     context 'when with create permisison' do
-      let(:user) { FactoryBot.create(:user, user_permission_list: ['user.create']) }
+      let(:user) { create(:user, user_permission_list: ['user.create']) }
 
       it {
         expect(creatable_fields).to match_array(basic_fields + permissible_fields)
@@ -180,20 +180,20 @@ RSpec.describe V1::UserResource, type: :resource do
       let(:filter) { { upcoming_birthdays: true } }
 
       before do
-        FactoryBot.create(:user, user_details_sharing_preference: 'all_users',
-                                 birthday: Faker::Date.between(from: 1.day.from_now,
-                                                               to: 2.days.from_now))
-        FactoryBot.create(:user, user_details_sharing_preference: 'hidden',
-                                 birthday: Faker::Date.between(from: 1.day.from_now,
-                                                               to: 2.days.from_now))
+        create(:user, user_details_sharing_preference: 'all_users',
+                      birthday: Faker::Date.between(from: 1.day.from_now,
+                                                    to: 2.days.from_now))
+        create(:user, user_details_sharing_preference: 'hidden',
+                      birthday: Faker::Date.between(from: 1.day.from_now,
+                                                    to: 2.days.from_now))
       end
 
       context 'when with update permission' do
         let(:user) do
-          FactoryBot.create(:user, user_details_sharing_preference: 'members_only',
-                                   user_permission_list: ['user.update'],
-                                   birthday: Faker::Date.between(from: 1.day.from_now,
-                                                                 to: 2.days.from_now))
+          create(:user, user_details_sharing_preference: 'members_only',
+                        user_permission_list: ['user.update'],
+                        birthday: Faker::Date.between(from: 1.day.from_now,
+                                                      to: 2.days.from_now))
         end
 
         it { expect(filtered.size).to eq 3 }
@@ -201,9 +201,9 @@ RSpec.describe V1::UserResource, type: :resource do
 
       context 'when without permission' do
         let(:user) do
-          FactoryBot.create(:user, user_details_sharing_preference: 'members_only',
-                                   birthday: Faker::Date.between(from: 1.day.from_now,
-                                                                 to: 2.days.from_now))
+          create(:user, user_details_sharing_preference: 'members_only',
+                        birthday: Faker::Date.between(from: 1.day.from_now,
+                                                      to: 2.days.from_now))
         end
 
         it { expect(filtered.size).to eq 2 }
@@ -211,9 +211,9 @@ RSpec.describe V1::UserResource, type: :resource do
 
       context 'when with own user details sharing set to hidden' do
         let(:user) do
-          FactoryBot.create(:user, user_details_sharing_preference: 'hidden',
-                                   birthday: Faker::Date.between(from: 1.day.from_now,
-                                                                 to: 2.days.from_now))
+          create(:user, user_details_sharing_preference: 'hidden',
+                        birthday: Faker::Date.between(from: 1.day.from_now,
+                                                      to: 2.days.from_now))
         end
 
         it { expect(filtered.size).to eq 2 }
@@ -228,35 +228,12 @@ RSpec.describe V1::UserResource, type: :resource do
     end
 
     describe 'group' do
-      let(:member) { FactoryBot.create(:user) }
-      let(:group) { FactoryBot.create(:group, users: [member]) }
+      let(:member) { create(:user) }
+      let(:group) { create(:group, users: [member]) }
       let(:filter) { { group: group.name } }
 
       it { expect(filtered.size).to eq 1 }
       it { expect(filtered.first).to eq member }
-    end
-
-    describe 'archived' do
-      let(:archived_user) { FactoryBot.create(:user) }
-
-      before do
-        archived_user.archive!
-        FactoryBot.create(:user)
-      end
-
-      context 'when archived' do
-        let(:filter) { { archived: 'true' } }
-
-        it { expect(filtered.size).to eq 1 }
-        it { expect(filtered.first).to eq archived_user }
-      end
-
-      context 'when not archived' do
-        let(:filter) { { archived: 'false' } }
-
-        it { expect(filtered.size).to eq 2 }
-        it { expect(filtered).to include user }
-      end
     end
   end
 end

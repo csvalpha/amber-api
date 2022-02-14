@@ -4,9 +4,9 @@ describe V1::UsersController do
   describe 'POST /users/:id/activate_account', version: 1 do
     let(:activation_token) { Faker::Crypto.sha256 }
     let(:record) do
-      FactoryBot.create(:user, login_enabled: true,
-                               activation_token: activation_token,
-                               activation_token_valid_till: 1.hour.from_now)
+      create(:user, login_enabled: true,
+                    activation_token: activation_token,
+                    activation_token_valid_till: 1.hour.from_now)
     end
     let(:record_url) { "/v1/users/#{record.id}/activate_account" }
     let(:valid_password) { Faker::Internet.password(min_length: 12) }
@@ -28,9 +28,9 @@ describe V1::UsersController do
 
     context 'when activation token has expired' do
       let(:record) do
-        FactoryBot.create(:user, login_enabled: true,
-                                 activation_token: activation_token,
-                                 activation_token_valid_till: 1.second.ago)
+        create(:user, login_enabled: true,
+                      activation_token: activation_token,
+                      activation_token_valid_till: 1.second.ago)
       end
 
       before { request }

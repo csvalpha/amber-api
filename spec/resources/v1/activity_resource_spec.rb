@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::ActivityResource, type: :resource do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
   let(:context) { { user: user } }
   let(:options) { { context: context } }
 
@@ -10,14 +10,14 @@ RSpec.describe V1::ActivityResource, type: :resource do
 
     describe 'closing' do
       let(:filter) { { closing: true } }
-      let(:closing_form) { FactoryBot.create(:form, respond_until: 1.day.from_now) }
+      let(:closing_form) { create(:form, respond_until: 1.day.from_now) }
       let(:closed_form) do
-        FactoryBot.create(:form, respond_until: 1.day.ago, respond_from: 2.days.ago)
+        create(:form, respond_until: 1.day.ago, respond_from: 2.days.ago)
       end
 
       before do
-        FactoryBot.create(:activity, form: closed_form)
-        FactoryBot.create(:activity, form: closing_form)
+        create(:activity, form: closed_form)
+        create(:activity, form: closing_form)
       end
 
       it { expect(filtered).to match_array Activity.closing }
@@ -25,13 +25,13 @@ RSpec.describe V1::ActivityResource, type: :resource do
     end
 
     describe 'group' do
-      let(:group) { FactoryBot.create(:group) }
+      let(:group) { create(:group) }
       let(:filter) { { group: group.id } }
 
       before do
-        FactoryBot.create(:activity, group: group)
-        FactoryBot.create(:activity)
-        FactoryBot.create(:activity)
+        create(:activity, group: group)
+        create(:activity)
+        create(:activity)
       end
 
       it { expect(filtered.length).to eq 1 }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Debit::MandatesController do
   describe 'GET /debit/mandates', version: 1 do
-    let(:records) { FactoryBot.create_list(:mandate, 3) }
+    let(:records) { create_list(:mandate, 3) }
     let(:record_url) { '/v1/debit/mandates' }
     let(:record_permission) { 'debit/mandate.read' }
     let(:request) { get(record_url) }
@@ -23,7 +23,7 @@ describe V1::Debit::MandatesController do
       context 'when with permission' do
         include_context 'when authenticated' do
           let(:user) do
-            FactoryBot.create(:user, user_permission_list: ['debit/mandate.read'])
+            create(:user, user_permission_list: ['debit/mandate.read'])
           end
         end
         before { records }

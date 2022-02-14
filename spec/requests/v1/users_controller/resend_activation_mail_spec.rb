@@ -6,7 +6,7 @@ describe V1::UsersController do
     let(:record_url) { "/v1/users/#{record.id}/resend_activation_mail" }
 
     context 'when without authentication' do
-      let(:record) { FactoryBot.create(:user) }
+      let(:record) { create(:user) }
 
       subject(:request) { post(record_url) }
 
@@ -15,13 +15,13 @@ describe V1::UsersController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: ['user.create']) }
+        let(:user) { create(:user, user_permission_list: ['user.create']) }
       end
 
       context 'when with activated user' do
         let(:record) do
-          FactoryBot.create(:user, activated_at: Faker::Time.between(from: 1.month.ago,
-                                                                     to: Date.yesterday))
+          create(:user, activated_at: Faker::Time.between(from: 1.month.ago,
+                                                          to: Date.yesterday))
         end
         let(:email) { ActionMailer::Base.deliveries }
 
@@ -37,7 +37,7 @@ describe V1::UsersController do
       end
 
       context 'when with unactivated user' do
-        let(:record) { FactoryBot.create(:user) }
+        let(:record) { create(:user) }
         let(:email) { ActionMailer::Base.deliveries.last }
 
         subject(:request) { perform_enqueued_jobs { post(record_url) } }

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::PhotoAlbumsController do
   describe 'POST /photo_albums', version: 1 do
-    let(:record) { FactoryBot.create(:photo_album) }
+    let(:record) { create(:photo_album) }
     let(:record_url) { '/v1/photo_albums' }
     let(:record_permission) { 'photo_album.create' }
 

@@ -3,7 +3,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
              :login_enabled, :otp_required, :activated_at, :emergency_contact, :emergency_number,
              :ifes_data_sharing_preference, :info_in_almanak, :almanak_subscription_preference,
              :digtus_subscription_preference, :email, :birthday, :address, :postcode, :city,
-             :phone_number, :food_preferences, :vegetarian, :archived_at, :study, :start_study,
+             :phone_number, :food_preferences, :vegetarian, :study, :start_study,
              :picture_publication_preference, :ical_secret_key, :webdav_secret_key,
              :password, :avatar, :avatar_url, :avatar_thumb_url,
              :user_details_sharing_preference, :allow_tomato_sharing
@@ -42,9 +42,6 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   filter :group, apply: lambda { |records, value, _options|
     records.active_users_for_group(Group.find_by(name: value))
   }
-  filter :archived, apply: lambda { |records, value, _options|
-    records.archived(ActiveRecord::Type::Boolean.new.cast(value.first))
-  }
 
   # rubocop:disable all
   def fetchable_fields
@@ -61,7 +58,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
                          almanak_subscription_preference digtus_subscription_preference
                          user_details_sharing_preference allow_tomato_sharing]
     end
-    allowed_keys += %i[archived_at picture_publication_preference] if read_or_me?
+    allowed_keys += %i[picture_publication_preference] if read_or_me?
     if read_user_details? && !application_is_tomato?
       allowed_keys += %i[email birthday address postcode city phone_number food_preferences vegetarian
                          study start_study]

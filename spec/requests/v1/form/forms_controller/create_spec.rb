@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Form::FormsController do
   describe 'POST /form/forms', version: 1 do
-    let(:record) { FactoryBot.build(:form) }
+    let(:record) { build(:form) }
     let(:record_url) { '/v1/form/forms' }
     let(:record_permission) { 'form/form.create' }
 
@@ -28,7 +28,7 @@ describe V1::Form::FormsController do
 
       context 'when with permission' do
         include_context 'when authenticated' do
-          let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+          let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
         before { request }

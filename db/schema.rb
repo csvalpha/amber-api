@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_130714) do
+ActiveRecord::Schema.define(version: 2021_10_11_110924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -511,7 +511,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_130714) do
     t.datetime "activation_token_valid_till"
     t.boolean "sidekiq_access"
     t.boolean "vegetarian", default: false
-    t.datetime "archived_at"
     t.string "otp_secret_key"
     t.boolean "otp_required"
     t.string "ical_secret_key"

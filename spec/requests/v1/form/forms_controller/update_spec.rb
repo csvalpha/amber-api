@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::Form::FormsController do
   describe 'PUT /form/forms/:id', version: 1 do
-    let(:record) { FactoryBot.create(:form, :with_author) }
+    let(:record) { create(:form, :with_author) }
     let(:record_url) { "/v1/form/forms/#{record.id}" }
     let(:record_permission) { 'form/form.update' }
 
@@ -12,7 +12,7 @@ describe V1::Form::FormsController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       subject(:request) { put(record_url) }

@@ -4,9 +4,9 @@ describe V1::StaticPagesController do
   describe 'GET /static_pages', version: 1 do
     let(:records) do
       [
-        FactoryBot.create(:static_page),
-        FactoryBot.create(:static_page),
-        FactoryBot.create(:static_page, :public)
+        create(:static_page),
+        create(:static_page),
+        create(:static_page, :public)
       ]
     end
     let(:record_url) { '/v1/static_pages' }

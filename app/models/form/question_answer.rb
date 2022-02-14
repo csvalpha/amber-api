@@ -5,7 +5,6 @@ module Form
     belongs_to :response
     has_one :form, through: :response
 
-    validates :response, presence: true
     validate :form_allows_responses?
     validate :question_belongs_to_form?
 

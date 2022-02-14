@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe V1::PollsController do
   describe 'PUT /polls/:id', version: 1 do
-    let(:record) { FactoryBot.create(:poll) }
+    let(:record) { create(:poll) }
     let(:record_url) { "/v1/polls/#{record.id}" }
     let(:record_permission) { 'poll.update' }
 
@@ -12,7 +12,7 @@ describe V1::PollsController do
 
     context 'when with permission' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       subject(:request) do

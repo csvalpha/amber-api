@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SmtpJob, type: :job do
   describe '#perform' do
-    let(:mail_alias) { FactoryBot.create(:mail_alias) }
+    let(:mail_alias) { create(:mail_alias) }
     let(:client) { Improvmx::Client.new }
     let(:mail) { ActionMailer::Base.deliveries.first }
 

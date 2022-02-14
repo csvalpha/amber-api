@@ -4,7 +4,7 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
   subject(:receive_mail) do
     receive_inbound_email_from_mail(
       from: 'someone@example.com',
-      'Delivered-To': mail_alias.email,
+      to: mail_alias.email,
       subject: 'Sample Subject',
       body: "I'm a sample body"
     )
@@ -12,11 +12,11 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
 
   describe 'Moderated mail is converted into stored mail' do
     context 'When for moderated address' do
-      let(:moderator) { FactoryBot.create(:user, email: 'moderator@test.csvalpha.nl') }
-      let(:moderator_group) { FactoryBot.create(:group, users: [moderator]) }
+      let(:moderator) { create(:user, email: 'moderator@test.csvalpha.nl') }
+      let(:moderator_group) { create(:group, users: [moderator]) }
       let(:mail_alias) do
-        FactoryBot.create(:mail_alias, :with_user, moderation_type: :moderated,
-                                                   moderator_group: moderator_group)
+        create(:mail_alias, :with_user, moderation_type: :moderated,
+                                        moderator_group: moderator_group)
       end
       let(:awaiting_moderation_email) { ActionMailer::Base.deliveries.last }
       let(:request_for_moderation_email) { ActionMailer::Base.deliveries.first }
@@ -45,13 +45,13 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
     end
 
     context 'When for non-moderated address' do
-      let(:mail_alias) { FactoryBot.create(:mail_alias) }
+      let(:mail_alias) { create(:mail_alias) }
 
       it { expect { receive_mail }.not_to change(StoredMail, :count) }
     end
 
     context 'When for non-existing address' do
-      let(:mail_alias) { FactoryBot.build(:mail_alias) }
+      let(:mail_alias) { build(:mail_alias) }
 
       it { expect { receive_mail }.not_to change(StoredMail, :count) }
     end

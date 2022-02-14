@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe Import::SendActivateMail, type: :model do
   subject(:send_activation) { described_class.new }
 
-  let(:not_activated_user) { FactoryBot.create(:user, activated_at: nil) }
+  let(:not_activated_user) { create(:user, activated_at: nil) }
   let(:user_with_activation_token) do
-    FactoryBot.create(:user, activated_at: nil,
-                             activation_token: User.activation_token_hash)
+    create(:user, activated_at: nil,
+                  activation_token: User.activation_token_hash)
   end
-  let(:already_activated_user) { FactoryBot.create(:user, activated_at: Time.zone.now) }
+  let(:already_activated_user) { create(:user, activated_at: Time.zone.now) }
 
   describe 'when sending activate mail' do
     before do

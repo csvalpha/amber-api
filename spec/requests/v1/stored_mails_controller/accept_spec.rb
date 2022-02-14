@@ -3,7 +3,7 @@ require 'rails_helper'
 describe V1::StoredMailsController do
   describe 'POST /stored_mails/:id/accept', version: 1 do
     let(:request) { post(record_url) }
-    let(:record) { FactoryBot.create(:stored_mail) }
+    let(:record) { create(:stored_mail) }
     let(:record_url) { "/v1/stored_mails/#{record.id}/accept" }
     let(:record_permission) { 'stored_mail.destroy' }
 
@@ -13,7 +13,7 @@ describe V1::StoredMailsController do
 
     context 'sends accept mail' do
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       before do
@@ -41,7 +41,7 @@ describe V1::StoredMailsController do
       let(:accept_mail) { ActionMailer::Base.deliveries.first }
 
       include_context 'when authenticated' do
-        let(:user) { FactoryBot.create(:user, user_permission_list: [record_permission]) }
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
       before do
