@@ -7,7 +7,9 @@ class UpdatePhotoExifDateToDateTime < ActiveRecord::Migration[6.1]
     # Re-save each photo to update the date_time_original to include the time
     Photo.with_deleted.each do |photo|
       # Using touch false to prevent updating the timestamps
-      photo.save(touch: false)
+      if photo.photo_album
+        photo.save(touch: false)
+      end
     end
   end
 
