@@ -111,7 +111,7 @@ RSpec.describe User, type: :model do
     context 'when re-null picture_publication_preference' do
       subject(:user) { create(:user) }
 
-      it { expect(user.update(picture_publication_preference: nil)).to eq false }
+      it { expect(user.update(picture_publication_preference: nil)).to be false }
     end
 
     context 'when with an invalid picture_publication_preference' do
@@ -123,19 +123,19 @@ RSpec.describe User, type: :model do
     context 'when re-null ifes_data_sharing_preference' do
       subject(:user) { create(:user) }
 
-      it { expect(user.update(ifes_data_sharing_preference: nil)).to eq false }
+      it { expect(user.update(ifes_data_sharing_preference: nil)).to be false }
     end
 
     context 'when re-null valid info_in_almanak' do
       subject(:user) { create(:user) }
 
-      it { expect(user.update(info_in_almanak: nil)).to eq false }
+      it { expect(user.update(info_in_almanak: nil)).to be false }
     end
 
     context 'when re-null user_details_sharing_preference' do
       subject(:user) { create(:user) }
 
-      it { expect(user.update(user_details_sharing_preference: nil)).to eq false }
+      it { expect(user.update(user_details_sharing_preference: nil)).to be false }
     end
 
     context 'when with an invalid user_details_sharing_preference' do
@@ -606,7 +606,7 @@ RSpec.describe User, type: :model do
       subject(:user) { create(:user) }
 
       it 'is not activated' do
-        expect(user.activated_at).to be nil
+        expect(user.activated_at).to be_nil
       end
 
       context 'when activating the user and updating password' do

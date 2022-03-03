@@ -167,7 +167,7 @@ RSpec.describe Form::Response, type: :model do
       end
 
       it do
-        expect(response.update_completed_status!).to eq true
+        expect(response.update_completed_status!).to be true
       end
     end
 
