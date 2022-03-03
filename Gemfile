@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
-gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '6b894ab'
+gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '8541e53'
 
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.4'
