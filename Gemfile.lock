@@ -220,6 +220,8 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     improvmx (0.2)
       rest-client (~> 2.0)
+    isbn_validation (1.2.2)
+      activerecord (>= 3)
     jsonapi-authorization (3.0.2)
       jsonapi-resources (~> 0.9.0)
       pundit (>= 1.0.0, < 3.0.0)
@@ -548,6 +550,7 @@ DEPENDENCIES
   iban-tools (~> 1.1.0)
   icalendar (~> 2.4)
   improvmx (~> 0.2.0)
+  isbn_validation (~> 1.2)
   jsonapi-authorization (~> 3.0)
   jsonapi-resources (~> 0.9.1.beta2)
   listen
