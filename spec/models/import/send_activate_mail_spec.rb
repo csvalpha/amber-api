@@ -24,7 +24,7 @@ RSpec.describe Import::SendActivateMail, type: :model do
     it do # rubocop:disable RSpec/MultipleExpectations
       expect(mail.count).to eq 1
       expect(mail.first.to[0]).to eq not_activated_user.reload.email
-      expect(not_activated_user.activation_token).not_to be nil
+      expect(not_activated_user.activation_token).not_to be_nil
     end
   end
 

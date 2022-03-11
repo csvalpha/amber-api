@@ -48,7 +48,7 @@ RSpec.describe PhotoAlbum, type: :model do
       create(:photo, photo_album: photo_album)
     end
 
-    it { expect(photo_album.to_zip).not_to be nil }
+    it { expect(photo_album.to_zip).not_to be_nil }
   end
 
   describe '#destroy' do

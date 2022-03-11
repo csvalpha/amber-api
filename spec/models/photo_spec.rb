@@ -76,6 +76,6 @@ RSpec.describe Photo, type: :model do
   describe '#extract_exif_on_png' do
     subject(:photo) { create(:photo, :png) }
 
-    it { expect(photo.exif_make).to be nil }
+    it { expect(photo.exif_make).to be_nil }
   end
 end

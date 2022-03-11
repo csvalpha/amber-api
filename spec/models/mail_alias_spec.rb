@@ -164,13 +164,13 @@ RSpec.describe MailAlias, type: :model do
     context 'when open alias' do
       let(:mail_alias) { build(:mail_alias, moderation_type: 'open') }
 
-      it { expect(mail_alias.moderated?).to eq false }
+      it { expect(mail_alias.moderated?).to be false }
     end
 
     context 'when moderated alias' do
       let(:mail_alias) { build(:mail_alias, moderation_type: 'moderated') }
 
-      it { expect(mail_alias.moderated?).to eq true }
+      it { expect(mail_alias.moderated?).to be true }
     end
   end
 

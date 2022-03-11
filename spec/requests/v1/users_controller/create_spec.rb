@@ -77,7 +77,7 @@ describe V1::UsersController do
           before { request }
 
           it 'does not send an email' do
-            expect(email).to eq nil
+            expect(email).to be_nil
           end
         end
       end

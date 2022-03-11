@@ -142,7 +142,7 @@ describe V1::UsersController do
 
         it_behaves_like '200 OK'
 
-        it { expect(another_user.authenticate(new_password)).to eq false }
+        it { expect(another_user.authenticate(new_password)).to be false }
       end
     end
 
