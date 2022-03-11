@@ -14,7 +14,7 @@ services:
       - redis_data:/var/lib/redis/data
   sidekiq:
     env_file: .env
-    image: docker.csvalpha.nl/amber-api:latest
+    image: ghcr.io/csvalpha/amber-api:latest
     command: sidekiq -C config/sidekiq.yml
     depends_on:
       - db
@@ -25,7 +25,7 @@ services:
       - POSTGRES_HOST=db
   web:
     env_file: .env
-    image: docker.csvalpha.nl/amber-api:latest
+    image: ghcr.io/csvalpha/amber-api:latest
     depends_on:
       - db
       - redis
