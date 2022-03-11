@@ -68,7 +68,7 @@ describe V1::ApplicationController do
       allow(application_controller).to receive(:doorkeeper_token).and_return(access_token)
     end
 
-    it { expect(application_controller.current_user).to eq nil }
+    it { expect(application_controller.current_user).to be_nil }
     it { expect(application_controller.current_application).to eq my_app }
   end
 end

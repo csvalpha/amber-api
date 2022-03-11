@@ -152,4 +152,6 @@ end
 members.sample(10).each do |member|
   FactoryBot.create(:mail_alias, user: nil, group: member.groups.first)
 end
+
+FactoryBot.create_list(:book, 10)
 # rubocop:enable Style/CombinableLoops

@@ -270,7 +270,7 @@ RSpec.describe Activity, type: :model do
         build_stubbed(:activity, :full_day)
       end
 
-      it { expect(activity.full_day?).to eq true }
+      it { expect(activity.full_day?).to be true }
     end
 
     context 'when with non full day activity' do
@@ -278,7 +278,7 @@ RSpec.describe Activity, type: :model do
         build_stubbed(:activity)
       end
 
-      it { expect(activity.full_day?).to eq false }
+      it { expect(activity.full_day?).to be false }
     end
   end
 
