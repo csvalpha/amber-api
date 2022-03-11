@@ -1,5 +1,7 @@
 class V1::BooksController < V1::ApplicationController
   def isbn_lookup # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    authorize Book
+
     return unless params.key?(:isbn)
 
     isbn = params.require(:isbn)
