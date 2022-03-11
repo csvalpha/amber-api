@@ -16,11 +16,11 @@ describe V1::BooksController do
   describe 'GET /books/isbn_lookup', version: 1 do
     let(:record_url) { '/v1/books/isbn_lookup' }
     let(:record_permission) { 'book.create' }
-    let(:request) {
+    let(:request) do
       VCR.use_cassette('retrieve_book_by_isbn') do
         get "#{record_url}?isbn=9789065394309"
       end
-    }
+    end
 
     context 'when unauthorized' do
       it_behaves_like '401 Unauthorized'
