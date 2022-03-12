@@ -1,5 +1,7 @@
 FROM ruby:3.1.1-alpine
 
+ARG BUILD_HASH='unknown'
+ENV BUILD_HASH=$BUILD_HASH
 ARG BUNDLE_INSTALL_EXCLUDE='development test'
 EXPOSE 3000
 

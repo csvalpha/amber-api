@@ -23,11 +23,11 @@ RSpec.describe DefaultOffPaginator, type: :resource do
         ActionController::Parameters.new(size: 50, number: 1)
       end
 
-      it { expect(instance.turned_on).to eq true }
+      it { expect(instance.turned_on).to be true }
     end
 
     context 'when without params' do
-      it { expect(instance.turned_on).to eq false }
+      it { expect(instance.turned_on).to be false }
     end
 
     context 'when turned on' do

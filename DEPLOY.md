@@ -1,5 +1,10 @@
 ## Deploying
-Deploying is done via buildkite. To deploy, push branch `master` or `staging` to Github and click in Buildkite on the 'Deploy this step' button to finish deploying.
+Deployments are done using GitHub Actions. To deploy a branch, follow the following steps:
+
+* Go to the Continuous Delivery [workflow page](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml).
+* Open the "Run workflow" modal.
+* Choose a branch and if you want to merge the changes on the staging branch into the master branch (only possible when the branch chosen in previous step is master).
+* Click the green button "Run workflow".
 
 We use a continuous development cycle. That means: branch `master` is always in production. When a feature is merged through a PR to `staging`, merge its changes to `master` and deploy as soon as possible.
 

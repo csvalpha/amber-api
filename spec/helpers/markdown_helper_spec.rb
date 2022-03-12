@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe MarkdownHelper, type: :helper do
   include described_class
   describe '#camofy' do
-    it { expect(camofy(nil)).to eq nil }
+    it { expect(camofy(nil)).to be_nil }
 
     it do
       expect(camofy("plain text \n ![alt text](http://example.org/image.jpg)")).to eq(
