@@ -12,7 +12,7 @@ on:
         type: string
     secrets:
       rails_master_key:
-        description: The Sentry integration's token
+        description: The Rails master key
         required: true
 
 jobs:
