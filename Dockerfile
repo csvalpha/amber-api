@@ -1,4 +1,4 @@
-FROM ruby:3.0.3-alpine
+FROM ruby:3.1.2-alpine
 
 ARG BUILD_HASH='unknown'
 ENV BUILD_HASH=$BUILD_HASH
