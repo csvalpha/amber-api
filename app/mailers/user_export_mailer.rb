@@ -4,6 +4,6 @@ class UserExportMailer < ApplicationMailer
     @group = group
     @fields = fields
     @description = description
-    mail to: 'privacy@csvalpha.nl', subject: '[Privacy] Er is een database-export gemaakt'
+    mail to: 'privacy@csvalpha.nl', subject: '[Privacy] Er is een database-export gemaakt' # rubocop:disable Rails/I18nLocaleTexts
   end
 end
