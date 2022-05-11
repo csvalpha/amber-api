@@ -144,11 +144,10 @@ jobs:
           ref: ${{ needs.merge.outputs.sha }}
 
       - name: Start deployment
-        uses: bobheadxi/deployments@b0db96170b843c3c786ed42a046d869c50efe3cd # tag=v1.1.0
+        uses: bobheadxi/deployments@11bd6447913c3ffeedb5552bcf6890d1668d9732 # tag=v1.2.0
         id: start_deployment
         with:
           step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ needs.metadata.outputs.stage }}
 
       - name: Deploy
@@ -177,11 +176,10 @@ jobs:
           set_commits: skip
 
       - name: Finish deployment
-        uses: bobheadxi/deployments@b0db96170b843c3c786ed42a046d869c50efe3cd # tag=v1.1.0
+        uses: bobheadxi/deployments@11bd6447913c3ffeedb5552bcf6890d1668d9732 # tag=v1.2.0
         if: steps.start_deployment.conclusion == 'success' && always()
         with:
           step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.start_deployment.outputs.deployment_id }}
           env: ${{ needs.metadata.outputs.stage }}
