@@ -21,12 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2.4.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
         with:
           ref: ${{ inputs.sha }}
 
       - name: Build test image
-        uses: guidojw/actions/build-docker-image@2b1dea8cbd9e44491c269e771b75636026caf8ca # tag=v1.1.0
+        uses: guidojw/actions/build-docker-image@92f1fbb6058a84135e953d0d49462bccf3e6336a # tag=v1.2.0
         with:
           file: Dockerfile
           build-args: |
@@ -49,7 +49,7 @@ jobs:
           - 5432:5432
     steps:
       - name: Checkout code
-        uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2.4.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
         with:
           ref: ${{ inputs.sha }}
 
@@ -63,7 +63,7 @@ jobs:
           bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
 
       - name: Load test image
-        uses: guidojw/actions/load-docker-image@2b1dea8cbd9e44491c269e771b75636026caf8ca # tag=v1.1.0
+        uses: guidojw/actions/load-docker-image@92f1fbb6058a84135e953d0d49462bccf3e6336a # tag=v1.2.0
         with:
           name: app
 
@@ -93,7 +93,7 @@ jobs:
           - 5432:5432
     steps:
       - name: Checkout code
-        uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2.4.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
         with:
           ref: ${{ inputs.sha }}
 
@@ -102,7 +102,7 @@ jobs:
           echo '::add-matcher::.github/problem-matchers/rspec.json'
 
       - name: Load test image
-        uses: guidojw/actions/load-docker-image@2b1dea8cbd9e44491c269e771b75636026caf8ca # tag=v1.1.0
+        uses: guidojw/actions/load-docker-image@92f1fbb6058a84135e953d0d49462bccf3e6336a # tag=v1.2.0
         with:
           name: app
 
