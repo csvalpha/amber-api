@@ -57,17 +57,17 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@f211e3e9ded2d9377c8cadc4489a4e38014bc4c9 # tag=v1.7.0
+        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # tag=v2.0.0
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # tag=v1.14.1
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2.0.0
         with:
           registry: ${{ env.REGISTRY_URL }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push image
-        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a # tag=v2.10.0
+        uses: docker/build-push-action@e551b19e49efd4e98792db7592c17c09b89db8d8 # tag=v3.0.0
         with:
           push: true
           context: .
@@ -108,7 +108,7 @@ jobs:
           done
 
       - name: Update Publish Image check run
-        uses: guidojw/actions/update-check-run@2b1dea8cbd9e44491c269e771b75636026caf8ca # tag=v1.1.0
+        uses: guidojw/actions/update-check-run@92f1fbb6058a84135e953d0d49462bccf3e6336a # tag=v1.2.0
         with:
           app_id: ${{ env.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
