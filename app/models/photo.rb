@@ -31,7 +31,10 @@ class Photo < ApplicationRecord
     data = EXIFR::JPEG.new(image.file.file)
 
     META_FIELDS.each do |field|
-      public_send("exif_#{field}=", data.public_send(field)) if data.public_send(field).present?
+      next unless data.public_send(field).present?
+      value = data.public_send(field)
+      value = value.encode('UTF-8', invalid: :replace, undef: :replace, replace: '') if value.kind_of? String
+      public_send("exif_#{field}=", value)
     end
   end
 
