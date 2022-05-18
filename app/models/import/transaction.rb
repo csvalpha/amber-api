@@ -53,8 +53,8 @@ module Import
         amount = normalize_amount(amount, description, user)
         next if amount.nil? || amount.zero?
 
-        transaction = Debit::Transaction.new(description: description, amount: amount,
-                                             collection: @collection, user: user)
+        transaction = Debit::Transaction.new(description:, amount:,
+                                             collection: @collection, user:)
         (transactions << transaction) && next if transaction.valid?
 
         @errors.add(:import_file, "Transaction #{description} for user #{user.username} is invalid")

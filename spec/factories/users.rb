@@ -40,11 +40,11 @@ FactoryBot.define do
 
     after :create do |user, evaluator|
       user.user_permissions << evaluator.user_permission_list.compact.map do |name|
-        FactoryBot.create(:permission, name: name)
+        FactoryBot.create(:permission, name:)
       end
 
       evaluator.groups.each do |group|
-        FactoryBot.create(:membership, group: group, user: user)
+        FactoryBot.create(:membership, group:, user:)
       end
     end
   end

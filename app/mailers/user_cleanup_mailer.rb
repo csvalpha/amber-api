@@ -6,6 +6,6 @@ class UserCleanupMailer < ApplicationMailer
               ' staan op het punt gearchiveerd te worden'
     subject = 'Er zijn gebruikers gearchiveerd!' if @will_archive_users.empty?
 
-    mail to: 'ict@csvalpha.nl;bestuur@csvalpha.nl', subject: subject
+    mail to: 'ict@csvalpha.nl;bestuur@csvalpha.nl', subject:
   end
 end

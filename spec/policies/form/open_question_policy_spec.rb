@@ -12,7 +12,7 @@ RSpec.describe Form::OpenQuestionPolicy, type: :policy do
     end
 
     describe 'when open question option is owned' do
-      it { expect(policy).to permit(user, build_stubbed(:open_question, form: form)) }
+      it { expect(policy).to permit(user, build_stubbed(:open_question, form:)) }
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe Form::OpenQuestionPolicy, type: :policy do
       let(:record_permission) { 'form/open_question.update' }
       let(:user) { create(:user, user_permission_list: [record_permission]) }
 
-      it { expect(policy).to permit(user, build_stubbed(:open_question, form: form)) }
+      it { expect(policy).to permit(user, build_stubbed(:open_question, form:)) }
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.describe Form::OpenQuestionPolicy, type: :policy do
       let(:record_permission) { 'form/open_question.destroy' }
       let(:user) { create(:user, user_permission_list: [record_permission]) }
 
-      it { expect(policy).to permit(user, build_stubbed(:open_question, form: form)) }
+      it { expect(policy).to permit(user, build_stubbed(:open_question, form:)) }
     end
   end
 end

@@ -9,7 +9,7 @@ describe V1::UsersController do
     let(:record_permission) { 'user.create' }
     let(:group) { create(:group) }
     let(:live_run) { nil }
-    let(:params) { { group: group.id, file: test_file, live_run: live_run } }
+    let(:params) { { group: group.id, file: test_file, live_run: } }
 
     subject(:request) { post(record_url, params) }
 

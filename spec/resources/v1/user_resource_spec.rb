@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::UserResource, type: :resource do
   let(:user) { create(:user, user_details_sharing_preference: 'hidden') }
-  let(:context) { { user: user } }
-  let(:options) { { context: context } }
+  let(:context) { { user: } }
+  let(:options) { { context: } }
 
   describe '#fetchable_fields' do
     let(:basic_fields) do
@@ -106,7 +106,7 @@ RSpec.describe V1::UserResource, type: :resource do
 
     context 'when with application' do
       let(:application) { create(:application) }
-      let(:context) { { user: user, application: application } }
+      let(:context) { { user:, application: } }
 
       it { expect(resource.fetchable_fields).to match_array(basic_fields) }
 
@@ -128,7 +128,7 @@ RSpec.describe V1::UserResource, type: :resource do
 
   describe '#createable_fields' do
     let(:another_user) { create(:user) }
-    let(:context) { { user: user, model: another_user } }
+    let(:context) { { user:, model: another_user } }
     let(:creatable_fields) { described_class.creatable_fields(context) }
     let(:basic_fields) do
       %i[avatar email address postcode city phone_number
