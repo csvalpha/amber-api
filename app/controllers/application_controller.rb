@@ -1,5 +1,5 @@
 class ApplicationController < JSONAPI::ResourceController
-  include Pundit
+  include Pundit::Authorization
 
   before_action :set_paper_trail_whodunnit
   before_action :set_raven_context

@@ -25,9 +25,9 @@ module Rack
       req.params['username'].presence if req.path == '/oauth/token'
     end
 
-    self.throttled_response = lambda do |env|
+    self.throttled_responder = lambda do |req|
       now = Time.zone.now
-      match_data = env['rack.attack.match_data']
+      match_data = req.env['rack.attack.match_data']
 
       headers = {
         'X-RateLimit-Limit' => match_data[:limit].to_s,

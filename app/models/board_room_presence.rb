@@ -1,6 +1,4 @@
 class BoardRoomPresence < ApplicationRecord
-  acts_as_paranoid
-
   belongs_to :user
 
   validates :start_time, presence: true
