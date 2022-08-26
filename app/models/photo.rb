@@ -25,13 +25,20 @@ class Photo < ApplicationRecord
 
   before_save :extract_exif
 
-  def extract_exif
+  def extract_exif # rubocop:disable Metrics/MethodLength
     return unless jpeg?
 
     data = EXIFR::JPEG.new(image.file.file)
 
     META_FIELDS.each do |field|
-      public_send("exif_#{field}=", data.public_send(field)) if data.public_send(field).present?
+      next if data.public_send(field).blank?
+
+      value = data.public_send(field)
+      if value.is_a? String
+        value = value.encode('UTF-8', invalid: :replace, undef: :replace,
+                                      replace: '')
+      end
+      public_send("exif_#{field}=", value)
     end
   end
 
