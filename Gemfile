@@ -35,6 +35,7 @@ gem 'rack-cors', '~> 1.0', require: 'rack/cors'
 gem 'rails', '~> 6.0'
 gem 'rails-i18n', '~> 7.0'
 gem 'redis', '~> 5.0', '>= 5.0.5'
+gem 'roo', '~> 2.9'
 gem 'ruby-filemagic', '~> 0.7'
 gem 'rubyzip', '~> 2.0'
 gem 'sentry-raven', '~> 3.0'
@@ -87,5 +88,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
-gem 'roo', '~> 2.9'
