@@ -1,6 +1,6 @@
 module Import
   class Transaction
-    require 'roo'
+    include SpreadsheetHelper
 
     def initialize(file, collection)
       @file = file
@@ -21,9 +21,7 @@ module Import
     private
 
     def valid?(file)
-      spreadsheet = Roo::Spreadsheet.open(file[:file], extension: file[:extension])
-      sheet = spreadsheet.sheet(0)
-      headers = sheet.row(1)
+      headers = get_headers(file)
       unless headers.include?('username')
         @errors.add(:import_file, 'username field must be present')
       end
@@ -32,11 +30,8 @@ module Import
 
     def read_spreadsheet(file)
       transactions_to_save = []
-      spreadsheet = Roo::Spreadsheet.open(file[:file], extension: file[:extension])
-      sheet = spreadsheet.sheet(0)
-      headers = sheet.row(1)
-      (2..sheet.last_row).each do |i|
-        row = headers.zip(sheet.row(i)).to_h
+
+      get_rows(file).map do |row|
         transactions_to_save.push(*row_to_transactions(row))
       end
       transactions_to_save

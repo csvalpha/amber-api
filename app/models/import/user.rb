@@ -1,7 +1,7 @@
 module Import
   class User
     extend ActiveRecord::Translation
-    require 'roo'
+    include SpreadsheetHelper
 
     attr_reader :errors, :imported_users
 
@@ -13,16 +13,11 @@ module Import
       @group = group
     end
 
-    def save!(live_run) # rubocop:disable Metrics/MethodLength
+    def save!(live_run) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       return unless valid?
 
       ::User.transaction do
-        spreadsheet = Roo::Spreadsheet.open(@file[:file], extension: @file[:extension])
-        sheet = spreadsheet.sheet(0)
-        headers = sheet.row(1)
-
-        (2..sheet.last_row).each do |i|
-          row = headers.zip(sheet.row(i)).to_h
+        get_rows(@file).each do |row|
           user = row_to_user(row)
           if user.valid?
             @imported_users << user
@@ -40,15 +35,13 @@ module Import
       Membership.create(user: user, group: group, start_date: Time.zone.now)
     end
 
-    def valid? # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def valid? # rubocop:disable Metrics/MethodLength
       if @file[:file].blank?
         errors.add(:file, 'No file uploaded')
         return false
       end
 
-      spreadsheet = Roo::Spreadsheet.open(@file[:file], extension: @file[:extension])
-      sheet = spreadsheet.sheet(0)
-      headers = sheet.row(1)
+      headers = get_headers(@file)
 
       (REQUIRED_COLUMNS - headers).each do |missing_column_name|
         errors.add(:header, "#{missing_column_name} must be present in header")
