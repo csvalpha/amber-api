@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CsvHelper, type: :helper do
+RSpec.describe SpreadsheetHelper, type: :helper do
   include described_class
 
   let(:test_file_path) { Rails.root.join('spec', 'support', 'files', 'user_import.csv') }
@@ -12,7 +12,10 @@ RSpec.describe CsvHelper, type: :helper do
   end
 
   describe '#decode_upload_file' do
-    it { expect(File.read(decode_upload_file(base64_data))).to eq File.read(test_file) }
+    let(:decoded_upload) { decode_upload_file(base64_data) }
+
+    it { expect(File.read(decoded_upload[:file])).to eq File.read(test_file) }
+    it { expect(decoded_upload[:extension]).to eq 'csv' }
   end
 
   describe '#split_base_url' do
@@ -25,7 +28,7 @@ RSpec.describe CsvHelper, type: :helper do
         'data:text/csv;base64,Zmlyc3RfbmFtZSxsYXN0X25hbWVfcHJlZml4LGxhc3RfbmFtZSxlbWFpbCxiaXJ0aGRheSxhZGRyZXNzLHBvc3Rjb2RlLGNpdHkscGhvbmVfbnVtYmVyLGFsbGVyZ2llcyx2ZWdldGFyaWFuLHN0dWR5LHBpY3R1cmVfcHVibGljYXR😈pb25fcHJlZmVyZW5jZSxlbWVyZ2VuY3lfY29udGFjdCxlbWVyZ2VuY3lfbnVtYmVyLGlmZXNfZGF0YV9zaGFyaW5nX3ByZWZlcmVuY2UsaW5mb19pbl9hbG1hbmFrLGFsbWFuYWtfc3Vic2NyaXB0aW9uX3ByZWZlcmVuY2UsZGlndHVzX3N1YnNjcmlwdGlvbl9wcmVmZXJlbmNlLGxvZ2luX2VuYWJsZWQKQXJ0aMO6cixkZSxLb25pbmctQXJlbmRzLHN0aWpuQGV4YW1wbGUuY29tLDE5NzAtMi0yLEhlbmdlbG9zZXN0cmFhdCAxLDc1MTROQixFbnNjaGVkZSwgKzMxKDApNjEyMzQ1Njc4LCJOb3RlbiwgbGFjdG9zZSIsdHJ1ZSxUZWNobmlzY2hlIE5hdHV1cmt1bmRlLGFsd2F5c19wdWJsaXNoLE0uIGRlIFJ1aXRlciwwNjIyODY1MjU1LHRydWUsZmFsc2Usbm9fc3Vic2NyaXB0aW9uLG5vX3N1YnNjcmlwdGlvbixmYWxzZQpUw6tzdGXDpyx2w7NuLELDvG5kZW5zdMOgdcOfLGtvZW5AZXhhbXBsZS5jb20sMTk3MC0yLTIwLEhlbmdlbG9zZXN0cmFhdCAzLDc1MDBBQSxFbnNjaGVkZSwgKzMxKDApNjEyMzQ1Njc4LCxmYWxzZSxUZWNobmlzY2hlIEt1bmRpZ2hlaWQsYWx3YXlzX3B1Ymxpc2gsTS4gZGUgUnVpdGVyLDA2OTg3NjU0MzIsZmFsc2UsdHJ1ZSxub19zdWJzY3JpcHRpb24sbm9fc3Vic2NyaXB0aW9uLGZhbHNlCkhhbnMgRGF2aWQsJ3QsSG9nZSxwbGVra2llQGV4YW1wbGUuY29tLDE5NzAtMi0yMCxQbGVra2llIDMsNzUwMEFBLE51bnNwZWV0LDA2MTIzNDU2NzgsLGZhbHNlLFRlY2huaXNjaGUgS3VuZGlnaGVpZCxhbHdheXNfcHVibGlzaCxNLiBkZSBSdWl0ZXIsMDY5ODc2NTQzMixmYWxzZSx0cnVlLG5vX3N1YnNjcmlwdGlvbixub19zdWJzY3JpcHRpb24sZmFsc2UK'
       end
 
-      it { expect(decode_upload_file(broken_base64_data)).to be_instance_of Tempfile }
+      it { expect(decode_upload_file(broken_base64_data)[:file]).to be_instance_of Tempfile }
     end
 
     describe '#split_base_url' do

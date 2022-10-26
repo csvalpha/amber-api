@@ -13,11 +13,11 @@ module Import
       @group = group
     end
 
-    def save!(live_run) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def save!(live_run) # rubocop:disable Metrics/MethodLength
       return unless valid?
 
       ::User.transaction do
-        get_rows(@file).each do |row|
+        get_rows(@file).each_with_index do |row, i|
           user = row_to_user(row)
           if user.valid?
             @imported_users << user
@@ -35,8 +35,8 @@ module Import
       Membership.create(user: user, group: group, start_date: Time.zone.now)
     end
 
-    def valid? # rubocop:disable Metrics/MethodLength
-      if @file[:file].blank?
+    def valid? # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      if @file.nil? || @file[:file].blank?
         errors.add(:file, 'No file uploaded')
         return false
       end
