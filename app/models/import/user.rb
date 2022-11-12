@@ -1,7 +1,7 @@
 module Import
   class User
     extend ActiveRecord::Translation
-    require 'csv'
+    include SpreadsheetHelper
 
     attr_reader :errors, :imported_users
 
@@ -17,7 +17,7 @@ module Import
       return unless valid?
 
       ::User.transaction do
-        CSV.foreach(@file, headers: true, col_sep: ',').with_index do |row, i|
+        get_rows(@file).each_with_index do |row, i|
           user = row_to_user(row)
           if user.valid?
             @imported_users << user
@@ -36,13 +36,12 @@ module Import
     end
 
     def valid? # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      if @file.blank?
+      if @file.nil? || @file[:file].blank?
         errors.add(:file, 'No file uploaded')
         return false
       end
 
-      csv = CSV.open(@file, headers: true, col_sep: ',')
-      headers = csv.read.headers
+      headers = get_headers(@file)
 
       (REQUIRED_COLUMNS - headers).each do |missing_column_name|
         errors.add(:header, "#{missing_column_name} must be present in header")
@@ -76,10 +75,9 @@ module Import
     private
 
     def row_to_user(row)
-      user_hash = row.to_hash
-      user_hash['login_enabled'] = true unless user_hash['login_enabled']
-      user_hash['username'] = nil unless user_hash['username']
-      ::User.new(user_hash)
+      row['login_enabled'] = true unless row['login_enabled']
+      row['username'] = nil unless row['username']
+      ::User.new(row)
     end
   end
 end
