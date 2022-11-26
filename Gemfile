@@ -54,7 +54,7 @@ group :development, :test do
   gem 'consistency_fail'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'faker', '~> 2.9'
+  gem 'faker', '~> 3.0'
   gem 'fuubar'
   gem 'pry-byebug', require: false
   gem 'pry-rails'
