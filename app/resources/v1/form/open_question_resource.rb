@@ -3,7 +3,7 @@ class V1::Form::OpenQuestionResource < V1::ApplicationResource
   attributes :question, :field_type, :required, :position
 
   has_one :form, always_include_linkage_data: true
-  has_many :answers, always_include_linkage_data: true
+  has_many :answers, class_name: 'OpenQuestionAnswer', always_include_linkage_data: true
 
   def self.records(options = {})
     options[:includes] = [:answers] if options[:context][:action] == 'index'

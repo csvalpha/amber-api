@@ -10,7 +10,7 @@ class V1::Forum::ThreadResource < V1::ApplicationResource
     @model.read?(current_user)
   end
 
-  has_one :author, always_include_linkage_data: true
+  has_one :author, class_name: 'User', always_include_linkage_data: true
   has_one :category, always_include_linkage_data: true
   has_many :posts
 

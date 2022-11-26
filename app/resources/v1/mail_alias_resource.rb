@@ -3,7 +3,7 @@ class V1::MailAliasResource < V1::ApplicationResource
 
   has_one :group, always_include_linkage_data: true
   has_one :user, always_include_linkage_data: true
-  has_one :moderator_group, always_include_linkage_data: true
+  has_one :moderator_group, class_name: 'Group', always_include_linkage_data: true
 
   def fetchable_fields
     return super - [:last_received_at] unless update_permission?

@@ -17,13 +17,13 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   end
 
   has_many :groups
-  has_many :active_groups
+  has_many :active_groups, class_name: 'Group'
   has_many :memberships
   has_many :mail_aliases
-  has_many :mandates, always_include_linkage_data: true
-  has_many :group_mail_aliases
+  has_many :mandates, class_name: 'Debit::Mandate', always_include_linkage_data: true
+  has_many :group_mail_aliases, class_name: 'MailAlias'
   has_many :permissions
-  has_many :user_permissions
+  has_many :user_permissions, class_name: 'Permission'
 
   filter :upcoming_birthdays, apply: lambda { |records, _value, options|
     context = options[:context]

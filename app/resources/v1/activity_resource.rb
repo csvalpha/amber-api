@@ -10,8 +10,8 @@ class V1::ActivityResource < V1::ApplicationResource
     camofy(@model['description'])
   end
 
-  has_one :form, always_include_linkage_data: true
-  has_one :author, always_include_linkage_data: true
+  has_one :form, class_name: 'Form::Form', always_include_linkage_data: true
+  has_one :author, class_name: 'User', always_include_linkage_data: true
   has_one :group, always_include_linkage_data: true
 
   filter :upcoming, apply: ->(records, _value, _options) { records.upcoming }

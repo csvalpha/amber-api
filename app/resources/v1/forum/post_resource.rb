@@ -6,7 +6,7 @@ class V1::Forum::PostResource < V1::ApplicationResource
     camofy(@model['message'])
   end
 
-  has_one :author, always_include_linkage_data: true
+  has_one :author, class_name: 'User', always_include_linkage_data: true
   has_one :thread
 
   filter :thread
