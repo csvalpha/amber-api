@@ -13,5 +13,5 @@ class Vacancy < ApplicationRecord
     else
       [author]
     end
-  end 
+  end
 end

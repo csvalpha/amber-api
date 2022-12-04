@@ -1,6 +1,6 @@
 class V1::VacancyResource < V1::ApplicationResource
-    attributes :title, :description, :description_camofied, :workload, :workload_peak,
-               :contact, :deadline, :author_name, :avatar_thumb_url, :cover_photo_url, :cover_photo
+  attributes :title, :description, :description_camofied, :workload, :workload_peak,
+             :contact, :deadline, :author_name, :avatar_thumb_url, :cover_photo_url, :cover_photo
 
   def cover_photo_url
     @model.cover_photo.url
@@ -27,7 +27,7 @@ class V1::VacancyResource < V1::ApplicationResource
 
   def self.creatable_fields(_context)
     %i[title description group workload workload_peak contact
-      deadline cover_photo]
+       deadline cover_photo]
   end
 
   before_create do

@@ -51,7 +51,7 @@ all_permissions_map = {
   'debit/collection' => %i[create read update destroy],
   'debit/transaction' => %i[create read update destroy],
   'debit/mandate' => %i[create read update],
-  'vacancy' => %i[create read update destroy],
+  'vacancy' => %i[create read update destroy]
 }
 
 bestuur.permissions = create_permissions(all_permissions_map)
@@ -86,7 +86,7 @@ member_permission_map = {
   'static_page' => %i[read],
   'debit/collection' => %i[read],
   'debit/transaction' => [],
-  'vacancy' => %i[create read],
+  'vacancy' => %i[create read]
 }
 
 members.permissions = create_permissions(member_permission_map)
