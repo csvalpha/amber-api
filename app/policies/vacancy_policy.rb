@@ -1,9 +1,13 @@
 class VacancyPolicy < ApplicationPolicy
   def update?
-    user_is_owner? || super
+    record.owners.include?(user) || super
   end
 
-  def user_is_owner?
-    record.owners.include?(user)
+  def create_with_group?(_group)
+    true
+  end
+
+  def replace_group?(_group)
+    true
   end
 end
