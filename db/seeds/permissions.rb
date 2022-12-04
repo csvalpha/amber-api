@@ -50,7 +50,8 @@ all_permissions_map = {
   'static_page' => %i[create read update destroy],
   'debit/collection' => %i[create read update destroy],
   'debit/transaction' => %i[create read update destroy],
-  'debit/mandate' => %i[create read update]
+  'debit/mandate' => %i[create read update],
+  'vacancy' => %i[create read update destroy],
 }
 
 bestuur.permissions = create_permissions(all_permissions_map)
@@ -84,7 +85,8 @@ member_permission_map = {
   'permission' => %i[read],
   'static_page' => %i[read],
   'debit/collection' => %i[read],
-  'debit/transaction' => []
+  'debit/transaction' => [],
+  'vacancy' => %i[create read],
 }
 
 members.permissions = create_permissions(member_permission_map)
@@ -113,7 +115,8 @@ old_members_permission_map = {
   'form/closed_question_answer' => %i[read],
   'form/open_question_answer' => %i[read],
   'permission' => [:read],
-  'static_page' => %i[read]
+  'static_page' => %i[read],
+  'vacancy' => []
 }
 
 old_members.permissions = create_permissions(old_members_permission_map)
