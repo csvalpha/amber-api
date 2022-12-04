@@ -38,7 +38,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
   end
 
-  after_successful_authorization do |controller, auth|
+  after_successful_authorization do |_, auth|
     if auth.auth.is_a?(Doorkeeper::OAuth::CodeResponse)
       is_tomato = auth.auth.pre_auth.scopes.include?('tomato')
       user = auth.auth.pre_auth.resource_owner
