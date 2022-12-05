@@ -576,6 +576,14 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#permissions' do
+    subject(:user) { create(:user, user_permission_list: ['user.read']) }
+
+    before { create(:group, users: [user], permission_list: ['user.update']) }
+
+    it { expect(user.permissions.map(&:name)).to match_array(['user.read', 'user.update']) }
+  end
+
   describe '#current_group_member?' do
     subject(:user) { create(:user) }
 
