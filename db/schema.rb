@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_04_193247) do
+ActiveRecord::Schema.define(version: 2022_10_12_154634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -536,7 +536,6 @@ ActiveRecord::Schema.define(version: 2022_12_04_193247) do
     t.string "user_details_sharing_preference"
     t.boolean "allow_tomato_sharing"
     t.string "webdav_secret_key"
-    t.string "nickname"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login_enabled"], name: "index_users_on_login_enabled"

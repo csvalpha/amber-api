@@ -64,7 +64,7 @@ module Import
                           info_in_almanak almanak_subscription_preference
                           digtus_subscription_preference].freeze
 
-    ALLOWED_COLUMNS = %w[first_name last_name_prefix last_name nickname
+    ALLOWED_COLUMNS = %w[first_name last_name_prefix last_name
                          login_enabled emergency_contact emergency_number
                          ifes_data_sharing_preference info_in_almanak
                          almanak_subscription_preference digtus_subscription_preference

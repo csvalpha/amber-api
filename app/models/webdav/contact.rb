@@ -47,7 +47,6 @@ module Webdav
           name.family = user.last_name
           name.additional = user.last_name_prefix if user.last_name_prefix
         end
-        maker.nickname = user.nickname
         maker.birthday = user.birthday if user.birthday
         maker.add_addr do |address|
           address.location = 'home'
