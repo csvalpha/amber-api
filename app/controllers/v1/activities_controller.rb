@@ -29,7 +29,7 @@ class V1::ActivitiesController < V1::ApplicationController
       calendar.add_event(act.to_ical)
     end
 
-    if @user.permission?(:read, User) && (requested_categories == nil || requested_categories.include?('birthdays'))
+    if ical_add_birthdays?
       users_for_ical.each do |user|
         calendar.add_event(user.to_ical)
       end
@@ -80,9 +80,16 @@ class V1::ActivitiesController < V1::ApplicationController
   end
 
   def authenticate_user_by_ical_secret_key
-    @user = User.activated.login_enabled.find_by(id: params[:user_id], ical_secret_key: params[:key])
+    @user = User.activated.login_enabled.find_by(id: params[:user_id],
+                                                 ical_secret_key: params[:key])
     return false unless @user
 
     @user.permission?(:read, Activity)
+  end
+
+  def ical_add_birthdays?(requested_categories)
+    return false unless @user.permission?(:read, User)
+
+    requested_categories.nil? || requested_categories.include?('birthdays')
   end
 end

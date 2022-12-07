@@ -179,8 +179,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def to_ical # rubocop:disable Metrics/AbcSize
-    default_options = Rails.application.config.action_mailer.default_url_options
-
     date = birthday.change(year: Time.zone.now.year)
     date = date.next_year if date < 3.months.ago
     event = Icalendar::Event.new

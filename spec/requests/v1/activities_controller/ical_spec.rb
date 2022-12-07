@@ -8,8 +8,10 @@ describe V1::ActivitiesController, type: :controller do
       create(:user, activated_at: Time.zone.now,
                     user_permission_list: permissions)
     end
-    let(:birthday_users) { User.active_users_for_group(Group.find_by(name: 'Leden'))
-      .where.not(birthday: nil) }
+    let(:birthday_users) do
+      User.active_users_for_group(Group.find_by(name: 'Leden'))
+          .where.not(birthday: nil)
+    end
 
     before { activity }
 
@@ -53,11 +55,12 @@ describe V1::ActivitiesController, type: :controller do
       end
 
       describe 'without user permission' do
-        let(:user) { create(:user, activated_at: Time.zone.now, user_permission_list: ['activity.read']) }
+        let(:user) do
+          create(:user, activated_at: Time.zone.now, user_permission_list: ['activity.read'])
+        end
+        let(:ical_events) { Icalendar::Calendar.parse(request.body).first.events }
 
         subject(:request) { get('ical', params: { user_id: user.id, key: user.ical_secret_key }) }
-
-        let(:ical_events) { Icalendar::Calendar.parse(request.body).first.events }
 
         it { expect(ical_events.count).to eq Activity.count }
       end
@@ -83,7 +86,7 @@ describe V1::ActivitiesController, type: :controller do
       describe 'with a subset of all categories' do
         subject(:request) do
           get('ical', params: { user_id: user.id, key: user.ical_secret_key,
-                                categories: 'algemeen,sociëteit,vorming,not_a_valid_category,birthdays' })
+                                categories: 'algemeen,sociëteit,vorming,invalid_cat,birthdays' })
         end
 
         let(:activity) { create(:activity, category: 'algemeen') }
