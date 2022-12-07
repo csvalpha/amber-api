@@ -24,6 +24,6 @@ class Group < ApplicationRecord
   validates :name, presence: true
   validates :administrative, inclusion: [true, false]
   validates :kind, presence: true, inclusion: {
-    in: %w[bestuur commissie dispuut genootschap groep huis jaargroep werkgroep kring lichting]
+    in: %w[bestuur commissie dispuut genootschap groep huis kiemgroep werkgroep kring lichting curiositas]
   }
 end

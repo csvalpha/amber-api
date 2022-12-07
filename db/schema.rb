@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_12_154634) do
+ActiveRecord::Schema.define(version: 2022_12_07_160057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -536,10 +536,26 @@ ActiveRecord::Schema.define(version: 2022_10_12_154634) do
     t.string "user_details_sharing_preference"
     t.boolean "allow_tomato_sharing"
     t.string "webdav_secret_key"
+    t.string "nickname"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login_enabled"], name: "index_users_on_login_enabled"
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "vacancies", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "description"
+    t.string "workload"
+    t.string "workload_peak"
+    t.string "cover_photo"
+    t.string "contact"
+    t.date "deadline"
+    t.integer "author_id", null: false
+    t.integer "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
   end
 
   create_table "versions", id: :serial, force: :cascade do |t|
