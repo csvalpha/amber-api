@@ -29,7 +29,7 @@ class V1::ActivitiesController < V1::ApplicationController
       calendar.add_event(act.to_ical)
     end
 
-    if ical_add_birthdays?
+    if ical_add_birthdays?(requested_categories)
       users_for_ical.each do |user|
         calendar.add_event(user.to_ical)
       end
