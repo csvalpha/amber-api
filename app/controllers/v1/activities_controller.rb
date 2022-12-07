@@ -18,10 +18,11 @@ class V1::ActivitiesController < V1::ApplicationController
     render json: alias_response("#{mail_alias}@csvalpha.nl")
   end
 
-  def ical
+  def ical # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return head :unauthorized unless authenticate_user_by_ical_secret_key
 
     requested_categories = params[:categories].try(:split, ',')
+
     permitted_categories = (requested_categories & Activity.categories) ||
                            Activity.categories
     activities_for_ical(permitted_categories).each do |act|
