@@ -21,11 +21,19 @@ class V1::ActivitiesController < V1::ApplicationController
   def ical
     return head :unauthorized unless authenticate_user_by_ical_secret_key
 
-    permitted_categories = (params[:categories].try(:split, ',') & Activity.categories) ||
+    requested_categories = params[:categories].try(:split, ',')
+    permitted_categories = (requested_categories & Activity.categories) ||
                            Activity.categories
-    activities_for_ical(permitted_categories).map do |act|
+    activities_for_ical(permitted_categories).each do |act|
       calendar.add_event(act.to_ical)
     end
+
+    if requested_categories.include?('birthdays')
+      users_for_ical.each do |user|
+        calendar.add_event(user.to_ical)
+      end
+    end
+
     render plain: calendar.to_ical, content_type: 'text/calendar'
   end
 
@@ -63,6 +71,11 @@ class V1::ActivitiesController < V1::ApplicationController
   def activities_for_ical(categories)
     Activity.where(category: categories)
             .where(start_time: (3.months.ago..1.year.from_now))
+  end
+
+  def users_for_ical
+    User.active_users_for_group(Group.find_by(name: 'Leden'))
+        .where.not(birthday: nil)
   end
 
   def authenticate_user_by_ical_secret_key
