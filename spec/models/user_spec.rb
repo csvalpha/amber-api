@@ -36,6 +36,12 @@ RSpec.describe User, type: :model do
       it { expect(user).not_to be_valid }
     end
 
+    context 'when without a nickname' do
+      subject(:user) { build_stubbed(:user, nickname: nil) }
+
+      it { expect(user).to be_valid }
+    end
+
     context 'when without an address' do
       subject(:user) { build_stubbed(:user, address: nil) }
 
