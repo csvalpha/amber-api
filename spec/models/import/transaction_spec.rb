@@ -4,7 +4,7 @@ RSpec.describe Import::Transaction, type: :model do
   let(:user) { create(:user, username: 'bestuurder') }
   let(:test_file) { Rails.root.join('spec', 'support', 'files', 'collection_import.csv') }
   let(:collection) { create(:collection) }
-  let(:importer) { described_class.new(test_file, collection) }
+  let(:importer) { described_class.new({ file: test_file, extension: 'csv' }, collection) }
   let(:errors) { collection.errors.messages[:import_file] }
 
   before do
