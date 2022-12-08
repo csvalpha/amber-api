@@ -31,7 +31,8 @@ class V1::ActivitiesController < V1::ApplicationController
 
     if ical_add_birthdays?(requested_categories)
       users_for_ical.each do |user|
-        calendar.add_event(user.to_ical)
+        user_ical = user.to_ical
+        calendar.add_event(user_ical) if user_ical
       end
     end
 
