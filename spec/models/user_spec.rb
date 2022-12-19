@@ -634,6 +634,32 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#to_ical' do
+    context 'when without birthday' do
+      subject(:user) do
+        build_stubbed(:user, birthday: nil)
+      end
+
+      it { expect(user.to_ical).to be_nil }
+    end
+
+    context 'when with birthday' do
+      subject(:user) do
+        build_stubbed(:user)
+      end
+
+      let(:date) do
+        date = user.birthday.change(year: Time.zone.now.year)
+        date = date.next_year if date < 3.months.ago
+        date
+      end
+
+      it { expect(user.to_ical.description).to include((date.year - user.birthday.year).to_s) }
+      it { expect(user.to_ical.dtstart).to eq date }
+      it { expect(user.to_ical.dtend).to eq date.tomorrow }
+    end
+  end
+
   describe '.password_reset_url' do
     it { expect(described_class.password_reset_url).to include('forgot_password') }
   end
