@@ -178,6 +178,19 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.webdav_secret_key = SecureRandom.hex(32)
   end
 
+  def to_ical # rubocop:disable Metrics/AbcSize
+    return unless birthday
+
+    date = birthday.change(year: Time.zone.now.year)
+    date = date.next_year if date < 3.months.ago
+    event = Icalendar::Event.new
+    event.dtstart     = Icalendar::Values::Date.new(date)
+    event.dtend       = Icalendar::Values::Date.new(date.tomorrow)
+    event.summary     = "Verjaardag #{full_name}"
+    event.description = "#{first_name} wordt vandaag #{date.year - birthday.year} jaar!"
+    event
+  end
+
   private
 
   def downcase_email!
