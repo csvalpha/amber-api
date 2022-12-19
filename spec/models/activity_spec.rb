@@ -180,7 +180,7 @@ RSpec.describe Activity, type: :model do
       let(:record) do
         build_stubbed(:activity,
                       category: %w[algemeen sociëteit vorming dinsdagkring woensdagkring
-                                   disputen jaargroepen huizen extern].sample)
+                                   disputen kiemgroepen huizen extern curiositates].sample)
       end
 
       it { expect(record.humanized_category).to eq record.category.capitalize }

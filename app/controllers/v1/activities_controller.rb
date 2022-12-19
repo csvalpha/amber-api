@@ -18,14 +18,24 @@ class V1::ActivitiesController < V1::ApplicationController
     render json: alias_response("#{mail_alias}@csvalpha.nl")
   end
 
-  def ical
+  def ical # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return head :unauthorized unless authenticate_user_by_ical_secret_key
 
-    permitted_categories = (params[:categories].try(:split, ',') & Activity.categories) ||
+    requested_categories = params[:categories].try(:split, ',')
+
+    permitted_categories = (requested_categories & Activity.categories) ||
                            Activity.categories
-    activities_for_ical(permitted_categories).map do |act|
+    activities_for_ical(permitted_categories).each do |act|
       calendar.add_event(act.to_ical)
     end
+
+    if ical_add_birthdays?(requested_categories)
+      users_for_ical.each do |user|
+        user_ical = user.to_ical
+        calendar.add_event(user_ical) if user_ical
+      end
+    end
+
     render plain: calendar.to_ical, content_type: 'text/calendar'
   end
 
@@ -65,10 +75,22 @@ class V1::ActivitiesController < V1::ApplicationController
             .where(start_time: (3.months.ago..1.year.from_now))
   end
 
-  def authenticate_user_by_ical_secret_key
-    user = User.activated.login_enabled.find_by(id: params[:user_id], ical_secret_key: params[:key])
-    return false unless user
+  def users_for_ical
+    User.active_users_for_group(Group.find_by(name: 'Leden'))
+        .where.not(birthday: nil)
+  end
 
-    user.permission?(:read, Activity)
+  def authenticate_user_by_ical_secret_key
+    @user = User.activated.login_enabled.find_by(id: params[:user_id],
+                                                 ical_secret_key: params[:key])
+    return false unless @user
+
+    @user.permission?(:read, Activity)
+  end
+
+  def ical_add_birthdays?(requested_categories)
+    return false unless @user.permission?(:read, User)
+
+    requested_categories.nil? || requested_categories.include?('birthdays')
   end
 end
