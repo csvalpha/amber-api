@@ -661,7 +661,7 @@ RSpec.describe User, type: :model do
   end
 
   describe '.password_reset_url' do
-    it { expect(described_class.password_reset_url).to include('forgot_password') }
+    it { expect(described_class.password_reset_url).to include('forgot-password') }
   end
 
   describe 'has_paper_trail' do
