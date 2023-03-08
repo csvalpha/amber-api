@@ -19,7 +19,7 @@ module ActionMailbox::Ingresses::Improvmx # rubocop:disable Style/ClassAndModule
       retrieve_email(params.require('raw_url'))
     end
 
-    def retrieve_email(url)
+    def retrieve_email(url) # rubocop:disable Metrics/AbcSize
       uri = URI(url)
 
       request = Net::HTTP::Get.new uri
