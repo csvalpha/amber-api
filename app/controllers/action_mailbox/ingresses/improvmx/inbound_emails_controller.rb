@@ -28,6 +28,10 @@ module ActionMailbox::Ingresses::Improvmx # rubocop:disable Style/ClassAndModule
       response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
         http.request(request)
       end
+
+      logger.info response.code
+      logger.info response.body
+
       response.body
     end
   end
