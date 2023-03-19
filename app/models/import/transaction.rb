@@ -66,11 +66,13 @@ module Import
 
       begin
         if amount.instance_of?(String)
-          amount = amount.tr(',', '.')
-                         .tr('-', '0')
-                         .strip
-                         .delete_prefix('€')
-                         .strip
+          amount = amount.strip()
+                         .tr(',', '.')
+                         .tr(' ', '')
+          amount = "0" if amount == '€-'
+          amount = amount.tr('€', '')
+                         .delete_suffix('-')
+                         .delete_suffix('.')
         end
         raise ArgumentError if Float(amount).nil? # test whether string is numeric
 
