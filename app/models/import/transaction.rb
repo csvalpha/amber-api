@@ -71,8 +71,7 @@ module Import
                          .tr(' ', '')
           amount = "0" if amount == '€-'
           amount = amount.tr('€', '')
-                         .delete_suffix('-')
-                         .delete_suffix('.')
+                         .delete_suffix('.-')
         end
         raise ArgumentError if Float(amount).nil? # test whether string is numeric
 
