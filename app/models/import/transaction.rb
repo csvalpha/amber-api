@@ -66,10 +66,10 @@ module Import
 
       begin
         if amount.instance_of?(String)
-          amount = amount.strip()
+          amount = amount.strip
                          .tr(',', '.')
                          .tr(' ', '')
-          amount = "0" if amount == '€-'
+          amount = '0' if amount == '€-'
           amount = amount.tr('€', '')
                          .delete_suffix('.-')
         end
