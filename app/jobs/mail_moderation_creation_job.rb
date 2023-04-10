@@ -14,7 +14,9 @@ class MailModerationCreationJob < ApplicationJob
     request.basic_auth 'api', Rails.application.config.x.improvmx_api_key
 
     response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+      # :nocov:
       http.request(request)
+      # :nocov:
     end
 
     if response.is_a? Net::HTTPSuccess
