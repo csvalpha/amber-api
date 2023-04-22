@@ -21,8 +21,8 @@ class UserArchiveJob < ApplicationJob
     User.create!(id: ARCHIVE_USER_ID,
                  username: 'archived.user',
                  email: 'ict@csvalpha.nl',
-                 first_name: 'Gearchiveerde Gebruiker',
-                 last_name: '-',
+                 first_name: 'Gearchiveerde',
+                 last_name: 'Gebruiker',
                  address: 'Onbekend',
                  postcode: 'Onbekend',
                  city: 'Onbekend')
