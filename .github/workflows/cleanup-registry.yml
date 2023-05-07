@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Delete old versions
-        uses: snok/container-retention-policy@46881d5f6ddd0509d9646f4565ddcdfdca520707 # tag=v1.4.2
+        uses: snok/container-retention-policy@482ce28159f65a8bfad986da1fedcef40169aa75 # v2.0.0
         with:
           image-names: ${{ env.IMAGE_NAMES }}
           cut-off: 2 days ago UTC
           account-type: org
           org-name: ${{ github.repository_owner }}
           skip-tags: latest,staging
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GH_PAT }}

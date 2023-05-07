@@ -116,11 +116,26 @@ RSpec.describe MailAlias, type: :model do
 
   describe '#moderators' do
     context 'when with open alias' do
-      subject(:mail_alias) do
-        build_stubbed(:mail_alias, :with_group, moderation_type: 'open')
+      context 'when without moderator' do
+        subject(:mail_alias) do
+          build_stubbed(:mail_alias, :with_group, moderation_type: 'open')
+        end
+
+        it { expect(mail_alias.mail_addresses).to be_empty }
       end
 
-      it { expect(mail_alias.mail_addresses).to be_empty }
+      context 'when with moderator' do
+        subject(:mail_alias) do
+          build_stubbed(:mail_alias, :with_user, :with_moderator,
+                        moderation_type: 'open')
+        end
+
+        before { mail_alias.valid? }
+
+        it {
+          expect(mail_alias.errors[:base].first).to include 'Must have no moderator'
+        }
+      end
     end
 
     context 'when with moderated alias' do

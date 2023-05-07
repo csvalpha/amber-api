@@ -7,7 +7,7 @@ RSpec.describe V1::UserResource, type: :resource do
 
   describe '#fetchable_fields' do
     let(:basic_fields) do
-      %i[id created_at updated_at username first_name last_name_prefix last_name full_name
+      %i[id created_at updated_at username first_name last_name_prefix last_name full_name nickname
          avatar_url avatar_thumb_url groups active_groups memberships mail_aliases
          group_mail_aliases permissions user_permissions mandates]
     end
@@ -131,7 +131,7 @@ RSpec.describe V1::UserResource, type: :resource do
     let(:context) { { user:, model: another_user } }
     let(:creatable_fields) { described_class.creatable_fields(context) }
     let(:basic_fields) do
-      %i[avatar email address postcode city phone_number
+      %i[avatar nickname email address postcode city phone_number
          food_preferences vegetarian study start_study
          almanak_subscription_preference
          digtus_subscription_preference emergency_contact emergency_number]
