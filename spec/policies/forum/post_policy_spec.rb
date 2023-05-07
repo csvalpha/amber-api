@@ -16,7 +16,7 @@ RSpec.describe Forum::PostPolicy, type: :policy do
   end
 
   permissions :create?, :update? do
-    it { expect(policy).not_to permit(user, build_stubbed(:post, thread: thread)) }
+    it { expect(policy).not_to permit(user, build_stubbed(:post, thread:)) }
 
     it do
       expect(policy).not_to permit(user, build_stubbed(:post, thread: closed_thread))
@@ -27,7 +27,7 @@ RSpec.describe Forum::PostPolicy, type: :policy do
     describe 'when with permission' do
       let(:user) { create(:user, user_permission_list: ['forum/post.create']) }
 
-      it { expect(policy).to permit(user, build_stubbed(:post, thread: thread)) }
+      it { expect(policy).to permit(user, build_stubbed(:post, thread:)) }
 
       it do
         expect(policy).not_to permit(user, build_stubbed(:post,
@@ -41,7 +41,7 @@ RSpec.describe Forum::PostPolicy, type: :policy do
                user_permission_list: ['forum/thread.update', 'forum/post.create'])
       end
 
-      it { expect(policy).to permit(user, build_stubbed(:post, thread: thread)) }
+      it { expect(policy).to permit(user, build_stubbed(:post, thread:)) }
       it { expect(policy).to permit(user, build_stubbed(:post, thread: closed_thread)) }
     end
   end
@@ -50,7 +50,7 @@ RSpec.describe Forum::PostPolicy, type: :policy do
     describe 'when with permission' do
       let(:user) { create(:user, user_permission_list: ['forum/post.update']) }
 
-      it { expect(policy).to permit(user, build_stubbed(:post, thread: thread)) }
+      it { expect(policy).to permit(user, build_stubbed(:post, thread:)) }
 
       it do
         expect(policy).not_to permit(user, build_stubbed(:post, thread: closed_thread))
@@ -63,7 +63,7 @@ RSpec.describe Forum::PostPolicy, type: :policy do
                user_permission_list: ['forum/thread.update', 'forum/post.update'])
       end
 
-      it { expect(policy).to permit(user, build_stubbed(:post, thread: thread)) }
+      it { expect(policy).to permit(user, build_stubbed(:post, thread:)) }
       it { expect(policy).to permit(user, build_stubbed(:post, thread: closed_thread)) }
     end
 

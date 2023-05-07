@@ -43,7 +43,7 @@ describe V1::ActivitiesController do
 
       context 'when with activity in group that user belongs to' do
         let(:group) { create(:group, users: [user]) }
-        let(:record) { create(:activity, :with_form, group: group) }
+        let(:record) { create(:activity, :with_form, group:) }
         let(:record_url) { "/v1/activities/#{record.id}/generate_alias" }
 
         before { request }

@@ -91,7 +91,7 @@ describe V1::UsersController do
       end
 
       context 'with valid old password' do
-        let(:valid_attributes) { { password: new_password, old_password: old_password } }
+        let(:valid_attributes) { { password: new_password, old_password: } }
         let(:request) do
           put(record_url, data: {
                 id: user.id,
@@ -128,7 +128,7 @@ describe V1::UsersController do
         let(:another_user) do
           create(:user, password: old_password)
         end
-        let(:valid_attributes) { { password: new_password, old_password: old_password } }
+        let(:valid_attributes) { { password: new_password, old_password: } }
         let(:record_url) { "/v1/users/#{another_user.id}" }
         let(:request) do
           put(record_url, data: {

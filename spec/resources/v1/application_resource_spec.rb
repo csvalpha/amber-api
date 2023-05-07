@@ -5,8 +5,8 @@ RSpec.describe V1::ApplicationResource, type: :resource do
   let(:other_user) do
     create(:user, first_name: 'Jan', last_name_prefix: 'de', last_name: 'Vries')
   end
-  let(:context) { { user: user } }
-  let(:options) { { context: context } }
+  let(:context) { { user: } }
+  let(:options) { { context: } }
 
   describe 'filters' do
     let(:filtered) { described_class.apply_filters(User, filter, options) }

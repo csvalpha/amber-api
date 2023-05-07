@@ -32,7 +32,7 @@ module Import
     def save_user_to_group(user, group)
       return unless user && group
 
-      Membership.create(user: user, group: group, start_date: Time.zone.now)
+      Membership.create(user:, group:, start_date: Time.zone.now)
     end
 
     def valid? # rubocop:disable Metrics/MethodLength, Metrics/AbcSize

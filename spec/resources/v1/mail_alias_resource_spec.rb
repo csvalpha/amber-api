@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::MailAliasResource, type: :resource do
-  let(:context) { { user: user } }
+  let(:context) { { user: } }
   let(:record) { create(:mail_alias) }
   let(:resource) { described_class.new(record, context) }
 

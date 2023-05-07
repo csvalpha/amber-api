@@ -16,12 +16,12 @@ describe V1::StoredMailsController do
       let(:moderator_group) { create(:group, users: [user]) }
       let(:mail_alias) do
         create(:mail_alias, :with_group, :with_moderator,
-               moderator_group: moderator_group)
+               moderator_group:)
       end
 
       before do
         create(:stored_mail)
-        create_list(:stored_mail, 2, mail_alias: mail_alias)
+        create_list(:stored_mail, 2, mail_alias:)
       end
 
       it_behaves_like '200 OK'

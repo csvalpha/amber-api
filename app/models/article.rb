@@ -30,7 +30,7 @@ class Article < ApplicationRecord
   def only_one_pinned_article
     return unless pinned?
 
-    matches = Article.pinned.where.not(id: id)
+    matches = Article.pinned.where.not(id:)
     errors.add(:pinned, 'cannot have more than one pinned article') if matches.exists?
   end
 end

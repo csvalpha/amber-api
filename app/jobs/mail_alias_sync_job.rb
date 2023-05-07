@@ -42,7 +42,7 @@ class MailAliasSyncJob < ApplicationJob
     default_options = Rails.application.config.action_mailer.default_url_options
     path = '/api/rails/action_mailbox/improvmx/inbound_emails'
 
-    uri = URI::Generic.build(default_options.merge(path: path))
+    uri = URI::Generic.build(default_options.merge(path:))
     uri.user = 'actionmailbox'
     uri.password = Rails.application.credentials.action_mailbox.fetch(:ingress_password)
 

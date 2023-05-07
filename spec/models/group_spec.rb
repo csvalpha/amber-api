@@ -40,7 +40,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with active membership' do
       before do
-        create(:membership, group: group, user: user)
+        create(:membership, group:, user:)
       end
 
       it { expect(group.active_users).to contain_exactly(user) }
@@ -48,7 +48,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with expired membership' do
       before do
-        create(:membership, group: group, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:, end_date: 1.day.ago)
       end
 
       it { expect(group.active_users).to be_empty }
@@ -56,7 +56,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with future membership' do
       before do
-        create(:membership, group: group, user: user, start_date: 1.day.from_now)
+        create(:membership, group:, user:, start_date: 1.day.from_now)
       end
 
       it { expect(group.active_users).to be_empty }
@@ -66,8 +66,8 @@ RSpec.describe Group, type: :model do
       let(:group2) { create(:group) }
 
       before do
-        create(:membership, group: group, user: user)
-        create(:membership, group: group2, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:)
+        create(:membership, group: group2, user:, end_date: 1.day.ago)
       end
 
       it { expect(group.active_users).to contain_exactly(user) }
@@ -85,7 +85,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with active membership' do
       before do
-        create(:membership, group: group, user: user)
+        create(:membership, group:, user:)
       end
 
       it { expect(described_class.active.length).to eq 1 }
@@ -93,7 +93,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with expired membership' do
       before do
-        create(:membership, group: group, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:, end_date: 1.day.ago)
       end
 
       it { expect(described_class.active.length).to eq 0 }
@@ -101,7 +101,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with future membership' do
       before do
-        create(:membership, group: group, user: user, start_date: 1.day.from_now)
+        create(:membership, group:, user:, start_date: 1.day.from_now)
       end
 
       it { expect(described_class.active.length).to eq 0 }
@@ -115,7 +115,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with active membership' do
       before do
-        create(:membership, group: group, user: user)
+        create(:membership, group:, user:)
       end
 
       it { expect(described_class.active_groups_for_user(user).length).to eq 1 }
@@ -123,7 +123,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with expired membership' do
       before do
-        create(:membership, group: group, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:, end_date: 1.day.ago)
       end
 
       it { expect(described_class.active_groups_for_user(user).length).to eq 0 }
@@ -131,7 +131,7 @@ RSpec.describe Group, type: :model do
 
     context 'when with future membership' do
       before do
-        create(:membership, group: group, user: user, start_date: 1.day.from_now)
+        create(:membership, group:, user:, start_date: 1.day.from_now)
       end
 
       it { expect(described_class.active_groups_for_user(user).length).to eq 0 }
@@ -141,8 +141,8 @@ RSpec.describe Group, type: :model do
       let(:group2) { create(:group) }
 
       before do
-        create(:membership, group: group, user: user)
-        create(:membership, group: group2, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:)
+        create(:membership, group: group2, user:, end_date: 1.day.ago)
       end
 
       it { expect(described_class.active_groups_for_user(user).length).to eq 1 }

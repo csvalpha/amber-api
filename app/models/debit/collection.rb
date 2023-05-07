@@ -41,7 +41,7 @@ module Debit
       sdd.add_transaction(
         name: mandate.iban_holder,
         iban: IBANTools::IBAN.new(mandate.iban).code,
-        amount: amount,
+        amount:,
         mandate_id: mandate.id,
         mandate_date_of_signature: mandate.start_date,
         reference: date,
@@ -51,7 +51,7 @@ module Debit
     end
 
     def user_amount(user)
-      user_amount = transactions.where(user: user).sum(&:amount)
+      user_amount = transactions.where(user:).sum(&:amount)
       return user_amount if user_amount.positive?
       return if user_amount.zero?
 

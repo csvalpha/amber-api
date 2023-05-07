@@ -25,7 +25,7 @@ describe V1::GroupsController do
         let(:record_permission) { 'group.update' }
 
         before do
-          create(:membership, user: user, group: record)
+          create(:membership, user:, group: record)
         end
       end
     end
