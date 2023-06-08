@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_19_204657) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_160057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,8 +18,8 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.integer "status", default: 0, null: false
     t.string "message_id", null: false
     t.string "message_checksum", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
   end
 
@@ -29,7 +28,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -41,7 +40,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.text "metadata"
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -54,14 +53,14 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "form_id"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.decimal "price", precision: 8, scale: 2
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "cover_photo"
     t.string "location"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
     t.string "title"
     t.string "description"
     t.integer "author_id"
@@ -76,9 +75,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.text "content"
     t.integer "article_id"
     t.integer "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["article_id"], name: "index_article_comments_on_article_id"
     t.index ["author_id"], name: "index_article_comments_on_author_id"
   end
@@ -86,10 +85,10 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "articles", id: :serial, force: :cascade do |t|
     t.string "title"
     t.string "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "group_id"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.boolean "publicly_visible", default: false, null: false
     t.integer "author_id"
     t.string "cover_photo"
@@ -101,13 +100,13 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   end
 
   create_table "board_room_presences", id: :serial, force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
     t.text "status"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["user_id"], name: "index_board_room_presences_on_user_id"
   end
 
@@ -117,9 +116,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "description"
     t.string "isbn"
     t.string "cover_photo"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["isbn"], name: "index_books_on_isbn", unique: true
   end
 
@@ -127,9 +126,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "name", null: false
     t.date "date", null: false
     t.integer "author_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["author_id"], name: "index_debit_collections_on_author_id"
   end
 
@@ -139,9 +138,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.date "start_date", null: false
     t.date "end_date"
     t.bigint "user_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_debit_mandates_on_user_id"
   end
 
@@ -150,9 +149,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.integer "collection_id"
     t.string "description"
     t.decimal "amount", precision: 8, scale: 2
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["collection_id"], name: "index_debit_transactions_on_collection_id"
     t.index ["user_id"], name: "index_debit_transactions_on_user_id"
   end
@@ -160,9 +159,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "form_closed_question_answers", id: :serial, force: :cascade do |t|
     t.integer "option_id"
     t.integer "response_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.integer "question_id"
     t.boolean "radio_question", default: false, null: false
     t.index ["question_id", "response_id"], name: "index_form_closed_question_answers_on_question_and_response", unique: true, where: "(radio_question IS TRUE)"
@@ -172,9 +171,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "form_closed_question_options", id: :serial, force: :cascade do |t|
     t.string "option"
     t.integer "question_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.integer "position", default: 0
   end
 
@@ -184,18 +183,18 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.integer "position"
     t.boolean "required", default: false, null: false
     t.integer "form_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
   end
 
   create_table "form_forms", id: :serial, force: :cascade do |t|
     t.integer "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.datetime "respond_until"
-    t.datetime "respond_from"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "respond_until", precision: nil
+    t.datetime "respond_from", precision: nil
     t.integer "group_id"
     t.integer "responses_count", default: 0, null: false
     t.index ["group_id"], name: "index_form_forms_on_group_id"
@@ -205,9 +204,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.text "answer"
     t.integer "response_id"
     t.integer "question_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["response_id", "question_id"], name: "index_form_open_question_answers_on_response_id_and_question_id", unique: true
   end
 
@@ -217,17 +216,17 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.integer "position"
     t.boolean "required", default: false, null: false
     t.integer "form_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
   end
 
   create_table "form_responses", id: :serial, force: :cascade do |t|
     t.integer "form_id"
     t.integer "user_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "completed", default: false, null: false
     t.integer "lock_version"
     t.index ["form_id", "user_id"], name: "index_form_responses_on_form_id_and_user_id", unique: true
@@ -236,9 +235,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
 
   create_table "forum_categories", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.integer "threads_count", default: 0, null: false
     t.index ["deleted_at"], name: "index_forum_categories_on_deleted_at"
   end
@@ -247,9 +246,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "message"
     t.integer "author_id"
     t.integer "thread_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["author_id"], name: "index_forum_posts_on_author_id"
     t.index ["deleted_at"], name: "index_forum_posts_on_deleted_at"
     t.index ["thread_id"], name: "index_forum_posts_on_thread_id"
@@ -259,9 +258,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.integer "user_id"
     t.integer "thread_id"
     t.integer "post_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["thread_id"], name: "index_forum_read_threads_on_thread_id"
     t.index ["user_id"], name: "index_forum_read_threads_on_user_id"
   end
@@ -270,10 +269,10 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "title"
     t.integer "author_id"
     t.integer "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.datetime "closed_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "closed_at", precision: nil
     t.integer "posts_count", default: 0, null: false
     t.index ["author_id"], name: "index_forum_threads_on_author_id"
     t.index ["category_id"], name: "index_forum_threads_on_category_id"
@@ -285,7 +284,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.integer "sluggable_id", null: false
     t.string "sluggable_type", limit: 50
     t.string "scope"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
@@ -294,9 +293,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
 
   create_table "groups", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.text "description"
     t.string "kind", null: false
     t.string "recognized_at_gma"
@@ -309,9 +308,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "groups_permissions", id: :serial, force: :cascade do |t|
     t.integer "group_id"
     t.integer "permission_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["deleted_at"], name: "index_groups_permissions_on_deleted_at"
     t.index ["group_id"], name: "index_groups_permissions_on_group_id"
     t.index ["permission_id"], name: "index_groups_permissions_on_permission_id"
@@ -323,12 +322,12 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "description"
     t.integer "group_id"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.bigint "moderator_group_id"
     t.boolean "smtp_enabled", default: false
-    t.datetime "last_received_at"
+    t.datetime "last_received_at", precision: nil
     t.index ["email"], name: "index_mail_aliases_on_email", unique: true
     t.index ["moderator_group_id"], name: "index_mail_aliases_on_moderator_group_id"
   end
@@ -336,9 +335,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "memberships", id: :serial, force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.date "start_date", null: false
     t.date "end_date"
     t.string "function"
@@ -354,8 +353,8 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "token", null: false
     t.integer "expires_in", null: false
     t.text "redirect_uri", null: false
-    t.datetime "created_at", null: false
-    t.datetime "revoked_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "revoked_at", precision: nil
     t.string "scopes"
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
   end
@@ -366,8 +365,8 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "token", null: false
     t.string "refresh_token"
     t.integer "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at", null: false
+    t.datetime "revoked_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
     t.string "scopes"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
     t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
@@ -380,17 +379,17 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "secret", null: false
     t.text "redirect_uri", null: false
     t.string "scopes", default: "", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "confidential", default: true, null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
   create_table "permissions", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["deleted_at"], name: "index_permissions_on_deleted_at"
     t.index ["name"], name: "index_permissions_on_name", unique: true
   end
@@ -398,9 +397,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "permissions_users", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "permission_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["deleted_at"], name: "index_permissions_users_on_deleted_at"
     t.index ["permission_id"], name: "index_permissions_users_on_permission_id"
     t.index ["user_id"], name: "index_permissions_users_on_user_id"
@@ -409,9 +408,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "photo_albums", id: :serial, force: :cascade do |t|
     t.string "title"
     t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.boolean "publicly_visible", default: false, null: false
     t.bigint "author_id"
     t.bigint "group_id"
@@ -422,9 +421,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
 
   create_table "photo_comments", id: :serial, force: :cascade do |t|
     t.text "content"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "author_id"
     t.integer "photo_id"
     t.index ["author_id"], name: "index_photo_comments_on_author_id"
@@ -434,15 +433,15 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "photos", id: :serial, force: :cascade do |t|
     t.string "image"
     t.integer "photo_album_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.string "original_filename"
     t.integer "uploader_id"
     t.integer "comments_count", default: 0, null: false
     t.string "exif_make"
     t.string "exif_model"
-    t.datetime "exif_date_time_original"
+    t.datetime "exif_date_time_original", precision: nil
     t.string "exif_exposure_time"
     t.string "exif_aperture_value"
     t.string "exif_iso_speed_ratings"
@@ -455,9 +454,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   end
 
   create_table "polls", id: :serial, force: :cascade do |t|
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "author_id"
     t.integer "form_id"
     t.index ["author_id"], name: "index_polls_on_author_id"
@@ -467,10 +466,10 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
   create_table "quickpost_messages", id: :serial, force: :cascade do |t|
     t.integer "author_id"
     t.text "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.datetime "datetime"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "datetime", precision: nil
     t.index ["datetime"], name: "index_quickpost_messages_on_datetime"
     t.index ["deleted_at"], name: "index_quickpost_messages_on_deleted_at"
   end
@@ -480,19 +479,19 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "slug", null: false
     t.string "content", null: false
     t.boolean "publicly_visible"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "category", default: "vereniging"
     t.index ["slug"], name: "index_static_pages_on_slug", unique: true
   end
 
   create_table "stored_mails", force: :cascade do |t|
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.bigint "mail_alias_id"
-    t.datetime "received_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "received_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "inbound_email_id"
     t.index ["inbound_email_id"], name: "index_stored_mails_on_inbound_email_id"
     t.index ["mail_alias_id"], name: "index_stored_mails_on_mail_alias_id"
@@ -502,9 +501,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "email"
     t.string "username"
     t.string "password_digest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.string "first_name", null: false
     t.string "last_name_prefix"
     t.string "last_name", null: false
@@ -517,10 +516,10 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.string "study"
     t.date "start_study"
     t.boolean "login_enabled", default: false, null: false
-    t.datetime "activated_at"
+    t.datetime "activated_at", precision: nil
     t.string "activation_token"
     t.string "avatar"
-    t.datetime "activation_token_valid_till"
+    t.datetime "activation_token_valid_till", precision: nil
     t.boolean "sidekiq_access"
     t.boolean "vegetarian", default: false
     t.string "otp_secret_key"
@@ -553,9 +552,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.date "deadline"
     t.integer "author_id", null: false
     t.integer "group_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
   end
 
   create_table "versions", id: :serial, force: :cascade do |t|
@@ -563,7 +562,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_204657) do
     t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.jsonb "object"
     t.jsonb "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"

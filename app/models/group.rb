@@ -12,6 +12,7 @@ class Group < ApplicationRecord
   has_many :groups_permissions, class_name: 'GroupsPermissions', dependent: :destroy
   has_many :permissions, through: :groups_permissions
   has_many :mail_aliases
+  has_many :articles, foreign_key: :group_id
 
   scope :active, (lambda {
     joins(:memberships).merge(Membership.active).distinct
