@@ -151,13 +151,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def activation_url
     params = { activation_token: activation_token }
     default_options = Rails.application.config.action_mailer.default_url_options
-    URI::Generic.build(default_options.merge(path: "/users/#{id}/activate_account",
+    URI::Generic.build(default_options.merge(path: "/users/#{id}/activate-account",
                                              query: params.to_query)).to_s
   end
 
   def self.password_reset_url
     default_options = Rails.application.config.action_mailer.default_url_options
-    URI::Generic.build(default_options.merge(path: '/users/forgot_password')).to_s
+    URI::Generic.build(default_options.merge(path: '/users/forgot-password')).to_s
   end
 
   def activate_account!
