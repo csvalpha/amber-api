@@ -3,6 +3,7 @@ class V1::ApplicationController < ApplicationController
   rescue_from AmberError::NotMemberOfGroupError, with: :user_is_not_member_of_group_error
 
   def context
+    logger.debug caller.join("\n")
     { user: current_user, application: current_application, action: params[:action] }
   end
 
