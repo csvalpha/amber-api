@@ -1,6 +1,6 @@
-class V1::RoomResource < V1::ApplicationResource
-  attributes :house_name, :location, :contact, :description, :description_camofied,
-             :publicly_visible, :cover_photo_url, :cover_photo
+class V1::RoomAdvertResource < V1::ApplicationResource
+  attributes :house_name, :contact, :location, :available_from, :description, 
+              :description_camofied, :cover_photo_url, :cover_photo, :publicly_visible
 
   def cover_photo_url
     @model.cover_photo.url
@@ -17,7 +17,7 @@ class V1::RoomResource < V1::ApplicationResource
   end
 
   def self.creatable_fields(_context)
-    %i[house_name location contact description cover_photo publicly_visible]
+    %i[house_name contact location available_from description cover_photo publicly_visible]
   end
 
   before_create do

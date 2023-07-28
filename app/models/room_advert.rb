@@ -1,4 +1,4 @@
-class Room < ApplicationRecord
+class RoomAdvert < ApplicationRecord
   mount_base64_uploader :cover_photo, CoverPhotoUploader
 
   belongs_to :author, class_name: 'User'

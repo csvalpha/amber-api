@@ -474,10 +474,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_114709) do
     t.index ["deleted_at"], name: "index_quickpost_messages_on_deleted_at"
   end
 
-  create_table "rooms", force: :cascade do |t|
+  create_table "room_adverts", force: :cascade do |t|
     t.string "house_name", null: false
-    t.string "location"
     t.string "contact", null: false
+    t.string "location"
+    t.string "available_from"
     t.string "description", null: false
     t.string "cover_photo"
     t.boolean "publicly_visible"

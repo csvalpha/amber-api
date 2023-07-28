@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe V1::RoomsController do
-  describe 'GET /rooms', version: 1 do
-    let(:records) { create_list(:room, 3) }
-    let(:record_url) { '/v1/rooms' }
-    let(:record_permission) { 'room.read' }
+describe V1::RoomAdvertsController do
+  describe 'GET /room_adverts', version: 1 do
+    let(:records) { create_list(:room_advert, 3) }
+    let(:record_url) { '/v1/room_adverts' }
+    let(:record_permission) { 'room_advert.read' }
 
     before { Bullet.enable = false }
 
