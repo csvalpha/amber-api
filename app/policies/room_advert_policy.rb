@@ -17,10 +17,6 @@ class RoomAdvertPolicy < ApplicationPolicy
     user_is_owner? || super
   end
 
-  def archive?
-    user_is_owner? || super
-  end
-
   private
 
   def user_is_owner?
