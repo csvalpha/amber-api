@@ -9,6 +9,10 @@ class RoomAdvertPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    true
+  end
+
   def update?
     user_is_owner? || super
   end
