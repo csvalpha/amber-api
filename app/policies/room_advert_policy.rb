@@ -13,6 +13,10 @@ class RoomAdvertPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    super || scope.exists?(id: record.id)
+  end
+
   def update?
     user_is_owner? || super
   end

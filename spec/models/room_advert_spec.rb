@@ -32,7 +32,7 @@ RSpec.describe RoomAdvert, type: :model do
 
     context 'when without public visibility' do
       subject(:room_advert) { build_stubbed(:room_advert, publicly_visible: nil) }
-  
+
       it { expect(room_advert).not_to be_valid }
     end
   end

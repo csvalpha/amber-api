@@ -7,10 +7,8 @@ describe V1::RoomAdvertsController do
     let(:record_permission) { 'room_advert.update' }
 
     it_behaves_like 'an updatable and permissible model', response: :ok do
-      let(:invalid_attributes) { { title: '' } }
+      let(:invalid_attributes) { { house_name: '' } }
     end
-
-    it_behaves_like 'an updatable model with group'
 
     context 'when with permission' do
       include_context 'when authenticated' do

@@ -21,5 +21,4 @@ RSpec.describe RoomAdvertPolicy, type: :policy do
       it { expect(policy).to permit(user, build_stubbed(:room_advert)) }
     end
   end
-
 end

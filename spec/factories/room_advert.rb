@@ -7,7 +7,7 @@ FactoryBot.define do
     house_name { Faker::Company.name }
     contact { Faker::Internet.email }
     location { Faker::Address.street_name }
-    location { Faker::Date.forward(days: 31) }
+    available_from { Faker::Date.forward(days: 31) }
     description { Faker::Hipster.paragraph }
     publicly_visible { false }
 
