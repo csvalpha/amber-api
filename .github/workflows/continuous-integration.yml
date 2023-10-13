@@ -135,3 +135,4 @@ jobs:
         with:
           name: coverage
           path: coverage/
+          if-no-files-found: error
