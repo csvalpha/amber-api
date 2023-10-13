@@ -16,6 +16,7 @@ RSpec.describe V1::ApplicationResource, type: :resource do
       allow(described_class).to receive(:searchable_fields).and_return(%i[first_name last_name])
       user
       other_user
+      application
     end
 
     describe 'search' do
