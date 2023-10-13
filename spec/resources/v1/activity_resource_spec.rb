@@ -45,8 +45,8 @@ RSpec.describe V1::ActivityResource, type: :resource do
       let(:sort) { { form: { respond_until: :desc } } }
       let(:form) { create(:form, respond_until: 1.day.from_now) }
       let(:other_form) { create(:form, respond_until: 2.days.from_now) }
-      let(:activity) { create(:activity: form: form) }
-      let(:other_activity) { create(:activity: form: other_form) }
+      let(:activity) { create(:activity, form: form) }
+      let(:other_activity) { create(:activity, form: other_form) }
 
       before do
         activity
