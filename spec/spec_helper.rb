@@ -3,8 +3,6 @@ require 'simplecov-lcov'
 
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start 'rails' do
-  add_filter 'app/jobs/sentry_job.rb'
-
   minimum_coverage 95
   minimum_coverage_by_file 95
 end
