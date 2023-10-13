@@ -1,5 +1,7 @@
 require 'simplecov'
+require 'simplecov-lcov'
 
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start 'rails' do
   add_filter 'app/jobs/sentry_job.rb'
 
