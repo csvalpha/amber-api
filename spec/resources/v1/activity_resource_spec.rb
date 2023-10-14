@@ -39,10 +39,11 @@ RSpec.describe V1::ActivityResource, type: :resource do
   end
 
   describe 'sort' do
-    let(:sorted) { described_class.apply_sort(Activity, options, context) }
+    let(:sorted) { described_class.apply_sort(records, sort, context) }
 
     describe 'form.respond_until' do
-      let(:sort) { { form: { respond_until: :desc } } }
+      let(:records) { Activity.all }
+      let(:sort) { { 'form.respond_until' => :desc } }
       let(:form) { create(:form, respond_until: 1.day.from_now) }
       let(:other_form) { create(:form, respond_until: 2.days.from_now) }
       let(:activity) { create(:activity, form: form) }

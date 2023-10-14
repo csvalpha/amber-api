@@ -7,23 +7,17 @@ class V1::ApplicationResource < JSONAPI::Resource
 
   filter :search
 
-  # :nocov:
   def self.creatable_fields(_context)
     []
   end
-
-  # :nocov:
 
   def self.updatable_fields(context)
     creatable_fields(context)
   end
 
-  # :nocov:
   def self.searchable_fields
     []
   end
-
-  # :nocov:
 
   def self.apply_filter(records, filter, value, options)
     # Monkeypatch for weird bug in filter method
@@ -77,10 +71,6 @@ class V1::ApplicationResource < JSONAPI::Resource
 
   def current_user
     context.fetch(:user)
-  end
-
-  def current_application
-    context.fetch(:application)
   end
 
   def self.current_user_or_application(options)
