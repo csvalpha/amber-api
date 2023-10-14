@@ -113,6 +113,7 @@ describe V1::ActivitiesController, type: :controller do
           filtered_activity
         end
 
+        it_behaves_like '200 OK'
         it { expect(ical_events.map(&:summary).to_s).to include("Verjaardag #{user.full_name}") }
         it { expect(ical_events.map(&:summary).to_s).to include(activity.title) }
         it { expect(request.body).not_to include(filtered_activity.title) }
