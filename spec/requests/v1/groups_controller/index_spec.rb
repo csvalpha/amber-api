@@ -51,7 +51,7 @@ describe V1::GroupsController do
       before do
         administrative_group
       end
-      
+
       it_behaves_like '200 OK'
 
       it { expect(json_object_ids).to match_array(expected_ids) }
