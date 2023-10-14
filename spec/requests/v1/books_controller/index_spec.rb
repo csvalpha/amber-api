@@ -39,7 +39,19 @@ describe V1::BooksController do
         let(:user) { create(:user, user_permission_list: [record_permission]) }
       end
 
-      it_behaves_like '200 OK'
+      describe 'with subtitle' do
+        it_behaves_like '200 OK'
+      end
+
+      describe 'without subtitle' do
+        let(:request) do
+          VCR.use_cassette('retrieve_book_by_isbn_no_subtitle') do
+            get "#{record_url}?isbn=8713638034201"
+          end
+        end
+
+        it_behaves_like '200 OK'
+      end
     end
   end
 end

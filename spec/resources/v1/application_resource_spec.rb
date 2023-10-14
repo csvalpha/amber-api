@@ -5,8 +5,7 @@ RSpec.describe V1::ApplicationResource, type: :resource do
   let(:other_user) do
     create(:user, first_name: 'Jan', last_name_prefix: 'de', last_name: 'Vries')
   end
-  let(:application) { create(:application, name: 'Application') }
-  let(:context) { { user: user, application: application } }
+  let(:context) { { user: user } }
   let(:options) { { context: context } }
 
   describe 'filters' do
@@ -16,7 +15,6 @@ RSpec.describe V1::ApplicationResource, type: :resource do
       allow(described_class).to receive(:searchable_fields).and_return(%i[first_name last_name])
       user
       other_user
-      application
     end
 
     describe 'search' do
@@ -27,12 +25,11 @@ RSpec.describe V1::ApplicationResource, type: :resource do
       end
 
       context 'when searching for multiple records' do
-        let(:filter) { { search: %w[john vries application] } }
+        let(:filter) { { search: %w[john vries] } }
 
         it { expect(filtered).to include user }
         it { expect(filtered).to include other_user }
-        it { expect(filtered).to include application }
-        it { expect(filtered.size).to eq 3 }
+        it { expect(filtered.size).to eq 2 }
       end
 
       context 'when without records' do
