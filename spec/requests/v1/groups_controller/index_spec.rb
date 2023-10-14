@@ -41,9 +41,6 @@ describe V1::GroupsController do
       end
 
       let(:administrative_group) { create(:group, administrative: true) }
-      let(:new_records) do
-        records + [administrative_group]
-      end
       let(:expected_ids) { [administrative_group.id] }
 
       subject(:request) { filtered_request }
@@ -53,7 +50,6 @@ describe V1::GroupsController do
       end
 
       it_behaves_like '200 OK'
-
       it { expect(json_object_ids).to match_array(expected_ids) }
       it { expect(json_object_ids.count).to equal(1) }
       it { expect(json_object_ids).to include(administrative_group.id) }
