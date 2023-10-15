@@ -9,6 +9,11 @@ class PhotoAlbum < ApplicationRecord
   validates :publicly_visible, inclusion: [true, false]
 
   scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :posted_between_or_publicly_visible, (lambda { |start_date, end_date|
+    where(publicly_visible: true)
+      .or(where.not(date: nil).where(date: start_date..end_date))
+      .or(where(date: nil).where(created_at: start_date..end_date))
+  })
 
   def owners
     if group.present?
