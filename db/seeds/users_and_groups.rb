@@ -7,9 +7,11 @@ ictcie = Group.create!(name: 'ICT-commissie', kind: 'commissie',
 bestuur = Group.create!(name: 'Bestuur', kind: 'bestuur', description: 'Wij zijn de echte bazen',
                         recognized_at_gma: 'ALV 21',  rejected_at_gma: 'ALV 218')
 
-sofia_treasurers = Group.create!(name: 'SOFIA Penningmeester', kind: 'bestuur', administrative: true)
+sofia_treasurers = Group.create!(name: 'SOFIA Penningmeester', kind: 'bestuur',
+                                 administrative: true)
 
-sofia_secretaries = Group.create!(name: 'SOFIA Secretaris', kind: 'bestuur', administrative: true)
+sofia_renting_managers = Group.create!(name: 'SOFIA Verhuur Manager', kind: 'bestuur',
+                                       administrative: true)
 
 sofia_main_bartenders = Group.create!(name: 'SOFIA Hoofdtappers', kind: 'groep')
 
@@ -32,14 +34,14 @@ nerds.first.update(username: 'nerd',
                    password_confirmation: 'password1234')
 
 sofia_treasurer = FactoryBot.create(:user, activated_at: Time.zone.now)
-sofia_treasurer.update(username: 'sofia_secretary',
+sofia_treasurer.update(username: 'sofia_treasurer',
                        password: 'password1234',
                        password_confirmation: 'password1234')
 
-sofia_secretary = FactoryBot.create(:user, activated_at: Time.zone.now)
-sofia_secretary.update(username: 'sofia_secretary',
-                      password: 'password1234',
-                      password_confirmation: 'password1234')
+sofia_renting_manager = FactoryBot.create(:user, activated_at: Time.zone.now)
+sofia_renting_manager.update(username: 'sofia_renting_manager',
+                             password: 'password1234',
+                             password_confirmation: 'password1234')
 
 sofia_bartenders = FactoryBot.create_list(:user, 6, activated_at: Time.zone.now)
 sofia_bartenders.first.update(username: 'sofia_main_bartender',
@@ -70,12 +72,20 @@ bestuurders.each do |user|
                     function: Faker::Job.title)
 end
 
-Membership.create(user: sofia_treasurer, group: sofia_treasurers, start_date: Date.current.months_ago(10))
+Membership.create(user: sofia_treasurer, group: sofia_treasurers,
+                  start_date: Date.current.months_ago(10))
+Membership.create(user: sofia_treasurer, group: member_group,
+                  start_date: Date.current.months_ago(4), function: Faker::Job.title)
 
-Membership.create(user: sofia_secretary, group: sofia_secretaries, start_date: Date.current.months_ago(10))
+Membership.create(user: sofia_renting_manager, group: sofia_renting_managers,
+                  start_date: Date.current.months_ago(10))
+Membership.create(user: sofia_renting_manager, group: member_group,
+                  start_date: Date.current.months_ago(4), function: Faker::Job.title)
 
 sofia_bartenders.each do |user|
-  Membership.create(user: user, group: sofia_main_bartenders, start_date: Date.current.months_ago(10),
+  Membership.create(user: user, group: sofia_main_bartenders,
+                    start_date: Date.current.months_ago(10), function: Faker::Job.title)
+  Membership.create(user: user, group: member_group, start_date: Date.current.months_ago(4),
                     function: Faker::Job.title)
 end
 
