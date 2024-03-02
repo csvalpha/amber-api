@@ -18,7 +18,7 @@ describe V1::BooksController do
     let(:record_permission) { 'book.create' }
     let(:request) do
       VCR.use_cassette('retrieve_book_by_isbn') do
-        get "#{record_url}?isbn=9789065394309"
+        get "#{record_url}?isbn=9781784870140"
       end
     end
 
