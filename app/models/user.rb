@@ -18,7 +18,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :board_room_presences, dependent: :delete_all
   has_many :photo_comments, foreign_key: :author_id
   has_many :created_photo_tags, class_name: 'PhotoTag', foreign_key: :author_id,
-                               dependent: :delete_all
+                                dependent: :delete_all
   has_many :photo_tags, foreign_key: :tagged_user_id, dependent: :delete_all
   has_many :photos, through: :photo_tags
   has_many :mail_aliases, dependent: :delete_all
