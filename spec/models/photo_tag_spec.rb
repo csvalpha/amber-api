@@ -53,5 +53,14 @@ RSpec.describe PhotoTag, type: :model do
 
       it { expect(photo_tag).to be_valid }
     end
+
+    context 'when with a user that is already tagged' do
+      let(:photo) { create(:photo) }
+      let(:tagged_user) { create(:user) }
+      before { create(:photo_tag, photo_id: photo.id, tagged_user_id: tagged_user.id ) }
+      subject(:photo_tag) { build(:photo_tag, photo_id: photo.id, tagged_user_id: tagged_user.id ) }
+
+      it { expect(photo_tag).not_to be_valid }
+    end
   end
 end
