@@ -11,7 +11,7 @@ describe V1::PhotoTagsController do
       let(:valid_relationships) do
         {
           photo: { data: { id: record.photo_id, type: 'photos' } },
-          tagged_user: { data: { id: record.tagged_user_id, type: 'users' } }
+          tagged_user: { data: { id: create(:user).id, type: 'users' } }
         }
       end
       let(:invalid_relationships) do
@@ -34,7 +34,7 @@ describe V1::PhotoTagsController do
             relationships: {
               photo: { data: { id: record.photo_id, type: 'photos' } },
               user: { data: { id: another_user.id, type: 'users' } },
-              tagged_user: { data: { id: record.tagged_user_id, type: 'users' } }
+              tagged_user: { data: { id: create(:user).id, type: 'users' } }
             }
           }
         )

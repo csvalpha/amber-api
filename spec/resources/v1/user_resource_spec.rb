@@ -9,7 +9,7 @@ RSpec.describe V1::UserResource, type: :resource do
     let(:basic_fields) do
       %i[id created_at updated_at username first_name last_name_prefix last_name full_name nickname
          avatar_url avatar_thumb_url groups active_groups memberships mail_aliases
-         group_mail_aliases permissions user_permissions mandates]
+         group_mail_aliases photos permissions user_permissions mandates]
     end
     let(:update_fields) do
       %i[login_enabled otp_required activated_at emergency_contact
@@ -137,7 +137,7 @@ RSpec.describe V1::UserResource, type: :resource do
          digtus_subscription_preference emergency_contact emergency_number]
     end
     let(:permissible_fields) do
-      %i[first_name last_name_prefix last_name birthday photos
+      %i[first_name last_name_prefix last_name birthday
          user_permissions login_enabled]
     end
     let(:current_user_fields) do
