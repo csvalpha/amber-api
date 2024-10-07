@@ -18,8 +18,8 @@ Otherwise, you need the following prerequisites installed:
 
 ## Installation
 ### With Docker
-1. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
-2. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
+1. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
+2. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
 3. Create databases and tables and run seeds with `bundle exec rails db:setup` (see tip on how to run commands in the container).
 
 Tip: to run commands in the container, you can run the following:

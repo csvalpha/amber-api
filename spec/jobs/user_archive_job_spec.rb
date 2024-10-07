@@ -47,6 +47,8 @@ RSpec.describe UserArchiveJob, type: :job do
         create(:mail_alias, user: user)
         create(:membership, user: user)
         create(:permissions_users, user: user)
+        create(:photo_tag, author: user)
+        create(:photo_tag, tagged_user: user)
       end
 
       it { expect { job }.to change(BoardRoomPresence, :count).by(-1) }
@@ -55,6 +57,7 @@ RSpec.describe UserArchiveJob, type: :job do
       it { expect { job }.to change(MailAlias, :count).by(-1) }
       it { expect { job }.to change(Membership, :count).by(-1) }
       it { expect { job }.to change(PermissionsUsers, :count).by(-1) }
+      it { expect { job }.to change(PhotoTag, :count).by(-2) }
       it { expect { job }.to change { User.exists?(user.id) }.from(true).to(false) }
     end
   end

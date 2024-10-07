@@ -42,8 +42,10 @@ Rails.application.routes.draw do
       end
     end
     jsonapi_resources :photo_comments
+    jsonapi_resources :photo_tags
     jsonapi_resources :photos, only: %i[index show destroy]
     jsonapi_resources :polls
+    jsonapi_resources :room_adverts
     jsonapi_resources :static_pages
     jsonapi_resources :stored_mails, only: %i[index show destroy] do
       jsonapi_relationships
