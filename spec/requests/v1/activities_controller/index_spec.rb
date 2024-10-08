@@ -13,5 +13,19 @@ describe V1::ActivitiesController do
     it_behaves_like 'a publicly visible index request' do
       let(:model_name) { :activity }
     end
+
+    describe 'sortable attributes' do
+      context 'when valid' do
+        let(:record_url) { '/v1/activities?sort=-form.respond_until' }
+
+        it_behaves_like '200 OK'
+      end
+
+      context 'when invalid' do
+        let(:record_url) { '/v1/activities?sort=form.id' }
+
+        it_behaves_like '400 Bad Request'
+      end
+    end
   end
 end

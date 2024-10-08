@@ -6,7 +6,7 @@ describe V1::DailyVersesController do
     let(:cache) { Rails.cache }
     let(:record_url) { '/v1/daily_verses' }
     let(:request) do
-      VCR.use_cassette('retrieve_daily_verse') do
+      VCR.use_cassette('retrieve_daily_verse', tag: :daily_verse) do
         get record_url
       end
     end
