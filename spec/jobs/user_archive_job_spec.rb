@@ -4,6 +4,7 @@ RSpec.describe UserArchiveJob, type: :job do
   describe '#perform' do
     let(:archive_user) { create(:user, id: 0) }
     let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
 
     subject(:job) { described_class.perform_now(user.id) }
 
@@ -13,6 +14,7 @@ RSpec.describe UserArchiveJob, type: :job do
         create(:photo_comment, author: user)
         create(:article, author: user)
         create(:activity, author: user)
+        create(:photo_tag, author: user, tagged_user: other_user)
         create(:photo, uploader: user)
         create(:photo_album, author: user)
         create(:poll, author: user)
@@ -28,6 +30,7 @@ RSpec.describe UserArchiveJob, type: :job do
       it { expect { job }.to change { PhotoComment.last.author }.from(user).to(archive_user) }
       it { expect { job }.to change { Article.last.author }.from(user).to(archive_user) }
       it { expect { job }.to change { Activity.last.author }.from(user).to(archive_user) }
+      it { expect { job }.to change { PhotoTag.last.author }.from(user).to(archive_user) }
       it { expect { job }.to change { Photo.last.uploader }.from(user).to(archive_user) }
       it { expect { job }.to change { PhotoAlbum.last.author }.from(user).to(archive_user) }
       it { expect { job }.to change { Poll.last.author }.from(user).to(archive_user) }
@@ -47,7 +50,6 @@ RSpec.describe UserArchiveJob, type: :job do
         create(:mail_alias, user: user)
         create(:membership, user: user)
         create(:permissions_users, user: user)
-        create(:photo_tag, author: user)
         create(:photo_tag, tagged_user: user)
       end
 
@@ -57,7 +59,7 @@ RSpec.describe UserArchiveJob, type: :job do
       it { expect { job }.to change(MailAlias, :count).by(-1) }
       it { expect { job }.to change(Membership, :count).by(-1) }
       it { expect { job }.to change(PermissionsUsers, :count).by(-1) }
-      it { expect { job }.to change(PhotoTag, :count).by(-2) }
+      it { expect { job }.to change(PhotoTag, :count).by(-1) }
       it { expect { job }.to change { User.exists?(user.id) }.from(true).to(false) }
     end
   end
