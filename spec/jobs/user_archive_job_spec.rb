@@ -4,7 +4,6 @@ RSpec.describe UserArchiveJob, type: :job do
   describe '#perform' do
     let(:archive_user) { create(:user, id: 0) }
     let(:user) { create(:user) }
-    let(:other_user) { create(:user) }
 
     subject(:job) { described_class.perform_now(user.id) }
 
@@ -14,7 +13,7 @@ RSpec.describe UserArchiveJob, type: :job do
         create(:photo_comment, author: user)
         create(:article, author: user)
         create(:activity, author: user)
-        create(:photo_tag, author: user, tagged_user: other_user)
+        create(:photo_tag, author: user)
         create(:photo, uploader: user)
         create(:photo_album, author: user)
         create(:poll, author: user)
