@@ -10,6 +10,10 @@ class PhotoAlbum < ApplicationRecord
 
   scope :publicly_visible, (-> { where(publicly_visible: true) })
 
+  scope :without_photo_tags, -> {
+    where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)
+  }
+
   def owners
     if group.present?
       group.active_users + [author]
