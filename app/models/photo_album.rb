@@ -10,7 +10,7 @@ class PhotoAlbum < ApplicationRecord
 
   scope :publicly_visible, (-> { where(publicly_visible: true) })
 
-  scope :without_photo_tags, -> {
+  scope :without_photo_tags, lambda {
     where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)
   }
 
