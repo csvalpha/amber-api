@@ -11,7 +11,6 @@ class V1::ApplicationResource < JSONAPI::Resource
   def self.creatable_fields(_context)
     []
   end
-
   # :nocov:
 
   def self.updatable_fields(context)
@@ -22,7 +21,6 @@ class V1::ApplicationResource < JSONAPI::Resource
   def self.searchable_fields
     []
   end
-
   # :nocov:
 
   def self.apply_filter(records, filter, value, options)
@@ -79,9 +77,11 @@ class V1::ApplicationResource < JSONAPI::Resource
     context.fetch(:user)
   end
 
+  # :nocov:
   def current_application
     context.fetch(:application)
   end
+  # :nocov:
 
   def self.current_user_or_application(options)
     options.fetch(:context).fetch(:user) || options.fetch(:context).fetch(:application)

@@ -2,6 +2,7 @@ Alpha AMBER API
 ================
 [![Continuous Integration](https://github.com/csvalpha/amber-api/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/csvalpha/amber-api/actions/workflows/continuous-integration.yml)
 [![Continuous Delivery](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml/badge.svg)](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml)
+[![codecov](https://codecov.io/github/csvalpha/amber-api/graph/badge.svg?token=FC2UFYSOON)](https://codecov.io/github/csvalpha/amber-api)
 
 ## Prerequisites
 If you're going to run the project with Docker, you only need to install the following prerequisites:
