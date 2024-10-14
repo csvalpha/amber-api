@@ -10,7 +10,7 @@ FactoryBot.define do
     start_time { Faker::Time.between(from: 1.day.ago, to: Time.zone.today) }
     end_time { Faker::Time.between(from: 1.day.from_now, to: 2.days.from_now) }
     category do
-      %w[algemeen societeit vorming kring 
+      %w[algemeen societeit vorming kring
          choose ifes ozon disputen kiemgroepen huizen extern eerstejaars curiositates].sample
     end
     publicly_visible { false }
