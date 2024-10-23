@@ -109,7 +109,6 @@ jobs:
       codecov_token: ${{ secrets.CODECOV_TOKEN }}
       rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
       
-
   publish_image:
     name: Publish Image
     needs: [metadata, merge]
