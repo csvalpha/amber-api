@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::BoardRoomPresenceResource, type: :resource do
   let(:user) { create(:user) }
-  let(:context) { { user: } }
-  let(:options) { { context: } }
+  let(:context) { { user: user } }
+  let(:options) { { context: context } }
 
   describe 'filters' do
     let(:filtered) { described_class.apply_filters(BoardRoomPresence, filter, options) }

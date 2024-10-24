@@ -16,7 +16,7 @@ RSpec.describe MailModerationReminderJob, type: :job do
 
     context 'when mail not moderated' do
       let(:stored_mail) do
-        create(:stored_mail, mail_alias:)
+        create(:stored_mail, mail_alias: mail_alias)
       end
 
       it { expect(ActionMailer::Base.deliveries.count).to eq 1 }

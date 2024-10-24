@@ -45,7 +45,7 @@ shared_examples 'an updatable model with group' do
 
   context 'when the user is old member of the new group' do
     before do
-      create(:membership, group: new_group, user:,
+      create(:membership, group: new_group, user: user,
                           end_date: Faker::Time.between(from: 1.month.ago,
                                                         to: Date.yesterday))
     end
@@ -55,7 +55,7 @@ shared_examples 'an updatable model with group' do
 
   context 'when the user is member of the new group' do
     before do
-      create(:membership, user:, group: new_group)
+      create(:membership, user: user, group: new_group)
     end
 
     it_behaves_like '200 OK'

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::GroupResource, type: :resource do
   let(:user) { create(:user) }
-  let(:context) { { user: } }
-  let(:options) { { context: } }
+  let(:context) { { user: user } }
+  let(:options) { { context: context } }
 
   describe '#fetchable_fields' do
     let(:basic_fields) do

@@ -19,7 +19,7 @@ shared_examples 'a creatable model with group' do
 
   context 'when in group' do
     before do
-      create(:membership, user:, group: record.group)
+      create(:membership, user: user, group: record.group)
     end
 
     it_behaves_like '201 Created'

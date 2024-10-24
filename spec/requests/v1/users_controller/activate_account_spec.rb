@@ -5,7 +5,7 @@ describe V1::UsersController do
     let(:activation_token) { Faker::Crypto.sha256 }
     let(:record) do
       create(:user, login_enabled: true,
-                    activation_token:,
+                    activation_token: activation_token,
                     activation_token_valid_till: 1.hour.from_now)
     end
     let(:record_url) { "/v1/users/#{record.id}/activate_account" }
@@ -29,7 +29,7 @@ describe V1::UsersController do
     context 'when activation token has expired' do
       let(:record) do
         create(:user, login_enabled: true,
-                      activation_token:,
+                      activation_token: activation_token,
                       activation_token_valid_till: 1.second.ago)
       end
 

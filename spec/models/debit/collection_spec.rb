@@ -46,7 +46,7 @@ RSpec.describe Debit::Collection, type: :model do
     context 'when with user without mandate' do
       context 'when user has amount to be collected' do
         before do
-          create(:transaction, collection:)
+          create(:transaction, collection: collection)
           collection.to_sepa
         end
 
@@ -61,7 +61,7 @@ RSpec.describe Debit::Collection, type: :model do
 
       context 'when user has zero amount' do
         before do
-          create(:transaction, collection:, amount: 0)
+          create(:transaction, collection: collection, amount: 0)
           collection.to_sepa
         end
 
@@ -74,10 +74,10 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has zero amount in collection' do
-      let(:transaction) { create(:transaction, collection:, amount: 2) }
+      let(:transaction) { create(:transaction, collection: collection, amount: 2) }
 
       before do
-        create(:transaction, collection:, user: transaction.user, amount: -2)
+        create(:transaction, collection: collection, user: transaction.user, amount: -2)
         create(:mandate, user: transaction.user)
       end
 
@@ -86,7 +86,7 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has negative amount in collection' do
-      let(:transaction) { create(:transaction, collection:, amount: -2) }
+      let(:transaction) { create(:transaction, collection: collection, amount: -2) }
 
       before do
         create(:mandate, user: transaction.user)
@@ -103,7 +103,7 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has mandate and amount' do
-      let(:transaction) { create(:transaction, collection:, amount: 2) }
+      let(:transaction) { create(:transaction, collection: collection, amount: 2) }
 
       before { create(:mandate, user: transaction.user, iban: 'NL 44 RABO 0123456789') }
 

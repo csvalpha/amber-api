@@ -80,7 +80,7 @@ class Activity < ApplicationRecord
   def copy_author_and_group_to_form!
     return unless form
 
-    form.update(author:, group:)
+    form.update(author: author, group: group)
   end
 
   def small_changes_allowed_on_present_responses

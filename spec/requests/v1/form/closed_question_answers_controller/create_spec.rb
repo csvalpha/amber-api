@@ -29,7 +29,7 @@ describe V1::Form::ClosedQuestionAnswersController do
         let(:response) { create(:response, form: question.form) }
         let(:answers) do
           question.options.map do |option|
-            create(:closed_question_answer, option:, response:)
+            create(:closed_question_answer, option: option, response: response)
           end
         end
         let(:record) { answers.sample }
@@ -56,12 +56,12 @@ describe V1::Form::ClosedQuestionAnswersController do
         let(:previous_answer) do
           create(:closed_question_answer,
                  option: question.options.first,
-                 response:)
+                 response: response)
         end
         let(:record) do
           build(:closed_question_answer,
                 option: question.options.second,
-                response:)
+                response: response)
         end
         let(:valid_relationships) do
           {

@@ -16,7 +16,7 @@ namespace :cleanup do
         '(revoked_at IS NOT NULL AND revoked_at < :delete_before) OR ' \
         '(expires_in IS NOT NULL AND ' \
         "(created_at + expires_in * INTERVAL '1 second') < :delete_before)",
-        { delete_before: }
+        { delete_before: delete_before }
       ]
       Doorkeeper::AccessGrant.where(expire).delete_all
       Doorkeeper::AccessToken.where(expire).delete_all

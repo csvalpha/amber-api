@@ -4,7 +4,7 @@ RSpec.describe Form::ClosedQuestionAnswerPolicy, type: :policy do
   subject(:policy) { described_class }
 
   let(:user) { build_stubbed(:user) }
-  let(:response) { build_stubbed(:response, user:) }
+  let(:response) { build_stubbed(:response, user: user) }
 
   permissions :destroy? do
     describe 'when closed question option is not owned' do
@@ -14,7 +14,7 @@ RSpec.describe Form::ClosedQuestionAnswerPolicy, type: :policy do
     describe 'when closed question option is owned' do
       it do
         expect(policy).to permit(user, build_stubbed(:closed_question_answer,
-                                                     response:))
+                                                     response: response))
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe Form::ClosedQuestionAnswerPolicy, type: :policy do
 
       it do
         expect(policy).to permit(user, build_stubbed(:closed_question_answer,
-                                                     response:))
+                                                     response: response))
       end
     end
   end

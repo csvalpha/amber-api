@@ -14,7 +14,7 @@ module Forum
     end
 
     def read?(user)
-      thread = Forum::ReadThread.find_or_create_by(thread: self, user:)
+      thread = Forum::ReadThread.find_or_create_by(thread: self, user: user)
       thread.post == posts.last
     end
   end

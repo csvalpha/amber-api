@@ -13,7 +13,7 @@ class Poll < ApplicationRecord
   def copy_author_to_form!
     return unless form
 
-    form.update(author:)
+    form.update(author: author)
   end
 
   def form_has_at_most_one_question

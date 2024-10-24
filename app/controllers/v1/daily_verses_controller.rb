@@ -24,7 +24,7 @@ class V1::DailyVersesController < V1::ApplicationController
     reference = ActionView::Base.full_sanitizer.sanitize(data['source'])
     content = ActionView::Base.full_sanitizer.sanitize(data['text']['bgt'])
     { data: [{ id: 1, type: 'daily_verse', attributes:
-      { copyright:, reference:, content: } }] }
+      { copyright: copyright, reference: reference, content: content } }] }
   end
 
   def ttl_to_midnight

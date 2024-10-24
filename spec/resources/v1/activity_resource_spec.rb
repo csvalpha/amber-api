@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::ActivityResource, type: :resource do
   let(:user) { create(:user) }
-  let(:context) { { user: } }
-  let(:options) { { context: } }
+  let(:context) { { user: user } }
+  let(:options) { { context: context } }
 
   describe 'filters' do
     let(:filtered) { described_class.apply_filters(Activity, filter, options) }
@@ -29,7 +29,7 @@ RSpec.describe V1::ActivityResource, type: :resource do
       let(:filter) { { group: group.id } }
 
       before do
-        create(:activity, group:)
+        create(:activity, group: group)
         create(:activity)
         create(:activity)
       end

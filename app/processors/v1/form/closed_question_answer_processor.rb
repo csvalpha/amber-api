@@ -38,7 +38,7 @@ class V1::Form::ClosedQuestionAnswerProcessor < JSONAPI::Authorization::Authoriz
     resource_id = params[:resource_id]
     data = params[:data]
 
-    resource = resource_klass.find_by_key(resource_id, context:)
+    resource = resource_klass.find_by_key(resource_id, context: context)
 
     result = resource.replace_fields(data)
 

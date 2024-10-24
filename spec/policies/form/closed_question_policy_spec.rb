@@ -12,7 +12,7 @@ RSpec.describe Form::ClosedQuestionPolicy, type: :policy do
     end
 
     describe 'when closed question option is owned' do
-      it { expect(policy).to permit(user, build_stubbed(:closed_question, form:)) }
+      it { expect(policy).to permit(user, build_stubbed(:closed_question, form: form)) }
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe Form::ClosedQuestionPolicy, type: :policy do
     describe 'when with permission' do
       let(:user) { create(:user, user_permission_list: [record_permission]) }
 
-      it { expect(policy).to permit(user, build_stubbed(:closed_question, form:)) }
+      it { expect(policy).to permit(user, build_stubbed(:closed_question, form: form)) }
     end
   end
 
@@ -32,7 +32,7 @@ RSpec.describe Form::ClosedQuestionPolicy, type: :policy do
     describe 'when with permission' do
       let(:user) { create(:user, user_permission_list: [record_permission]) }
 
-      it { expect(policy).to permit(user, build_stubbed(:closed_question, form:)) }
+      it { expect(policy).to permit(user, build_stubbed(:closed_question, form: form)) }
     end
   end
 end

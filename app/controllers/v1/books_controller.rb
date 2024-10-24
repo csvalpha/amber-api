@@ -14,8 +14,8 @@ class V1::BooksController < V1::ApplicationController
     author = ActionView::Base.full_sanitizer.sanitize(info['authors'].to_sentence)
     description = ActionView::Base.full_sanitizer.sanitize(info['description'])
     cover_photo = get_cover_photo(volume['id'])
-    data = { title:, author:, description:, isbn:,
-             cover_photo: }
+    data = { title: title, author: author, description: description, isbn: isbn,
+             cover_photo: cover_photo }
     render json: data
   end
 

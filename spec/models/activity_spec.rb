@@ -288,7 +288,7 @@ RSpec.describe Activity, type: :model do
       let(:group) { create(:group, users: [user]) }
 
       subject(:activity) do
-        build_stubbed(:activity, group:)
+        build_stubbed(:activity, group: group)
       end
 
       it { expect(activity.owners).to include user }

@@ -9,12 +9,12 @@ class ModeratedMailbox < ApplicationMailbox
       # Since mail.to contains all recipients, and this function is called once per moderated
       # recipient we need to check if a stored mail has already been created for this inbound_email
       message_id = inbound_email.message_id
-      inbound_email_ids = ActionMailbox::InboundEmail.select('id').where(message_id:)
+      inbound_email_ids = ActionMailbox::InboundEmail.select('id').where(message_id: message_id)
       next if StoredMail.with_deleted
-                        .where(mail_alias:)
+                        .where(mail_alias: mail_alias)
                         .exists?(inbound_email_id: inbound_email_ids)
 
-      stored_mail = StoredMail.create(mail_alias:, inbound_email:)
+      stored_mail = StoredMail.create(mail_alias: mail_alias, inbound_email: inbound_email)
 
       mail_alias.moderators.each do |moderator|
         MailModerationMailer.request_for_moderation_email(moderator, stored_mail).deliver_later

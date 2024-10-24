@@ -5,7 +5,7 @@ shared_examples 'a model with group owners' do
     let(:user) { create(:user) }
     let(:group) { create(:group, users: [user]) }
 
-    subject(:model) { build_stubbed(model_name, group:) }
+    subject(:model) { build_stubbed(model_name, group: group) }
 
     it { expect(model.owners).to include user }
   end
@@ -23,10 +23,10 @@ shared_examples 'a model with group owners' do
     let(:group) { create(:group) }
 
     before do
-      create(:membership, group:, user:, end_date: 1.day.ago)
+      create(:membership, group: group, user: user, end_date: 1.day.ago)
     end
 
-    subject(:model) { build_stubbed(model_name, group:) }
+    subject(:model) { build_stubbed(model_name, group: group) }
 
     it { expect(model.owners).not_to include user }
   end
@@ -36,10 +36,10 @@ shared_examples 'a model with group owners' do
     let(:group) { create(:group) }
 
     before do
-      create(:membership, group:, user:, end_date: 1.day.ago)
+      create(:membership, group: group, user: user, end_date: 1.day.ago)
     end
 
-    subject(:model) { build_stubbed(model_name, author: user, group:) }
+    subject(:model) { build_stubbed(model_name, author: user, group: group) }
 
     it { expect(model.owners).to include user }
   end

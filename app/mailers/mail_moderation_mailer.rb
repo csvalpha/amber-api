@@ -58,6 +58,6 @@ class MailModerationMailer < ApplicationMailer
   def to_moderation_url(stored_mail)
     default_options = Rails.application.config.action_mailer.default_url_options
     path = "/mail-moderations/#{stored_mail.id}"
-    URI::Generic.build(default_options.merge(path:)).to_s
+    URI::Generic.build(default_options.merge(path: path)).to_s
   end
 end

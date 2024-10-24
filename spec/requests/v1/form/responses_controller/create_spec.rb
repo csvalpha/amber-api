@@ -19,7 +19,7 @@ describe V1::Form::ResponsesController do
       let(:user) do
         create(:user, user_permission_list: [record_permission])
       end
-      let(:record) { create(:response, user:) }
+      let(:record) { create(:response, user: user) }
       let(:valid_relationships) do
         { form: { data: { id: record.form_id, type: 'forms' } } }
       end

@@ -27,7 +27,7 @@ describe V1::Form::FormsController do
 
       context 'when user has incompleted response' do
         let(:response) do
-          response = create(:response, form: record, user:)
+          response = create(:response, form: record, user: user)
           response.update(completed: false)
           response
         end
@@ -42,7 +42,7 @@ describe V1::Form::FormsController do
 
       context 'when user has completed response' do
         let(:response) do
-          create(:response, form: record, user:)
+          create(:response, form: record, user: user)
         end
 
         before { response }

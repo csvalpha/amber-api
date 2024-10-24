@@ -21,7 +21,7 @@ RSpec.describe GroupPolicy, type: :policy do
 
     describe 'when user is no longer a member' do
       before do
-        create(:membership, user:, group:, end_date: Date.yesterday)
+        create(:membership, user: user, group: group, end_date: Date.yesterday)
       end
 
       it { expect(policy).not_to permit(user, group) }
@@ -29,7 +29,7 @@ RSpec.describe GroupPolicy, type: :policy do
 
     describe 'when user is a future member' do
       before do
-        create(:membership, user:, group:, start_date: Date.tomorrow)
+        create(:membership, user: user, group: group, start_date: Date.tomorrow)
       end
 
       it { expect(policy).not_to permit(user, group) }
@@ -37,7 +37,7 @@ RSpec.describe GroupPolicy, type: :policy do
 
     describe 'when user is a member with membership ending in future' do
       before do
-        create(:membership, user:, group:, end_date: Date.tomorrow)
+        create(:membership, user: user, group: group, end_date: Date.tomorrow)
       end
 
       it { expect(policy).to permit(user, group) }

@@ -5,7 +5,7 @@ describe 'DAV4Rack::Carddav::Controller for DAV4Rack::Carddav::ContactResource' 
     let(:users) { create_list(:user, 4, :webdav_enabled, activated_at: Time.zone.now) }
     let(:user) { users.first }
     let(:group) do
-      create(:group, users:)
+      create(:group, users: users)
     end
 
     before { group }
