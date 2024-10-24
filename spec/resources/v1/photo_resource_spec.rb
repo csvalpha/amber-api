@@ -30,9 +30,9 @@ RSpec.describe V1::PhotoResource, type: :resource do
       let(:photo) { create(:photo) }
 
       before do
-        create(:photo_tag, photo: photo)
-        create(:photo_tag, photo: photo)
-        create(:photo_tag, photo: photo)
+        create(:photo_tag, photo:)
+        create(:photo_tag, photo:)
+        create(:photo_tag, photo:)
         photo.reload
       end
 

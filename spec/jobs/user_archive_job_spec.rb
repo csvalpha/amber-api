@@ -43,8 +43,8 @@ RSpec.describe UserArchiveJob, type: :job do
 
     describe 'other entities are destroyed' do
       before do
-        create(:board_room_presence, user: user)
-        create(:mandate, user: user)
+        create(:board_room_presence, user:)
+        create(:mandate, user:)
         create(:transaction, user: user)
         create(:mail_alias, user: user)
         create(:membership, user: user)
