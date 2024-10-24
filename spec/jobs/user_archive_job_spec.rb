@@ -43,13 +43,13 @@ RSpec.describe UserArchiveJob, type: :job do
 
     describe 'other entities are destroyed' do
       before do
-        create(:board_room_presence, user:)
-        create(:mandate, user:)
-        create(:transaction, user:)
-        create(:mail_alias, user:)
-        create(:membership, user:)
-        create(:permissions_users, user:)
-        create(:photo_tag, tagged_user:)
+        create(:board_room_presence, user: user)
+        create(:mandate, user: user)
+        create(:transaction, user: user)
+        create(:mail_alias, user: user)
+        create(:membership, user: user)
+        create(:permissions_users, user: user)
+        create(:photo_tag, tagged_user: user)
       end
 
       it { expect { job }.to change(BoardRoomPresence, :count).by(-1) }
