@@ -23,6 +23,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   has_many :mandates, always_include_linkage_data: true
   has_many :group_mail_aliases
   has_many :permissions
+  has_many :photos
   has_many :user_permissions
 
   filter :upcoming_birthdays, apply: lambda { |records, _value, options|
@@ -50,7 +51,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
                       avatar_url avatar_thumb_url created_at updated_at id]
     # Relationships
     allowed_keys += %i[groups active_groups memberships mail_aliases mandates
-                       group_mail_aliases permissions user_permissions]
+                       group_mail_aliases permissions photos user_permissions]
     allowed_keys += %i[ical_secret_key webdav_secret_key] if me?
     if update_or_me?
       allowed_keys += %i[login_enabled otp_required activated_at emergency_contact

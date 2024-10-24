@@ -17,6 +17,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :article_comments, foreign_key: :author_id
   has_many :board_room_presences, dependent: :delete_all
   has_many :photo_comments, foreign_key: :author_id
+  has_many :created_photo_tags, class_name: 'PhotoTag', foreign_key: :author_id,
+                                dependent: :delete_all
+  has_many :photo_tags, foreign_key: :tagged_user_id, dependent: :delete_all
+  has_many :photos, through: :photo_tags
   has_many :mail_aliases, dependent: :delete_all
   has_many :read_threads, class_name: 'Forum::ReadThread', dependent: :delete_all
   has_many :mandates, class_name: 'Debit::Mandate', dependent: :delete_all
@@ -151,13 +155,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def activation_url
     params = { activation_token: }
     default_options = Rails.application.config.action_mailer.default_url_options
-    URI::Generic.build(default_options.merge(path: "/users/#{id}/activate_account",
+    URI::Generic.build(default_options.merge(path: "/users/#{id}/activate-account",
                                              query: params.to_query)).to_s
   end
 
   def self.password_reset_url
     default_options = Rails.application.config.action_mailer.default_url_options
-    URI::Generic.build(default_options.merge(path: '/users/forgot_password')).to_s
+    URI::Generic.build(default_options.merge(path: '/users/forgot-password')).to_s
   end
 
   def activate_account!

@@ -1,3 +1,4 @@
+
 FROM ruby:3.1.2-alpine@sha256:0b91e98c4613c2287bb7274a1584ea141b68960fb6b0edd7fe32127dc888d1a0
 
 ARG BUILD_HASH='unknown'

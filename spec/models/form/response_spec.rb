@@ -28,6 +28,22 @@ RSpec.describe Form::Response, type: :model do
       it { expect(another_response).not_to be_valid }
     end
 
+    context 'when the user is archived' do
+      let(:archived_user) { create(:user, id: 0) }
+      let(:another_response) do
+        build(:response, form: form, user: archived_user)
+      end
+      let(:form) { create(:form) }
+
+      before do
+        create(:response, form: form, user: archived_user)
+      end
+
+      it 'allows multiple responses' do
+        expect(another_response).to be_valid
+      end
+    end
+
     context 'when form is not published' do
       before do
         response.form.update(respond_from: 2.days.ago, respond_until: Date.yesterday)

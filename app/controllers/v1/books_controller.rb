@@ -6,49 +6,45 @@ class V1::BooksController < V1::ApplicationController
 
     isbn = params.require(:isbn)
 
-    product = get_product(isbn)
-    return head :not_found if product.nil?
 
-    title = ActionView::Base.full_sanitizer.sanitize(get_title(product))
-    author = ActionView::Base.full_sanitizer.sanitize(product['specsTag'])
-    description = ActionView::Base.full_sanitizer.sanitize(product['longDescription'])
-    cover_photo = get_cover_photo(product)
-    data = { title:, author:, description:, isbn:,
-             cover_photo: }
+    volume = get_volume(isbn)
+    return head :not_found if volume.nil?
+
+    info = volume['volumeInfo']
+    title = ActionView::Base.full_sanitizer.sanitize(info['title'])
+    author = ActionView::Base.full_sanitizer.sanitize(info['authors'].to_sentence)
+    description = ActionView::Base.full_sanitizer.sanitize(info['description'])
+    cover_photo = get_cover_photo(volume['id'])
+    data = { title: title, author: author, description: description, isbn: isbn,
+             cover_photo: cover_photo }
     render json: data
   end
 
   private
 
-  def get_product(query)
-    api_key = Rails.application.config.x.bol_com_api_key
-    url = "https://api.bol.com/catalog/v4/search?q=#{query}&offset=0&limit=1&dataoutput=products&apikey=#{api_key}&format=json"
+  def get_volume(isbn)
+    api_key = Rails.application.config.x.google_api_key
+    url = "https://www.googleapis.com/books/v1/volumes?q=isbn:#{isbn}&maxResults=1&projection=lite&key=#{api_key}"
     result = HTTP.get(url).parse
-    return nil unless (result['totalResultSize']).positive?
+    return nil if result['items'].blank?
 
-    result['products'][0]
+    result['items'].first
   end
 
-  def get_title(product)
-    if product['subtitle']
-      "#{product['title']} - #{product['subtitle']}"
-    else
-      product['title']
-    end
+  def cover_photo_sizes
+    %i[extra_large large medium small thumbnail small_thumbnail]
   end
 
-  def get_cover_photo(product)
-    return nil unless product['images']
+  def get_cover_photo(volume_id) # rubocop:disable Metrics/AbcSize
+    api_key = Rails.application.config.x.google_api_key
+    url = "https://www.googleapis.com/books/v1/volumes/#{volume_id}?fields=volumeInfo(imageLinks)&key=#{api_key}"
+    result = HTTP.get(url).parse
+    image_links = result.dig('volumeInfo', 'imageLinks')
+    return nil unless image_links
 
-    cover_photo = product['images'].find { |image| image['key'] == 'XL' }
-
-    # Pick the largest available image if no XL image available
-    cover_photo = product['images'].last if cover_photo.nil?
-
-    return nil unless cover_photo
-
-    mime = Rack::Mime.mime_type(".#{cover_photo['url'].split('.').last}")
-    cover_photo = HTTP.get(cover_photo['url']).to_s
-    "data:#{mime};base64,#{Base64.strict_encode64(cover_photo)}"
+    camelized_sizes = cover_photo_sizes.map { |v| v.to_s.camelize(:lower) }
+    size = (camelized_sizes & image_links.keys).first
+    result = HTTP.get(image_links[size])
+    "data:#{result.content_type.mime_type};base64,#{Base64.strict_encode64(result.to_s)}"
   end
 end

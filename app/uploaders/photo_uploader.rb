@@ -8,6 +8,6 @@ class PhotoUploader < ApplicationImageUploader
   end
 
   def store_dir
-    "uploads/photo_albums/#{model.photo_album.id}/photos/#{model.id}"
+    "uploads/photo_albums/#{model.photo_album_id}/photos/#{model.id}"
   end
 end
