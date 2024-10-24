@@ -6,7 +6,6 @@ class V1::BooksController < V1::ApplicationController
 
     isbn = params.require(:isbn)
 
-
     volume = get_volume(isbn)
     return head :not_found if volume.nil?
 
