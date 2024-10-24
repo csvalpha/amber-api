@@ -1,6 +1,6 @@
 class V1::PollResource < V1::ApplicationResource
-  has_one :form, always_include_linkage_data: true
-  has_one :author
+  has_one :form, class_name: 'Form::Form', always_include_linkage_data: true
+  has_one :author, class_name: 'User'
 
   before_create do
     @model.author_id = current_user.id

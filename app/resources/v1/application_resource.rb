@@ -23,21 +23,6 @@ class V1::ApplicationResource < JSONAPI::Resource
     []
   end
 
-  # :nocov:
-
-  def self.apply_filter(records, filter, value, options)
-    # Monkeypatch for weird bug in filter method
-    # When defining a filter on application level
-    # it will be applied before knowing which resource it is in
-    # When doing it with overwriting apply_filter (as done here) it knows which resource it is
-    case filter
-    when :search
-      search(records, value)
-    else
-      super(records, filter, value, options)
-    end
-  end
-
   def self.search(records, value)
     return records if records == []
 

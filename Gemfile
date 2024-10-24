@@ -1,90 +1,90 @@
 source 'https://rubygems.org'
 
-gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
 gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '8541e53'
 
-gem 'bcrypt', '~> 3.1'
-gem 'bootsnap', '~> 1.4'
-gem 'carrierwave', '~> 2.1'
-gem 'carrierwave-base64', '~> 2.5'
-gem 'carrierwave-bombshelter', '~> 0.2'
+gem 'active_model_otp', '~> 2.0.0'
+gem 'bcrypt', '~> 3.1.0'
+gem 'bootsnap', '~> 1.11.0'
+gem 'carrierwave', '~> 2.2.0'
+gem 'carrierwave-base64', '~> 2.10.0'
+gem 'carrierwave-bombshelter', '~> 0.2.0'
 gem 'case_transform', '~> 0.2'
-gem 'counter_culture', '~> 3.0'
-gem 'dav4rack_ext', '~> 1.0'
-gem 'doorkeeper', '~> 5.2'
-gem 'doorkeeper-i18n', '~> 5.2'
-gem 'exifr', '~> 1.3'
-gem 'friendly_id', '~> 5.2'
-gem 'http', '~> 5.0'
+gem 'counter_culture', '~> 3.2.0'
+gem 'dav4rack_ext', '~> 1.0.0'
+gem 'doorkeeper', '~> 5.5.0'
+gem 'doorkeeper-i18n', '~> 5.2.0'
+gem 'exifr', '~> 1.3.0'
+gem 'friendly_id', '~> 5.4.0'
+gem 'http', '~> 5.0.0'
 gem 'iban-tools', '~> 1.1.0'
-gem 'icalendar', '~> 2.4'
+gem 'icalendar', '~> 2.7.0'
 gem 'improvmx', '~> 0.2.1'
 gem 'isbn_validation', '~> 1.2'
 gem 'jsonapi-authorization', '~> 3.0'
-gem 'jsonapi-resources', '~> 0.9.1.beta2'
-gem 'message_bus', '~> 4.0'
-gem 'mini_magick', '~> 4.6'
+gem 'jsonapi-resources', '~> 0.10.0'
+gem 'message_bus', '~> 4.2.0'
+gem 'mini_magick', '~> 4.11'
 gem 'paper_trail', '~> 14.0'
-gem 'paranoia', '~> 2.2'
-gem 'pg', '~> 1.0'
-gem 'phonelib'
+gem 'paranoia', '~> 2.6'
+gem 'pg', '~> 1.3'
+gem 'phonelib', '~> 0.6.58'
 gem 'puma', '~> 6.0'
-gem 'pundit', '~> 2.0'
-gem 'rack-attack', '~> 6.0'
+gem 'pundit', '~> 2.2'
+gem 'rack-attack', '~> 6.6.0'
 gem 'rack-cors', '~> 2.0', '>= 2.0.1', require: 'rack/cors'
 gem 'rails', '~> 7.0', '>= 7.0.4.3'
 gem 'rails-i18n', '~> 7.0'
-gem 'redis', '~> 4.0'
-gem 'roo', '~> 2.9'
+gem 'redis', '~> 4.6'
+gem 'roo', '~> 2.9' 
 gem 'ruby-filemagic', '~> 0.7'
-gem 'rubyzip', '~> 2.0'
-gem 'sentry-raven', '~> 3.0'
-gem 'sepa_king', '~> 0.11'
-gem 'sidekiq', '~> 6.0'
+gem 'rubyzip', '~> 2.3'
+gem 'sentry-raven', '~> 3.1'
+gem 'sepa_king', '~> 0.13'
+gem 'sidekiq', '~> 6.4'
 gem 'sidekiq-scheduler', '~> 5.0', '>= 5.0.2'
-gem 'slack-notifier', '~> 2.0'
+gem 'slack-notifier', '~> 2.4'
 gem 'validates_timeliness', '~> 7.0.0.beta2'
-gem 'vpim', '~> 13.11'
+gem 'vpim', '~> 13.11.11'
 
 group :development, :test do
-  gem 'awesome_print'
-  gem 'brakeman', require: false
-  gem 'bullet'
-  gem 'colorize'
-  gem 'consistency_fail'
-  gem 'dotenv-rails'
-  gem 'factory_bot_rails'
+  gem 'awesome_print', '~> 1.9.2'
+  gem 'brakeman', '~> 5.2.1', require: false
+  gem 'bullet', '~> 7.0.1'
+  gem 'colorize', '~> 0.8.1'
+  gem 'consistency_fail', '~> 0.3.7'
+  gem 'dotenv-rails', '~> 2.7.6'
+  gem 'factory_bot_rails', '~> 6.2.0'
   gem 'faker', '~> 3.0'
-  gem 'fuubar'
-  gem 'pry-byebug', require: false
-  gem 'pry-rails'
-  gem 'rack-mini-profiler', require: false
-  gem 'rb-readline', require: false
+  gem 'fuubar', '~> 2.5.1'
+  gem 'pry-byebug', '~> 3.9.0', require: false
+  gem 'pry-rails', '~> 0.3.9'
+  gem 'rack-mini-profiler', '~> 3.0.0', require: false
+  gem 'rb-readline', '~> 0.5.5', require: false
 end
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'listen'
-  gem 'mina'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-watcher-listen'
+  gem 'better_errors', '~> 2.9.1'
+  gem 'binding_of_caller', '~> 1.0.0'
+  gem 'listen', '~> 3.7.1'
+  gem 'mina', '~> 1.2.4'
+  gem 'spring', '~> 2.1.1'
+  gem 'spring-commands-rspec', '~> 1.0.4'
+  gem 'spring-watcher-listen', '~> 2.0.1'
 end
 
 group :test do
-  gem 'guard-rspec', require: false
-  gem 'rspec-rails'
-  gem 'rubocop', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'simplecov', require: false
-  gem 'terminal-notifier-guard'
-  gem 'timecop'
-  gem 'vcr'
-  gem 'webmock'
+  gem 'guard-rspec', '~> 4.7.3', require: false
+  gem 'rspec-rails', '~> 5.1.1'
+  gem 'rubocop', '~> 1.26.1', require: false
+  gem 'rubocop-performance', '~> 1.13.3', require: false
+  gem 'rubocop-rails', '~> 2.14.2', require: false
+  gem 'rubocop-rspec', '~> 2.9.0', require: false
+  gem 'simplecov', '~> 0.21.2', require: false
+  gem 'terminal-notifier-guard', '~> 1.7.0'
+  gem 'timecop', '~> 0.9.5'
+  gem 'vcr', '~> 6.1.0'
+  gem 'webmock', '~> 3.14.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data', '~> 1.2022.1', platforms: %i[mingw mswin x64_mingw jruby]

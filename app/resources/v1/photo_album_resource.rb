@@ -4,7 +4,7 @@ class V1::PhotoAlbumResource < V1::ApplicationResource
   filter :without_photo_tags, apply: ->(records, _value, _options) { records.without_photo_tags }
 
   has_many :photos
-  has_one :author, always_include_linkage_data: true
+  has_one :author, class_name: 'User', always_include_linkage_data: true
   has_one :group, always_include_linkage_data: true
 
   def self.creatable_fields(_context)
