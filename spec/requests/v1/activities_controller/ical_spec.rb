@@ -3,10 +3,14 @@ require 'rails_helper'
 describe V1::ActivitiesController, type: :controller do
   describe 'GET /ical/activities' do
     let(:activity) { create(:activity) }
-    let(:permissions) { ['activity.read'] }
+    let(:permissions) { ['activity.read', 'user.read'] }
     let(:user) do
       create(:user, activated_at: Time.zone.now,
                     user_permission_list: permissions)
+    end
+    let(:birthday_users) do
+      User.active_users_for_group(Group.find_by(name: 'Leden'))
+          .where.not(birthday: nil)
     end
 
     before { activity }
@@ -42,12 +46,23 @@ describe V1::ActivitiesController, type: :controller do
         it_behaves_like '401 Unauthorized'
       end
 
-      describe 'without permission' do
+      describe 'without activity permission' do
         let(:user) { create(:user, activated_at: Time.zone.now) }
 
         subject(:request) { get('ical', params: { user_id: user.id, key: user.ical_secret_key }) }
 
         it_behaves_like '401 Unauthorized'
+      end
+
+      describe 'without user permission' do
+        let(:user) do
+          create(:user, activated_at: Time.zone.now, user_permission_list: ['activity.read'])
+        end
+        let(:ical_events) { Icalendar::Calendar.parse(request.body).first.events }
+
+        subject(:request) { get('ical', params: { user_id: user.id, key: user.ical_secret_key }) }
+
+        it { expect(ical_events.count).to eq Activity.count }
       end
 
       describe 'with activated, login_enabled account with permission and correct ical secret' do
@@ -65,13 +80,13 @@ describe V1::ActivitiesController, type: :controller do
 
         let(:ical_events) { Icalendar::Calendar.parse(request.body).first.events }
 
-        it { expect(ical_events.count).to eq Activity.count }
+        it { expect(ical_events.count).to eq Activity.count + birthday_users.count }
       end
 
       describe 'with a subset of all categories' do
         subject(:request) do
           get('ical', params: { user_id: user.id, key: user.ical_secret_key,
-                                categories: 'algemeen,sociëteit,vorming,not_a_valid_category' })
+                                categories: 'algemeen,sociëteit,vorming,invalid_cat,birthdays' })
         end
 
         let(:activity) { create(:activity, category: 'algemeen') }
@@ -96,7 +111,7 @@ describe V1::ActivitiesController, type: :controller do
         it_behaves_like '200 OK'
         it { expect(ical_events.map(&:summary).to_s).to include(activity.title) }
         it { expect(request.body).not_to include(filtered_activity.title) }
-        it { expect(ical_events.count).to eq 2 }
+        it { expect(ical_events.count).to eq 2 + birthday_users.count }
       end
     end
   end

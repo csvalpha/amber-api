@@ -3,7 +3,7 @@ version: '2'
 services:
   db:
     env_file: .env
-    image: postgres:14.2
+    image: postgres:14.7
     volumes:
       - postgres_data:/var/lib/postgresql/data
   redis:

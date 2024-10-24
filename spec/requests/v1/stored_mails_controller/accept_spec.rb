@@ -8,7 +8,11 @@ describe V1::StoredMailsController do
     let(:record_permission) { 'stored_mail.destroy' }
 
     it_behaves_like 'a destroyable and permissible model' do
-      let(:request) { perform_enqueued_jobs(only: ActionMailer::DeliveryJob) { post(record_url) } }
+      let(:request) do
+        perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob) do
+          post(record_url)
+        end
+      end
     end
 
     context 'sends accept mail' do

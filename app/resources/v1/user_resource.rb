@@ -1,5 +1,5 @@
 class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/ClassLength
-  attributes :username, :first_name, :last_name_prefix, :last_name, :full_name,
+  attributes :username, :first_name, :last_name_prefix, :last_name, :full_name, :nickname,
              :login_enabled, :otp_required, :activated_at, :emergency_contact, :emergency_number,
              :ifes_data_sharing_preference, :info_in_almanak, :almanak_subscription_preference,
              :digtus_subscription_preference, :email, :birthday, :address, :postcode, :city,
@@ -24,6 +24,8 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   has_many :group_mail_aliases, class_name: 'MailAlias'
   has_many :permissions
   has_many :user_permissions, class_name: 'Permission'
+  has_many :photos
+
 
   filter :upcoming_birthdays, apply: lambda { |records, _value, options|
     context = options[:context]
@@ -46,11 +48,11 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   # rubocop:disable all
   def fetchable_fields
     # Attributes
-    allowed_keys = %i[username first_name last_name_prefix last_name full_name
+    allowed_keys = %i[username first_name last_name_prefix last_name full_name nickname
                       avatar_url avatar_thumb_url created_at updated_at id]
     # Relationships
     allowed_keys += %i[groups active_groups memberships mail_aliases mandates
-                       group_mail_aliases permissions user_permissions]
+                       group_mail_aliases permissions photos user_permissions]
     allowed_keys += %i[ical_secret_key webdav_secret_key] if me?
     if update_or_me?
       allowed_keys += %i[login_enabled otp_required activated_at emergency_contact
@@ -69,7 +71,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   # rubocop:enable all
 
   def self.creatable_fields(context) # rubocop:disable Metrics/MethodLength
-    attributes = %i[avatar email address postcode city phone_number
+    attributes = %i[avatar nickname email address postcode city phone_number
                     food_preferences vegetarian study start_study
                     almanak_subscription_preference digtus_subscription_preference
                     emergency_contact emergency_number]
@@ -89,7 +91,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   end
 
   def self.searchable_fields
-    %i[email first_name last_name last_name_prefix study]
+    %i[email first_name last_name last_name_prefix nickname study]
   end
 
   def self.records(options = {})

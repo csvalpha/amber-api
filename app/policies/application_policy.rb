@@ -31,10 +31,6 @@ class ApplicationPolicy
     Pundit.policy_scope!(@user || @application, record.class)
   end
 
-  def create_or_update?
-    user.permission?(:create, record) || user.permission?(:update, record)
-  end
-
   class Scope
     attr_reader :user, :scope
 

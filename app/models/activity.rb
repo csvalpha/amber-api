@@ -34,7 +34,7 @@ class Activity < ApplicationRecord
 
   def self.categories
     %w[algemeen societeit vorming dinsdagkring woensdagkring
-       choose ifes ozon disputen jaargroepen huizen extern eerstejaars]
+       choose ifes ozon disputen kiemgroepen huizen extern eerstejaars curiositates]
   end
 
   def full_day?

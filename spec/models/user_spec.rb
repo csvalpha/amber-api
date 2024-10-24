@@ -36,6 +36,12 @@ RSpec.describe User, type: :model do
       it { expect(user).not_to be_valid }
     end
 
+    context 'when without a nickname' do
+      subject(:user) { build_stubbed(:user, nickname: nil) }
+
+      it { expect(user).to be_valid }
+    end
+
     context 'when without an address' do
       subject(:user) { build_stubbed(:user, address: nil) }
 
@@ -576,6 +582,14 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#permissions' do
+    subject(:user) { create(:user, user_permission_list: ['user.read']) }
+
+    before { create(:group, users: [user], permission_list: ['user.update']) }
+
+    it { expect(user.permissions.map(&:name)).to match_array(['user.read', 'user.update']) }
+  end
+
   describe '#current_group_member?' do
     subject(:user) { create(:user) }
 
@@ -628,8 +642,34 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#to_ical' do
+    context 'when without birthday' do
+      subject(:user) do
+        build_stubbed(:user, birthday: nil)
+      end
+
+      it { expect(user.to_ical).to be_nil }
+    end
+
+    context 'when with birthday' do
+      subject(:user) do
+        build_stubbed(:user)
+      end
+
+      let(:date) do
+        date = user.birthday.change(year: Time.zone.now.year)
+        date = date.next_year if date < 3.months.ago
+        date
+      end
+
+      it { expect(user.to_ical.description).to include((date.year - user.birthday.year).to_s) }
+      it { expect(user.to_ical.dtstart).to eq date }
+      it { expect(user.to_ical.dtend).to eq date.tomorrow }
+    end
+  end
+
   describe '.password_reset_url' do
-    it { expect(described_class.password_reset_url).to include('forgot_password') }
+    it { expect(described_class.password_reset_url).to include('forgot-password') }
   end
 
   describe 'has_paper_trail' do

@@ -61,11 +61,18 @@ module Import
       transactions
     end
 
-    def normalize_amount(amount, description, user)
+    def normalize_amount(amount, description, user) # rubocop:disable Metrics/MethodLength
       return amount if amount.nil?
 
       begin
-        amount = amount.tr(',', '.') if amount.instance_of?(String)
+        if amount.instance_of?(String)
+          amount = amount.strip
+                         .tr(',', '.')
+                         .tr(' ', '')
+          amount = '0' if amount == '€-'
+          amount = amount.tr('€', '')
+                         .delete_suffix('.-')
+        end
         raise ArgumentError if Float(amount).nil? # test whether string is numeric
 
         amount.to_d

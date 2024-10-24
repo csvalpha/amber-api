@@ -8,6 +8,8 @@ class Photo < ApplicationRecord
   belongs_to :uploader, class_name: 'User'
   has_many :comments, class_name: 'PhotoComment',
                       dependent: :destroy, counter_cache: :comments_count
+  has_many :tags, class_name: 'PhotoTag',
+                  dependent: :destroy, counter_cache: :tags_count
 
   mount_uploader :image, PhotoUploader
   has_paper_trail skip: [:image]
@@ -17,6 +19,10 @@ class Photo < ApplicationRecord
 
   scope :with_comments, (lambda {
     joins(:comments).distinct
+  })
+
+  scope :with_tags, (lambda {
+    joins(:tags).distinct
   })
 
   scope :publicly_visible, (lambda {

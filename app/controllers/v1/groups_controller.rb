@@ -36,9 +36,11 @@ class V1::GroupsController < V1::ApplicationController
   end
 
   def slack_notification(description)
+    # :nocov:
     "User ##{current_user.id} (#{current_user.full_name}) "\
       "is exporting users for group #{@model.id} from host #{request.host} with #"\
       "#{permitted_serializable_user_attributes.join(',')}. De gebruiker gaf als "\
       "reden: #{description}"
+    # :nocov:
   end
 end

@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Team.name }
     description { Faker::Lorem.paragraph }
     kind do
-      %w[bestuur commissie dispuut genootschap groep huis jaargroep werkgroep kring lichting].sample
+      %w[bestuur commissie dispuut genootschap groep huis kiemgroep werkgroep kring lichting].sample
     end
     recognized_at_gma { 'ALV 21' }
     rejected_at_gma { 'ALV 218' }

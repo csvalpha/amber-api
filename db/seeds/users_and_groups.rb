@@ -54,7 +54,7 @@ old_members.each do |user|
                     function: Faker::Job.title)
 end
 
-FactoryBot.create_list(:group, 6, kind: 'jaargroep',
+FactoryBot.create_list(:group, 6, kind: 'kiemgroep',
                                   users: leden.sample(6))
 
 FactoryBot.create_list(:group, 3, kind: 'huis',

@@ -25,5 +25,18 @@ RSpec.describe V1::PhotoResource, type: :resource do
 
       it { expect(resource.amount_of_comments).to eq(3) }
     end
+
+    context 'when with tags' do
+      let(:photo) { create(:photo) }
+
+      before do
+        create(:photo_tag, photo: photo)
+        create(:photo_tag, photo: photo)
+        create(:photo_tag, photo: photo)
+        photo.reload
+      end
+
+      it { expect(resource.amount_of_tags).to eq(3) }
+    end
   end
 end

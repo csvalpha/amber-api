@@ -3,6 +3,7 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name_prefix { [nil, 'van', 'de', 'van de'].sample }
     last_name { Faker::Name.last_name }
+    nickname { Faker::Name.first_name }
     birthday { Faker::Date.between(from: 27.years.ago, to: 17.years.ago) }
     address { Faker::Address.street_address }
     postcode { Faker::Address.postcode }

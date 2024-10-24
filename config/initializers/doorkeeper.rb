@@ -37,4 +37,19 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   resource_owner_authenticator do
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
   end
+
+  # https://github.com/doorkeeper-gem/doorkeeper/blob/v5.4.0/app/controllers/doorkeeper/authorizations_controller.rb#L123
+  after_successful_authorization do |_, auth|
+    # To SOFIA, a CodeResponse is returned
+    if auth.auth.is_a?(Doorkeeper::OAuth::CodeResponse)
+      # We are only interested authorization for the tomato scope
+      is_tomato = auth.auth.pre_auth.scopes.include?('tomato')
+      user = auth.auth.pre_auth.resource_owner
+
+      if is_tomato && !user.allow_tomato_sharing
+        user.allow_tomato_sharing = true
+        user.save!
+      end
+    end
+  end
 end
