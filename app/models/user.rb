@@ -98,7 +98,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     scope
   })
   scope :active_users_for_group, (lambda { |group|
-    joins(:memberships).merge(Membership.active.where(group: group))
+    joins(:memberships).merge(Membership.active.where(group:))
   })
 
   def full_name
@@ -153,7 +153,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def activation_url
-    params = { activation_token: activation_token }
+    params = { activation_token: }
     default_options = Rails.application.config.action_mailer.default_url_options
     URI::Generic.build(default_options.merge(path: "/users/#{id}/activate-account",
                                              query: params.to_query)).to_s

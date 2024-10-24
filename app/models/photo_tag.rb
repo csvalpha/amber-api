@@ -12,8 +12,7 @@ class PhotoTag < ApplicationRecord
   private
 
   def user_not_already_tagged
-    existing_tag = PhotoTag.where(photo_id: photo_id,
-                                  tagged_user_id: tagged_user_id).where.not(id: id).exists?
+    existing_tag = PhotoTag.where(photo_id:, tagged_user_id:).where.not(id:).exists?
     errors.add(:tagged_user, 'has already been tagged in this photo') if existing_tag
   end
 end

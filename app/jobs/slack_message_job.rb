@@ -3,6 +3,6 @@ class SlackMessageJob < ApplicationJob
   queue_as :default
 
   def perform(message, channel: nil)
-    ping(message, channel: channel)
+    ping(message, channel:)
   end
 end
