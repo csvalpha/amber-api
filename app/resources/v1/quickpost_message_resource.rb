@@ -2,7 +2,6 @@ class V1::QuickpostMessageResource < V1::ApplicationResource
   attributes :message
 
   has_one :author, always_include_linkage_data: true
-  
   before_create do
     @model.author_id = current_user.id
   end
