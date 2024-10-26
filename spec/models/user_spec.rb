@@ -244,7 +244,7 @@ RSpec.describe User, type: :model do
 
     context 'when with active membership' do
       before do
-        create(:membership, group: group, user: user)
+        create(:membership, group:, user:)
       end
 
       it { expect(user.active_groups).to contain_exactly(group) }
@@ -252,7 +252,7 @@ RSpec.describe User, type: :model do
 
     context 'when with expired membership' do
       before do
-        create(:membership, group: group, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:, end_date: 1.day.ago)
       end
 
       it { expect(user.active_groups).to be_empty }
@@ -260,7 +260,7 @@ RSpec.describe User, type: :model do
 
     context 'when with future membership' do
       before do
-        create(:membership, group: group, user: user, start_date: 1.day.from_now)
+        create(:membership, group:, user:, start_date: 1.day.from_now)
       end
 
       it { expect(user.active_groups).to be_empty }
@@ -270,8 +270,8 @@ RSpec.describe User, type: :model do
       let(:group2) { create(:group) }
 
       before do
-        create(:membership, group: group, user: user)
-        create(:membership, group: group2, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:)
+        create(:membership, group: group2, user:, end_date: 1.day.ago)
       end
 
       it { expect(user.active_groups).to contain_exactly(group) }
@@ -286,7 +286,7 @@ RSpec.describe User, type: :model do
 
     context 'when with active membership' do
       before do
-        create(:membership, group: group, user: user)
+        create(:membership, group:, user:)
       end
 
       it { expect(user.group_mail_aliases).to contain_exactly(mail_alias) }
@@ -294,7 +294,7 @@ RSpec.describe User, type: :model do
 
     context 'when with expired membership' do
       before do
-        create(:membership, group: group, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:, end_date: 1.day.ago)
       end
 
       it { expect(user.group_mail_aliases).to be_empty }
@@ -302,7 +302,7 @@ RSpec.describe User, type: :model do
 
     context 'when with future membership' do
       before do
-        create(:membership, group: group, user: user, start_date: 1.day.from_now)
+        create(:membership, group:, user:, start_date: 1.day.from_now)
       end
 
       it { expect(user.group_mail_aliases).to be_empty }
@@ -571,8 +571,8 @@ RSpec.describe User, type: :model do
 
         before do
           create(:group, users: [user], permission_list: ['user.read'])
-          create(:membership, user: user, group:
-            group, end_date: Faker::Time.between(from: 1.month.ago, to: Date.yesterday))
+          create(:membership, user:, group:,
+                              end_date: Faker::Time.between(from: 1.month.ago, to: Date.yesterday))
         end
 
         it { expect(user.permission?(:read, user)).to be true }
@@ -606,7 +606,7 @@ RSpec.describe User, type: :model do
 
     context 'when in group with expired membership' do
       before do
-        create(:membership, group: another_group, user: user,
+        create(:membership, group: another_group, user:,
                             end_date: Faker::Time.between(from: 1.month.ago,
                                                           to: Date.yesterday))
       end
@@ -628,7 +628,7 @@ RSpec.describe User, type: :model do
 
         before do
           user.activate_account!
-          user.update(password: password)
+          user.update(password:)
         end
 
         it 'can login with the new password' do
@@ -691,6 +691,6 @@ RSpec.describe User, type: :model do
   private
 
   def valid_access_tokens_for(resource_owner_id)
-    Doorkeeper::AccessToken.where(resource_owner_id: resource_owner_id, revoked_at: nil)
+    Doorkeeper::AccessToken.where(resource_owner_id:, revoked_at: nil)
   end
 end
