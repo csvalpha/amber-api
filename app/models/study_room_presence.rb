@@ -4,7 +4,7 @@ class StudyRoomPresence < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, presence: true
   validates_datetime :end_time, after: :start_time
-  validates :status, inclusion: { in: %w[present busy absent] }
+  validates :status, inclusion: { in: %w[chilling studying banaan] }
 
   scope :current, (lambda {
     where('start_time <= :current_time AND end_time >= :current_time',

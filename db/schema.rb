@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_28_205012) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_27_103012) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -523,15 +523,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_28_205012) do
     t.index ["mail_alias_id"], name: "index_stored_mails_on_mail_alias_id"
   end
 
-  create_table "study_room_presences", id: :serial, force: :cascade do |t|
-    t.datetime "start_time", precision: nil
-    t.datetime "end_time", precision: nil
-    t.text "status"
-    t.integer "user_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "deleted_at", precision: nil
-    t.index ["user_id"], name: "index_study_room_presences_on_user_id"
+  create_table "study_room_presences", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.text "status", null: false
+    t.integer "user_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
