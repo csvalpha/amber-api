@@ -18,14 +18,14 @@ gem 'friendly_id', '~> 5.2'
 gem 'http', '~> 5.0'
 gem 'iban-tools', '~> 1.1.0'
 gem 'icalendar', '~> 2.4'
-gem 'improvmx', '~> 0.2.0'
+gem 'improvmx', '~> 0.2.1'
 gem 'isbn_validation', '~> 1.2'
 gem 'jsonapi-authorization', '~> 3.0'
 gem 'jsonapi-resources', '~> 0.9.1.beta2'
 gem 'message_bus', '~> 4.0'
 gem 'mini_magick', '~> 4.6'
 gem 'paper_trail', '~> 14.0'
-gem 'paranoia', '~> 2.2'
+gem 'paranoia', '~> 3.0'
 gem 'pg', '~> 1.0'
 gem 'phonelib'
 gem 'puma', '~> 6.0'
@@ -80,6 +80,7 @@ group :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'simplecov', require: false
+  gem 'simplecov-lcov', '~> 0.8.0', require: false
   gem 'terminal-notifier-guard'
   gem 'timecop'
   gem 'vcr'

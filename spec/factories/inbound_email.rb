@@ -14,8 +14,8 @@ FactoryBot.define do
   end
 end
 
-def create_inbound_email_from_mail(**mail_options, &block)
-  mail = Mail.new(mail_options, &block)
+def create_inbound_email_from_mail(**mail_options, &)
+  mail = Mail.new(mail_options, &)
 
   ActionMailbox::InboundEmail.create_and_extract_message_id! mail.to_s, status: :processing
 end

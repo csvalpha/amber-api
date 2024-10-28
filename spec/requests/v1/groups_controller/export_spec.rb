@@ -3,7 +3,7 @@ require 'rails_helper'
 describe V1::GroupsController do
   describe 'GET /groups/:id/export', version: 1 do
     let(:users) { create_list(:user, 3) }
-    let(:record) { create(:group, users: users) }
+    let(:record) { create(:group, users:) }
     let(:record_url) { "/v1/groups/#{record.id}/export?description=blahblah" }
     let(:record_permission) { 'group.read' }
     let(:request) { get(record_url) }
