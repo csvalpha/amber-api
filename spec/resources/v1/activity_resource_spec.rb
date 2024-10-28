@@ -37,4 +37,24 @@ RSpec.describe V1::ActivityResource, type: :resource do
       it { expect(filtered.length).to eq 1 }
     end
   end
+
+  describe 'sort' do
+    let(:sorted) { described_class.apply_sort(records, sort, context) }
+
+    describe 'form.respond_until' do
+      let(:records) { Activity.all }
+      let(:sort) { { 'form.respond_until' => :desc } }
+      let(:form) { create(:form, respond_until: 1.day.from_now) }
+      let(:other_form) { create(:form, respond_until: 2.days.from_now) }
+      let(:activity) { create(:activity, form:) }
+      let(:other_activity) { create(:activity, form: other_form) }
+
+      before do
+        activity
+        other_activity
+      end
+
+      it { expect(sorted).to match_array [other_activity, activity] }
+    end
+  end
 end

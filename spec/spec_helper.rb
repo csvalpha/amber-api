@@ -1,8 +1,8 @@
 require 'simplecov'
+require 'simplecov-lcov'
 
+SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start 'rails' do
-  add_filter 'app/jobs/sentry_job.rb'
-
   minimum_coverage 95
   minimum_coverage_by_file 95
 end
@@ -30,4 +30,8 @@ RSpec::Matchers.define_negated_matcher :a_string_excluding, :a_string_including
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/vcr_cassettes'
   config.hook_into :webmock
+  config.filter_sensitive_data('<TOKEN>', :daily_verse) do
+    Base64.strict_encode64("#{Rails.application.config.x.daily_verse_user}:"\
+                           "#{Rails.application.config.x.daily_verse_password}")
+  end
 end
