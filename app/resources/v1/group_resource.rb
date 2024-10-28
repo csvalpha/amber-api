@@ -18,6 +18,7 @@ class V1::GroupResource < V1::ApplicationResource
   has_many :memberships
   has_many :mail_aliases
   has_many :permissions
+  has_many :articles
 
   filter :active, apply: ->(records, _value, _options) { records.active }
   filter :kind

@@ -7,7 +7,7 @@ RSpec.describe V1::GroupResource, type: :resource do
 
   describe '#fetchable_fields' do
     let(:basic_fields) do
-      %i[id name avatar_url avatar_thumb_url created_at updated_at mail_aliases memberships users
+      %i[id name articles avatar_url avatar_thumb_url created_at updated_at mail_aliases memberships users
          permissions]
     end
     let(:authenticated_fields) do
