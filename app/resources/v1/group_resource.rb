@@ -21,10 +21,8 @@ class V1::GroupResource < V1::ApplicationResource
   has_many :articles
 
   filter :active, apply: ->(records, _value, _options) { records.active }
-  filter :kind, apply: ->(records, value, _options) { records.where(kind: value[0]) }
-  filter :administrative, (lambda do |records, value, _options|
-    records.where(administrative: value[0])
-  end)
+  filter :kind
+  filter :administrative
 
   def fetchable_fields
     return super - [:avatar] if current_user
