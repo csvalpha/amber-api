@@ -90,7 +90,7 @@ describe V1::ActivitiesController, type: :controller do
         end
 
         let(:group) { create(:group, name: 'Leden') }
-        let(:membership) { create(:membership, user: user, group: group, start_date: 1.month.ago) }
+        let(:membership) { create(:membership, user:, group:, start_date: 1.month.ago) }
 
         let(:activity) { create(:activity, category: 'algemeen') }
         let(:second_activity) { create(:activity, category: 'vorming') }
