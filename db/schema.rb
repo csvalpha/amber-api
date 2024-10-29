@@ -9,7 +9,6 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema[7.0].define(version: 2024_10_27_103012) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -490,7 +489,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_27_103012) do
     t.string "house_name", null: false
     t.string "contact", null: false
     t.string "location"
-    t.string "available_from"
     t.string "description", null: false
     t.string "cover_photo"
     t.boolean "publicly_visible"
@@ -498,6 +496,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_27_103012) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "available_from", null: false
   end
 
   create_table "static_pages", id: :serial, force: :cascade do |t|

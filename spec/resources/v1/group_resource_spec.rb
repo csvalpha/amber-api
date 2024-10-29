@@ -47,7 +47,7 @@ RSpec.describe V1::GroupResource, type: :resource do
     end
 
     describe 'administrative' do
-      let(:filter) { { administrative: ['true'] } }
+      let(:filter) { { administrative: [true] } }
       let(:group) { create(:group, administrative: true) }
       let(:other_group) { create(:group, administrative: false) }
 
