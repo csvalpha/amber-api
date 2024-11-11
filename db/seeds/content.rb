@@ -1,6 +1,10 @@
 # rubocop:disable Style/CombinableLoops
 members = Group.find_by(name: 'Leden').users
 
+members.sample(4).each do |user|
+  FactoryBot.create(:study_room_presence, user:)
+end
+
 articles = []
 members.sample(15).each do |user|
   articles << FactoryBot.create(:article, author: user, group: nil)
