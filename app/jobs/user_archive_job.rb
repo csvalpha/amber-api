@@ -20,7 +20,7 @@ class UserArchiveJob < ApplicationJob
 
     User.create!(id: ARCHIVE_USER_ID,
                  username: 'archived.user',
-                 email: <%= Rails.application.config.x.ict_email %>,
+                 email: Rails.application.config.x.ict_email,
                  first_name: 'Gearchiveerde',
                  last_name: 'Gebruiker',
                  address: 'Onbekend',
