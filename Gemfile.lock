@@ -1,4 +1,4 @@
-GIT
+FpumaGIT
   remote: https://github.com/csvalpha/dav4rack.git
   revision: 8541e53876d7a49a1c2d318e698f9dae88439e89
   ref: 8541e53
@@ -318,7 +318,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
-    puma (6.0)
+    puma (6.4.3)
       nio4r (~> 2.0)
     puma (6.4.3-java)
       nio4r (~> 2.0)
@@ -575,7 +575,7 @@ DEPENDENCIES
   phonelib
   pry-byebug
   pry-rails
-  puma (~> 6.4, >= 6.4.3)
+  puma (~> 6.0)
   pundit (~> 2.0)
   rack-attack (~> 6.0)
   rack-cors (~> 2.0, >= 2.0.1)
