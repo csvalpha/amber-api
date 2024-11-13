@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::StaticPageResource, type: :resource do
   let(:user) { create(:user) }
-  let(:context) { { user: user } }
-  let(:options) { { context: context } }
+  let(:context) { { user: } }
+  let(:options) { { context: } }
   let(:record) { create(:static_page) }
   let(:resource) { described_class.new(record, context) }
 

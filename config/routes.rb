@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     jsonapi_resources :articles
     jsonapi_resources :article_comments
     jsonapi_resources :board_room_presences
+    jsonapi_resources :study_room_presences
     jsonapi_resources :books do
       collection do
         get :isbn_lookup

@@ -31,12 +31,12 @@ RSpec.describe Form::Response, type: :model do
     context 'when the user is archived' do
       let(:archived_user) { create(:user, id: 0) }
       let(:another_response) do
-        build(:response, form: form, user: archived_user)
+        build(:response, form:, user: archived_user)
       end
       let(:form) { create(:form) }
 
       before do
-        create(:response, form: form, user: archived_user)
+        create(:response, form:, user: archived_user)
       end
 
       it 'allows multiple responses' do
@@ -69,7 +69,7 @@ RSpec.describe Form::Response, type: :model do
 
       describe 'when it is answered' do
         let(:open_question_answer) do
-          create(:open_question_answer, question: open_question, response: response)
+          create(:open_question_answer, question: open_question, response:)
         end
 
         before do
@@ -112,7 +112,7 @@ RSpec.describe Form::Response, type: :model do
           create(:closed_question_answer,
                  option: closed_question.options.first,
                  question: closed_question,
-                 response: response)
+                 response:)
         end
 
         before do

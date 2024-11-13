@@ -1,6 +1,10 @@
 # rubocop:disable Style/CombinableLoops
 members = Group.find_by(name: 'Leden').users
 
+members.sample(4).each do |user|
+  FactoryBot.create(:study_room_presence, user:)
+end
+
 articles = []
 members.sample(15).each do |user|
   articles << FactoryBot.create(:article, author: user, group: nil)
@@ -37,7 +41,7 @@ articles << FactoryBot.create(
 
 articles.each do |article|
   members.sample(6).each do |user|
-    FactoryBot.create(:article_comment, article: article, author: user)
+    FactoryBot.create(:article_comment, article:, author: user)
   end
 end
 
@@ -67,19 +71,19 @@ activities_with_forms.each do |activity|
   closed_questions = FactoryBot.create_list(:closed_question, 4, form: activity.form)
 
   closed_questions.each do |question|
-    FactoryBot.create_list(:closed_question_option, 3, question: question)
+    FactoryBot.create_list(:closed_question_option, 3, question:)
   end
 
   members.sample(3).each do |user|
-    response = FactoryBot.create(:response, form: activity.form, user: user)
+    response = FactoryBot.create(:response, form: activity.form, user:)
 
     closed_questions.each do |question|
       FactoryBot.create(:closed_question_answer, option: question.options.sample,
-                                                 response: response)
+                                                 response:)
     end
 
     open_questions.each do |open_question|
-      FactoryBot.create(:open_question_answer, question: open_question, response: response)
+      FactoryBot.create(:open_question_answer, question: open_question, response:)
     end
   end
 end
@@ -93,15 +97,15 @@ polls_with_forms.each do |poll|
   closed_questions = FactoryBot.create_list(:closed_question, 1, form: poll.form)
 
   closed_questions.each do |question|
-    FactoryBot.create_list(:closed_question_option, 3, question: question)
+    FactoryBot.create_list(:closed_question_option, 3, question:)
   end
 
   members.sample(3).each do |user|
-    response = FactoryBot.create(:response, form: poll.form, user: user)
+    response = FactoryBot.create(:response, form: poll.form, user:)
 
     closed_questions.each do |question|
       FactoryBot.create(:closed_question_answer, option: question.options.sample,
-                                                 response: response)
+                                                 response:)
     end
   end
 end
@@ -113,21 +117,21 @@ forum_categories = FactoryBot.create_list(:category, 7)
 
 forum_categories.each do |category|
   members.sample(4).each do |member|
-    forum_threads << FactoryBot.create(:thread, author: member, category: category)
+    forum_threads << FactoryBot.create(:thread, author: member, category:)
   end
 end
 
 forum_threads.each do |thread|
-  forum_posts << FactoryBot.create(:post, thread: thread, author: thread.author)
+  forum_posts << FactoryBot.create(:post, thread:, author: thread.author)
   members.sample(24).each do |member|
-    forum_posts << FactoryBot.create(:post, thread: thread, author: member)
+    forum_posts << FactoryBot.create(:post, thread:, author: member)
   end
 end
 
 bestuur = Group.find_by(name: 'Bestuur').users
 
 bestuur.each do |user|
-  FactoryBot.create(:board_room_presence, user: user)
+  FactoryBot.create(:board_room_presence, user:)
 end
 
 FactoryBot.create_list(:static_page, 3)
@@ -137,7 +141,7 @@ collections = FactoryBot.create_list(:collection, 4)
 
 collections.each do |collection|
   members.sample(8).each do |member|
-    FactoryBot.create(:transaction, collection: collection, user: member)
+    FactoryBot.create(:transaction, collection:, user: member)
   end
 end
 
