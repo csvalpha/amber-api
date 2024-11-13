@@ -9,8 +9,9 @@ class CreateStudyRoomPresence < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-  Permission.create(name: 'study_room_presence.create')
-  Permission.create(name: 'study_room_presence.read')
-  Permission.create(name: 'study_room_presence.update')
-  Permission.create(name: 'study_room_presence.destroy')
+    Permission.create(name: 'study_room_presence.create')
+    Permission.create(name: 'study_room_presence.read')
+    Permission.create(name: 'study_room_presence.update')
+    Permission.create(name: 'study_room_presence.destroy')
+  end
 end
