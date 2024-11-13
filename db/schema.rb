@@ -474,7 +474,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_104056) do
     t.index ["form_id"], name: "index_polls_on_form_id"
   end
   
-    create_table "quickpost_messages", id: :serial, force: :cascade do |t|
+  create_table "quickpost_messages", id: :serial, force: :cascade do |t|
     t.integer "author_id"
     t.text "message"
     t.datetime "created_at", precision: nil, null: false
