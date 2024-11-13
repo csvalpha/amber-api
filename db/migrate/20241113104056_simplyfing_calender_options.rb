@@ -1,6 +1,17 @@
 class SimplyfingCalenderOptions < ActiveRecord::Migration[7.0]
-  def change
-    Activity.where(category: 'dinsdagkring').update_all(category: 'kring') 
-    Activity.where(category: 'woensdagkring').update_all(category: 'kring') 
+  def up
+    Activity.where(category: 'dinsdagkring').find_each do |activity|
+      activity.update(category: 'kring')
+    end
+
+    Activity.where(category: 'woensdagkring').find_each do |activity|
+      activity.update(category: 'kring')
+    end
+  end
+
+  def down
+    Activity.where(category: 'kring').find_each do |activity|
+      activity.update(category: 'dinsdagkring')
+    end
   end
 end
