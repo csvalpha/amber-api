@@ -3,9 +3,9 @@ shared_examples 'a model accepting a base 64 image as' do |attr|
     'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAA
     AAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII='
   end
-  let(:model_name) { described_class.to_s.downcase }
+  let(:model_name) { described_class.to_s.underscore }
 
-  subject(:model) { create(described_class.to_s.downcase) }
+  subject(:model) { create(described_class.to_s.underscore) }
 
   context 'when passing a valid image' do
     it do
