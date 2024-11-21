@@ -4,8 +4,7 @@ module MarkdownHelper
   def camofy(markdown)
     return unless markdown
 
-    sub_markdown(markdown)
-
+    markdown = sub_markdown(markdown)
     sub_html(markdown)
   end
 
