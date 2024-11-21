@@ -20,7 +20,7 @@ module MarkdownHelper
       quote_mark = Regexp.last_match(2)
       url = Regexp.last_match(3)
       ending = Regexp.last_match(4)
-      "<img#{preceding_src} src=#{quote_mark}#{camo(url)}#{quote_mark}#{ending}"
+      "<img#{preceding_src}src=#{quote_mark}#{camo(url)}#{quote_mark}#{ending}"
     end
   end
 
@@ -39,6 +39,6 @@ module MarkdownHelper
     # note that we don't allow mismatched quotes like 'url" or shenanigans like that
     # This regex contains two particularly useful features:
     #  capturing groups, and lazy matching.
-    %r{<img([^>]*) src=(["']?)(.+?)\2( |>|/>)}
+    %r{<img([^>]*\s)src=(["']?)(.+?)\2(\s|>|/)}
   end
 end
