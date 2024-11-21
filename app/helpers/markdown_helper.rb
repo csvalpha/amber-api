@@ -32,12 +32,13 @@ module MarkdownHelper
   def html_img_regex
     # warning: this regex may not be perfect. They rarely are.
     # If you find an edge case, improve this regex!
-    # <img...something... src="url"
-    # or, the alternative quotes: <img...something... src='url'
-    # or, even without
+    # <img...something... src="url"...ending...
+    # or, the alternative quotes: <img...something... src='url'...ending...
+    # or, even without quotes: <img...something... src=url...ending...
+    # and the ...ending... can be either a space, a > or />
     # note that we don't allow mismatched quotes like 'url" or shenanigans like that
     # This regex contains two particularly useful features:
     #  capturing groups, and lazy matching.
-    /<img([^>]*) src=(["']?)(.+?)\2([ >])/
+    %r{<img([^>]*) src=(["']?)(.+?)\2( |>|/>)}
   end
 end
