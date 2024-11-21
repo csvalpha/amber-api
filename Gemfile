@@ -48,7 +48,7 @@ gem 'vpim', '~> 13.11'
 
 group :development, :test do
   gem 'awesome_print'
-  gem 'brakeman', '~> 5.2.3',require: false
+  gem 'brakeman', require: false
   gem 'bullet'
   gem 'colorize'
   gem 'consistency_fail'
