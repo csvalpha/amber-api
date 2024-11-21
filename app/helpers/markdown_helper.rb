@@ -1,11 +1,11 @@
 module MarkdownHelper
   include CamoHelper
 
-  def camofy(markdown)
-    return unless markdown
+  def camofy(text)
+    return unless text
 
-    markdown = sub_markdown(markdown)
-    sub_html(markdown)
+    text = sub_markdown(text)
+    sub_html(text)
   end
 
   def sub_markdown(text)
