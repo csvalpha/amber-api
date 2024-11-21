@@ -4,13 +4,24 @@ module MarkdownHelper
   def camofy(markdown)
     return unless markdown
 
-    markdown.gsub(markdown_img_regex) do
+    sub_markdown(markdown)
+
+    sub_html(markdown)
+  end
+
+  def sub_markdown(text)
+    text.gsub(markdown_img_regex) do
       "![#{Regexp.last_match(1)}](#{camo(Regexp.last_match(2))}#{Regexp.last_match(3)})"
     end
+  end
 
-    markdown.gsub(html_img_regex) do
+  def sub_html(text)
+    text.gsub(html_img_regex) do
+      preceding_src = Regexp.last_match(1)
       quote_mark = Regexp.last_match(2)
-      "<img#{Regexp.last_match(1)} src=#{quote_mark}#{camo(Regexp.last_match(3))}#{quote_mark}#{Regexp.last_match(4)}"
+      url = Regexp.last_match(3)
+      ending = Regexp.last_match(4)
+      "<img#{preceding_src} src=#{quote_mark}#{camo(url)}#{quote_mark}#{ending}"
     end
   end
 
@@ -20,7 +31,8 @@ module MarkdownHelper
   end
 
   def html_img_regex
-    # warning: this regex may not be perfect. They rarely are. If you find an edge case, improve this regex!
+    # warning: this regex may not be perfect. They rarely are.
+    # If you find an edge case, improve this regex!
     # <img...something... src="url"
     # or, the alternative quotes: <img...something... src='url'
     # or, even without
