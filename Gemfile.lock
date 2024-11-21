@@ -511,7 +511,7 @@ GEM
       timeliness (>= 0.3.10, < 1)
     vcard_parser (0.0.9)
     vcr (6.1.0)
-    vpim (13.11.11)
+    vpim (24.2.20)
     webmock (3.14.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -607,7 +607,7 @@ DEPENDENCIES
   tzinfo-data
   validates_timeliness (~> 7.0.0.beta2)
   vcr
-  vpim (~> 13.11)
+  vpim (~> 24.2, >= 24.2.20)
   webmock
 
 BUNDLED WITH
