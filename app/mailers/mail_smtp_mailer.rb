@@ -12,14 +12,14 @@ class MailSmtpMailer < ApplicationMailer
   #   since we do not want to send the password to mail management
   def notify_management_enable_email(mail_alias)
     @mail_alias = mail_alias
-    mail to: 'mailbeheer@csvalpha.nl',
+    mail to: Rails.application.config.x.mailbeheer_email,
          subject: "SMTP account voor #{mail_alias.email} aangemaakt"
   end
 
   # Mail to notify the user and mail management that their SMTP is removed
   def disabled_email(mail_alias)
     @mail_alias = mail_alias
-    mail to: 'mailbeheer@csvalpha.nl', bcc: mail_alias.mail_addresses,
+    mail to: Rails.application.config.x.mailbeheer_email, bcc: mail_alias.mail_addresses,
          subject: "SMTP account voor #{mail_alias.email} opgeheven"
   end
 end

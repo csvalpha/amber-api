@@ -35,8 +35,7 @@ RSpec.describe UserCleanupJob, type: :job do
 
     context 'when with will archive and archived users' do
       it { expect(ActionMailer::Base.deliveries.count).to eq 1 }
-      it { expect(email.to).to include 'bestuur@csvalpha.nl' }
-      it { expect(email.to).to include 'ict@csvalpha.nl' }
+      it { expect(email.to).to include Rails.application.config.x.privacy_email }
       it { expect(email.body.to_s).to include(almost_archive_user.full_name) }
       it { expect(email.body.to_s).not_to include(user.full_name) }
       it { expect(email.body.to_s).to include('Er is 1 gebruiker gearchiveerd.') }
