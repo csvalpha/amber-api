@@ -15,7 +15,7 @@ RSpec.describe V1::UserResource, type: :resource do
       %i[login_enabled otp_required activated_at emergency_contact
          emergency_number ifes_data_sharing_preference info_in_almanak
          almanak_subscription_preference digtus_subscription_preference
-         user_details_sharing_preference allow_tomato_sharing]
+         user_details_sharing_preference allow_sofia_sharing]
     end
     let(:read_fields) do
       %i[picture_publication_preference]
@@ -24,7 +24,7 @@ RSpec.describe V1::UserResource, type: :resource do
       %i[email birthday address postcode city phone_number food_preferences vegetarian
          study start_study]
     end
-    let(:tomato_fields) do
+    let(:sofia_fields) do
       %i[email birthday]
     end
     let(:another_user) { create(:user, user_details_sharing_preference: 'hidden') }
@@ -110,17 +110,17 @@ RSpec.describe V1::UserResource, type: :resource do
 
       it { expect(resource.fetchable_fields).to match_array(basic_fields) }
 
-      context 'when with tomato scope' do
-        let(:application) { create(:application, scopes: 'public tomato') }
+      context 'when with sofia scope' do
+        let(:application) { create(:application, scopes: 'public sofia') }
 
         context 'when without allowance' do
           it { expect(resource.fetchable_fields).to match_array(basic_fields) }
         end
 
         context 'when with allowance' do
-          let(:another_user) { create(:user, allow_tomato_sharing: true) }
+          let(:another_user) { create(:user, allow_sofia_sharing: true) }
 
-          it { expect(resource.fetchable_fields).to match_array(basic_fields + tomato_fields) }
+          it { expect(resource.fetchable_fields).to match_array(basic_fields + sofia_fields) }
         end
       end
     end
@@ -141,7 +141,7 @@ RSpec.describe V1::UserResource, type: :resource do
          user_permissions login_enabled]
     end
     let(:current_user_fields) do
-      %i[otp_required password user_details_sharing_preference allow_tomato_sharing
+      %i[otp_required password user_details_sharing_preference allow_sofia_sharing
          info_in_almanak ifes_data_sharing_preference picture_publication_preference]
     end
 

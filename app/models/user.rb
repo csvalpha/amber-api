@@ -52,7 +52,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # Technical fields
   validates :login_enabled, inclusion: [true, false]
   validate :password_when_activated?
-  validate :allow_tomato_sharing_valid?
+  validate :allow_sofia_sharing_valid?
 
   # Preferences
   validates :almanak_subscription_preference, presence: true, inclusion: {
@@ -82,7 +82,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   scope :activated, (-> { where('activated_at < ?', Time.zone.now) })
   scope :contactsync_users, (-> { where.not(webdav_secret_key: nil) })
-  scope :tomato_users, (-> { where(allow_tomato_sharing: true) })
+  scope :sofia_users, (-> { where(allow_sofia_sharing: true) })
   scope :login_enabled, (-> { where(login_enabled: true) })
   scope :sidekiq_access, (-> { where(sidekiq_access: true) })
   scope :birthday, (lambda { |month = Time.zone.now.month, day = Time.zone.now.day|
@@ -211,10 +211,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
                                                                         password_digest.blank?
   end
 
-  def allow_tomato_sharing_valid?
-    return unless allow_tomato_sharing_changed?(from: true, to: false)
+  def allow_sofia_sharing_valid?
+    return unless allow_sofia_sharing_changed?(from: true, to: false)
 
-    errors.add(:allow_tomato_sharing,
+    errors.add(:allow_sofia_sharing,
                'before being removed from sofia your credits needs to be zero.
                 Please ask the board to be removed from sofia.')
   end
