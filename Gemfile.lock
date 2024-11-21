@@ -575,7 +575,7 @@ DEPENDENCIES
   phonelib
   pry-byebug
   pry-rails
-  puma (~> 6.0)
+  puma (~> 6.4.3)
   pundit (~> 2.0)
   rack-attack (~> 6.0)
   rack-cors (~> 2.0, >= 2.0.1)
