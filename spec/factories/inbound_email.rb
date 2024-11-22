@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :inbound_email, class: 'ActionMailbox::InboundEmail' do
-    from { "#{Faker::Name.first_name} <#{Faker::Internet.safe_email}>" }
+    from { "#{Faker::Name.first_name} <#{Faker::Internet.email}>" }
     to { "#{Faker::Internet.user_name}@test.csvalpha.nl" }
     subject { Faker::Book.title }
 

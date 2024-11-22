@@ -61,7 +61,6 @@ class UserArchiveJob < ApplicationJob
      PhotoAlbum,
      PhotoTag,
      Poll,
-     QuickpostMessage,
      Form::Form,
      Form::Response,
      Forum::Post,
