@@ -4,7 +4,7 @@ RSpec.describe Form::OpenQuestionAnswerPolicy, type: :policy do
   subject(:policy) { described_class }
 
   let(:user) { build(:user) }
-  let(:response) { build(:response, user: user) }
+  let(:response) { build(:response, user:) }
 
   permissions :update? do
     describe 'when open question answer is not owned' do
@@ -14,7 +14,7 @@ RSpec.describe Form::OpenQuestionAnswerPolicy, type: :policy do
     describe 'when open question answer is owned' do
       it do
         expect(policy).to permit(user, build(:open_question_answer,
-                                             response: response))
+                                             response:))
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe Form::OpenQuestionAnswerPolicy, type: :policy do
 
       it do
         expect(policy).to permit(user, build(:open_question_answer,
-                                             response: response))
+                                             response:))
       end
     end
   end

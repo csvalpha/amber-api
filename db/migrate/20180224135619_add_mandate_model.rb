@@ -13,7 +13,7 @@ class AddMandateModel < ActiveRecord::Migration[5.1]
     end
 
     User.all.each do |user|
-      Debit::Mandate.create(user: user, uid: user.id,
+      Debit::Mandate.create(user:, uid: user.id,
                             iban: user.iban,
                             iban_holder: user.iban_holder,
                             start_date: Time.zone.now)

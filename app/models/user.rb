@@ -16,7 +16,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :user_permissions, through: :permissions_users, source: :permission
   has_many :article_comments, foreign_key: :author_id
   has_many :board_room_presences, dependent: :delete_all
+  has_many :study_room_presences, dependent: :delete_all
   has_many :photo_comments, foreign_key: :author_id
+  has_many :created_photo_tags, class_name: 'PhotoTag', foreign_key: :author_id,
+                                dependent: :delete_all
+  has_many :photo_tags, foreign_key: :tagged_user_id, dependent: :delete_all
+  has_many :photos, through: :photo_tags
   has_many :mail_aliases, dependent: :delete_all
   has_many :read_threads, class_name: 'Forum::ReadThread', dependent: :delete_all
   has_many :mandates, class_name: 'Debit::Mandate', dependent: :delete_all
@@ -94,7 +99,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     scope
   })
   scope :active_users_for_group, (lambda { |group|
-    joins(:memberships).merge(Membership.active.where(group: group))
+    joins(:memberships).merge(Membership.active.where(group:))
   })
 
   def full_name
@@ -149,7 +154,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def activation_url
-    params = { activation_token: activation_token }
+    params = { activation_token: }
     default_options = Rails.application.config.action_mailer.default_url_options
     URI::Generic.build(default_options.merge(path: "/users/#{id}/activate-account",
                                              query: params.to_query)).to_s
@@ -210,8 +215,8 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return unless allow_tomato_sharing_changed?(from: true, to: false)
 
     errors.add(:allow_tomato_sharing,
-               'before being removed from tomato your credits needs to be zero.
-                Please ask the board to be removed from tomato.')
+               'before being removed from sofia your credits needs to be zero.
+                Please ask the board to be removed from sofia.')
   end
 
   def generate_ical_secret_key
