@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_18_155243) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -474,18 +474,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_155243) do
     t.index ["author_id"], name: "index_polls_on_author_id"
     t.index ["form_id"], name: "index_polls_on_form_id"
   end
-
-  create_table "quickpost_messages", id: :serial, force: :cascade do |t|
-    t.integer "author_id"
-    t.text "message"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "deleted_at", precision: nil
-    t.datetime "datetime", precision: nil
-    t.index ["datetime"], name: "index_quickpost_messages_on_datetime"
-    t.index ["deleted_at"], name: "index_quickpost_messages_on_deleted_at"
-  end
-
+3
   create_table "room_adverts", force: :cascade do |t|
     t.string "house_name", null: false
     t.string "contact", null: false
@@ -521,6 +510,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_18_155243) do
     t.bigint "inbound_email_id"
     t.index ["inbound_email_id"], name: "index_stored_mails_on_inbound_email_id"
     t.index ["mail_alias_id"], name: "index_stored_mails_on_mail_alias_id"
+  end
+
+  create_table "study_room_presences", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.text "status", null: false
+    t.integer "user_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

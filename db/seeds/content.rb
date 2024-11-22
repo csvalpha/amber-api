@@ -1,6 +1,10 @@
 # rubocop:disable Style/CombinableLoops
 members = Group.find_by(name: 'Leden').users
 
+members.sample(4).each do |user|
+  FactoryBot.create(:study_room_presence, user:)
+end
+
 articles = []
 members.sample(15).each do |user|
   articles << FactoryBot.create(:article, author: user, group: nil)
@@ -40,10 +44,6 @@ articles.each do |article|
     FactoryBot.create(:article_comment, article:, author: user)
   end
 end
-
-members.sample(80).each { |user| FactoryBot.create(:quickpost_message, author: user) }
-# To ensure at least one user creating (more than) two quickpost messages
-members.sample(30).each { |user| FactoryBot.create(:quickpost_message, author: user) }
 
 members.sample(4).each do |user|
   FactoryBot.create(:activity, author: user)
