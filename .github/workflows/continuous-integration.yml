@@ -97,8 +97,8 @@ jobs:
     services:
       camo:
         image: rx14/camo.cr:latest
-      env:
-        PORT: 9090
+        env:
+          PORT: 9090
       db:
         image: postgres:14.7
         env:
