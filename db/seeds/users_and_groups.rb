@@ -54,21 +54,21 @@ old_members.first.update(username: 'oudlid',
                          password_confirmation: 'password1234')
 
 leden.each do |user|
-  Membership.create(user: user, group: member_group, start_date: Date.current.months_ago(4),
+  Membership.create(user:, group: member_group, start_date: Date.current.months_ago(4),
                     function: Faker::Job.title)
 end
 
 nerds.each do |user|
-  Membership.create(user: user, group: ictcie, start_date: Date.current.months_ago(10),
+  Membership.create(user:, group: ictcie, start_date: Date.current.months_ago(10),
                     function: Faker::Job.title)
-  Membership.create(user: user, group: member_group, start_date: Date.current.months_ago(4),
+  Membership.create(user:, group: member_group, start_date: Date.current.months_ago(4),
                     function: Faker::Job.title)
 end
 
 bestuurders.each do |user|
-  Membership.create(user: user, group: bestuur, start_date: Date.current.months_ago(10),
+  Membership.create(user:, group: bestuur, start_date: Date.current.months_ago(10),
                     function: Faker::Job.title)
-  Membership.create(user: user, group: member_group, start_date: Date.current.months_ago(11),
+  Membership.create(user:, group: member_group, start_date: Date.current.months_ago(11),
                     function: Faker::Job.title)
 end
 
@@ -83,14 +83,14 @@ Membership.create(user: sofia_renting_manager, group: member_group,
                   start_date: Date.current.months_ago(4), function: Faker::Job.title)
 
 sofia_bartenders.each do |user|
-  Membership.create(user: user, group: sofia_main_bartenders,
+  Membership.create(user:, group: sofia_main_bartenders,
                     start_date: Date.current.months_ago(10), function: Faker::Job.title)
-  Membership.create(user: user, group: member_group, start_date: Date.current.months_ago(4),
+  Membership.create(user:, group: member_group, start_date: Date.current.months_ago(4),
                     function: Faker::Job.title)
 end
 
 old_members.each do |user|
-  Membership.create(user: user, group: old_members_group, start_date: Date.current.months_ago(10),
+  Membership.create(user:, group: old_members_group, start_date: Date.current.months_ago(10),
                     function: Faker::Job.title)
 end
 
