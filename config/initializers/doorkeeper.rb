@@ -8,7 +8,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   hash_token_secrets
   hash_application_secrets
 
-  optional_scopes :tomato, sofia
+  optional_scopes :tomato, :sofia
 
   # See https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow
   grant_flows %w[password authorization_code client_credentials]
