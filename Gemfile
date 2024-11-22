@@ -25,7 +25,7 @@ gem 'jsonapi-resources', '~> 0.9.1.beta2'
 gem 'message_bus', '~> 4.0'
 gem 'mini_magick', '~> 4.6'
 gem 'paper_trail', '~> 14.0'
-gem 'paranoia', '~> 2.2'
+gem 'paranoia', '~> 3.0'
 gem 'pg', '~> 1.0'
 gem 'phonelib'
 gem 'puma', '~> 6.0'
@@ -44,7 +44,7 @@ gem 'sidekiq', '~> 6.0'
 gem 'sidekiq-scheduler', '~> 5.0', '>= 5.0.2'
 gem 'slack-notifier', '~> 2.0'
 gem 'validates_timeliness', '~> 7.0.0.beta2'
-gem 'vpim', '~> 13.11'
+gem 'vpim', '~> 24.2', '>= 24.2.20'
 
 group :development, :test do
   gem 'awesome_print'
@@ -80,6 +80,7 @@ group :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'simplecov', require: false
+  gem 'simplecov-lcov', '~> 0.8.0', require: false
   gem 'terminal-notifier-guard'
   gem 'timecop'
   gem 'vcr'

@@ -45,7 +45,7 @@ RSpec.describe PhotoAlbum, type: :model do
 
     before do
       photo_album
-      create(:photo, photo_album: photo_album)
+      create(:photo, photo_album:)
     end
 
     it { expect(photo_album.to_zip).not_to be_nil }

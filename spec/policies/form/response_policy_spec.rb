@@ -11,7 +11,7 @@ RSpec.describe Form::ResponsePolicy, type: :policy do
     end
 
     describe 'when response is owned' do
-      it { expect(policy).to permit(user, build_stubbed(:response, user: user)) }
+      it { expect(policy).to permit(user, build_stubbed(:response, user:)) }
     end
 
     describe 'when with permission' do
