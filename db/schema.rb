@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_27_114709) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_27_103012) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -430,6 +430,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_114709) do
     t.index ["photo_id"], name: "index_photo_comments_on_photo_id"
   end
 
+  create_table "photo_tags", force: :cascade do |t|
+    t.decimal "x", precision: 5, scale: 2
+    t.float "y"
+    t.integer "author_id", null: false
+    t.integer "tagged_user_id", null: false
+    t.integer "photo_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "photos", id: :serial, force: :cascade do |t|
     t.string "image"
     t.integer "photo_album_id"
@@ -448,6 +459,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_114709) do
     t.string "exif_copyright"
     t.string "exif_lens_model"
     t.integer "exif_focal_length"
+    t.integer "tags_count", default: 0, null: false
     t.index ["deleted_at"], name: "index_photos_on_deleted_at"
     t.index ["photo_album_id"], name: "index_photos_on_photo_album_id"
     t.index ["uploader_id"], name: "index_photos_on_uploader_id"
@@ -473,12 +485,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_114709) do
     t.index ["datetime"], name: "index_quickpost_messages_on_datetime"
     t.index ["deleted_at"], name: "index_quickpost_messages_on_deleted_at"
   end
-
+  
   create_table "room_adverts", force: :cascade do |t|
     t.string "house_name", null: false
     t.string "contact", null: false
     t.string "location"
-    t.string "available_from"
     t.string "description", null: false
     t.string "cover_photo"
     t.boolean "publicly_visible"
@@ -486,6 +497,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_114709) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "available_from", null: false
   end
 
   create_table "static_pages", id: :serial, force: :cascade do |t|
@@ -509,6 +521,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_27_114709) do
     t.bigint "inbound_email_id"
     t.index ["inbound_email_id"], name: "index_stored_mails_on_inbound_email_id"
     t.index ["mail_alias_id"], name: "index_stored_mails_on_mail_alias_id"
+  end
+
+  create_table "study_room_presences", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.text "status", null: false
+    t.integer "user_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

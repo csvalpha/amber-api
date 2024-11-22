@@ -8,7 +8,7 @@ RSpec.describe Webdav::Addressbook, type: :model do
       create(:user, :webdav_enabled)
     ]
   end
-  let(:group) { create(:group, users: users) }
+  let(:group) { create(:group, users:) }
 
   subject(:addressbook) { described_class.new(group) }
 

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::ActivityResource, type: :resource do
   let(:user) { create(:user) }
-  let(:context) { { user: user } }
-  let(:options) { { context: context } }
+  let(:context) { { user: } }
+  let(:options) { { context: } }
 
   describe 'filters' do
     let(:filtered) { described_class.apply_filters(Activity, filter, options) }
@@ -29,12 +29,32 @@ RSpec.describe V1::ActivityResource, type: :resource do
       let(:filter) { { group: group.id } }
 
       before do
-        create(:activity, group: group)
+        create(:activity, group:)
         create(:activity)
         create(:activity)
       end
 
       it { expect(filtered.length).to eq 1 }
+    end
+  end
+
+  describe 'sort' do
+    let(:sorted) { described_class.apply_sort(records, sort, context) }
+
+    describe 'form.respond_until' do
+      let(:records) { Activity.all }
+      let(:sort) { { 'form.respond_until' => :desc } }
+      let(:form) { create(:form, respond_until: 1.day.from_now) }
+      let(:other_form) { create(:form, respond_until: 2.days.from_now) }
+      let(:activity) { create(:activity, form:) }
+      let(:other_activity) { create(:activity, form: other_form) }
+
+      before do
+        activity
+        other_activity
+      end
+
+      it { expect(sorted).to match_array [other_activity, activity] }
     end
   end
 end

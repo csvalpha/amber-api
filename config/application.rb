@@ -81,5 +81,10 @@ module Amber
     config.x.google_api_key = credentials.dig(Rails.env.to_sym, :google_api_key)
 
     config.x.healthcheck_ids = credentials.dig(Rails.env.to_sym, :healthcheck_ids)
+
+    config.x.noreply_email = ENV.fetch('NOREPLY_EMAIL', 'no-reply@csvalpha.com')
+    config.x.ict_email = ENV.fetch('ICT_EMAIL', 'ict@csvalpha.com')
+    config.x.privacy_email = ENV.fetch('PRIVACY_EMAIL', 'privacy@csvalpha.com')
+    config.x.mailbeheer_email = ENV.fetch('PRIVACY_EMAIL', 'mailbeheer@csvalpha.com')
   end
 end

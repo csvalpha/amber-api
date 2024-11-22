@@ -50,7 +50,7 @@ RSpec.describe MailAlias, type: :model do
       let(:user) { build_stubbed(:user) }
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias, :with_group, user: user)
+        build_stubbed(:mail_alias, :with_group, user:)
       end
 
       before { mail_alias.valid? }
@@ -143,7 +143,7 @@ RSpec.describe MailAlias, type: :model do
 
       subject(:mail_alias) do
         build_stubbed(:mail_alias, :with_group,
-                      moderation_type: 'moderated', moderator_group: moderator_group)
+                      moderation_type: 'moderated', moderator_group:)
       end
 
       it { expect(mail_alias.moderators.count).to be 1 }
@@ -197,7 +197,7 @@ RSpec.describe MailAlias, type: :model do
       end
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias, user: user, email: 'amber@test.csvalpha.nl')
+        build_stubbed(:mail_alias, user:, email: 'amber@test.csvalpha.nl')
       end
 
       it { expect(mail_alias.to_s).to eq('Alpha Amber <amber@test.csvalpha.nl>') }
@@ -207,7 +207,7 @@ RSpec.describe MailAlias, type: :model do
       let(:group) { create(:group, name: 'ICT-commissie') }
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias, group: group, user: nil,
+        build_stubbed(:mail_alias, group:, user: nil,
                                    email: 'ict@test.csvalpha.nl')
       end
 
