@@ -92,7 +92,12 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     needs: build
+    env:
+      PORT: 9090
+      CAMO_KEY: camo_key_123
     services:
+      camo:
+        image: rx14/camo.cr:latest
       db:
         image: postgres:14.7
         env:
@@ -121,9 +126,13 @@ jobs:
           name: app
 
       - name: Test
+        env:
+          CAMO_HOST: localhost:${{ env.PORT }}
         run: |
           mkdir coverage
           docker run \
+          -e CAMO_KEY \
+          -e CAMO_HOST \
           -e POSTGRES_USER=postgres \
           -e POSTGRES_PASSWORD=postgres \
           -e POSTGRES_HOST=localhost \
