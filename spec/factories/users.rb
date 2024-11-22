@@ -23,7 +23,7 @@ FactoryBot.define do
     user_details_sharing_preference { %w[all_users members_only hidden].sample }
     username { nil }
 
-    sequence(:email) { |n| Faker::Internet.safe_email(name: "#{Faker::Internet.user_name}#{n}") }
+    sequence(:email) { |n| Faker::Internet.email(name: "#{Faker::Internet.user_name}#{n}") }
 
     password = Faker::Internet.password(min_length: 12)
     password { password }
