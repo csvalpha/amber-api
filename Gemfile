@@ -43,7 +43,7 @@ gem 'sepa_king', '~> 0.14'
 gem 'sidekiq', '~> 6.5', '>= 6.5.12'
 gem 'sidekiq-scheduler', '~> 5.0', '>= 5.0.6'
 gem 'slack-notifier', '~> 2.4'
-gem 'validates_timeliness', '~> 7.0.0.beta2'
+gem 'validates_timeliness', '~> 8.0.0'
 gem 'vpim', '~> 24.2', '>= 24.2.20'
 
 group :development, :test do
