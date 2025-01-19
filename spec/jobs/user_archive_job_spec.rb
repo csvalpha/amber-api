@@ -17,7 +17,6 @@ RSpec.describe UserArchiveJob, type: :job do
         create(:photo, uploader: user)
         create(:photo_album, author: user)
         create(:poll, author: user)
-        create(:quickpost_message, author: user)
         create(:response, user:)
         create(:form, author: user)
         create(:post, author: user)
@@ -33,7 +32,6 @@ RSpec.describe UserArchiveJob, type: :job do
       it { expect { job }.to change { Photo.last.uploader }.from(user).to(archive_user) }
       it { expect { job }.to change { PhotoAlbum.last.author }.from(user).to(archive_user) }
       it { expect { job }.to change { Poll.last.author }.from(user).to(archive_user) }
-      it { expect { job }.to change { QuickpostMessage.last.author }.from(user).to(archive_user) }
       it { expect { job }.to change { Form::Response.last.user }.from(user).to(archive_user) }
       it { expect { job }.to change { Form::Form.last.author }.from(user).to(archive_user) }
       it { expect { job }.to change { Forum::Post.last.author }.from(user).to(archive_user) }
@@ -44,6 +42,7 @@ RSpec.describe UserArchiveJob, type: :job do
     describe 'other entities are destroyed' do
       before do
         create(:board_room_presence, user:)
+        create(:study_room_presence, user:)
         create(:mandate, user:)
         create(:transaction, user:)
         create(:mail_alias, user:)
@@ -53,6 +52,7 @@ RSpec.describe UserArchiveJob, type: :job do
       end
 
       it { expect { job }.to change(BoardRoomPresence, :count).by(-1) }
+      it { expect { job }.to change(StudyRoomPresence, :count).by(-1) }
       it { expect { job }.to change(Debit::Mandate, :count).by(-1) }
       it { expect { job }.to change(Debit::Transaction, :count).by(-1) }
       it { expect { job }.to change(MailAlias, :count).by(-1) }

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     jsonapi_resources :articles
     jsonapi_resources :article_comments
     jsonapi_resources :board_room_presences
+    jsonapi_resources :study_room_presences
     jsonapi_resources :books do
       collection do
         get :isbn_lookup
@@ -72,7 +73,6 @@ Rails.application.routes.draw do
     end
     get 'users/me/nextcloud', to: 'users#nextcloud'
 
-    jsonapi_resources :quickpost_messages
     jsonapi_resources :vacancies
 
     namespace :debit do

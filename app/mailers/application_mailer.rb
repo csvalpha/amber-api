@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'no-reply@csvalpha.nl'
+  default from: Rails.application.config.x.noreply_email
   layout 'mailer'
 end
