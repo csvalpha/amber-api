@@ -5,7 +5,7 @@ gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '8541e53'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'
 gem 'bootsnap', '~> 1.18', '>= 1.18.4'
-gem 'carrierwave', '~> 2.2', '>= 2.2.6'
+gem 'carrierwave', '~> 3.1', '>= 3.1.1'
 gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
