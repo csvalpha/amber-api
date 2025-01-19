@@ -127,6 +127,8 @@ jobs:
       (github.ref_name == 'staging' || github.ref_name == 'master') && ((github.ref_name == 'master' &&
       github.event.inputs.merge == 'y' && fromJSON(needs.metadata.outputs.has_diff) && success()) ||
       ((github.event.inputs.merge != 'y' || !fromJSON(needs.metadata.outputs.has_diff)) && !cancelled()))
+    permissions:
+      checks: write
     steps:
       - name: Get environment URL
         id: get_url
@@ -205,11 +207,10 @@ jobs:
           done
 
       - name: Update Continuous Delivery check run
-        uses: guidojw/actions/update-check-run@3ad963828827110a6b716a011f242bf01fdf1db4 # v1.4.7
+        uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23 # v2.0.0
         with:
-          app_id: ${{ vars.GH_APP_ID }}
-          private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           sha: ${{ needs.merge.outputs.sha }}
+          token: ${{ github.token }}
           name: Continuous Delivery
           conclusion: ${{ steps.get_conclusion.outputs.conclusion }}
           details_url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
