@@ -125,9 +125,11 @@ Style/HashTransformValues:
 Lint/RaiseException:
   Enabled: true
 
-
 Lint/StructNewOverride:
   Enabled: true
 
 Naming/InclusiveLanguage:
+  Enabled: false
+
+Rails/BulkChangeTable:
   Enabled: false
