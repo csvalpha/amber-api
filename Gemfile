@@ -56,7 +56,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker', '~> 3.5', '>= 3.5.1'
   gem 'fuubar'
-  gem 'pry-byebug', '~> 3.9.0', require: false
+  gem 'pry-byebug', '~> 3.10.0', require: false
   gem 'pry-rails', '~> 0.3.11'
   gem 'rack-mini-profiler', require: false
   gem 'rb-readline', require: false
