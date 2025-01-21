@@ -9,7 +9,7 @@ gem 'carrierwave', '~> 3.1', '>= 3.1.1'
 gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
-gem 'concurrent-ruby', '1.3.4' #can be removed when we upgrade to rails 7.1 https://www.devgem.io/posts/resolving-the-loggerthreadsafelevel-error-in-rails-after-bundle-update
+gem 'concurrent-ruby', '1.3.4' # can be removed when we upgrade to rails 7.1 https://www.devgem.io/posts/resolving-the-loggerthreadsafelevel-error-in-rails-after-bundle-update
 gem 'counter_culture', '~> 3.8', '>= 3.8.2'
 gem 'dav4rack_ext', '~> 1.0'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.1'
