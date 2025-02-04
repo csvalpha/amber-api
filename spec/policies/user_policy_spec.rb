@@ -29,19 +29,6 @@ RSpec.describe UserPolicy, type: :policy do
                                      create(:user, allow_sofia_sharing: false))
       end
     end
-      describe 'when with old sofia application' do
-        let(:application) { Doorkeeper::Application.create(name: 'Old Sofia', scopes: 'tomato') }
-  
-        it do
-          expect(policy).to permit(application,
-                                   create(:user, allow_sofia_sharing: true))
-        end
-  
-        it do
-          expect(policy).not_to permit(application,
-                                       create(:user, allow_sofia_sharing: false))
-        end
-    end
   end
 
   permissions :update? do

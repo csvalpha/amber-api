@@ -9,7 +9,7 @@ class UserPolicy < ApplicationPolicy
     end
 
     def sofia?
-      @application&.scopes&.include?('tomato') || @application.scopes.include?('sofia')
+      @application.scopes.include?('sofia')
     end
   end
 

@@ -144,7 +144,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   def application_is_sofia?
     return false unless context.key?(:application) && context.fetch(:application)
 
-    context.fetch(:application).scopes.to_a.include?('tomato') || context.fetch(:application).scopes.to_a.include?('sofia')
+    context.fetch(:application).scopes.to_a.include?('sofia')
   end
 
   def update_or_me?

@@ -8,7 +8,7 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   hash_token_secrets
   hash_application_secrets
 
-  optional_scopes :tomato, :sofia
+  optional_scopes :sofia
 
   # See https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow
   grant_flows %w[password authorization_code client_credentials]
@@ -42,9 +42,9 @@ Doorkeeper.configure do # rubocop:disable Metrics/BlockLength
   after_successful_authorization do |_, auth|
     # To SOFIA, a CodeResponse is returned
     if auth.auth.is_a?(Doorkeeper::OAuth::CodeResponse)
-      # We are only interested authorization for the tomato or sofia scope
-      # Check if either 'tomato' or 'sofia' is included in the scopes
-      is_sofia = auth.auth.pre_auth.scopes.include?('tomato') || auth.auth.pre_auth.scopes.include?('sofia')
+      # We are only interested authorization for the sofia scope
+      # Check if either 'sofia' is included in the scopes
+      is_sofia = auth.auth.pre_auth.scopes.include?('sofia')
       user = auth.auth.pre_auth.resource_owner
 
       if is_sofia && !user.allow_sofia_sharing
