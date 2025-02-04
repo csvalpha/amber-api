@@ -1,5 +1,6 @@
 class Vacancy < ApplicationRecord
   mount_base64_uploader :cover_photo, CoverPhotoUploader
+  has_paper_trail skip: [:cover_photo]
 
   belongs_to :author, class_name: 'User'
   belongs_to :group, optional: true

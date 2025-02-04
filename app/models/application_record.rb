@@ -1,8 +1,8 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
+  
 
   acts_as_paranoid
-  has_paper_trail
 
   def self.model_names
     @model_names ||= begin
