@@ -1,7 +1,7 @@
 module Form
   class QuestionAnswer < ApplicationRecord
     self.abstract_class = true
-    
+
     belongs_to :response
     has_one :form, through: :response
 
