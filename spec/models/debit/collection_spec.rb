@@ -102,13 +102,21 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has mandate and amount' do
-      let(:transaction) { create(:transaction, collection:, amount: 2) }
+      let(:transaction1) { create(:transaction, collection:, amount: 3000) }
+      let(:transaction2) { create(:transaction, collection:, amount: 100) }
+      let(:transaction3) { create(:transaction, collection:, amount: 3000) }
 
-      before { create(:mandate, user: transaction.user, iban: 'NL 44 RABO 0123456789') }
+      before do
+        create(:mandate, user: transaction1.user, iban: 'NL 44 RABO 0123456789')
+        create(:mandate, user: transaction2.user, iban: 'NL 39 ABNA 8234998285')
+        create(:mandate, user: transaction3.user, iban: 'NL 69 ABNA4435376989')
+      end
 
       it { expect(collection.to_sepa.first).to be_an_instance_of(SEPA::DirectDebit) }
-      it { expect(collection.to_sepa.first.transactions.size).to eq 1 }
-      it { expect(collection.to_sepa.first.transactions.first.amount).to eq 2 }
+      it { expect(collection.to_sepa.first.transactions.size).to eq 2 }
+      it { expect(collection.to_sepa.first.transactions.first.amount).to eq 3000 }
+      it { expect(collection.to_sepa.second.transactions.size).to eq 1 }
+      it { expect(collection.to_sepa.second.transactions.first.amount).to eq 3000 }
     end
 
     context 'when collection date has passed' do
