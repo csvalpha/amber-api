@@ -50,7 +50,7 @@ RSpec.describe Debit::Collection, type: :model do
           collection.to_sepa
         end
 
-        it { expect(collection.to_sepa).to be_nil }
+        it { expect(collection.to_sepa).to be_empty }
 
         it do
           expect(
@@ -65,7 +65,7 @@ RSpec.describe Debit::Collection, type: :model do
           collection.to_sepa
         end
 
-        it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
+        it { expect(collection.to_sepa).to be_empty }
 
         it do
           expect(collection.errors).to be_empty
@@ -81,8 +81,7 @@ RSpec.describe Debit::Collection, type: :model do
         create(:mandate, user: transaction.user)
       end
 
-      it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
-      it { expect(collection.to_sepa.transactions.size).to eq 0 }
+      it { expect(collection.to_sepa.first).to be_nil }
     end
 
     context 'when user has negative amount in collection' do
@@ -93,7 +92,7 @@ RSpec.describe Debit::Collection, type: :model do
         collection.to_sepa
       end
 
-      it { expect(collection.to_sepa).to be_nil }
+      it { expect(collection.to_sepa).to be_empty }
 
       it do
         expect(
@@ -107,9 +106,9 @@ RSpec.describe Debit::Collection, type: :model do
 
       before { create(:mandate, user: transaction.user, iban: 'NL 44 RABO 0123456789') }
 
-      it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
-      it { expect(collection.to_sepa.transactions.size).to eq 1 }
-      it { expect(collection.to_sepa.transactions.first.amount).to eq 2 }
+      it { expect(collection.to_sepa.first).to be_an_instance_of(SEPA::DirectDebit) }
+      it { expect(collection.to_sepa.first.transactions.size).to eq 1 }
+      it { expect(collection.to_sepa.first.transactions.first.amount).to eq 2 }
     end
 
     context 'when collection date has passed' do
