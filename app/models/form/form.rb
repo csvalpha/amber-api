@@ -1,5 +1,6 @@
 module Form
   class Form < ApplicationRecord
+    has_paper_trail
     belongs_to :author, class_name: 'User', optional: true
     belongs_to :group, optional: true
 
