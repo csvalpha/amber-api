@@ -5,25 +5,32 @@ module V1::Debit
     def sepa
       authorize Debit::Collection
       return head :not_found unless @model.transactions.any?
-    
+
       sepa_files = @model.to_sepa
       return render json: error_response, status: :unprocessable_entity if sepa_files.empty?
-    
-      compressed_filestream = Zip::OutputStream.write_buffer do |zip|
-        sepa_files.each_with_index do |sepa, index|
-          zip.put_next_entry("sepa_batch_#{index + 1}.xml")
-          zip.write sepa.to_xml('pain.008.001.02')
-        end
-      end
-    
-      send_data compressed_filestream.string, filename: "sepa_bestanden.zip", type: 'application/zip'
+
+      send_compressed_sepa_files(sepa_files)
     end
+
     private
 
     def set_model
       @model = model_class.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       head :not_found
+    end
+
+    def send_compressed_sepa_files(sepa_files)
+      date_string = Time.zone.today.strftime('%Y-%m-%d')
+
+      compressed_filestream = Zip::OutputStream.write_buffer do |zip|
+        sepa_files.each_with_index do |sepa, index|
+          zip.put_next_entry("sepa_#{date_string}_deel_#{index + 1}.xml")
+          zip.write sepa.to_xml('pain.008.001.02')
+        end
+      end
+
+      send_data compressed_filestream.string, type: 'application/zip'
     end
 
     def error_response
