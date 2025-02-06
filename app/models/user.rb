@@ -103,7 +103,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   })
 
   def full_name
-    [first_name, last_name_prefix, last_name].reject(&:blank?).join(' ')
+    [first_name, last_name_prefix, last_name].compact_blank.join(' ')
   end
 
   alias to_s full_name
@@ -114,7 +114,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def generate_username
     value = [first_name, '.', last_name_prefix, last_name]
-            .reject(&:blank?).join.gsub(/\s|-/, '')
+            .compact_blank.join.gsub(/\s|-/, '')
             .parameterize.tr('-', '.')
     usernames_like = User.where('username LIKE ?', "#{value}%")
     value = "#{value}#{usernames_like.size}" if usernames_like.any?

@@ -1,5 +1,6 @@
 module Form
   class Response < ApplicationRecord
+    has_paper_trail
     belongs_to :form
     counter_culture :form, column_name: :responses_count
     belongs_to :user
