@@ -1,4 +1,5 @@
 class Permission < ApplicationRecord
+  has_paper_trail
   has_many :groups_permissions, class_name: 'GroupsPermissions'
   has_many :permissions_users, class_name: 'PermissionsUsers'
   has_many :groups, through: :groups_permissions

@@ -676,14 +676,10 @@ RSpec.describe User, type: :model do
     with_versioning do
       let(:user) { create(:user) }
 
-      # Currently we have a problem with paper trail
-      # which causes two versions to be created on each change
-      # This is caused by the fact that we call paper trail twice
-      # (once in ApplicationRecord and once in User)
-      it { expect(user.versions.size).to eq 2 }
+      it { expect(user.versions.size).to eq 1 }
 
       it do
-        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(2).to(4))
+        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(1).to(2))
       end
     end
   end

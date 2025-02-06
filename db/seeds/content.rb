@@ -45,10 +45,6 @@ articles.each do |article|
   end
 end
 
-members.sample(80).each { |user| FactoryBot.create(:quickpost_message, author: user) }
-# To ensure at least one user creating (more than) two quickpost messages
-members.sample(30).each { |user| FactoryBot.create(:quickpost_message, author: user) }
-
 members.sample(4).each do |user|
   FactoryBot.create(:activity, author: user)
 end
