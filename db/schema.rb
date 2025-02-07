@@ -9,7 +9,8 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
+
+ActiveRecord::Schema[7.0].define(version: 2025_02_07_233328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -473,7 +474,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.index ["author_id"], name: "index_polls_on_author_id"
     t.index ["form_id"], name: "index_polls_on_form_id"
   end
-3
+
   create_table "room_adverts", force: :cascade do |t|
     t.string "house_name", null: false
     t.string "contact", null: false
@@ -558,7 +559,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.string "digtus_subscription_preference", default: "physical"
     t.string "user_details_sharing_preference"
     t.boolean "allow_tomato_sharing"
-    t.string "webdav_secret_key"
     t.string "nickname"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
