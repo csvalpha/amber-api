@@ -98,7 +98,7 @@ describe V1::UsersController do
 
       authenticated_attributes = %w[
         email birthday address postcode phone_number study
-        food_preferences vegetarian start_study ical_secret_key webdav_secret_key
+        food_preferences vegetarian start_study ical_secret_key
         city picture_publication_preference info_in_almanak
         almanak_subscription_preference digtus_subscription_preference
         emergency_contact emergency_number ifes_data_sharing_preference

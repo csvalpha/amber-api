@@ -68,7 +68,6 @@ Rails.application.routes.draw do
         post :resend_activation_mail
         post :generate_otp_secret
         post :activate_otp
-        post :activate_webdav
       end
     end
     get 'users/me/nextcloud', to: 'users#nextcloud'
@@ -110,26 +109,6 @@ Rails.application.routes.draw do
 
   get 'coffee', to: 'coffee#index'
   get 'ical/activities', to: 'v1/activities#ical'
-
-  namespace :webdav do
-    match ':user_id/:key/contacts', via: :all, to: ContactSyncHandler.new(
-      resource_class: DAV4Rack::Carddav::PrincipalResource,
-      books_collection: '/books/'
-    )
-
-    match ':user_id/:key/contacts/books/', via: :all, to: ContactSyncHandler.new(
-      resource_class: DAV4Rack::Carddav::AddressbookCollectionResource
-    )
-
-    match ':user_id/:key/contacts/books/:book_id', via: :all, to: ContactSyncHandler.new(
-      resource_class: DAV4Rack::Carddav::AddressbookResource
-    )
-
-    match ':user_id/:key/contacts/books/:book_id/:contact_id(.vcf)',
-          via: :all, to: ContactSyncHandler.new(
-            resource_class: DAV4Rack::Carddav::ContactResource
-          )
-  end
 
   require 'sidekiq/web'
   require 'sidekiq-scheduler/web'

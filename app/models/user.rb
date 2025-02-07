@@ -179,10 +179,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     column_names.map(&:to_sym) + %i[full_name avatar_url]
   end
 
-  def generate_webdav_secret_key
-    self.webdav_secret_key = SecureRandom.hex(32)
-  end
-
   def to_ical # rubocop:disable Metrics/AbcSize
     return unless birthday
 
