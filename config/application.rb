@@ -62,9 +62,6 @@ module Amber
     config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Europe/Amsterdam'
 
-    config.x.slack_channel = '#monitoring'
-    config.x.slack_webhook = credentials.dig(Rails.env.to_sym, :slack_webhook) || ''
-
     config.x.mail_domains = %w[csvalpha.nl societeitflux.nl]
     config.x.improvmx_api_key = credentials.dig(Rails.env.to_sym, :improvmx_api_key)
     config.x.smtp_username = credentials.dig(:production, :smtp_username)

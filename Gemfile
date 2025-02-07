@@ -42,7 +42,6 @@ gem 'sentry-raven', '~> 3.1', '>= 3.1.2'
 gem 'sepa_king', '~> 0.14'
 gem 'sidekiq', '~> 7.3', '>= 7.3.7'
 gem 'sidekiq-scheduler', '~> 5.0', '>= 5.0.6'
-gem 'slack-notifier', '~> 2.4'
 gem 'validates_timeliness', '~> 7.0.0'
 gem 'vpim', '~> 24.2', '>= 24.2.20'
 
