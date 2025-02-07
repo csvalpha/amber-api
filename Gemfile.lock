@@ -1,16 +1,4 @@
 GIT
-  remote: https://github.com/csvalpha/dav4rack.git
-  revision: 8541e53876d7a49a1c2d318e698f9dae88439e89
-  ref: 8541e53
-  specs:
-    dav4rack (0.2.11)
-      addressable (>= 2.8.0)
-      nokogiri (>= 1.12.5)
-      rack (>= 2.2.3)
-      uuidtools (>= 2.1.5)
-      webrick (>= 1.7.0)
-
-GIT
   remote: https://github.com/heapsource/active_model_otp.git
   revision: 6ed9927ac2457b3fa7d59931f7758cac209c3b71
   ref: 6ed9927
@@ -139,10 +127,6 @@ GEM
     crass (1.0.6)
     date (3.4.1)
     date (3.4.1-java)
-    dav4rack_ext (1.0.0)
-      dav4rack
-      http_router
-      vcard_parser (~> 0.0.8)
     debug_inspector (1.1.0)
     diff-lcs (1.5.0)
     docile (1.4.0)
@@ -215,9 +199,6 @@ GEM
     http-cookie (1.0.4)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
-    http_router (0.11.2)
-      rack (>= 1.0.0)
-      url_mount (~> 0.2.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     iban-tools (1.2.1)
@@ -505,20 +486,15 @@ GEM
     unf_ext (0.0.8.1-x86-mingw32)
     unicode-display_width (2.1.0)
     uniform_notifier (1.16.0)
-    url_mount (0.2.1)
-      rack
-    uuidtools (2.2.0)
     validates_timeliness (7.0.0)
       activemodel (>= 7.0.0, < 8)
       timeliness (>= 0.3.10, < 1)
-    vcard_parser (0.0.9)
     vcr (6.1.0)
     vpim (24.2.20)
     webmock (3.14.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webrick (1.7.0)
     websocket-driver (0.7.7)
       base64
       websocket-extensions (>= 0.1.0)
@@ -551,8 +527,6 @@ DEPENDENCIES
   colorize
   consistency_fail
   counter_culture (~> 3.8, >= 3.8.2)
-  dav4rack!
-  dav4rack_ext (~> 1.0)
   doorkeeper (~> 5.8, >= 5.8.1)
   doorkeeper-i18n (~> 5.2, >= 5.2.7)
   dotenv-rails
