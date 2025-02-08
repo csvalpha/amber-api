@@ -81,7 +81,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_commit :sync_mail_aliases
 
   scope :activated, (-> { where('activated_at < ?', Time.zone.now) })
-  scope :contactsync_users, (-> { where.not(webdav_secret_key: nil) })
   scope :tomato_users, (-> { where(allow_tomato_sharing: true) })
   scope :login_enabled, (-> { where(login_enabled: true) })
   scope :sidekiq_access, (-> { where(sidekiq_access: true) })
