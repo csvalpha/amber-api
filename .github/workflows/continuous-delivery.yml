@@ -165,7 +165,7 @@ jobs:
             docker-compose up -d
 
       - name: Finalize Sentry release
-        uses: getsentry/action-release@50f4a1a3799e059c182a73c30bbebc89739af2db # v1.10.2
+        uses: getsentry/action-release@12bba0bd9c0f65f9f80d4965db646a1aed373d36 # v1.10.3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG_NAME }}
