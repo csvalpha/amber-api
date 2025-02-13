@@ -41,10 +41,6 @@ class UserPolicy < ApplicationPolicy
     me?
   end
 
-  def activate_webdav?
-    me?
-  end
-
   def batch_import?
     create?
   end

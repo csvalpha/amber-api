@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
-gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '8541e53'
 
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'
 gem 'bootsnap', '~> 1.18', '>= 1.18.4'
@@ -10,7 +9,6 @@ gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
 gem 'counter_culture', '~> 3.8', '>= 3.8.2'
-gem 'dav4rack_ext', '~> 1.0'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.1'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
 gem 'exifr', '~> 1.4'

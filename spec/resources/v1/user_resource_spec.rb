@@ -98,7 +98,7 @@ RSpec.describe V1::UserResource, type: :resource do
       let(:another_user) { user }
       let(:fields) do
         basic_fields + update_fields +
-          read_fields + user_details_fields + %i[ical_secret_key webdav_secret_key]
+          read_fields + user_details_fields + %i[ical_secret_key]
       end
 
       it { expect(resource.fetchable_fields).to match_array(fields) }
