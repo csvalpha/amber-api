@@ -23,11 +23,11 @@ shared_examples 'a model accepting a base 64 image as' do |attr|
     before { model.instance_variable_set(:"@#{attr}_secure_token", nil) }
 
     it do
-      expect { 
+      expect do
         model.public_send(attr).cache! # https://makandracards.com/makandra/611988-upgrade-carrierwave-3-x
         model.public_send(attr).store!
-        model.public_send(attr).recreate_versions! 
-      }.to(change { model.public_send(attr).url })
+        model.public_send(attr).recreate_versions!
+      end.to(change { model.public_send(attr).url })
     end
   end
 
