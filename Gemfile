@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
 gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '8541e53'
 
+gem 'active_model_otp', '~> 2.3'
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'
 gem 'bootsnap', '~> 1.18', '>= 1.18.4'
 gem 'carrierwave', '~> 3.1', '>= 3.1.1'
