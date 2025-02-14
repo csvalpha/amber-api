@@ -14,6 +14,8 @@ RUN apk add --update \
   imagemagick \
   postgresql-dev \
   tzdata \
+  libffi-dev \
+  build-base \
   && rm -rf /var/cache/apk/*
 
 RUN mkdir /app
