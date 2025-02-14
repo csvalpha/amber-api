@@ -11,6 +11,7 @@ RUN apk add --update \
   build-base \
   git \
   file-dev \
+  jpeg-dev \
   imagemagick \
   postgresql-dev \
   tzdata \
