@@ -4,7 +4,7 @@ class CreateStaticPages < ActiveRecord::Migration[5.0]
       t.string :title, null: false
       t.string :slug, null: false
       t.string :content, null: false
-      t.boolean :publicly_visible, default: false, null: false
+      t.boolean :publicly_visible
       t.datetime :deleted_at
 
       t.timestamps
