@@ -7,7 +7,7 @@ class CreateRoomAdverts < ActiveRecord::Migration[7.0]
       t.string :available_from
       t.string :description, null: false
       t.string :cover_photo
-      t.boolean :publicly_visible
+      t.boolean :publicly_visible, default: false, null: false
       t.integer :author_id
       t.datetime :deleted_at
 

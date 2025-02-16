@@ -102,7 +102,7 @@ RSpec.describe MailAlias, type: :model do
     context 'when with user' do
       subject(:mail_alias) { build_stubbed(:mail_alias, :with_user) }
 
-      it { expect(mail_alias.mail_addresses).to match_array([mail_alias.user.email]) }
+      it { expect(mail_alias.mail_addresses).to contain_exactly(mail_alias.user.email) }
     end
   end
 

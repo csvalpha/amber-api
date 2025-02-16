@@ -1,4 +1,4 @@
-require:
+plugins:
   - rubocop-rspec
   - rubocop-performance
   - rubocop-rails
@@ -54,6 +54,9 @@ Rails/InverseOf:
 Rails/LexicallyScopedActionFilter:
   Enabled: false
 
+Rails/BulkChangeTable:
+  Enabled: false
+
 RSpec/LeadingSubject:
   Enabled: false
 
@@ -69,8 +72,11 @@ RSpec/ContextWording:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
-RSpec/FilePath:
+RSpec/SpecFilePathFormat:
   Enabled: false
+
+RSpec/VariableName:
+  EnforcedStyle: snake_case
 
 Style/ClassAndModuleChildren:
   Exclude:
@@ -129,7 +135,4 @@ Lint/StructNewOverride:
   Enabled: true
 
 Naming/InclusiveLanguage:
-  Enabled: false
-
-Rails/BulkChangeTable:
   Enabled: false

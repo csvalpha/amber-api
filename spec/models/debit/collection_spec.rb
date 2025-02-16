@@ -102,14 +102,14 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has mandate and amount' do
-      let(:transaction1) { create(:transaction, collection:, amount: 3000) }
-      let(:transaction2) { create(:transaction, collection:, amount: 100) }
-      let(:transaction3) { create(:transaction, collection:, amount: 3000) }
+      let(:big_transaction) { create(:transaction, collection:, amount: 4500) }
+      let(:small_transaction) { create(:transaction, collection:, amount: 400) }
+      let(:medium_transaction) { create(:transaction, collection:, amount: 1500) }
 
       before do
-        create(:mandate, user: transaction1.user, iban: 'NL 44 RABO 0123456789')
-        create(:mandate, user: transaction2.user, iban: 'NL 39 ABNA 8234998285')
-        create(:mandate, user: transaction3.user, iban: 'NL 69 ABNA4435376989')
+        create(:mandate, user: big_transaction.user, iban: 'NL 44 RABO 0123456789')
+        create(:mandate, user: small_transaction.user, iban: 'NL 39 ABNA 8234998285')
+        create(:mandate, user: mediumTransaction.user, iban: 'NL 69 ABNA4435376989')
       end
 
       it { expect(collection.to_sepa.first).to be_an_instance_of(SEPA::DirectDebit) }
@@ -127,8 +127,8 @@ RSpec.describe Debit::Collection, type: :model do
       it { expect(collection.to_sepa).to be_nil }
 
       it do
-        expect(collection.errors.messages[:sepa].first).to eq 'can only generate sepa files'\
-                                                              ' for collections in future'
+        expect(collection.errors.messages[:sepa].first).to eq 'can only generate sepa files ' \
+                                                              'for collections in future'
       end
     end
   end

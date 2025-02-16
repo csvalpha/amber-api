@@ -34,7 +34,7 @@ RSpec.describe Import::User, type: :model do
       end
 
       context 'when on a dry run' do
-        it { expect { user_import.save!(false) }.to(change(User, :count).by(0)) }
+        it { expect { user_import.save!(false) }.not_to(change(User, :count)) }
       end
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe Import::User, type: :model do
         )
       end
 
-      it { expect { user_import.save!(live_run) }.to(change(User, :count).by(0)) }
+      it { expect { user_import.save!(live_run) }.not_to(change(User, :count)) }
     end
   end
 

@@ -35,7 +35,7 @@ module Import
       Membership.create(user:, group:, start_date: Time.zone.now)
     end
 
-    def valid? # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def valid? # rubocop:disable Metrics/MethodLength
       if @file.nil? || @file[:file].blank?
         errors.add(:file, 'No file uploaded')
         return false
@@ -51,7 +51,7 @@ module Import
         errors.add(:header, "#{unpermitted_column_name} is not permitted to set")
       end
 
-      errors.size.zero?
+      errors.empty?
     end
 
     # Method used in the translation of validation errors

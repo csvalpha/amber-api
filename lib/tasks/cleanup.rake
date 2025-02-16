@@ -22,8 +22,8 @@ namespace :cleanup do
       Doorkeeper::AccessToken.where(expire).delete_all
       puts 'Removed old access tokens'
     else
-      puts 'Please specify the -f argument if you really want to remove the old doorkeeper tokens.'\
-           ' This action cannot be undone.'
+      puts 'Please use the -f argument if you really want to remove the old doorkeeper tokens. ' \
+           'This action cannot be undone.'
     end
   end
 end

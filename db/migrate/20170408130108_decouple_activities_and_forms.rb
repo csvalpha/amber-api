@@ -13,7 +13,7 @@ class DecoupleActivitiesAndForms < ActiveRecord::Migration[5.0]
   end
 
   def migrate_data_from_form_to_activities
-    Form::Form.all.each do |form|
+    Form::Form.find_each do |form|
       activity = Activity.find_by(form:)
       next unless activity
 

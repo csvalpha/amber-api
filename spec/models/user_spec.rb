@@ -587,7 +587,7 @@ RSpec.describe User, type: :model do
 
     before { create(:group, users: [user], permission_list: ['user.update']) }
 
-    it { expect(user.permissions.map(&:name)).to match_array(['user.read', 'user.update']) }
+    it { expect(user.permissions.map(&:name)).to contain_exactly('user.read', 'user.update') }
   end
 
   describe '#current_group_member?' do

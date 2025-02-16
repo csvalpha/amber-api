@@ -1,7 +1,7 @@
 class AddReferenceToDailyVerse < ActiveRecord::Migration[5.1]
   def change
     add_column :daily_verses, :reference, :string
-    DailyVerse.all.each do |daily_verse|
+    DailyVerse.find_each do |daily_verse|
       reference = "#{daily_verse.book} #{daily_verse.chapter}:#{daily_verse.verse}"
       daily_verse.reference = reference
       daily_verse.save

@@ -13,8 +13,7 @@ RSpec.describe MailAliasSyncJob, type: :job do
     before do
       stub_const('Improvmx::Client', improvmx_class)
       allow(improvmx_class).to receive(:new).and_return(improvmx)
-      allow(improvmx).to receive(:create_or_update_alias).and_return(200)
-      allow(improvmx).to receive(:delete_alias).and_return(200)
+      allow(improvmx).to receive_messages(create_or_update_alias: 200, delete_alias: 200)
       job.perform(mail_alias.id)
     end
 
