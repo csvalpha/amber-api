@@ -1,5 +1,6 @@
 module Debit
   class Mandate < ApplicationRecord
+    has_paper_trail
     belongs_to :user
 
     validates :start_date, presence: true
