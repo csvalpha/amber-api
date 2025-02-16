@@ -252,7 +252,7 @@ GEM
     llhttp-ffi (0.5.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
-    logger (1.6.5)
+    logger (1.6.6)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -282,14 +282,12 @@ GEM
     msgpack (1.7.5-java)
     nenv (0.3.0)
     net-imap (0.5.6)
-    net-imap (0.5.6)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.5.1)
     net-smtp (0.5.1)
       net-protocol
     netrc (0.11.0)
@@ -544,8 +542,6 @@ GEM
       rack
     useragent (0.16.11)
     uuidtools (2.2.0)
-    validates_timeliness (7.1.0)
-      activemodel (>= 7.0.0, < 8)
     validates_timeliness (8.0.0)
       activemodel (>= 8.0.0, < 9)
       timeliness (>= 0.3.10, < 1)
@@ -648,7 +644,6 @@ DEPENDENCIES
   terminal-notifier-guard
   timecop
   tzinfo-data
-  validates_timeliness (~> 7.1.0)
   validates_timeliness (~> 8.0.0)
   vcr
   vpim (~> 24.2, >= 24.2.20)
