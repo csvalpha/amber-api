@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'active_model_otp', git: 'https://github.com/heapsource/active_model_otp.git', ref: '6ed9927'
 gem 'dav4rack', git: 'https://github.com/csvalpha/dav4rack.git', ref: '8541e53'
 
+gem 'active_model_otp', '~> 2.3'
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'
 gem 'bootsnap', '~> 1.18', '>= 1.18.4'
 gem 'carrierwave', '~> 3.1', '>= 3.1.1'
@@ -35,7 +35,7 @@ gem 'rack-attack', '~> 6.7'
 gem 'rack-cors', '~> 2.0', '>= 2.0.2', require: 'rack/cors'
 gem 'rails', '~> 7.0.0', '>= 7.0.8.7'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.10'
-gem 'redis', '~> 4.8', '>= 4.8.1'
+gem 'redis', '~> 5.3'
 gem 'roo', '~> 2.10', '>= 2.10.1'
 gem 'ruby-filemagic', '~> 0.7', '>= 0.7.3'
 gem 'rubyzip', '~> 2.3', '>= 2.3.2'
