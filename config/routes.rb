@@ -20,7 +20,6 @@ Rails.application.routes.draw do
     jsonapi_resources :articles
     jsonapi_resources :article_comments
     jsonapi_resources :board_room_presences
-    jsonapi_resources :study_room_presences
     jsonapi_resources :books do
       collection do
         get :isbn_lookup
@@ -47,6 +46,7 @@ Rails.application.routes.draw do
     jsonapi_resources :photos, only: %i[index show destroy]
     jsonapi_resources :polls
     jsonapi_resources :room_adverts
+    jsonapi_resources :sidekiq, only: %i[index show]
     jsonapi_resources :static_pages
     jsonapi_resources :stored_mails, only: %i[index show destroy] do
       jsonapi_relationships
@@ -55,6 +55,7 @@ Rails.application.routes.draw do
         post :reject
       end
     end
+    jsonapi_resources :study_room_presences
     resources :daily_verses, only: [:index]
     jsonapi_resources :users, only: %i[index show create update] do
       jsonapi_relationships
