@@ -97,7 +97,7 @@ To run RuboCop, execute:
 
 ## Migrations 
 
-When migrations are executed on master and everthing worked the can be archived with the following command.
+When migrations are executed on master and everthing worked they can be archived with the following command.
 
     bundle exec rails db:migrate:archive
 
