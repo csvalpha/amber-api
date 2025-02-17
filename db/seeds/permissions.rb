@@ -53,7 +53,8 @@ all_permissions_map = {
   'debit/collection' => %i[create read update destroy],
   'debit/transaction' => %i[create read update destroy],
   'debit/mandate' => %i[create read update],
-  'vacancy' => %i[create read update destroy]
+  'vacancy' => %i[create read update destroy],
+  'sidekiq' => %i[read]
 }
 
 bestuur.permissions = create_permissions(all_permissions_map)
