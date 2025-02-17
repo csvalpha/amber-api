@@ -95,6 +95,12 @@ To run RuboCop, execute:
 
     bundle exec rubocop
 
+## Migrations 
+
+When migrations are executed on master and everthing worked the can be archived with the following command.
+
+    bundle exec rails db:migrate:archive
+
 ## GitHub Actions (automated testing)
 GitHub Actions is a CI/CD service which automatically tests the application after a commit has been pushed. GitHub Actions will run RuboCop and RSpec (see `.github/workflows/continuous-integration.yml`) and will fail if one of these fails.
 
