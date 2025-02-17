@@ -109,7 +109,7 @@ RSpec.describe Debit::Collection, type: :model do
       before do
         create(:mandate, user: big_transaction.user, iban: 'NL 44 RABO 0123456789')
         create(:mandate, user: small_transaction.user, iban: 'NL 39 ABNA 8234998285')
-        create(:mandate, user: mediumTransaction.user, iban: 'NL 69 ABNA4435376989')
+        create(:mandate, user: medium_transaction.user, iban: 'NL 69 ABNA4435376989')
       end
 
       it { expect(collection.to_sepa.first).to be_an_instance_of(SEPA::DirectDebit) }

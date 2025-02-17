@@ -307,7 +307,7 @@ RSpec.describe Activity, type: :model do
     end
 
     context 'when without public visibility' do
-      subject(:activity) { build_stubbed(:activity, publicly_visible: nil) }
+      subject(:activity) { build_stubbed(:activity, publicly_visible: false) }
 
       it { expect(activity).not_to be_valid }
     end

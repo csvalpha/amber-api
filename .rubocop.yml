@@ -8,8 +8,8 @@ AllCops:
   TargetRubyVersion: 3.3
   Exclude:
     - 'db/schema.rb'
+    - 'db/migrate/archive/*'
     - 'config/initializers/secret_token.rb'
-    - 'vendor/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
   NewCops: enable
@@ -45,16 +45,10 @@ Rails/HttpPositionalArguments:
 Rails/HasManyOrHasOneDependent:
   Enabled: false
 
-Rails/ReversibleMigration:
-  Enabled: false
-
 Rails/InverseOf:
   Enabled: false
 
 Rails/LexicallyScopedActionFilter:
-  Enabled: false
-
-Rails/BulkChangeTable:
   Enabled: false
 
 RSpec/LeadingSubject:

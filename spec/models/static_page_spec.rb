@@ -19,7 +19,7 @@ RSpec.describe StaticPage, type: :model do
     end
 
     context 'when without public visibility' do
-      subject(:static_page) { build_stubbed(:static_page, publicly_visible: nil) }
+      subject(:static_page) { build_stubbed(:static_page, publicly_visible: false) }
 
       it { expect(static_page).not_to be_valid }
     end

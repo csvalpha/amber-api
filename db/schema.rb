@@ -9,7 +9,8 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
+
+ActiveRecord::Schema[7.0].define(version: 2025_02_16_233318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,7 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.integer "author_id"
     t.string "cover_photo"
     t.integer "comments_count", default: 0, null: false
-    t.boolean "pinned", default: false
+    t.boolean "pinned", default: false, null: false
     t.index ["author_id"], name: "index_articles_on_author_id"
     t.index ["deleted_at"], name: "index_articles_on_deleted_at"
     t.index ["group_id"], name: "index_articles_on_group_id"
@@ -325,7 +326,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "deleted_at", precision: nil
     t.bigint "moderator_group_id"
-    t.boolean "smtp_enabled", default: false
+    t.boolean "smtp_enabled", default: false, null: false
     t.datetime "last_received_at", precision: nil
     t.index ["email"], name: "index_mail_aliases_on_email", unique: true
     t.index ["moderator_group_id"], name: "index_mail_aliases_on_moderator_group_id"
@@ -480,7 +481,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.string "location"
     t.string "description", null: false
     t.string "cover_photo"
-    t.boolean "publicly_visible"
+    t.boolean "publicly_visible", default: false, null: false
     t.integer "author_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -492,7 +493,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.string "title", null: false
     t.string "slug", null: false
     t.string "content", null: false
-    t.boolean "publicly_visible"
+    t.boolean "publicly_visible", default: false, null: false
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -544,20 +545,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.string "activation_token"
     t.string "avatar"
     t.datetime "activation_token_valid_till", precision: nil
-    t.boolean "sidekiq_access"
+    t.boolean "sidekiq_access", default: false, null: false
     t.boolean "vegetarian", default: false
     t.string "otp_secret_key"
-    t.boolean "otp_required"
+    t.boolean "otp_required", default: false, null: false
     t.string "ical_secret_key"
     t.string "picture_publication_preference", default: "always_ask"
     t.string "emergency_contact"
     t.string "emergency_number"
-    t.boolean "ifes_data_sharing_preference", default: false
-    t.boolean "info_in_almanak", default: false
+    t.boolean "ifes_data_sharing_preference", default: false, null: false
+    t.boolean "info_in_almanak", default: false, null: false
     t.string "almanak_subscription_preference", default: "physical"
     t.string "digtus_subscription_preference", default: "physical"
     t.string "user_details_sharing_preference"
-    t.boolean "allow_tomato_sharing"
+    t.boolean "allow_tomato_sharing", default: false, null: false
     t.string "webdav_secret_key"
     t.string "nickname"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
