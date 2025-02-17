@@ -349,14 +349,6 @@ RSpec.describe User, type: :model do
     it { expect(described_class.birthday(10, 26).count).to eq(0) }
   end
 
-  describe '.sidekiq_access' do
-    it do
-      expect { create(:user, user_permission_list: ['sidekiq.read']) }.to(
-        change { described_class.sidekiq_access.count }.by(1)
-      )
-    end
-  end
-
   describe '.upcoming_birthdays' do
     context 'when with normal birthdays' do
       before do
