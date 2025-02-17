@@ -12,7 +12,7 @@ class AddMandateModel < ActiveRecord::Migration[5.1]
       t.index :uid, unique: true
     end
 
-    User.All_each do |user|
+    User.all.each do |user|
       Debit::Mandate.create(user:, uid: user.id,
                             iban: user.iban,
                             iban_holder: user.iban_holder,

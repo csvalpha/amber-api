@@ -10,7 +10,7 @@ class RemoveUserEnums < ActiveRecord::Migration[5.1]
     dsp_migration = { '0' => 'physical', '1' => 'digital', '2' => 'no_subscription' }
     uds_migration = { '0' => 'hidden', '1' => 'members_only', '2' => 'all_users' }
 
-    User.All_each do |user|
+    User.all.each do |user|
       user.picture_publication_preference = ppp_migration[user.picture_publication_preference]
       user.almanak_subscription_preference = asp_migration[user.almanak_subscription_preference]
       user.digtus_subscription_preference = dsp_migration[user.digtus_subscription_preference]
