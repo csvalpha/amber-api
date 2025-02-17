@@ -1,5 +1,5 @@
 
-FROM ruby:3.1.2-alpine@sha256:05b990dbaa3a118f96e9ddbf046f388b3c4953d5ef3d18908af96f42c0e138d9
+FROM ruby:3.2.7-alpine@sha256:05d7e9b96be9bdcaa15016b41693963d257847c323dcbd45e56c4d837018bdf0
 
 ARG BUILD_HASH='unknown'
 ENV BUILD_HASH=$BUILD_HASH
@@ -11,9 +11,12 @@ RUN apk add --update \
   build-base \
   git \
   file-dev \
+  jpeg-dev \
   imagemagick \
   postgresql-dev \
   tzdata \
+  libffi-dev \
+  build-base \
   && rm -rf /var/cache/apk/*
 
 RUN mkdir /app

@@ -5,7 +5,7 @@ require:
 
 AllCops:
   TargetRailsVersion: 7.0
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
   Exclude:
     - 'db/schema.rb'
     - 'config/initializers/secret_token.rb'
