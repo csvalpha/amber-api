@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserCleanupJob, type: :job do
+RSpec.describe UserCleanupJob do
   describe '#perform' do
     let(:user) { create(:user) }
     let(:almost_archive_user) do

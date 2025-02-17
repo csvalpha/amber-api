@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Webdav::Contact, type: :model do
+RSpec.describe Webdav::Contact do
   let(:user) { build_stubbed(:user) }
 
   subject(:contact) { described_class.new(user) }

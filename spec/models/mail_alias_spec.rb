@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailAlias, type: :model do
+RSpec.describe MailAlias do
   describe '#valid' do
     context 'when without moderation type' do
       subject(:mail_alias) { build_stubbed(:mail_alias, moderation_type: nil) }

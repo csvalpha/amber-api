@@ -1,3 +1,7 @@
+require:
+  - rubocop-factory_bot
+  - rubocop-rspec_rails
+
 plugins:
   - rubocop-rspec
   - rubocop-performance
@@ -71,6 +75,11 @@ RSpec/SpecFilePathFormat:
 
 RSpec/VariableName:
   EnforcedStyle: snake_case
+
+FactoryBot:
+  Include:
+    - "**/spec/factories/**/*.rb"
+    - "**/db/seeds/*.rb"
 
 Style/ClassAndModuleChildren:
   Exclude:

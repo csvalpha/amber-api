@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Activity, type: :model do
+RSpec.describe Activity do
   subject(:activity) { build_stubbed(:activity) }
 
   describe '#valid' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Debit::Collection, type: :model do
+RSpec.describe Debit::Collection do
   subject(:collection) { build_stubbed(:collection) }
 
   describe '#valid' do

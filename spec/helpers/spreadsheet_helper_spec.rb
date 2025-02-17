@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SpreadsheetHelper, type: :helper do
+RSpec.describe SpreadsheetHelper do
   include described_class
 
   let(:test_file_path) { Rails.root.join('spec', 'support', 'files', 'user_import.csv') }

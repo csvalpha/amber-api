@@ -1,7 +1,7 @@
 require 'rails_helper'
 require Rails.root.join('spec', 'support', 'mocks', 'fake_http')
 
-RSpec.describe MailAliasSyncJob, type: :job do
+RSpec.describe MailAliasSyncJob do
   describe '#perform' do
     let(:job) { described_class.new }
     let(:mail_alias) do

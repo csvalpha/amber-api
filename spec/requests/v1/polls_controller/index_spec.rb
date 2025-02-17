@@ -21,11 +21,7 @@ describe V1::PollsController do
       end
 
       let(:new_records) do
-        [
-          create(:poll),
-          create(:poll),
-          create(:poll)
-        ]
+        create_list(:poll, 3)
       end
 
       subject(:request) { filtered_request }

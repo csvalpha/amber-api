@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Import::User, type: :model do
+RSpec.describe Import::User do
   let(:test_file_path) { Rails.root.join('spec', 'support', 'files', 'user_import.csv') }
   let(:test_file) { File.open(test_file_path) }
   let(:group) { create(:group) }
