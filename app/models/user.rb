@@ -84,7 +84,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :contactsync_users, (-> { where.not(webdav_secret_key: nil) })
   scope :tomato_users, (-> { where(allow_tomato_sharing: true) })
   scope :login_enabled, (-> { where(login_enabled: true) })
-  scope :sidekiq_access, (-> { where(permission?(:read, Sidekiq)) })
   scope :birthday, (lambda { |month = Time.zone.now.month, day = Time.zone.now.day|
     where('extract (month from birthday) = ? AND extract (day from birthday) = ?', month, day)
   })

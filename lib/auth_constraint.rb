@@ -6,7 +6,9 @@ class AuthConstraint
                                                                             'access_token')
     Rails.cache.fetch(token, expires_in: 1.minute) do
       user_id = Doorkeeper::AccessToken.by_token(token).resource_owner_id
-      User.sidekiq_access.login_enabled.exists?(user_id)
+      user = User.find_by(id: user_id)
+
+      user&.permission?("read", "Sidekiq")
     end
   end
 end

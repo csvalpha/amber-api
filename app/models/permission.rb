@@ -11,9 +11,15 @@ class Permission < ApplicationRecord
 
   def name_is_model_dot_action?
     permission_name = name.try(:split, '.')
-    errors.add(:name, "must be `model_name`.`action`, is `#{name}`") unless
-                                                            permission_name.try(:length) == 2 &&
-                                                            ApplicationRecord.model_names.include?(permission_name.first) && # rubocop:disable Layout/LineLength
-                                                            %w[create read update destroy].include?(permission_name.second) # rubocop:disable Layout/LineLength
+  
+    allowed_system_permissions = ["sidekiq.read"] # Add more system permissions if needed
+  
+    is_valid_model_permission = permission_name.try(:length) == 2 &&
+                                (ApplicationRecord.model_names.include?(permission_name.first) ||
+                                 allowed_system_permissions.include?(name)) && 
+                                %w[create read update destroy].include?(permission_name.second)
+  
+    errors.add(:name, "must be `model_name.action`, is `#{name}`") unless is_valid_model_permission
   end
+  
 end
