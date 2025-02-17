@@ -19,7 +19,7 @@ RSpec.describe PhotoAlbum do
     end
 
     context 'when without public visibility' do
-      subject(:photo_album) { build_stubbed(:photo_album, publicly_visible: false) }
+      subject(:photo_album) { build_stubbed(:photo_album, publicly_visible: nil) }
 
       it { expect(photo_album).not_to be_valid }
     end

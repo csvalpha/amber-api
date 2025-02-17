@@ -31,13 +31,13 @@ RSpec.describe Article do
     end
 
     context 'when without public visibility' do
-      subject(:article) { build(:article, publicly_visible: false) }
+      subject(:article) { build(:article, publicly_visible: nil) }
 
       it { expect(article).not_to be_valid }
     end
 
     context 'when without pinned' do
-      subject(:article) { build(:article, pinned: false) }
+      subject(:article) { build(:article, pinned: nil) }
 
       it { expect(article).not_to be_valid }
     end

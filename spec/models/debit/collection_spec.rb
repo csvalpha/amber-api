@@ -114,9 +114,9 @@ RSpec.describe Debit::Collection do
 
       it { expect(collection.to_sepa.first).to be_an_instance_of(SEPA::DirectDebit) }
       it { expect(collection.to_sepa.first.transactions.size).to eq 2 }
-      it { expect(collection.to_sepa.first.transactions.first.amount).to eq 3000 }
+      it { expect(collection.to_sepa.first.transactions.first.amount).to eq 4500 }
       it { expect(collection.to_sepa.second.transactions.size).to eq 1 }
-      it { expect(collection.to_sepa.second.transactions.first.amount).to eq 3000 }
+      it { expect(collection.to_sepa.second.transactions.first.amount).to eq 1500 }
     end
 
     context 'when collection date has passed' do
