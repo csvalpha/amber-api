@@ -351,7 +351,7 @@ RSpec.describe User, type: :model do
 
   describe '.sidekiq_access' do
     it do
-      expect { create(:user, sidekiq_access: true) }.to(
+      expect { create(:user, user_permission_list: ['sidekiq.read']) }.to(
         change { described_class.sidekiq_access.count }.by(1)
       )
     end

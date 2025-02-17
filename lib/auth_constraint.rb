@@ -8,7 +8,7 @@ class AuthConstraint
       user_id = Doorkeeper::AccessToken.by_token(token).resource_owner_id
       user = User.find_by(id: user_id)
 
-      user&.permission?("read", "Sidekiq")
+      user&.permission?('read', 'Sidekiq')
     end
   end
 end

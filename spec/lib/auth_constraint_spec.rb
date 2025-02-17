@@ -23,7 +23,7 @@ RSpec.describe AuthConstraint do
       it { expect(described_class.sidekiq?(request)).to be false }
 
       context 'when authorized' do
-        let(:user) { create(:user, sidekiq_access: true) }
+        let(:user) { create(:user, user_permission_list: ['sidekiq.read']) }
 
         it { expect(described_class.sidekiq?(request)).to be true }
       end
