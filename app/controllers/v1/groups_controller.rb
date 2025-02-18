@@ -20,7 +20,6 @@ class V1::GroupsController < V1::ApplicationController
     return unless Rails.env.production? || Rails.env.staging?
 
     # :nocov:
-    SlackMessageJob.perform_later(slack_notification(description))
     UserExportMailerJob.perform_later(
       current_user, @model, permitted_serializable_user_attributes.join(', '), description
     )
@@ -33,14 +32,5 @@ class V1::GroupsController < V1::ApplicationController
       attrs = params[:user_attrs].presence || 'id'
       attributes & attrs.split(',').map(&:to_sym)
     end
-  end
-
-  def slack_notification(description)
-    # :nocov:
-    "User ##{current_user.id} (#{current_user.full_name}) "\
-      "is exporting users for group #{@model.id} from host #{request.host} with #"\
-      "#{permitted_serializable_user_attributes.join(',')}. De gebruiker gaf als "\
-      "reden: #{description}"
-    # :nocov:
   end
 end
