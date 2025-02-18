@@ -16,6 +16,7 @@ FactoryBot.define do
     emergency_contact { Faker::Name.name }
     emergency_number { Faker::PhoneNumber.phone_number }
     ifes_data_sharing_preference { Faker::Boolean }
+    be_drivers_license { Faker::Boolean }
     info_in_almanak { Faker::Boolean }
     picture_publication_preference { %w[always_publish always_ask never_publish].sample }
     almanak_subscription_preference { %w[physical digital no_subscription].sample }
