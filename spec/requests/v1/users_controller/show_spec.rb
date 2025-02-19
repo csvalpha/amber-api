@@ -31,7 +31,7 @@ describe V1::UsersController do
           %w[login_enabled otp_required
              activated_at emergency_contact emergency_number info_in_almanak
              almanak_subscription_preference digtus_subscription_preference
-             ifes_data_sharing_preference user_details_sharing_preference 
+             ifes_data_sharing_preference user_details_sharing_preference
              be_drivers_license]
         end
       end

@@ -137,8 +137,7 @@ RSpec.describe User, type: :model do
 
       it { expect(user.update(be_drivers_license: nil)).to be false }
     end
-    
-    be_drivers_license
+
     context 'when re-null valid info_in_almanak' do
       subject(:user) { create(:user) }
 
