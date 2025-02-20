@@ -66,8 +66,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :picture_publication_preference, not_renullable: true, inclusion: {
     in: %w[always_publish always_ask never_publish], allow_nil: true
   }
-  validates :ifes_data_sharing_preference, not_renullable: true
-  validates :info_in_almanak, not_renullable: true
   validates :user_details_sharing_preference, not_renullable: true, inclusion: {
     in: %w[hidden members_only all_users], allow_nil: true
   }
