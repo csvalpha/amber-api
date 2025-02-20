@@ -31,7 +31,7 @@ jobs:
           ref: ${{ inputs.sha }}
 
       - name: Build test image
-        uses: guidojw/actions/build-docker-image@ec8c080252c6b8903a4431211b78c543609f5f89 # v1.4.6
+        uses: guidojw/actions/build-docker-image@3ad963828827110a6b716a011f242bf01fdf1db4 # v1.4.7
         with:
           file: Dockerfile
           build-args: |
@@ -68,10 +68,10 @@ jobs:
 
       - name: Download actionlint
         run: |
-          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.26
+          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.7.7
 
       - name: Load test image
-        uses: guidojw/actions/load-docker-image@ec8c080252c6b8903a4431211b78c543609f5f89 # v1.4.6
+        uses: guidojw/actions/load-docker-image@3ad963828827110a6b716a011f242bf01fdf1db4 # v1.4.7
         with:
           name: app
 
@@ -80,8 +80,8 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           EXIT_STATUS=0
-          ./actionlint -ignore 'property "gh_app_private_key" is not defined' -ignore 'SC2153:' \
-            -ignore 'property "sha" is not defined in object type {}' || EXIT_STATUS=$?
+          ./actionlint -ignore 'SC2153:'  -ignore 'property "sha" is not defined in object type {}' || \
+          EXIT_STATUS=$?
           docker run -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST=localhost -e \
             RAILS_MASTER_KEY --network=host app bin/ci.sh lint || EXIT_STATUS=$?
           exit $EXIT_STATUS
@@ -114,7 +114,7 @@ jobs:
           echo '::add-matcher::.github/problem-matchers/rspec.json'
 
       - name: Load test image
-        uses: guidojw/actions/load-docker-image@ec8c080252c6b8903a4431211b78c543609f5f89 # v1.4.6
+        uses: guidojw/actions/load-docker-image@3ad963828827110a6b716a011f242bf01fdf1db4 # v1.4.7
         with:
           name: app
 
@@ -128,14 +128,14 @@ jobs:
 
       - name: Upload coverage report to Codecov
         if: ${{ !cancelled() }}
-        uses: codecov/codecov-action@015f24e6818733317a2da2edd6290ab26238649a # v5.0.7
+        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5.3.1
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload coverage report artifact
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         with:
           name: coverage
           path: coverage/

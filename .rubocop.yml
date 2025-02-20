@@ -4,7 +4,8 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRailsVersion: 5.1
+  TargetRailsVersion: 7.0
+  TargetRubyVersion: 3.2
   Exclude:
     - 'db/schema.rb'
     - 'config/initializers/secret_token.rb'
@@ -124,9 +125,11 @@ Style/HashTransformValues:
 Lint/RaiseException:
   Enabled: true
 
-
 Lint/StructNewOverride:
   Enabled: true
 
 Naming/InclusiveLanguage:
+  Enabled: false
+
+Rails/BulkChangeTable:
   Enabled: false
