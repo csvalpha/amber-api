@@ -40,7 +40,7 @@ module Form
     end
 
     def form_allows_responses?
-      return true if form.try(:allows_responses?)
+      return true if form.try(:allows_responses?) || user_id == 0
 
       errors.add(:form, 'does not allow responses')
       false
