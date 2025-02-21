@@ -3,13 +3,13 @@ class UserPolicy < ApplicationPolicy
     def resolve
       if user
         scope
-      elsif tomato?
-        scope.tomato_users
+      elsif sofia?
+        scope.sofia_users
       end
     end
 
-    def tomato?
-      @application&.scopes&.include? 'tomato'
+    def sofia?
+      @application.scopes.include?('sofia')
     end
   end
 

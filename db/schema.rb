@@ -9,7 +9,7 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_06_102023) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -557,7 +557,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_13_091607) do
     t.string "almanak_subscription_preference", default: "physical"
     t.string "digtus_subscription_preference", default: "physical"
     t.string "user_details_sharing_preference"
-    t.boolean "allow_tomato_sharing"
+    t.boolean "allow_sofia_sharing"
     t.string "webdav_secret_key"
     t.string "nickname"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
