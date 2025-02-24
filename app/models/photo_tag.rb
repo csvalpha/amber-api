@@ -1,4 +1,5 @@
 class PhotoTag < ApplicationRecord
+  has_paper_trail
   belongs_to :photo, touch: true
   counter_culture :photo, column_name: :tags_count
   belongs_to :author, class_name: 'User'

@@ -1,4 +1,5 @@
 class ArticleComment < ApplicationRecord
+  has_paper_trail
   belongs_to :article
   counter_culture :article, column_name: :comments_count
   belongs_to :author, class_name: 'User'

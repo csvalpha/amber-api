@@ -1,6 +1,7 @@
 require 'zip'
 
 class PhotoAlbum < ApplicationRecord
+  has_paper_trail
   has_many :photos, dependent: :destroy
   belongs_to :author, class_name: 'User'
   belongs_to :group, optional: true

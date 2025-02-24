@@ -1,4 +1,5 @@
 class Poll < ApplicationRecord
+  has_paper_trail
   belongs_to :form, class_name: 'Form::Form'
   has_many :responses, through: :form, class_name: 'Form::Response'
   belongs_to :author, class_name: 'User'

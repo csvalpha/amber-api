@@ -1,5 +1,6 @@
 module Forum
   class Thread < ApplicationRecord
+    has_paper_trail
     has_many :posts, dependent: :destroy, counter_cache: :posts_count
     has_many :read_threads, dependent: :destroy
 

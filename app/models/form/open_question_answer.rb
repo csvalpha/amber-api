@@ -1,5 +1,6 @@
 module Form
   class OpenQuestionAnswer < QuestionAnswer
+    has_paper_trail
     belongs_to :question, class_name: 'OpenQuestion'
 
     validates :answer, presence: true
