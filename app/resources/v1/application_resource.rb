@@ -36,7 +36,7 @@ class V1::ApplicationResource < JSONAPI::Resource
     end
   end
 
-  def self.search(records, value) # rubocop:disable Metrics/MethodLength
+  def self.search(records, value) # rubocop:disable Layout/LineLength
     return records if records.empty?
 
     arel = records.first.class.arel_table
