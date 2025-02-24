@@ -180,7 +180,7 @@ jobs:
           environment: ${{ needs.metadata.outputs.stage }}
           version: ${{ needs.merge.outputs.sha }}
           set_commits: skip
-   
+
       - name: Finish deployment
         uses: bobheadxi/deployments@648679e8e4915b27893bd7dbc35cb504dc915bc8 # v1.5.0
         if: steps.start_deployment.conclusion == 'success' && always()
@@ -189,7 +189,7 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.start_deployment.outputs.deployment_id }}
           env: ${{ needs.metadata.outputs.stage }}
-          env_url: ${{ steps.get_url.outputs.environment_url }}        
+          env_url: ${{ steps.get_url.outputs.environment_url }}
 
   update_check_run:
     name: Update Check Run
@@ -219,6 +219,7 @@ jobs:
               break
             fi
           done
+
       - name: Update Continuous Delivery check run
         uses: LouisBrunner/checks-action@6b626ffbad7cc56fd58627f774b9067e6118af23 # v2.0.0
         with:
