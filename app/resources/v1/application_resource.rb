@@ -37,7 +37,7 @@ class V1::ApplicationResource < JSONAPI::Resource
   end
 
   def self.search(records, value)
-    return records if records.== []
+    return records if records == []
 
     arel = records.first.class.arel_table
     value.each do |val|
