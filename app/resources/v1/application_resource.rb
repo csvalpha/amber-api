@@ -37,16 +37,17 @@ class V1::ApplicationResource < JSONAPI::Resource
   end
 
   def self.search(records, value)
-    return records if records == []
-
-    final_records = []
+    return records if records.empty?
+  
     arel = records.first.class.arel_table
     value.each do |val|
-      searchable_fields.each do |field|
-        final_records << records.where(arel[field].lower.matches("%#{val.downcase}%"))
+      val.split.each do |word|
+        records = records.where(
+          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
+        )
       end
-    end
-    records.where(id: final_records.flatten.map(&:id))
+    end  
+    records
   end
 
   def self.records(options = {})
