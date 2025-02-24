@@ -118,7 +118,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
   def excluded_display_properties
     %i[created_at updated_at deleted_at activated_at archived_at password_digest activation_token
        avatar activation_token_valid_till sidekiq_access otp_secret_key otp_required
-       ical_secret_key id]
+       ical_secret_key ical_categories id]
   end
 
   def otp_already_required_error
