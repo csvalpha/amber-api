@@ -36,14 +36,14 @@ class V1::ApplicationResource < JSONAPI::Resource
     end
   end
 
-  def self.search(records, value) # rubocop:disable Layout/LineLength
-    return records if records.empty?
+  def self.search(records, value)
+    return records if records.== []
 
     arel = records.first.class.arel_table
     value.each do |val|
       val.split.each do |word|
         records = records.where(
-          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
+          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or) # rubocop:disable Layout/LineLength
         )
       end
     end
