@@ -21,7 +21,6 @@ RSpec.describe V1::ApplicationResource, type: :resource do
       context 'when searching for one record' do
         let(:filter) { { search: ['john'] } }
 
-
         it { expect(filtered).to include user }
         it { expect(filtered).to include other_user }
         it { expect(filtered.size).to eq 2 }
