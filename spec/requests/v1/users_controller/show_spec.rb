@@ -32,7 +32,7 @@ describe V1::UsersController do
              activated_at emergency_contact emergency_number info_in_almanak
              almanak_subscription_preference digtus_subscription_preference
              ifes_data_sharing_preference user_details_sharing_preference
-             be_drivers_license]
+             trailer_drivers_license]
         end
       end
     end
@@ -63,7 +63,7 @@ describe V1::UsersController do
              activated_at emergency_contact emergency_number info_in_almanak
              almanak_subscription_preference digtus_subscription_preference
              ifes_data_sharing_preference user_details_sharing_preference
-             be_drivers_license]
+             trailer_drivers_license]
         end
       end
     end
@@ -104,7 +104,7 @@ describe V1::UsersController do
         city picture_publication_preference info_in_almanak
         almanak_subscription_preference digtus_subscription_preference
         emergency_contact emergency_number ifes_data_sharing_preference
-        user_details_sharing_preference be_drivers_license
+        user_details_sharing_preference trailer_drivers_license
       ]
       it_behaves_like '200 OK'
       it {

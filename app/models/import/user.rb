@@ -70,7 +70,7 @@ module Import
                          almanak_subscription_preference digtus_subscription_preference
                          email birthday address postcode city
                          phone_number food_preferences vegetarian study start_study
-                         picture_publication_preference be_drivers_license].freeze
+                         picture_publication_preference trailer_drivers_license].freeze
 
     private
 

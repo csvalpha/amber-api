@@ -21,7 +21,7 @@ describe V1::UsersController do
                                    info_in_almanak almanak_subscription_preference
                                    digtus_subscription_preference emergency_contact
                                    emergency_number ifes_data_sharing_preference
-                                   user_details_sharing_preference be_drivers_license]
+                                   user_details_sharing_preference trailer_drivers_license]
       permissible_attributes = %i[first_name last_name_prefix last_name birthday]
 
       it_behaves_like 'a model with conditionally updatable attributes',

@@ -561,7 +561,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
     t.boolean "allow_tomato_sharing"
     t.string "webdav_secret_key"
     t.string "nickname"
-    t.boolean "be_drivers_license", default: false, null: false
+    t.boolean "trailer_drivers_license", default: false, null: false
     t.boolean "setup_complete", default: false, null: false
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
