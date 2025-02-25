@@ -311,6 +311,7 @@ GEM
     puma (6.5.0)
       nio4r (~> 2.0)
     puma (6.5.0-java)
+      nio4r (~> 2.0)
     pundit (2.4.0)
       activesupport (>= 3.0.0)
     raabro (1.4.0)
