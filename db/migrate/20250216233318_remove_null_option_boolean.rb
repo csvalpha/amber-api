@@ -7,6 +7,7 @@ class RemoveNullOptionBoolean < ActiveRecord::Migration[7.0]
     execute 'UPDATE users SET ifes_data_sharing_preference = false WHERE ifes_data_sharing_preference IS NULL'
     execute 'UPDATE users SET info_in_almanak = false WHERE info_in_almanak IS NULL'
     execute 'UPDATE users SET allow_tomato_sharing = false WHERE allow_tomato_sharing IS NULL'
+    execute 'UPDATE users SET vegetarian = false WHERE vegetarian IS NULL'
     execute 'UPDATE mail_aliases SET smtp_enabled = false WHERE smtp_enabled IS NULL'
     execute 'UPDATE articles SET pinned = false WHERE pinned IS NULL'
     execute 'UPDATE room_adverts SET publicly_visible = false WHERE publicly_visible IS NULL'
@@ -22,6 +23,7 @@ class RemoveNullOptionBoolean < ActiveRecord::Migration[7.0]
 
     change_column_null :users, :ifes_data_sharing_preference, false
     change_column_null :users, :info_in_almanak, false
+    change_column_null :users, :vegetarian, false
 
     change_column_default :users, :allow_tomato_sharing, false
     change_column_null :users, :allow_tomato_sharing, false

@@ -546,7 +546,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_233318) do
     t.string "avatar"
     t.datetime "activation_token_valid_till", precision: nil
     t.boolean "sidekiq_access", default: false, null: false
-    t.boolean "vegetarian", default: false
+    t.boolean "vegetarian", default: false, null: false
     t.string "otp_secret_key"
     t.boolean "otp_required", default: false, null: false
     t.string "ical_secret_key"
