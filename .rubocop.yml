@@ -49,6 +49,9 @@ Rails/HttpPositionalArguments:
 Rails/HasManyOrHasOneDependent:
   Enabled: false
 
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
 Rails/InverseOf:
   Enabled: false
 
