@@ -10,13 +10,13 @@ module Debit
     validate :unique_on_time_interval?
     validate :iban_is_valid?
 
-    scope :active, (lambda {
+    scope :active, lambda {
       where('start_date <= :now AND
                (end_date > :now OR end_date IS NULL)',
             now: Time.zone.now)
-    })
+    }
 
-    scope :mandates_for, (->(user) { where(user:) })
+    scope :mandates_for, ->(user) { where(user:) }
 
     private
 

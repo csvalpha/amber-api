@@ -95,7 +95,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
 
   def self.records(options = {})
     options[:includes] = %i[mandates] if options[:context][:action] == 'index'
-    super(options)
+    super
   end
 
   before_save do

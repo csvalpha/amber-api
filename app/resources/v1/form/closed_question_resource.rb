@@ -7,7 +7,7 @@ class V1::Form::ClosedQuestionResource < V1::ApplicationResource
 
   def self.records(options = {})
     options[:includes] = [:options] if options[:context][:action] == 'index'
-    super(options)
+    super
   end
 
   def self.creatable_fields(_context)

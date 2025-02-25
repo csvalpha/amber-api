@@ -18,7 +18,7 @@ RSpec.describe StoredMailPolicy, type: :policy do
     }
 
   action_permission_map.each do |action, permission|
-    context "##{action}" do
+    describe "##{action}" do
       context 'when user is moderator' do
         subject(:policy) { described_class.new(user, stored_mail) }
 
