@@ -6,7 +6,8 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
              :phone_number, :food_preferences, :vegetarian, :study, :start_study,
              :picture_publication_preference, :ical_secret_key, :webdav_secret_key,
              :password, :avatar, :avatar_url, :avatar_thumb_url,
-             :user_details_sharing_preference, :allow_tomato_sharing, :trailer_drivers_license, :setup_complete
+             :user_details_sharing_preference, :allow_tomato_sharing, :trailer_drivers_license, 
+             :setup_complete
 
   def avatar_url
     @model.avatar.url
