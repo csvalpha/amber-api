@@ -9,6 +9,3 @@ describe V1::PhotoCommentsController do
     end
   end
 end
-
-
-
