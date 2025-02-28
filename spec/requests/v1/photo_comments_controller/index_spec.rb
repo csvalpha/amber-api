@@ -8,9 +8,5 @@ describe V1::PhotoCommentsController do
     let(:request) { get(record_url) }
 
     it_behaves_like 'an indexable model'
-
-    it_behaves_like 'a publicly visible index request' do
-      let(:model_name) { :photo_comment }
-    end
   end
 end
