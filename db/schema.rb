@@ -9,7 +9,7 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-3
+
 ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -561,6 +561,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
     t.boolean "allow_tomato_sharing", default: false, null: false
     t.string "webdav_secret_key"
     t.string "nickname"
+    t.string "ical_categories", default: [], array: true
     t.boolean "trailer_drivers_license", default: false, null: false
     t.boolean "setup_complete", default: false, null: false
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
