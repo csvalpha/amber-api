@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PhotoAlbum, type: :model do
+RSpec.describe PhotoAlbum do
   subject(:photo_album) { build_stubbed(:photo_album) }
 
   describe '#valid?' do

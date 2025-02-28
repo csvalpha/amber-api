@@ -31,7 +31,7 @@ VCR.configure do |config|
   config.cassette_library_dir = 'spec/vcr_cassettes'
   config.hook_into :webmock
   config.filter_sensitive_data('<TOKEN>', :daily_verse) do
-    Base64.strict_encode64("#{Rails.application.config.x.daily_verse_user}:"\
+    Base64.strict_encode64("#{Rails.application.config.x.daily_verse_user}:" \
                            "#{Rails.application.config.x.daily_verse_password}")
   end
 end

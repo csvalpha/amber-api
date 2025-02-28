@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Vacancy, type: :model do
+RSpec.describe Vacancy do
   subject(:vacancy) { build_stubbed(:vacancy) }
 
   describe '#valid' do
