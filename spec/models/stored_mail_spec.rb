@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StoredMail, type: :model do
+RSpec.describe StoredMail do
   describe '#valid' do
     subject(:stored_mail) { build_stubbed(:stored_mail) }
 

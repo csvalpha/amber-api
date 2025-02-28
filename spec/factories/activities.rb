@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :activity do
-    association :author, factory: :user
+    author factory: %i[user]
     group
 
     title { Faker::Book.title }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ModeratedMailbox, type: :mailbox do
+RSpec.describe ModeratedMailbox do
   subject(:receive_mail) do
     receive_inbound_email_from_mail(
       from: 'someone@example.com',

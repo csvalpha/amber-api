@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Book, type: :model do
+RSpec.describe Book do
   subject(:book) { build_stubbed(:book) }
 
   describe '#valid' do

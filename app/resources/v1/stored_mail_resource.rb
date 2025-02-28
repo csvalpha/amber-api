@@ -24,7 +24,7 @@ class V1::StoredMailResource < V1::ApplicationResource
       options[:includes] =
         { inbound_email: { raw_email_attachment: :blob } }
     end
-    super(options)
+    super
   end
 
   private

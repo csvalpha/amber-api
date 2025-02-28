@@ -8,5 +8,5 @@ class StaticPage < ApplicationRecord
   validates :publicly_visible, inclusion: [true, false]
   validates :category, inclusion: %w[vereniging ict documenten]
 
-  scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :publicly_visible, -> { where(publicly_visible: true) }
 end

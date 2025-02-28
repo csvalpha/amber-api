@@ -7,6 +7,6 @@ FactoryBot.define do
 
     article
 
-    trait(:with_public_article) { association :article, :public }
+    trait(:with_public_article) { article factory: %i[article public] }
   end
 end

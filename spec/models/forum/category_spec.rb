@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Forum::Category, type: :model do
+RSpec.describe Forum::Category do
   subject(:category) { build_stubbed(:category) }
 
   describe '#valid' do

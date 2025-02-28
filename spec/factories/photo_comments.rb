@@ -7,6 +7,6 @@ FactoryBot.define do
 
     photo
 
-    trait(:public) { association :photo, :public }
+    trait(:public) { photo factory: %i[photo public] }
   end
 end

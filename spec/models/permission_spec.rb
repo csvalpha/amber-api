@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Permission, type: :model do
+RSpec.describe Permission do
   subject(:permission) { build_stubbed(:permission) }
 
   describe '#valid?' do

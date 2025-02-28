@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Photo, type: :model do
+RSpec.describe Photo do
   subject(:photo) { build_stubbed(:photo) }
 
   describe '#valid?' do

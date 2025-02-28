@@ -4,9 +4,7 @@ module Webdav
       @group = group
     end
 
-    def name
-      @group.name
-    end
+    delegate :name, to: :@group
 
     def path
       @group.id

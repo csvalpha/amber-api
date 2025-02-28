@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Form::OpenQuestionAnswer, type: :model do
+RSpec.describe Form::OpenQuestionAnswer do
   subject(:open_question_answer) do
     build(:open_question_answer,
           question: create(:open_question, field_type: 'text'))

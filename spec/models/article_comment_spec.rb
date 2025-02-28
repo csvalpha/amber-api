@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ArticleComment, type: :model do
+RSpec.describe ArticleComment do
   subject(:article_comment) { build(:article_comment) }
 
   describe '#valid?' do

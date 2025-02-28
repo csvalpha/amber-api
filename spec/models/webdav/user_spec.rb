@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Webdav::User, type: :model do
+RSpec.describe Webdav::User do
   let(:user) { create(:user) }
   let(:group) { create(:group, users: [user]) }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BoardRoomPresence, type: :model do
+RSpec.describe BoardRoomPresence do
   subject(:board_room_presence) { build_stubbed(:board_room_presence) }
 
   describe '#valid?' do

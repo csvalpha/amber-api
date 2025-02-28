@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PermissionsUsers, type: :model do
+RSpec.describe PermissionsUsers do
   subject(:permissions_users) { build(:permissions_users) }
 
   describe '#valid?' do

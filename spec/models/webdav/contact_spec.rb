@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Webdav::Contact, type: :model do
+RSpec.describe Webdav::Contact do
   let(:user) { build_stubbed(:user) }
 
   subject(:contact) { described_class.new(user) }
@@ -53,7 +53,6 @@ RSpec.describe Webdav::Contact, type: :model do
 
     subject(:vcard) { described_class.user_to_vcard(user) }
 
-    it { allow(Time.zone).to receive(:now).and_return(time_now) }
     it { expect(vcard.name.given).to eq(user.first_name) }
     it { expect(vcard.name.family).to eq(user.last_name) }
     it { expect(vcard.name.additional).to eq(user.last_name_prefix || '') }

@@ -32,7 +32,7 @@ class V1::ApplicationResource < JSONAPI::Resource
     when :search
       search(records, value)
     else
-      super(records, filter, value, options)
+      super
     end
   end
 
@@ -52,7 +52,7 @@ class V1::ApplicationResource < JSONAPI::Resource
   def self.records(options = {})
     is_index = options.fetch(:context, {}).fetch(:action, {}) == 'index'
     includes = options.fetch(:includes, {}) || []
-    records ||= _model_class.all.includes(includes)
+    records ||= _model_class.includes(includes)
     if is_index
       records = Pundit.policy_scope!(current_user_or_application(options),
                                      _model_class).includes(includes)

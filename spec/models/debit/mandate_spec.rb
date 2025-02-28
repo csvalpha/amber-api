@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Debit::Mandate, type: :model do
+RSpec.describe Debit::Mandate do
   subject(:mandate) { build_stubbed(:mandate) }
 
   describe '#valid' do

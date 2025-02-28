@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GroupsPermissions, type: :model do
+RSpec.describe GroupsPermissions do
   subject(:groups_permissions) { build_stubbed(:groups_permissions) }
 
   describe '#valid?' do

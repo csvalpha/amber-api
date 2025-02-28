@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SoftDeleteCleanupJob, type: :job do
+RSpec.describe SoftDeleteCleanupJob do
   describe '#perform' do
     subject(:job) { described_class.perform_now }
 

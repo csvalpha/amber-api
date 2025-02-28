@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Poll, type: :model do
+RSpec.describe Poll do
   subject(:poll) { build_stubbed(:poll) }
 
   describe '#valid' do

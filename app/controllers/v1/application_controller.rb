@@ -7,7 +7,7 @@ class V1::ApplicationController < ApplicationController
   end
 
   def model_class
-    self.class.name.underscore.sub('v1/', '').sub(/_controller$/, '')\
+    self.class.name.underscore.sub('v1/', '').sub(/_controller$/, '')
         .singularize.to_s.camelize.safe_constantize
   end
 

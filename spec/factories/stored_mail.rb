@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :stored_mail do
-    association :inbound_email
+    inbound_email
 
     received_at { Faker::Time.between(from: 3.days.ago, to: Date.yesterday) }
     mail_alias { FactoryBot.create(:mail_alias, :with_group) }

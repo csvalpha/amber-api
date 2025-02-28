@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe RoomAdvert, type: :model do
+RSpec.describe RoomAdvert do
   subject(:room_advert) { build_stubbed(:room_advert) }
 
   describe '#valid' do

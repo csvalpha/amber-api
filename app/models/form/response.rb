@@ -15,7 +15,7 @@ module Form
     after_create :update_completed_status!
     before_destroy :destroyable?
 
-    scope :completed, (-> { where(completed: true) })
+    scope :completed, -> { where(completed: true) }
 
     def complete
       reload unless new_record? # reloading is necessary, to make sure all associations are fresh

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MarkdownHelper, type: :helper do
+RSpec.describe MarkdownHelper do
   include described_class
   describe '#camofy' do
     it { expect(camofy(nil)).to be_nil }

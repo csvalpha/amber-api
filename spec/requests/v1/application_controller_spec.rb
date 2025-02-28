@@ -6,9 +6,8 @@ describe V1::ApplicationController do
   describe '#permitted_serializable_attributes' do
     before do
       allow(application_controller).to receive(:current_user) { User.new }
-      allow(application_controller).to receive(:current_application).and_return(nil)
-      allow(application_controller).to receive(:model_class).and_return(Article)
-      allow(application_controller).to receive(:authorize).and_return(true)
+      allow(application_controller).to receive_messages(current_application: nil,
+                                                        model_class: Article, authorize: true)
     end
 
     describe 'with params[:attrs] nil' do
@@ -47,8 +46,7 @@ describe V1::ApplicationController do
       model_class = Article
       allow(model_class).to receive(:find).and_raise(ActiveRecord::RecordNotFound)
       allow(application_controller).to receive(:model_class) { model_class }
-      allow(application_controller).to receive(:params).and_return({})
-      allow(application_controller).to receive(:authorize).and_return(true)
+      allow(application_controller).to receive_messages(params: {}, authorize: true)
       allow(application_controller).to receive(:head)
     end
 

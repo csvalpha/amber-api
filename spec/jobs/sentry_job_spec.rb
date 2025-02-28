@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SentryJob, type: :job do
+RSpec.describe SentryJob do
   describe '#perform' do
     let(:job) { described_class.new }
 

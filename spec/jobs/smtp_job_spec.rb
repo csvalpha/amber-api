@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SmtpJob, type: :job do
+RSpec.describe SmtpJob do
   describe '#perform' do
     let(:mail_alias) { create(:mail_alias) }
     let(:client) { Improvmx::Client.new }

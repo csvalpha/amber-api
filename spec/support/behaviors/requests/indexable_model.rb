@@ -7,6 +7,6 @@ shared_examples 'an indexable model' do
     end
 
     it_behaves_like '200 OK'
-    it { expect(json['data'].count).to eq records.first.class.all.count }
+    it { expect(json['data'].count).to eq records.first.class.count }
   end
 end

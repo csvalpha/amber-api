@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Form::ClosedQuestionAnswer, type: :model do
+RSpec.describe Form::ClosedQuestionAnswer do
   subject(:closed_question_answer) { build(:closed_question_answer) }
 
   describe '#valid' do

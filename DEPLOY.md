@@ -8,6 +8,8 @@ Deployments are done using GitHub Actions. To deploy a branch, follow the follow
 
 We use a continuous development cycle. That means: branch `master` is always in production. When a feature is merged through a PR to `staging`, merge its changes to `master` and deploy as soon as possible.
 
+*Note: If the workflow fails with an error message about blobs along the lines of the following: `buildx failed with: ERROR: failed to solve: [...] blob [...]`: remove all recent cache files for staging on the [Caches page](https://github.com/csvalpha/amber-api/actions/caches) and try again. You might have to turn on the option `Perform all jobs, regardless of whether there are actual changes?` to force the workflow to re-execute all its jobs.*
+
 ## Versioning
 
 We do not use versioning in any way. In Slack the last deployed version can be looked up.
@@ -27,3 +29,4 @@ Currently, AMBER is deployed in two environments: Staging and Production. The fo
 | Staging     | staging.csvalpha.nl | This version runs fake - filler - data, feel free to try out new features on this environment | It is not mandatory that this environment runs the latest version of the `staging` branch. |
 
 > (API) Note on Staging and upgrading the DB: database migrations on Staging are done automatically on `deploy`. However, rollbacks are not. That means that migrating to a newer database `schema.rb` version is OK when trying out new features, but downgrading to an older version should be done manually with `bundle exec rails db:rollback` BEFORE deploying a different version of the API.
+

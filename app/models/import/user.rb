@@ -35,7 +35,7 @@ module Import
       Membership.create(user:, group:, start_date: Time.zone.now)
     end
 
-    def valid? # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def valid? # rubocop:disable Metrics/MethodLength
       if @file.nil? || @file[:file].blank?
         errors.add(:file, 'No file uploaded')
         return false
@@ -51,7 +51,7 @@ module Import
         errors.add(:header, "#{unpermitted_column_name} is not permitted to set")
       end
 
-      errors.size.zero?
+      errors.empty?
     end
 
     # Method used in the translation of validation errors
@@ -70,7 +70,7 @@ module Import
                          almanak_subscription_preference digtus_subscription_preference
                          email birthday address postcode city
                          phone_number food_preferences vegetarian study start_study
-                         picture_publication_preference].freeze
+                         picture_publication_preference trailer_drivers_license].freeze
 
     private
 

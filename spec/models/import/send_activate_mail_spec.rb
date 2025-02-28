@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Import::SendActivateMail, type: :model do
+RSpec.describe Import::SendActivateMail do
   subject(:send_activation) { described_class.new }
 
   let(:not_activated_user) { create(:user, activated_at: nil) }

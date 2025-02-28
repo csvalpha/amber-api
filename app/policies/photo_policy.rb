@@ -13,7 +13,7 @@ class PhotoPolicy < ApplicationPolicy
     true
   end
 
-  def get_related_resources? # rubocop:disable Naming/AccessorMethodName
+  def get_related_resources?
     index?
   end
 

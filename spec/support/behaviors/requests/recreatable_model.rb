@@ -18,6 +18,6 @@ shared_examples 'a re-creatable model' do
     it { expect(recreate_request.status).to eq(201) }
     it { expect { recreate_request }.to(change { record.class.count }.by(1)) }
     it { expect { recreate_request }.to(change { record.class.only_deleted.count }.by(-1)) }
-    it { expect { recreate_request }.to(change { record.class.with_deleted.count }.by(0)) }
+    it { expect { recreate_request }.not_to(change { record.class.with_deleted.count }) }
   end
 end

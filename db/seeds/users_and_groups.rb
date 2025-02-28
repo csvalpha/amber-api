@@ -5,7 +5,7 @@ ictcie = Group.create!(name: 'ICT-commissie', kind: 'commissie',
                        description: 'Wij zijn gewoon bazen', recognized_at_gma: 'ALV 1')
 
 bestuur = Group.create!(name: 'Bestuur', kind: 'bestuur', description: 'Wij zijn de echte bazen',
-                        recognized_at_gma: 'ALV 21',  rejected_at_gma: 'ALV 218')
+                        recognized_at_gma: 'ALV 21', rejected_at_gma: 'ALV 218')
 
 sofia_treasurers = Group.create!(name: 'SOFIA Penningmeester', kind: 'bestuur',
                                  administrative: true)

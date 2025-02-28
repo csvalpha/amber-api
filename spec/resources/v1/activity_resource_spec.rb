@@ -54,7 +54,7 @@ RSpec.describe V1::ActivityResource, type: :resource do
         other_activity
       end
 
-      it { expect(sorted).to match_array [other_activity, activity] }
+      it { expect(sorted).to contain_exactly(other_activity, activity) }
     end
   end
 end

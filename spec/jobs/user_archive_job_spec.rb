@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserArchiveJob, type: :job do
+RSpec.describe UserArchiveJob do
   describe '#perform' do
     let(:archive_user) { create(:user, id: 0) }
     let(:user) { create(:user) }

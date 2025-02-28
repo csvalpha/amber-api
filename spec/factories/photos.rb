@@ -7,9 +7,9 @@ FactoryBot.define do
     end
 
     photo_album
-    association :uploader, factory: :user
+    uploader factory: %i[user]
 
-    trait(:public) { association :photo_album, :public }
+    trait(:public) { photo_album factory: %i[photo_album public] }
     trait(:invalid) do
       image do
         Rack::Test::UploadedFile.new(

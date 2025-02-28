@@ -7,7 +7,7 @@ FactoryBot.define do
     end
     response do
       FactoryBot.create(:response,
-                        form: (option.try(:question).try(:form) || FactoryBot.create(:form)))
+                        form: option.try(:question).try(:form) || FactoryBot.create(:form))
     end
   end
 end

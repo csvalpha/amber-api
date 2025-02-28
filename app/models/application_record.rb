@@ -19,7 +19,7 @@ class ApplicationRecord < ActiveRecord::Base
     CSV.generate(headers: true) do |csv|
       csv << valid_attributes
 
-      all.find_each do |model|
+      find_each do |model|
         csv << valid_attributes.map { |attr| model.public_send(attr) }
       end
     end

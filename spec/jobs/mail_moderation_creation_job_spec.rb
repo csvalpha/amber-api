@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailModerationCreationJob, type: :job do
+RSpec.describe MailModerationCreationJob do
   let(:raw_url) { 'https://example.com/raw_email' }
   let(:response_body) { 'raw_email_data' }
   let(:response) do

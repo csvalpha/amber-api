@@ -12,7 +12,7 @@ module Form
 
     validate :no_changes_allowed_on_present_responses
 
-    scope :required, (-> { where(required: true) })
+    scope :required, -> { where(required: true) }
 
     def radio_question?
       field_type == 'radio'

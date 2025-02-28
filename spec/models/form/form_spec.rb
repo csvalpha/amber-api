@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Form::Form, type: :model do
+RSpec.describe Form::Form do
   subject(:form) { build_stubbed(:form) }
 
   describe '#valid' do

@@ -14,8 +14,8 @@ class Article < ApplicationRecord
 
   validate :only_one_pinned_article
 
-  scope :publicly_visible, (-> { where(publicly_visible: true) })
-  scope :pinned, (-> { where(pinned: true) })
+  scope :publicly_visible, -> { where(publicly_visible: true) }
+  scope :pinned, -> { where(pinned: true) }
 
   def owners
     if group.present?

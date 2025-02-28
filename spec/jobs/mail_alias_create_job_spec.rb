@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailAliasCreateJob, type: :job do
+RSpec.describe MailAliasCreateJob do
   describe '#perform' do
     let(:job) { described_class.new }
     let(:improvmx_class) { class_double(Improvmx::Client) }

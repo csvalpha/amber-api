@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :poll do
-    association :author, factory: :user
+    author factory: %i[user]
     form
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Forum::Post, type: :model do
+RSpec.describe Forum::Post do
   subject(:post) { build_stubbed(:post) }
 
   describe '#valid' do
