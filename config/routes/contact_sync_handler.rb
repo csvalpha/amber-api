@@ -4,7 +4,7 @@ class ContactSyncHandler < DAV4RackExt::Handler
   end
 
   def call(env)
-    super(env)
+    super
   rescue ActiveRecord::RecordNotFound
     Rack::Response.new([], 404).finish
   end
@@ -13,7 +13,7 @@ class ContactSyncHandler < DAV4RackExt::Handler
     {
       dav_extensions: DAV4Rack::Carddav::DAV_EXTENSIONS,
       controller_class: DAV4Rack::Carddav::Controller,
-      logger: ::Logger.new('/dev/null'),
+      logger: ::Logger.new(File::NULL),
       always_include_dav_header: true,
       pretty_xml: true,
       root_uri_path: ->(env) { root_uri_path(env) },

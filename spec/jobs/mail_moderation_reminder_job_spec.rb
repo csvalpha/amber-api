@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailModerationReminderJob, type: :job do
+RSpec.describe MailModerationReminderJob do
   describe '#perform' do
     subject(:job) { described_class }
 

@@ -6,7 +6,7 @@ class ArticleComment < ApplicationRecord
 
   validates :content, presence: true, length: { minimum: 1, maximum: 500 }
 
-  scope :publicly_visible, (lambda {
+  scope :publicly_visible, lambda {
     joins(:article).where(articles: { publicly_visible: true })
-  })
+  }
 end

@@ -23,7 +23,7 @@ class V1::Form::FormResource < V1::ApplicationResource
     if options[:context][:action] == 'index'
       options[:includes] = %i[responses open_questions closed_questions]
     end
-    super(options)
+    super
   end
 
   def self.creatable_fields(_context)

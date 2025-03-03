@@ -11,11 +11,11 @@ class Membership < ApplicationRecord
 
   after_commit :sync_mail_aliases
 
-  scope :active, (lambda {
+  scope :active, lambda {
     where('memberships.start_date <= :now AND
                (memberships.end_date > :now OR memberships.end_date IS NULL)',
           now: Time.zone.now)
-  })
+  }
 
   private
 
