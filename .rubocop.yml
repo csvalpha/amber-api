@@ -33,9 +33,6 @@ Metrics/BlockLength:
     - 'config/routes.rb'
     - 'spec/**/*'
 
-Layout/LineLength:
-  Max: 100
-
 Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'

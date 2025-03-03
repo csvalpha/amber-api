@@ -22,9 +22,7 @@ module Import
 
     def valid?(file)
       headers = get_headers(file)
-      unless headers.include?('username')
-        @errors.add(:import_file, 'username field must be present')
-      end
+      @errors.add(:import_file, 'username field must be present') unless headers.include?('username')
       headers.include?('username')
     end
 

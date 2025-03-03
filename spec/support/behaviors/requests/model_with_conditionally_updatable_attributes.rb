@@ -1,4 +1,4 @@
-shared_examples 'a model with conditionally updatable attributes' do |unrestricted_attrs, permissible_attrs, response| # rubocop:disable Layout/LineLength
+shared_examples 'a model with conditionally updatable attributes' do |unrestricted_attrs, permissible_attrs, response|
   let(:new_attrs) do
     attrs = record.attributes.symbolize_keys.transform_values do |value|
       case value

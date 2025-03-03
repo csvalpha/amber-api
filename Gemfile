@@ -50,7 +50,7 @@ gem 'vpim', '~> 24.2', '>= 24.2.20'
 group :development, :test do
   gem 'awesome_print'
   gem 'brakeman', require: false
-  gem 'bullet'
+  gem 'bullet', '~> 8.0', '>= 8.0.1',
   gem 'colorize'
   gem 'consistency_fail'
   gem 'dotenv-rails'
@@ -74,8 +74,8 @@ group :development do
 end
 
 group :test do
-  gem 'guard-rspec', require: false
-  gem 'rspec-rails'
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
+  gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
   gem 'rubocop', '~> 1.72', '>= 1.72.1', require: false
   gem 'rubocop-factory_bot', '~> 2.26', '>= 2.26.1', require: false
   gem 'rubocop-performance', '~> 1.24', '>= 1.24.0', require: false
