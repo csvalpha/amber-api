@@ -2,7 +2,6 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   acts_as_paranoid
-  has_paper_trail
 
   def self.model_names
     @model_names ||= begin
@@ -20,7 +19,7 @@ class ApplicationRecord < ActiveRecord::Base
     CSV.generate(headers: true) do |csv|
       csv << valid_attributes
 
-      all.find_each do |model|
+      find_each do |model|
         csv << valid_attributes.map { |attr| model.public_send(attr) }
       end
     end

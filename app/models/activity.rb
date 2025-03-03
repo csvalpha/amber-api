@@ -1,5 +1,6 @@
 class Activity < ApplicationRecord
   mount_base64_uploader :cover_photo, CoverPhotoUploader
+  has_paper_trail skip: [:cover_photo]
 
   belongs_to :form, class_name: 'Form::Form', optional: true
   has_many :responses, through: :form, class_name: 'Form::Response'
@@ -19,22 +20,22 @@ class Activity < ApplicationRecord
   validate :small_changes_allowed_on_present_responses
   validate :removing_form_not_allowed_on_present_responses
 
-  scope :upcoming, (lambda {
+  scope :upcoming, lambda {
     where('(start_time < ? and end_time > ?) or start_time > ?', Time.zone.now,
           Time.zone.now, Time.zone.now)
-  })
-  scope :publicly_visible, (-> { where(publicly_visible: true) })
-  scope :closing, (lambda { |days_ahead = 7|
+  }
+  scope :publicly_visible, -> { where(publicly_visible: true) }
+  scope :closing, lambda { |days_ahead = 7|
     now = DateTime.current
     ahead = days_ahead.days.from_now.to_datetime
     joins(:form).where(form_forms: { respond_until: now..ahead })
-  })
+  }
 
   after_save :copy_author_and_group_to_form!
 
   def self.categories
     %w[algemeen societeit vorming dinsdagkring woensdagkring
-       choose ifes ozon disputen jaargroepen huizen extern eerstejaars]
+       choose ifes ozon disputen kiemgroepen huizen extern eerstejaars curiositates]
   end
 
   def full_day?
@@ -80,12 +81,12 @@ class Activity < ApplicationRecord
   def copy_author_and_group_to_form!
     return unless form
 
-    form.update(author: author, group: group)
+    form.update(author:, group:)
   end
 
   def small_changes_allowed_on_present_responses
     return if !changed? || responses.empty? ||
-              changes.keys.map(&:to_sym).to_set <= always_changable_fields.to_set
+              changes.keys.to_set(&:to_sym) <= always_changable_fields.to_set
 
     errors.add(:form, 'has any responses')
   end

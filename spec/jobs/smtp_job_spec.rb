@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SmtpJob, type: :job do
+RSpec.describe SmtpJob do
   describe '#perform' do
     let(:mail_alias) { create(:mail_alias) }
     let(:client) { Improvmx::Client.new }
@@ -25,7 +25,7 @@ RSpec.describe SmtpJob, type: :job do
       it { expect(mail.bcc).to eq mail_alias.mail_addresses }
       it { expect(mail.subject).to eq "Je kunt nu mail versturen vanaf #{mail_alias.email}!" }
 
-      it { expect(management_mail.to).to eq ['mailbeheer@csvalpha.nl'] }
+      it { expect(management_mail.to).to eq [Rails.application.config.x.mailbeheer_email] }
 
       it {
         expect(management_mail.subject).to eq "SMTP account voor #{mail_alias.email} aangemaakt"
@@ -47,7 +47,7 @@ RSpec.describe SmtpJob, type: :job do
 
       it { expect(client).to have_received(:delete_smtp) }
       it { expect(mail.bcc).to eq mail_alias.mail_addresses }
-      it { expect(mail.to).to eq ['mailbeheer@csvalpha.nl'] }
+      it { expect(mail.to).to eq [Rails.application.config.x.mailbeheer_email] }
       it { expect(mail.subject).to eq "SMTP account voor #{mail_alias.email} opgeheven" }
     end
   end

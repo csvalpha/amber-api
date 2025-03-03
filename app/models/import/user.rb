@@ -1,7 +1,7 @@
 module Import
   class User
     extend ActiveRecord::Translation
-    require 'csv'
+    include SpreadsheetHelper
 
     attr_reader :errors, :imported_users
 
@@ -17,7 +17,7 @@ module Import
       return unless valid?
 
       ::User.transaction do
-        CSV.foreach(@file, headers: true, col_sep: ',').with_index do |row, i|
+        get_rows(@file).each_with_index do |row, i|
           user = row_to_user(row)
           if user.valid?
             @imported_users << user
@@ -32,17 +32,16 @@ module Import
     def save_user_to_group(user, group)
       return unless user && group
 
-      Membership.create(user: user, group: group, start_date: Time.zone.now)
+      Membership.create(user:, group:, start_date: Time.zone.now)
     end
 
-    def valid? # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      if @file.blank?
+    def valid? # rubocop:disable Metrics/MethodLength
+      if @file.nil? || @file[:file].blank?
         errors.add(:file, 'No file uploaded')
         return false
       end
 
-      csv = CSV.open(@file, headers: true, col_sep: ',')
-      headers = csv.read.headers
+      headers = get_headers(@file)
 
       (REQUIRED_COLUMNS - headers).each do |missing_column_name|
         errors.add(:header, "#{missing_column_name} must be present in header")
@@ -52,7 +51,7 @@ module Import
         errors.add(:header, "#{unpermitted_column_name} is not permitted to set")
       end
 
-      errors.size.zero?
+      errors.empty?
     end
 
     # Method used in the translation of validation errors
@@ -65,21 +64,20 @@ module Import
                           info_in_almanak almanak_subscription_preference
                           digtus_subscription_preference].freeze
 
-    ALLOWED_COLUMNS = %w[first_name last_name_prefix last_name
+    ALLOWED_COLUMNS = %w[first_name last_name_prefix last_name nickname
                          login_enabled emergency_contact emergency_number
                          ifes_data_sharing_preference info_in_almanak
                          almanak_subscription_preference digtus_subscription_preference
                          email birthday address postcode city
                          phone_number food_preferences vegetarian study start_study
-                         picture_publication_preference].freeze
+                         picture_publication_preference trailer_drivers_license].freeze
 
     private
 
     def row_to_user(row)
-      user_hash = row.to_hash
-      user_hash['login_enabled'] = true unless user_hash['login_enabled']
-      user_hash['username'] = nil unless user_hash['username']
-      ::User.new(user_hash)
+      row['login_enabled'] = true unless row['login_enabled']
+      row['username'] = nil unless row['username']
+      ::User.new(row)
     end
   end
 end

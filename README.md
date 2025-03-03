@@ -2,7 +2,7 @@ Alpha AMBER API
 ================
 [![Continuous Integration](https://github.com/csvalpha/amber-api/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/csvalpha/amber-api/actions/workflows/continuous-integration.yml)
 [![Continuous Delivery](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml/badge.svg)](https://github.com/csvalpha/amber-api/actions/workflows/continuous-delivery.yml)
-[![Depfu](https://badges.depfu.com/badges/663adb8e75ff19a32ca0d866d5fe2e85/count.svg)](https://depfu.com/github/csvalpha/amber-api?project_id=7749)
+[![codecov](https://codecov.io/github/csvalpha/amber-api/graph/badge.svg)](https://codecov.io/github/csvalpha/amber-api)
 
 ## Prerequisites
 If you're going to run the project with Docker, you only need to install the following prerequisites:
@@ -19,8 +19,8 @@ Otherwise, you need the following prerequisites installed:
 
 ## Installation
 ### With Docker
-1. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
-2. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
+1. Copy the `.env.example` to `.env` and update the fields to reflect your environment. To allow the development Docker configuration on amber-ui to work, change `COMPOSE_PROJECT_NAME` to "amber_development".
+2. Build the project using `docker-compose -f docker-compose.development.yml build api`. This will install the dependencies and set up the image. If dependencies are updated/added, you need to run this command again.
 3. Create databases and tables and run seeds with `bundle exec rails db:setup` (see tip on how to run commands in the container).
 
 Tip: to run commands in the container, you can run the following:
@@ -94,6 +94,12 @@ To run Guard, execute:
 To run RuboCop, execute:
 
     bundle exec rubocop
+
+## Migrations 
+
+When migrations are executed on master and everthing worked they can be archived with the following command.
+
+    bundle exec rails db:migrate:archive
 
 ## GitHub Actions (automated testing)
 GitHub Actions is a CI/CD service which automatically tests the application after a commit has been pushed. GitHub Actions will run RuboCop and RSpec (see `.github/workflows/continuous-integration.yml`) and will fail if one of these fails.

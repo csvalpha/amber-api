@@ -8,7 +8,7 @@
     - <%= user.full_name %>
   <% end %><br/><br/>
 
-  Vergeet niet de lidmaatschapsformulieren van deze leden te vernietigd. Als dit gebeurd is zouden we dan op de hoogte kunnen worden gebracht door middel van een mailtje naar privacy@csvalpha.nl.
+  Vergeet niet de lidmaatschapsformulieren van deze leden te vernietigd. Als dit gebeurd is zouden we dan op de hoogte kunnen worden gebracht door middel van een mailtje naar <%= Rails.application.config.x.privacy_email %>.
 
 <% end %>
 <br/>

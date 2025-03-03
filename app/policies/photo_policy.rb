@@ -2,9 +2,9 @@ class PhotoPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
       if user_can_read?
-        scope.includes(:photo_album)
+        scope
       else
-        scope.publicly_visible.includes(:photo_album)
+        scope.publicly_visible
       end
     end
   end
@@ -13,7 +13,7 @@ class PhotoPolicy < ApplicationPolicy
     true
   end
 
-  def get_related_resources? # rubocop:disable Naming/AccessorMethodName
+  def get_related_resources?
     index?
   end
 

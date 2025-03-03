@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Activity, type: :model do
+RSpec.describe Activity do
   subject(:activity) { build_stubbed(:activity) }
 
   describe '#valid' do
@@ -180,7 +180,7 @@ RSpec.describe Activity, type: :model do
       let(:record) do
         build_stubbed(:activity,
                       category: %w[algemeen sociëteit vorming dinsdagkring woensdagkring
-                                   disputen jaargroepen huizen extern].sample)
+                                   disputen kiemgroepen huizen extern curiositates].sample)
       end
 
       it { expect(record.humanized_category).to eq record.category.capitalize }
@@ -254,14 +254,16 @@ RSpec.describe Activity, type: :model do
       far_away
     end
 
-    it { expect(described_class.closing(0)).to match_array [] }
-    it { expect(described_class.closing(1)).to match_array [almost_closing, upcoming] }
+    it { expect(described_class.closing(0)).to be_empty }
+    it { expect(described_class.closing(1)).to contain_exactly(almost_closing, upcoming) }
 
     it do
-      expect(described_class.closing(7)).to match_array [almost_closing, upcoming, upcoming_week]
+      expect(described_class.closing(7)).to contain_exactly(almost_closing, upcoming, upcoming_week)
     end
 
-    it { expect(described_class.closing).to match_array [almost_closing, upcoming, upcoming_week] }
+    it {
+      expect(described_class.closing).to contain_exactly(almost_closing, upcoming, upcoming_week)
+    }
   end
 
   describe '#full_day?' do
@@ -288,7 +290,7 @@ RSpec.describe Activity, type: :model do
       let(:group) { create(:group, users: [user]) }
 
       subject(:activity) do
-        build_stubbed(:activity, group: group)
+        build_stubbed(:activity, group:)
       end
 
       it { expect(activity.owners).to include user }

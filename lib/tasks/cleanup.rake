@@ -16,14 +16,14 @@ namespace :cleanup do
         '(revoked_at IS NOT NULL AND revoked_at < :delete_before) OR ' \
         '(expires_in IS NOT NULL AND ' \
         "(created_at + expires_in * INTERVAL '1 second') < :delete_before)",
-        { delete_before: delete_before }
+        { delete_before: }
       ]
       Doorkeeper::AccessGrant.where(expire).delete_all
       Doorkeeper::AccessToken.where(expire).delete_all
       puts 'Removed old access tokens'
     else
-      puts 'Please specify the -f argument if you really want to remove the old doorkeeper tokens.'\
-           ' This action cannot be undone.'
+      puts 'Please use the -f argument if you really want to remove the old doorkeeper tokens. ' \
+           'This action cannot be undone.'
     end
   end
 end

@@ -1,6 +1,8 @@
 class V1::PhotoAlbumResource < V1::ApplicationResource
   attributes :title, :date, :publicly_visible
 
+  filter :without_photo_tags, apply: ->(records, _value, _options) { records.without_photo_tags }
+
   has_many :photos
   has_one :author, always_include_linkage_data: true
   has_one :group, always_include_linkage_data: true
@@ -24,7 +26,7 @@ class V1::PhotoAlbumResource < V1::ApplicationResource
   def user_is_member_of_group?
     return true unless @model.group
     return true if current_user.permission?(:update, @model)
-    return if current_user.current_group_member?(@model.group)
+    return false if current_user.current_group_member?(@model.group)
 
     raise AmberError::NotMemberOfGroupError
   end

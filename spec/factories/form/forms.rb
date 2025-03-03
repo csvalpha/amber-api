@@ -4,7 +4,7 @@ FactoryBot.define do
     respond_until { Faker::Time.between(from: Date.tomorrow, to: 7.days.from_now) }
 
     trait :with_author do
-      association :author, factory: :user
+      author factory: %i[user]
     end
 
     factory :expired_form do

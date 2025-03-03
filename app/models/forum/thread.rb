@@ -1,5 +1,6 @@
 module Forum
   class Thread < ApplicationRecord
+    has_paper_trail
     has_many :posts, dependent: :destroy, counter_cache: :posts_count
     has_many :read_threads, dependent: :destroy
 
@@ -14,7 +15,7 @@ module Forum
     end
 
     def read?(user)
-      thread = Forum::ReadThread.find_or_create_by(thread: self, user: user)
+      thread = Forum::ReadThread.find_or_create_by(thread: self, user:)
       thread.post == posts.last
     end
   end

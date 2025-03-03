@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserExportMailerJob, type: :job do
+RSpec.describe UserExportMailerJob do
   describe '#perform' do
     let(:exporting_user) { create(:user) }
     let(:group) { create(:group, users: [exporting_user]) }
@@ -18,7 +18,7 @@ RSpec.describe UserExportMailerJob, type: :job do
     end
 
     it { expect(ActionMailer::Base.deliveries.count).to eq 1 }
-    it { expect(privacy_notification_email.to.first).to eq 'privacy@csvalpha.nl' }
+    it { expect(privacy_notification_email.to).to eq [Rails.application.config.x.privacy_email] }
     it { expect(privacy_notification_email.body.to_s).to include(exporting_user.full_name) }
     it { expect(privacy_notification_email.body.to_s).to include(group.name) }
     it { expect(privacy_notification_email.body.to_s).to include(fields.join(', ')) }

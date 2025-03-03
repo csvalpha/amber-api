@@ -1,5 +1,6 @@
 module Form
   class OpenQuestion < ApplicationRecord
+    has_paper_trail
     belongs_to :form
     has_many :answers, class_name: 'OpenQuestionAnswer', foreign_key: 'question_id'
 
@@ -10,7 +11,7 @@ module Form
 
     validate :no_changes_allowed_on_present_responses
 
-    scope :required, (-> { where(required: true) })
+    scope :required, -> { where(required: true) }
 
     private
 

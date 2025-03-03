@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StaticPage, type: :model do
+RSpec.describe StaticPage do
   subject(:static_page) { build_stubbed(:static_page) }
 
   describe '#valid' do

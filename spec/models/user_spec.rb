@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   subject(:user) { build_stubbed(:user) }
 
   describe '#valid?' do
@@ -34,6 +34,12 @@ RSpec.describe User, type: :model do
       subject(:user) { build_stubbed(:user, last_name: nil) }
 
       it { expect(user).not_to be_valid }
+    end
+
+    context 'when without a nickname' do
+      subject(:user) { build_stubbed(:user, nickname: nil) }
+
+      it { expect(user).to be_valid }
     end
 
     context 'when without an address' do
@@ -120,18 +126,6 @@ RSpec.describe User, type: :model do
       it { expect(user).not_to be_valid }
     end
 
-    context 'when re-null ifes_data_sharing_preference' do
-      subject(:user) { create(:user) }
-
-      it { expect(user.update(ifes_data_sharing_preference: nil)).to be false }
-    end
-
-    context 'when re-null valid info_in_almanak' do
-      subject(:user) { create(:user) }
-
-      it { expect(user.update(info_in_almanak: nil)).to be false }
-    end
-
     context 'when re-null user_details_sharing_preference' do
       subject(:user) { create(:user) }
 
@@ -213,10 +207,10 @@ RSpec.describe User, type: :model do
     end
 
     context 'when allow_tomato_sharing is changed' do
-      context 'from nil to false' do
-        let(:user) { create(:user, allow_tomato_sharing: nil) }
+      context 'from false to true' do
+        let(:user) { create(:user, allow_tomato_sharing: false) }
 
-        before { user.allow_tomato_sharing = false }
+        before { user.allow_tomato_sharing = true }
 
         it { expect(user).to be_valid }
       end
@@ -238,7 +232,7 @@ RSpec.describe User, type: :model do
 
     context 'when with active membership' do
       before do
-        create(:membership, group: group, user: user)
+        create(:membership, group:, user:)
       end
 
       it { expect(user.active_groups).to contain_exactly(group) }
@@ -246,7 +240,7 @@ RSpec.describe User, type: :model do
 
     context 'when with expired membership' do
       before do
-        create(:membership, group: group, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:, end_date: 1.day.ago)
       end
 
       it { expect(user.active_groups).to be_empty }
@@ -254,7 +248,7 @@ RSpec.describe User, type: :model do
 
     context 'when with future membership' do
       before do
-        create(:membership, group: group, user: user, start_date: 1.day.from_now)
+        create(:membership, group:, user:, start_date: 1.day.from_now)
       end
 
       it { expect(user.active_groups).to be_empty }
@@ -264,8 +258,8 @@ RSpec.describe User, type: :model do
       let(:group2) { create(:group) }
 
       before do
-        create(:membership, group: group, user: user)
-        create(:membership, group: group2, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:)
+        create(:membership, group: group2, user:, end_date: 1.day.ago)
       end
 
       it { expect(user.active_groups).to contain_exactly(group) }
@@ -280,7 +274,7 @@ RSpec.describe User, type: :model do
 
     context 'when with active membership' do
       before do
-        create(:membership, group: group, user: user)
+        create(:membership, group:, user:)
       end
 
       it { expect(user.group_mail_aliases).to contain_exactly(mail_alias) }
@@ -288,7 +282,7 @@ RSpec.describe User, type: :model do
 
     context 'when with expired membership' do
       before do
-        create(:membership, group: group, user: user, end_date: 1.day.ago)
+        create(:membership, group:, user:, end_date: 1.day.ago)
       end
 
       it { expect(user.group_mail_aliases).to be_empty }
@@ -296,7 +290,7 @@ RSpec.describe User, type: :model do
 
     context 'when with future membership' do
       before do
-        create(:membership, group: group, user: user, start_date: 1.day.from_now)
+        create(:membership, group:, user:, start_date: 1.day.from_now)
       end
 
       it { expect(user.group_mail_aliases).to be_empty }
@@ -565,8 +559,8 @@ RSpec.describe User, type: :model do
 
         before do
           create(:group, users: [user], permission_list: ['user.read'])
-          create(:membership, user: user, group:
-            group, end_date: Faker::Time.between(from: 1.month.ago, to: Date.yesterday))
+          create(:membership, user:, group:,
+                              end_date: Faker::Time.between(from: 1.month.ago, to: Date.yesterday))
         end
 
         it { expect(user.permission?(:read, user)).to be true }
@@ -574,6 +568,14 @@ RSpec.describe User, type: :model do
         it { expect(user.permission?(:destroy, user)).to be false }
       end
     end
+  end
+
+  describe '#permissions' do
+    subject(:user) { create(:user, user_permission_list: ['user.read']) }
+
+    before { create(:group, users: [user], permission_list: ['user.update']) }
+
+    it { expect(user.permissions.map(&:name)).to contain_exactly('user.read', 'user.update') }
   end
 
   describe '#current_group_member?' do
@@ -592,7 +594,7 @@ RSpec.describe User, type: :model do
 
     context 'when in group with expired membership' do
       before do
-        create(:membership, group: another_group, user: user,
+        create(:membership, group: another_group, user:,
                             end_date: Faker::Time.between(from: 1.month.ago,
                                                           to: Date.yesterday))
       end
@@ -614,7 +616,7 @@ RSpec.describe User, type: :model do
 
         before do
           user.activate_account!
-          user.update(password: password)
+          user.update(password:)
         end
 
         it 'can login with the new password' do
@@ -628,22 +630,44 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#to_ical' do
+    context 'when without birthday' do
+      subject(:user) do
+        build_stubbed(:user, birthday: nil)
+      end
+
+      it { expect(user.to_ical).to be_nil }
+    end
+
+    context 'when with birthday' do
+      subject(:user) do
+        build_stubbed(:user)
+      end
+
+      let(:date) do
+        date = user.birthday.change(year: Time.zone.now.year)
+        date = date.next_year if date < 3.months.ago
+        date
+      end
+
+      it { expect(user.to_ical.description).to include((date.year - user.birthday.year).to_s) }
+      it { expect(user.to_ical.dtstart).to eq date }
+      it { expect(user.to_ical.dtend).to eq date.tomorrow }
+    end
+  end
+
   describe '.password_reset_url' do
-    it { expect(described_class.password_reset_url).to include('forgot_password') }
+    it { expect(described_class.password_reset_url).to include('forgot-password') }
   end
 
   describe 'has_paper_trail' do
     with_versioning do
       let(:user) { create(:user) }
 
-      # Currently we have a problem with paper trail
-      # which causes two versions to be created on each change
-      # This is caused by the fact that we call paper trail twice
-      # (once in ApplicationRecord and once in User)
-      it { expect(user.versions.size).to eq 2 }
+      it { expect(user.versions.size).to eq 1 }
 
       it do
-        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(2).to(4))
+        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(1).to(2))
       end
     end
   end
@@ -651,6 +675,6 @@ RSpec.describe User, type: :model do
   private
 
   def valid_access_tokens_for(resource_owner_id)
-    Doorkeeper::AccessToken.where(resource_owner_id: resource_owner_id, revoked_at: nil)
+    Doorkeeper::AccessToken.where(resource_owner_id:, revoked_at: nil)
   end
 end

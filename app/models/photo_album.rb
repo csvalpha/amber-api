@@ -1,6 +1,7 @@
 require 'zip'
 
 class PhotoAlbum < ApplicationRecord
+  has_paper_trail
   has_many :photos, dependent: :destroy
   belongs_to :author, class_name: 'User'
   belongs_to :group, optional: true
@@ -14,6 +15,10 @@ class PhotoAlbum < ApplicationRecord
       .or(where.not(date: nil).where(date: start_date..end_date))
       .or(where(date: nil).where(created_at: start_date..end_date))
   })
+  scope :without_photo_tags, lambda {
+    where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)
+  }
+
 
   def owners
     if group.present?
