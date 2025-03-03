@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ModeratedMailbox, type: :mailbox do
+RSpec.describe ModeratedMailbox do
   subject(:receive_mail) do
     receive_inbound_email_from_mail(
       from: 'someone@example.com',
@@ -16,7 +16,7 @@ RSpec.describe ModeratedMailbox, type: :mailbox do
       let(:moderator_group) { create(:group, users: [moderator]) }
       let(:mail_alias) do
         create(:mail_alias, :with_user, moderation_type: :moderated,
-                                        moderator_group: moderator_group)
+                                        moderator_group:)
       end
       let(:awaiting_moderation_email) { ActionMailer::Base.deliveries.last }
       let(:request_for_moderation_email) { ActionMailer::Base.deliveries.first }

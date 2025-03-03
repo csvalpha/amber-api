@@ -3,7 +3,7 @@ FactoryBot.define do
     name { Faker::Team.name }
     description { Faker::Lorem.paragraph }
     kind do
-      %w[bestuur commissie dispuut genootschap groep huis jaargroep werkgroep kring lichting].sample
+      %w[bestuur commissie dispuut genootschap groep huis kiemgroep werkgroep kring lichting].sample
     end
     recognized_at_gma { 'ALV 21' }
     rejected_at_gma { 'ALV 218' }
@@ -20,10 +20,10 @@ FactoryBot.define do
 
     after :create do |group, evaluator|
       group.memberships << evaluator.users.compact.map do |user|
-        FactoryBot.create(:membership, user: user, group: group)
+        FactoryBot.create(:membership, user:, group:)
       end
       group.permissions << evaluator.permission_list.compact.map do |name|
-        FactoryBot.create(:permission, name: name)
+        FactoryBot.create(:permission, name:)
       end
     end
   end

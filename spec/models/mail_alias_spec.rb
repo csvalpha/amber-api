@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailAlias, type: :model do
+RSpec.describe MailAlias do
   describe '#valid' do
     context 'when without moderation type' do
       subject(:mail_alias) { build_stubbed(:mail_alias, moderation_type: nil) }
@@ -50,7 +50,7 @@ RSpec.describe MailAlias, type: :model do
       let(:user) { build_stubbed(:user) }
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias, :with_group, user: user)
+        build_stubbed(:mail_alias, :with_group, user:)
       end
 
       before { mail_alias.valid? }
@@ -102,7 +102,7 @@ RSpec.describe MailAlias, type: :model do
     context 'when with user' do
       subject(:mail_alias) { build_stubbed(:mail_alias, :with_user) }
 
-      it { expect(mail_alias.mail_addresses).to match_array([mail_alias.user.email]) }
+      it { expect(mail_alias.mail_addresses).to contain_exactly(mail_alias.user.email) }
     end
   end
 
@@ -116,11 +116,26 @@ RSpec.describe MailAlias, type: :model do
 
   describe '#moderators' do
     context 'when with open alias' do
-      subject(:mail_alias) do
-        build_stubbed(:mail_alias, :with_group, moderation_type: 'open')
+      context 'when without moderator' do
+        subject(:mail_alias) do
+          build_stubbed(:mail_alias, :with_group, moderation_type: 'open')
+        end
+
+        it { expect(mail_alias.mail_addresses).to be_empty }
       end
 
-      it { expect(mail_alias.mail_addresses).to be_empty }
+      context 'when with moderator' do
+        subject(:mail_alias) do
+          build_stubbed(:mail_alias, :with_user, :with_moderator,
+                        moderation_type: 'open')
+        end
+
+        before { mail_alias.valid? }
+
+        it {
+          expect(mail_alias.errors[:base].first).to include 'Must have no moderator'
+        }
+      end
     end
 
     context 'when with moderated alias' do
@@ -128,7 +143,7 @@ RSpec.describe MailAlias, type: :model do
 
       subject(:mail_alias) do
         build_stubbed(:mail_alias, :with_group,
-                      moderation_type: 'moderated', moderator_group: moderator_group)
+                      moderation_type: 'moderated', moderator_group:)
       end
 
       it { expect(mail_alias.moderators.count).to be 1 }
@@ -182,7 +197,7 @@ RSpec.describe MailAlias, type: :model do
       end
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias, user: user, email: 'amber@test.csvalpha.nl')
+        build_stubbed(:mail_alias, user:, email: 'amber@test.csvalpha.nl')
       end
 
       it { expect(mail_alias.to_s).to eq('Alpha Amber <amber@test.csvalpha.nl>') }
@@ -192,7 +207,7 @@ RSpec.describe MailAlias, type: :model do
       let(:group) { create(:group, name: 'ICT-commissie') }
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias, group: group, user: nil,
+        build_stubbed(:mail_alias, group:, user: nil,
                                    email: 'ict@test.csvalpha.nl')
       end
 

@@ -1,0 +1,112 @@
+require 'rails_helper'
+
+RSpec.describe StudyRoomPresence do
+  subject(:study_room_presence) { build_stubbed(:study_room_presence) }
+
+  describe '#valid?' do
+    it { expect(study_room_presence).to be_valid }
+
+    context 'when without start time' do
+      subject(:study_room_presence) do
+        build_stubbed(:study_room_presence, start_time: nil)
+      end
+
+      it { expect(study_room_presence).not_to be_valid }
+    end
+
+    context 'when without end time' do
+      subject(:study_room_presence) do
+        build_stubbed(:study_room_presence, end_time: nil)
+      end
+
+      it { expect(study_room_presence).not_to be_valid }
+    end
+
+    context 'when end time before start time' do
+      subject(:study_room_presence) do
+        build_stubbed(:study_room_presence,
+                      end_time: 1.day.ago, start_time: 1.day.from_now)
+      end
+
+      it { expect(study_room_presence).not_to be_valid }
+    end
+
+    context 'when without status' do
+      subject(:study_room_presence) { build_stubbed(:study_room_presence, status: nil) }
+
+      it { expect(study_room_presence).not_to be_valid }
+    end
+
+    context 'when without a user' do
+      subject(:study_room_presence) { build_stubbed(:study_room_presence, user: nil) }
+
+      it { expect(study_room_presence).not_to be_valid }
+    end
+  end
+
+  describe '#current' do
+    context 'when started in the past and ended in the future' do
+      before { create(:study_room_presence) }
+
+      it { expect(described_class.current.count).to eq 1 }
+    end
+
+    context 'when not yet started' do
+      before { create(:study_room_presence, start_time: 1.minute.from_now) }
+
+      it { expect(described_class.current.count).to eq 0 }
+    end
+
+    context 'when just ended' do
+      before { create(:study_room_presence, end_time: 1.second.ago) }
+
+      it { expect(described_class.current.count).to eq 0 }
+    end
+  end
+
+  describe '#future' do
+    context 'when started in the past and ended in the future' do
+      before { create(:study_room_presence) }
+
+      it { expect(described_class.future.count).to eq 0 }
+    end
+
+    context 'when not yet started' do
+      before { create(:study_room_presence, start_time: 1.minute.from_now) }
+
+      it { expect(described_class.future.count).to eq 1 }
+    end
+
+    context 'when just ended' do
+      before { create(:study_room_presence, end_time: 1.second.ago) }
+
+      it { expect(described_class.future.count).to eq 0 }
+    end
+  end
+
+  describe '#current_and_future' do
+    context 'when started in the past and ended in the future' do
+      before { create(:study_room_presence) }
+
+      it { expect(described_class.current_and_future.count).to eq 1 }
+    end
+
+    context 'when not yet started' do
+      before { create(:study_room_presence, start_time: 1.minute.from_now) }
+
+      it { expect(described_class.current_and_future.count).to eq 1 }
+    end
+
+    context 'when just ended' do
+      before { create(:study_room_presence, end_time: 1.second.ago) }
+
+      it { expect(described_class.current_and_future.count).to eq 0 }
+    end
+
+    context 'when starting in the future' do
+      before { create(:study_room_presence, start_time: 1.second.from_now) }
+
+      it { expect(described_class.current_and_future.count).to eq 1 }
+    end
+  end
+end

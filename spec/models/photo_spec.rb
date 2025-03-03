@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Photo, type: :model do
+RSpec.describe Photo do
   subject(:photo) { build_stubbed(:photo) }
 
   describe '#valid?' do
@@ -44,6 +44,21 @@ RSpec.describe Photo, type: :model do
 
     it { expect(described_class.count).to be 3 }
     it { expect(described_class.with_comments.count).to be 2 }
+  end
+
+  describe '#with_tags' do
+    let(:photo_with_tags) { create(:photo) }
+    let(:photo_with_one_tag) { create(:photo) }
+
+    before do
+      create(:photo_tag, photo: photo_with_tags)
+      create(:photo_tag, photo: photo_with_tags)
+      create(:photo_tag, photo: photo_with_one_tag)
+      create(:photo)
+    end
+
+    it { expect(described_class.count).to be 3 }
+    it { expect(described_class.with_tags.count).to be 2 }
   end
 
   describe '#publicly_visible' do

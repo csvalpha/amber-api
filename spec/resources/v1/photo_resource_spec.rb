@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe V1::PhotoResource, type: :resource do
   let(:user) { create(:user) }
-  let(:context) { { user: user } }
-  let(:options) { { context: context } }
+  let(:context) { { user: } }
+  let(:options) { { context: } }
 
   describe '#amount_of_comments' do
     let(:photo) { create(:photo) }
@@ -17,13 +17,26 @@ RSpec.describe V1::PhotoResource, type: :resource do
       let(:photo) { create(:photo) }
 
       before do
-        create(:photo_comment, photo: photo)
-        create(:photo_comment, photo: photo)
-        create(:photo_comment, photo: photo)
+        create(:photo_comment, photo:)
+        create(:photo_comment, photo:)
+        create(:photo_comment, photo:)
         photo.reload
       end
 
       it { expect(resource.amount_of_comments).to eq(3) }
+    end
+
+    context 'when with tags' do
+      let(:photo) { create(:photo) }
+
+      before do
+        create(:photo_tag, photo:)
+        create(:photo_tag, photo:)
+        create(:photo_tag, photo:)
+        photo.reload
+      end
+
+      it { expect(resource.amount_of_tags).to eq(3) }
     end
   end
 end

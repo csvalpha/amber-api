@@ -5,9 +5,9 @@ RSpec.describe StoredMailPolicy, type: :policy do
   let(:moderator_group) { create(:group, users: [user]) }
   let(:mail_alias) do
     create(:mail_alias, :with_group,
-           moderation_type: :moderated, moderator_group: moderator_group)
+           moderation_type: :moderated, moderator_group:)
   end
-  let(:stored_mail) { build_stubbed(:stored_mail, mail_alias: mail_alias) }
+  let(:stored_mail) { build_stubbed(:stored_mail, mail_alias:) }
 
   action_permission_map =
     {
@@ -18,7 +18,7 @@ RSpec.describe StoredMailPolicy, type: :policy do
     }
 
   action_permission_map.each do |action, permission|
-    context "##{action}" do
+    describe "##{action}" do
       context 'when user is moderator' do
         subject(:policy) { described_class.new(user, stored_mail) }
 

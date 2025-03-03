@@ -1,5 +1,6 @@
 module Form
   class Response < ApplicationRecord
+    has_paper_trail
     belongs_to :form
     counter_culture :form, column_name: :responses_count
     belongs_to :user
@@ -8,13 +9,13 @@ module Form
     has_many :closed_question_answers, dependent: :destroy
     has_many :closed_questions, through: :closed_question_answers, source: :question
 
-    validates :user, uniqueness: { scope: :form }
+    validates :user, uniqueness: { scope: :form, unless: -> { user_id == 0 } } # rubocop:disable Style/NumericPredicate
     validate :form_allows_responses?
 
     after_create :update_completed_status!
     before_destroy :destroyable?
 
-    scope :completed, (-> { where(completed: true) })
+    scope :completed, -> { where(completed: true) }
 
     def complete
       reload unless new_record? # reloading is necessary, to make sure all associations are fresh

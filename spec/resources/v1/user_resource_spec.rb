@@ -2,20 +2,21 @@ require 'rails_helper'
 
 RSpec.describe V1::UserResource, type: :resource do
   let(:user) { create(:user, user_details_sharing_preference: 'hidden') }
-  let(:context) { { user: user } }
-  let(:options) { { context: context } }
+  let(:context) { { user: } }
+  let(:options) { { context: } }
 
   describe '#fetchable_fields' do
     let(:basic_fields) do
-      %i[id created_at updated_at username first_name last_name_prefix last_name full_name
+      %i[id created_at updated_at username first_name last_name_prefix last_name full_name nickname
          avatar_url avatar_thumb_url groups active_groups memberships mail_aliases
-         group_mail_aliases permissions user_permissions mandates]
+         group_mail_aliases photos permissions user_permissions mandates]
     end
     let(:update_fields) do
       %i[login_enabled otp_required activated_at emergency_contact
          emergency_number ifes_data_sharing_preference info_in_almanak
          almanak_subscription_preference digtus_subscription_preference
-         user_details_sharing_preference allow_tomato_sharing]
+         user_details_sharing_preference allow_tomato_sharing trailer_drivers_license
+         setup_complete]
     end
     let(:read_fields) do
       %i[picture_publication_preference]
@@ -106,7 +107,7 @@ RSpec.describe V1::UserResource, type: :resource do
 
     context 'when with application' do
       let(:application) { create(:application) }
-      let(:context) { { user: user, application: application } }
+      let(:context) { { user:, application: } }
 
       it { expect(resource.fetchable_fields).to match_array(basic_fields) }
 
@@ -128,10 +129,10 @@ RSpec.describe V1::UserResource, type: :resource do
 
   describe '#createable_fields' do
     let(:another_user) { create(:user) }
-    let(:context) { { user: user, model: another_user } }
+    let(:context) { { user:, model: another_user } }
     let(:creatable_fields) { described_class.creatable_fields(context) }
     let(:basic_fields) do
-      %i[avatar email address postcode city phone_number
+      %i[avatar nickname email address postcode city phone_number
          food_preferences vegetarian study start_study
          almanak_subscription_preference
          digtus_subscription_preference emergency_contact emergency_number]
@@ -142,7 +143,8 @@ RSpec.describe V1::UserResource, type: :resource do
     end
     let(:current_user_fields) do
       %i[otp_required password user_details_sharing_preference allow_tomato_sharing
-         info_in_almanak ifes_data_sharing_preference picture_publication_preference]
+         info_in_almanak ifes_data_sharing_preference picture_publication_preference
+         trailer_drivers_license setup_complete]
     end
 
     context 'when without permission' do

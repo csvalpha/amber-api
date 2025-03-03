@@ -1,14 +1,19 @@
 require:
+  - rubocop-factory_bot
+  - rubocop-rspec_rails
+
+plugins:
   - rubocop-rspec
   - rubocop-performance
   - rubocop-rails
 
 AllCops:
-  TargetRailsVersion: 5.1
+  TargetRailsVersion: 7.0
+  TargetRubyVersion: 3.3
   Exclude:
     - 'db/schema.rb'
+    - 'db/migrate/archive/*'
     - 'config/initializers/secret_token.rb'
-    - 'vendor/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
   NewCops: enable
@@ -44,7 +49,7 @@ Rails/HttpPositionalArguments:
 Rails/HasManyOrHasOneDependent:
   Enabled: false
 
-Rails/ReversibleMigration:
+Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
 Rails/InverseOf:
@@ -68,8 +73,16 @@ RSpec/ContextWording:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
-RSpec/FilePath:
+RSpec/SpecFilePathFormat:
   Enabled: false
+
+RSpec/VariableName:
+  EnforcedStyle: snake_case
+
+FactoryBot:
+  Include:
+    - "**/spec/factories/**/*.rb"
+    - "**/db/seeds/*.rb"
 
 Style/ClassAndModuleChildren:
   Exclude:
@@ -123,7 +136,6 @@ Style/HashTransformValues:
 
 Lint/RaiseException:
   Enabled: true
-
 
 Lint/StructNewOverride:
   Enabled: true

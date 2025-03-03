@@ -20,9 +20,9 @@ class UserArchiveJob < ApplicationJob
 
     User.create!(id: ARCHIVE_USER_ID,
                  username: 'archived.user',
-                 email: 'ict@csvalpha.nl',
-                 first_name: 'Gearchiveerde Gebruiker',
-                 last_name: '-',
+                 email: Rails.application.config.x.ict_email,
+                 first_name: 'Gearchiveerde',
+                 last_name: 'Gebruiker',
                  address: 'Onbekend',
                  postcode: 'Onbekend',
                  city: 'Onbekend')
@@ -33,7 +33,18 @@ class UserArchiveJob < ApplicationJob
       key = entity_key(entity)
       records = entity.where({ key => user })
 
-      records.each { |r| r.update({ key => global_archive_user }) && r.versions.destroy_all }
+      migrate_keep_entity_records(key, records)
+    end
+  end
+
+  def migrate_keep_entity_records(key, records)
+    records.each do |r|
+      unless r.update({ key => global_archive_user })
+        raise ActiveRecord::RecordInvalid.new(r),
+              "Failed to update #{r.class} record (ID: #{r.id})"
+      end
+
+      r.versions.destroy_all
     end
   end
 
@@ -48,8 +59,8 @@ class UserArchiveJob < ApplicationJob
      Activity,
      Photo,
      PhotoAlbum,
+     PhotoTag,
      Poll,
-     QuickpostMessage,
      Form::Form,
      Form::Response,
      Forum::Post,

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PhotoAlbum, type: :model do
+RSpec.describe PhotoAlbum do
   subject(:photo_album) { build_stubbed(:photo_album) }
 
   describe '#valid?' do
@@ -45,7 +45,7 @@ RSpec.describe PhotoAlbum, type: :model do
 
     before do
       photo_album
-      create(:photo, photo_album: photo_album)
+      create(:photo, photo_album:)
     end
 
     it { expect(photo_album.to_zip).not_to be_nil }

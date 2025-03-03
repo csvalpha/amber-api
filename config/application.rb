@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module Amber
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.0
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -46,7 +46,7 @@ module Amber
     # See https://github.com/kickstarter/rack-attack#getting-started
     config.middleware.use Rack::Attack
 
-    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
+    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: -> { Rails.logger } do
       allow do
         origins '*'
         resource '*',
@@ -78,8 +78,13 @@ module Amber
     config.x.daily_verse_user = credentials.dig(Rails.env.to_sym, :daily_verse_user)
     config.x.daily_verse_password = credentials.dig(Rails.env.to_sym, :daily_verse_password)
 
-    config.x.bol_com_api_key = credentials.dig(Rails.env.to_sym, :bol_com_api_key)
+    config.x.google_api_key = credentials.dig(Rails.env.to_sym, :google_api_key)
 
     config.x.healthcheck_ids = credentials.dig(Rails.env.to_sym, :healthcheck_ids)
+
+    config.x.noreply_email = ENV.fetch('NOREPLY_EMAIL', 'no-reply@csvalpha.nl')
+    config.x.ict_email = ENV.fetch('ICT_EMAIL', 'ict@csvalpha.nl')
+    config.x.privacy_email = ENV.fetch('PRIVACY_EMAIL', 'privacy@csvalpha.nl')
+    config.x.mailbeheer_email = ENV.fetch('MAILADMIN_EMAIL', 'mailbeheer@csvalpha.nl')
   end
 end

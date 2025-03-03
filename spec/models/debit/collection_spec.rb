@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Debit::Collection, type: :model do
+RSpec.describe Debit::Collection do
   subject(:collection) { build_stubbed(:collection) }
 
   describe '#valid' do
@@ -46,11 +46,11 @@ RSpec.describe Debit::Collection, type: :model do
     context 'when with user without mandate' do
       context 'when user has amount to be collected' do
         before do
-          create(:transaction, collection: collection)
+          create(:transaction, collection:)
           collection.to_sepa
         end
 
-        it { expect(collection.to_sepa).to be_nil }
+        it { expect(collection.to_sepa).to be_empty }
 
         it do
           expect(
@@ -61,11 +61,11 @@ RSpec.describe Debit::Collection, type: :model do
 
       context 'when user has zero amount' do
         before do
-          create(:transaction, collection: collection, amount: 0)
+          create(:transaction, collection:, amount: 0)
           collection.to_sepa
         end
 
-        it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
+        it { expect(collection.to_sepa).to be_empty }
 
         it do
           expect(collection.errors).to be_empty
@@ -74,26 +74,25 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has zero amount in collection' do
-      let(:transaction) { create(:transaction, collection: collection, amount: 2) }
+      let(:transaction) { create(:transaction, collection:, amount: 2) }
 
       before do
-        create(:transaction, collection: collection, user: transaction.user, amount: -2)
+        create(:transaction, collection:, user: transaction.user, amount: -2)
         create(:mandate, user: transaction.user)
       end
 
-      it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
-      it { expect(collection.to_sepa.transactions.size).to eq 0 }
+      it { expect(collection.to_sepa.first).to be_nil }
     end
 
     context 'when user has negative amount in collection' do
-      let(:transaction) { create(:transaction, collection: collection, amount: -2) }
+      let(:transaction) { create(:transaction, collection:, amount: -2) }
 
       before do
         create(:mandate, user: transaction.user)
         collection.to_sepa
       end
 
-      it { expect(collection.to_sepa).to be_nil }
+      it { expect(collection.to_sepa).to be_empty }
 
       it do
         expect(
@@ -103,13 +102,21 @@ RSpec.describe Debit::Collection, type: :model do
     end
 
     context 'when user has mandate and amount' do
-      let(:transaction) { create(:transaction, collection: collection, amount: 2) }
+      let(:big_transaction) { create(:transaction, collection:, amount: 4500) }
+      let(:small_transaction) { create(:transaction, collection:, amount: 400) }
+      let(:medium_transaction) { create(:transaction, collection:, amount: 1500) }
 
-      before { create(:mandate, user: transaction.user, iban: 'NL 44 RABO 0123456789') }
+      before do
+        create(:mandate, user: big_transaction.user, iban: 'NL 44 RABO 0123456789')
+        create(:mandate, user: small_transaction.user, iban: 'NL 39 ABNA 8234998285')
+        create(:mandate, user: medium_transaction.user, iban: 'NL 69 ABNA4435376989')
+      end
 
-      it { expect(collection.to_sepa).to be_an_instance_of(SEPA::DirectDebit) }
-      it { expect(collection.to_sepa.transactions.size).to eq 1 }
-      it { expect(collection.to_sepa.transactions.first.amount).to eq 2 }
+      it { expect(collection.to_sepa.first).to be_an_instance_of(SEPA::DirectDebit) }
+      it { expect(collection.to_sepa.first.transactions.size).to eq 2 }
+      it { expect(collection.to_sepa.first.transactions.first.amount).to eq 4500 }
+      it { expect(collection.to_sepa.second.transactions.size).to eq 1 }
+      it { expect(collection.to_sepa.second.transactions.first.amount).to eq 1500 }
     end
 
     context 'when collection date has passed' do
@@ -120,8 +127,8 @@ RSpec.describe Debit::Collection, type: :model do
       it { expect(collection.to_sepa).to be_nil }
 
       it do
-        expect(collection.errors.messages[:sepa].first).to eq 'can only generate sepa files'\
-                                                              ' for collections in future'
+        expect(collection.errors.messages[:sepa].first).to eq 'can only generate sepa files ' \
+                                                              'for collections in future'
       end
     end
   end

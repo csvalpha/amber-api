@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe V1::GroupResource, type: :resource do
   let(:user) { create(:user) }
-  let(:context) { { user: user } }
-  let(:options) { { context: context } }
+  let(:context) { { user: } }
+  let(:options) { { context: } }
 
   describe '#fetchable_fields' do
     let(:basic_fields) do
-      %i[id name avatar_url avatar_thumb_url created_at updated_at mail_aliases memberships users
-         permissions]
+      %i[id name articles avatar_url avatar_thumb_url created_at updated_at mail_aliases
+         memberships users permissions]
     end
     let(:authenticated_fields) do
       %i[description description_camofied kind recognized_at_gma rejected_at_gma administrative]
@@ -47,7 +47,7 @@ RSpec.describe V1::GroupResource, type: :resource do
     end
 
     describe 'administrative' do
-      let(:filter) { { administrative: ['true'] } }
+      let(:filter) { { administrative: [true] } }
       let(:group) { create(:group, administrative: true) }
       let(:other_group) { create(:group, administrative: false) }
 

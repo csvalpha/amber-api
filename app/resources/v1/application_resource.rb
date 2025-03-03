@@ -11,7 +11,6 @@ class V1::ApplicationResource < JSONAPI::Resource
   def self.creatable_fields(_context)
     []
   end
-
   # :nocov:
 
   def self.updatable_fields(context)
@@ -22,7 +21,6 @@ class V1::ApplicationResource < JSONAPI::Resource
   def self.searchable_fields
     []
   end
-
   # :nocov:
 
   def self.apply_filter(records, filter, value, options)
@@ -34,7 +32,7 @@ class V1::ApplicationResource < JSONAPI::Resource
     when :search
       search(records, value)
     else
-      super(records, filter, value, options)
+      super
     end
   end
 
@@ -54,7 +52,7 @@ class V1::ApplicationResource < JSONAPI::Resource
   def self.records(options = {})
     is_index = options.fetch(:context, {}).fetch(:action, {}) == 'index'
     includes = options.fetch(:includes, {}) || []
-    records ||= _model_class.all.includes(includes)
+    records ||= _model_class.includes(includes)
     if is_index
       records = Pundit.policy_scope!(current_user_or_application(options),
                                      _model_class).includes(includes)
@@ -79,9 +77,11 @@ class V1::ApplicationResource < JSONAPI::Resource
     context.fetch(:user)
   end
 
+  # :nocov:
   def current_application
     context.fetch(:application)
   end
+  # :nocov:
 
   def self.current_user_or_application(options)
     options.fetch(:context).fetch(:user) || options.fetch(:context).fetch(:application)

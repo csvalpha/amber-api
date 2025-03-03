@@ -1,4 +1,5 @@
 class Poll < ApplicationRecord
+  has_paper_trail
   belongs_to :form, class_name: 'Form::Form'
   has_many :responses, through: :form, class_name: 'Form::Response'
   belongs_to :author, class_name: 'User'
@@ -13,7 +14,7 @@ class Poll < ApplicationRecord
   def copy_author_to_form!
     return unless form
 
-    form.update(author: author)
+    form.update(author:)
   end
 
   def form_has_at_most_one_question

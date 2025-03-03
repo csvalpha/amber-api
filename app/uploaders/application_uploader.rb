@@ -10,7 +10,7 @@ class ApplicationUploader < CarrierWave::Uploader::Base
 
   # See https://github.com/carrierwaveuploader/carrierwave/wiki/How-to:-Create-random-and-unique-filenames-for-all-versioned-files#unique-filenames
   def filename
-    "#{secure_token}.#{file.extension}" if original_filename.present?
+    "#{secure_token}.#{file.extension}"
   end
 
   protected
