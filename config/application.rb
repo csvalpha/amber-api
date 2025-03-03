@@ -8,11 +8,7 @@ require 'active_storage/engine'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_mailbox/engine'
-# require "action_text/engine"
 # require "action_view/railtie"
-# require "action_cable/engine"
-# require "sprockets/railtie"
-# require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -23,11 +19,19 @@ module Amber
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
 
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
+    
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
@@ -72,8 +76,8 @@ module Amber
 
     config.x.sentry_dsn = credentials.dig(Rails.env.to_sym, :sentry_dsn)
 
-    config.x.camo_host = credentials.dig(Rails.env.to_sym, :camo_host)
-    config.x.camo_key = credentials.dig(Rails.env.to_sym, :camo_key)
+    config.x.camo_host = ENV.fetch('CAMO_HOST', credentials.dig(Rails.env.to_sym, :camo_host))
+    config.x.camo_key = ENV.fetch('CAMO_KEY', credentials.dig(Rails.env.to_sym, :camo_key))
 
     config.x.daily_verse_user = credentials.dig(Rails.env.to_sym, :daily_verse_user)
     config.x.daily_verse_password = credentials.dig(Rails.env.to_sym, :daily_verse_password)

@@ -33,7 +33,7 @@ gem 'puma', '~> 6.6'
 gem 'pundit', '~> 2.4'
 gem 'rack-attack', '~> 6.7'
 gem 'rack-cors', '~> 2.0', '>= 2.0.2', require: 'rack/cors'
-gem 'rails', '~> 7.0.0', '>= 7.0.8.7'
+gem 'rails', '~> 7.1.0', '>= 7.1.5.1'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.10'
 gem 'redis', '~> 5.3'
 gem 'roo', '~> 2.10', '>= 2.10.1'
@@ -50,7 +50,7 @@ gem 'vpim', '~> 24.2', '>= 24.2.20'
 group :development, :test do
   gem 'awesome_print'
   gem 'brakeman', require: false
-  gem 'bullet'
+  gem 'bullet', '~> 8.0', '>= 8.0.1'
   gem 'colorize'
   gem 'consistency_fail'
   gem 'dotenv-rails'
@@ -74,8 +74,8 @@ group :development do
 end
 
 group :test do
-  gem 'guard-rspec', require: false
-  gem 'rspec-rails'
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
+  gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
   gem 'rubocop', '~> 1.72', '>= 1.72.1', require: false
   gem 'rubocop-factory_bot', '~> 2.26', '>= 2.26.1', require: false
   gem 'rubocop-performance', '~> 1.24', '>= 1.24.0', require: false

@@ -56,9 +56,7 @@ module Webdav
           address.postalcode = user.postcode
         end
         maker.add_email(user.email)
-        if user.phone_number
-          maker.add_tel(user.phone_number) { |telephone| telephone.capability = %w[voice cell] }
-        end
+        maker.add_tel(user.phone_number) { |telephone| telephone.capability = %w[voice cell] } if user.phone_number
         maker.add_field(Vpim::DirectoryInfo::Field.create('REV', Time.zone.now))
         maker.add_field(Vpim::DirectoryInfo::Field.create('PRODID', 'C.S.V. Alpha'))
       end

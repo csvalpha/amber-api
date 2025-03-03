@@ -91,7 +91,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
                    groups: nextcloud_groups }
   end
 
-  def batch_import # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def batch_import # rubocop:disable Metrics/AbcSize
     authorize model_class
 
     file = decode_upload_file(params['file'])
@@ -100,9 +100,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
     import = Import::User.new(file, group)
 
-    unless import.valid?
-      return render json: { errors: import.errors }, status: :unprocessable_entity
-    end
+    return render json: { errors: import.errors }, status: :unprocessable_entity unless import.valid?
 
     import.save!(live_run)
     render json: { users: import.imported_users.to_json(except: excluded_display_properties),
