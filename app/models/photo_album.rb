@@ -6,9 +6,10 @@ class PhotoAlbum < ApplicationRecord
   belongs_to :group, optional: true
 
   validates :title, presence: true
-  validates :publicly_visible, inclusion: [true, false]
+  validates :visibility, inclusion: { in: ["everybody", "alumni", "members"] }
 
-  scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :alumni_visible, (-> { where(visibility: "alumni") })
+  scope :publicly_visible, (-> { where(visibility: "everybody") })
   scope :posted_between_or_publicly_visible, (lambda { |start_date, end_date|
     where(publicly_visible: true)
       .or(where.not(date: nil).where(date: start_date..end_date))

@@ -20,7 +20,11 @@ class Photo < ApplicationRecord
   })
 
   scope :publicly_visible, (lambda {
-    joins(:photo_album).where(photo_albums: { publicly_visible: true })
+    joins(:photo_album).where(photo_albums: { visibility: "everybody" })
+  })
+
+  scope :alumni_visible, (lambda {
+    joins(:photo_album).where(photo_albums: { visibility: "alumni" })
   })
 
   before_save :extract_exif

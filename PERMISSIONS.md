@@ -20,4 +20,4 @@ When the user has the read permission it is able to get all groups (as always). 
 
 ### Activity/Article/Photo
 #### Unauthenticated and without permission
-When not logged in or when without permission it is possible to get activities, articles and photos which have the publicly visible property to true.
+When not logged in or when without permission it is possible to get activities, articles and photos which have the visibility property to everybody.
