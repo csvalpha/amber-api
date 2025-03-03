@@ -19,7 +19,6 @@ class PhotoAlbum < ApplicationRecord
     where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)
   }
 
-
   def owners
     if group.present?
       group.active_users + [author]
