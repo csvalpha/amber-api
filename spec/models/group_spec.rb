@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Group, type: :model do
+RSpec.describe Group do
   subject(:group) { build_stubbed(:group) }
 
   describe '#valid?' do

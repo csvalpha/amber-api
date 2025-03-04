@@ -11,7 +11,7 @@ module Form
 
     validate :no_changes_allowed_on_present_responses
 
-    scope :required, (-> { where(required: true) })
+    scope :required, -> { where(required: true) }
 
     private
 

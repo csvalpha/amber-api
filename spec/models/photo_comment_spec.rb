@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PhotoComment, type: :model do
+RSpec.describe PhotoComment do
   subject(:photo_comment) { build(:photo_comment) }
 
   describe '#valid?' do

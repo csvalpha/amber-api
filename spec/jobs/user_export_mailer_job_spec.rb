@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UserExportMailerJob, type: :job do
+RSpec.describe UserExportMailerJob do
   describe '#perform' do
     let(:exporting_user) { create(:user) }
     let(:group) { create(:group, users: [exporting_user]) }
