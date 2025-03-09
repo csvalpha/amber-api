@@ -4,9 +4,9 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
              :ifes_data_sharing_preference, :info_in_almanak, :almanak_subscription_preference,
              :digtus_subscription_preference, :email, :birthday, :address, :postcode, :city,
              :phone_number, :food_preferences, :vegetarian, :study, :start_study,
-             :picture_publication_preference, :ical_secret_key, :webdav_secret_key,
+             :picture_publication_preference, :ical_secret_key,
              :password, :avatar, :avatar_url, :avatar_thumb_url,
-             :user_details_sharing_preference, :allow_tomato_sharing, :trailer_drivers_license,
+             :user_details_sharing_preference, :allow_sofia_sharing, :trailer_drivers_license,
              :setup_complete
 
   def avatar_url
@@ -53,19 +53,19 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
     # Relationships
     allowed_keys += %i[groups active_groups memberships mail_aliases mandates
                        group_mail_aliases permissions photos user_permissions]
-    allowed_keys += %i[ical_secret_key webdav_secret_key] if me?
+    allowed_keys += %i[ical_secret_key] if me?
     if update_or_me?
       allowed_keys += %i[login_enabled otp_required activated_at emergency_contact
                          emergency_number ifes_data_sharing_preference info_in_almanak
                          almanak_subscription_preference digtus_subscription_preference
-                         user_details_sharing_preference allow_tomato_sharing trailer_drivers_license setup_complete]
+                         user_details_sharing_preference allow_sofia_sharing trailer_drivers_license setup_complete]
     end
     allowed_keys += %i[picture_publication_preference] if read_or_me?
-    if read_user_details? && !application_is_tomato?
+    if read_user_details? && !application_is_sofia?
       allowed_keys += %i[email birthday address postcode city phone_number food_preferences vegetarian
                          study start_study]
     end
-    allowed_keys += %i[email birthday] if application_is_tomato? && @model.allow_tomato_sharing
+    allowed_keys += %i[email birthday] if application_is_sofia? && @model.allow_sofia_sharing
     super && allowed_keys
   end
   # rubocop:enable all
@@ -77,7 +77,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
                     emergency_contact emergency_number]
     if me?(context)
       attributes += %i[otp_required password
-                       user_details_sharing_preference allow_tomato_sharing
+                       user_details_sharing_preference allow_sofia_sharing
                        picture_publication_preference info_in_almanak
                        ifes_data_sharing_preference trailer_drivers_license setup_complete]
     end
@@ -142,10 +142,10 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
       me? || update_or_me?)
   end
 
-  def application_is_tomato?
+  def application_is_sofia?
     return false unless context.key?(:application) && context.fetch(:application)
 
-    context.fetch(:application).scopes.to_a.include?('tomato')
+    context.fetch(:application).scopes.to_a.include?('sofia')
   end
 
   def update_or_me?

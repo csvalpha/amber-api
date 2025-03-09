@@ -33,8 +33,6 @@ FactoryBot.define do
     otp_required { false }
     login_enabled { true }
 
-    trait(:webdav_enabled) { webdav_secret_key { SecureRandom.hex(32) } }
-
     transient do
       user_permission_list { [] }
       groups { [] }
