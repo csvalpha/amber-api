@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_19_195453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -229,7 +229,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "completed", default: false, null: false
     t.integer "lock_version"
-    t.index ["form_id", "user_id"], name: "index_form_responses_on_form_id_and_user_id", unique: true
+    t.index ["form_id", "user_id"], name: "index_form_responses_on_form_id_and_user_id_partial", unique: true, where: "(user_id <> 0)"
     t.index ["user_id"], name: "index_form_responses_on_user_id"
   end
 
