@@ -7,7 +7,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
              :picture_publication_preference, :ical_secret_key, :webdav_secret_key,
              :password, :avatar, :avatar_url, :avatar_thumb_url,
              :user_details_sharing_preference, :allow_tomato_sharing, :trailer_drivers_license,
-             :setup_complete
+             :sidekiq_access, :setup_complete
 
   def avatar_url
     @model.avatar.url
@@ -58,12 +58,13 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
       allowed_keys += %i[login_enabled otp_required activated_at emergency_contact
                          emergency_number ifes_data_sharing_preference info_in_almanak
                          almanak_subscription_preference digtus_subscription_preference
-                         user_details_sharing_preference allow_tomato_sharing trailer_drivers_license setup_complete]
+                         user_details_sharing_preference allow_tomato_sharing
+                         sidekiq_access setup_complete]
     end
     allowed_keys += %i[picture_publication_preference] if read_or_me?
     if read_user_details? && !application_is_tomato?
       allowed_keys += %i[email birthday address postcode city phone_number food_preferences vegetarian
-                         study start_study]
+                         study start_study trailer_drivers_license]
     end
     allowed_keys += %i[email birthday] if application_is_tomato? && @model.allow_tomato_sharing
     super && allowed_keys
@@ -74,12 +75,12 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
     attributes = %i[avatar nickname email address postcode city phone_number
                     food_preferences vegetarian study start_study
                     almanak_subscription_preference digtus_subscription_preference
-                    emergency_contact emergency_number]
+                    emergency_contact emergency_number trailer_drivers_license]
     if me?(context)
       attributes += %i[otp_required password
                        user_details_sharing_preference allow_tomato_sharing
                        picture_publication_preference info_in_almanak
-                       ifes_data_sharing_preference trailer_drivers_license setup_complete]
+                       ifes_data_sharing_preference sidekiq_access setup_complete]
     end
 
     if user_can_create_or_update?(context)

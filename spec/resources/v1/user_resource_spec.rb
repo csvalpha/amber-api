@@ -15,15 +15,15 @@ RSpec.describe V1::UserResource, type: :resource do
       %i[login_enabled otp_required activated_at emergency_contact
          emergency_number ifes_data_sharing_preference info_in_almanak
          almanak_subscription_preference digtus_subscription_preference
-         user_details_sharing_preference allow_tomato_sharing trailer_drivers_license
-         setup_complete]
+         user_details_sharing_preference allow_tomato_sharing
+         sidekiq_access setup_complete]
     end
     let(:read_fields) do
       %i[picture_publication_preference]
     end
     let(:user_details_fields) do
       %i[email birthday address postcode city phone_number food_preferences vegetarian
-         study start_study]
+         study start_study trailer_drivers_license]
     end
     let(:tomato_fields) do
       %i[email birthday]
@@ -144,7 +144,7 @@ RSpec.describe V1::UserResource, type: :resource do
     let(:current_user_fields) do
       %i[otp_required password user_details_sharing_preference allow_tomato_sharing
          info_in_almanak ifes_data_sharing_preference picture_publication_preference
-         trailer_drivers_license setup_complete]
+         trailer_drivers_license sidekiq_access setup_complete]
     end
 
     context 'when without permission' do
