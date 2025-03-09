@@ -46,7 +46,7 @@ module Amber
     # See https://github.com/kickstarter/rack-attack#getting-started
     config.middleware.use Rack::Attack
 
-    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
+    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: -> { Rails.logger } do
       allow do
         origins '*'
         resource '*',

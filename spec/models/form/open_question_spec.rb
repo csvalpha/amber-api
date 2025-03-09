@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Form::OpenQuestion, type: :model do
+RSpec.describe Form::OpenQuestion do
   subject(:open_question) { build_stubbed(:open_question) }
 
   describe '#valid' do
