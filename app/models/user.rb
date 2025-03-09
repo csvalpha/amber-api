@@ -84,7 +84,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :sidekiq_access, (-> { where(sidekiq_access: true) })
   scope :birthday, (lambda { |month = Time.zone.now.month, day = Time.zone.now.day|
     where('extract (month from birthday) = ? AND extract (day from birthday) = ?', month, day)
-  }
+  })
   scope :upcoming_birthdays, lambda { |days_ahead = 7|
     range = (0.days.from_now.to_date..days_ahead.days.from_now.to_date)
     scope = range.inject(birthday) do |birthdays, day|
