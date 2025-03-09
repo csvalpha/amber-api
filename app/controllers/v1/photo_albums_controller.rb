@@ -1,5 +1,5 @@
 class V1::PhotoAlbumsController < V1::ApplicationController
-  before_action :doorkeeper_authorize!, except: %i[index show zip]
+  before_action :doorkeeper_authorize!, except: %i[index show]
   before_action :set_model, only: %i[dropzone zip]
 
   def dropzone
