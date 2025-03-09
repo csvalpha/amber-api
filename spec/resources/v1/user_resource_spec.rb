@@ -144,7 +144,7 @@ RSpec.describe V1::UserResource, type: :resource do
     let(:current_user_fields) do
       %i[otp_required password user_details_sharing_preference allow_tomato_sharing
          info_in_almanak ifes_data_sharing_preference picture_publication_preference
-         trailer_drivers_license sidekiq_access setup_complete]
+         sidekiq_access setup_complete]
     end
 
     context 'when without permission' do
