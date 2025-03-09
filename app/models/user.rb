@@ -79,12 +79,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_commit :sync_mail_aliases
 
   scope :activated, -> { where(activated_at: ...Time.zone.now) }
-  scope :tomato_users, (-> { where(allow_tomato_sharing: true) })
-  scope :login_enabled, (-> { where(login_enabled: true) })
-  scope :sidekiq_access, (-> { where(sidekiq_access: true) })
-  scope :birthday, (lambda { |month = Time.zone.now.month, day = Time.zone.now.day|
+  scope :tomato_users, -> { where(allow_tomato_sharing: true) }
+  scope :login_enabled, -> { where(login_enabled: true) }
+  scope :sidekiq_access, -> { where(sidekiq_access: true) }
+  scope :birthday, lambda { |month = Time.zone.now.month, day = Time.zone.now.day|
     where('extract (month from birthday) = ? AND extract (day from birthday) = ?', month, day)
-  })
+  }
   scope :upcoming_birthdays, lambda { |days_ahead = 7|
     range = (0.days.from_now.to_date..days_ahead.days.from_now.to_date)
     scope = range.inject(birthday) do |birthdays, day|
