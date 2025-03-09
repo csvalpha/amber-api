@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'active_model_otp', '~> 2.3', '>= 2.3.4'
 gem 'bcrypt', '~> 3.1', '>= 3.1.20'
 gem 'bootsnap', '~> 1.18', '>= 1.18.4'
 gem 'carrierwave', '~> 3.1', '>= 3.1.1'
