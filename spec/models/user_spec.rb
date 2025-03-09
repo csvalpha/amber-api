@@ -206,19 +206,19 @@ RSpec.describe User do
       end
     end
 
-    context 'when allow_tomato_sharing is changed' do
+    context 'when allow_sofia_sharing is changed' do
       context 'from false to true' do
-        let(:user) { create(:user, allow_tomato_sharing: false) }
+        let(:user) { create(:user, allow_sofia_sharing: false) }
 
-        before { user.allow_tomato_sharing = true }
+        before { user.allow_sofia_sharing = true }
 
         it { expect(user).to be_valid }
       end
 
       context 'from true to false' do
-        let(:user) { create(:user, allow_tomato_sharing: true) }
+        let(:user) { create(:user, allow_sofia_sharing: true) }
 
-        before { user.allow_tomato_sharing = false }
+        before { user.allow_sofia_sharing = false }
 
         it { expect(user).not_to be_valid }
       end
@@ -313,10 +313,10 @@ RSpec.describe User do
     end
   end
 
-  describe '.tomato_users' do
+  describe '.sofia_users' do
     it do
-      expect { create(:user, allow_tomato_sharing: true) }.to(
-        change { described_class.tomato_users.count }.by(1)
+      expect { create(:user, allow_sofia_sharing: true) }.to(
+        change { described_class.sofia_users.count }.by(1)
       )
     end
   end
