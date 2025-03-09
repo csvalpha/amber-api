@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Form::ClosedQuestionOption, type: :model do
+RSpec.describe Form::ClosedQuestionOption do
   subject(:closed_question_option) { build_stubbed(:closed_question_option) }
 
   describe '#valid' do

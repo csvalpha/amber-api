@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Article, type: :model do
+RSpec.describe Article do
   subject(:article) { build(:article) }
 
   describe '#valid' do

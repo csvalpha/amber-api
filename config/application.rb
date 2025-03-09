@@ -46,7 +46,7 @@ module Amber
     # See https://github.com/kickstarter/rack-attack#getting-started
     config.middleware.use Rack::Attack
 
-    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
+    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: -> { Rails.logger } do
       allow do
         origins '*'
         resource '*',
@@ -61,9 +61,6 @@ module Amber
 
     config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Europe/Amsterdam'
-
-    config.x.slack_channel = '#monitoring'
-    config.x.slack_webhook = credentials.dig(Rails.env.to_sym, :slack_webhook) || ''
 
     config.x.mail_domains = %w[csvalpha.nl societeitflux.nl]
     config.x.improvmx_api_key = credentials.dig(Rails.env.to_sym, :improvmx_api_key)
