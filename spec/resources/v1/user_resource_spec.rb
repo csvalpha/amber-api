@@ -15,7 +15,8 @@ RSpec.describe V1::UserResource, type: :resource do
       %i[login_enabled otp_required activated_at emergency_contact
          emergency_number ifes_data_sharing_preference info_in_almanak
          almanak_subscription_preference digtus_subscription_preference
-         user_details_sharing_preference allow_sofia_sharing]
+         user_details_sharing_preference allow_tomato_sharing trailer_drivers_license
+         setup_complete]
     end
     let(:read_fields) do
       %i[picture_publication_preference]
@@ -141,8 +142,9 @@ RSpec.describe V1::UserResource, type: :resource do
          user_permissions login_enabled]
     end
     let(:current_user_fields) do
-      %i[otp_required password user_details_sharing_preference allow_sofia_sharing
-         info_in_almanak ifes_data_sharing_preference picture_publication_preference]
+      %i[otp_required password user_details_sharing_preference allow_tomato_sharing
+         info_in_almanak ifes_data_sharing_preference picture_publication_preference
+         trailer_drivers_license setup_complete]
     end
 
     context 'when without permission' do

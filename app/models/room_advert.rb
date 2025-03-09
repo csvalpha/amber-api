@@ -9,5 +9,5 @@ class RoomAdvert < ApplicationRecord
   validates :publicly_visible, inclusion: [true, false]
   validates :available_from, presence: true
 
-  scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :publicly_visible, -> { where(publicly_visible: true) }
 end

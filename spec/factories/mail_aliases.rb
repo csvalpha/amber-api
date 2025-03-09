@@ -16,7 +16,7 @@ FactoryBot.define do
 
     trait :with_moderator do
       moderation_type { :moderated }
-      association :moderator_group, factory: %i[group with_user]
+      moderator_group factory: %i[group with_user]
     end
   end
 end

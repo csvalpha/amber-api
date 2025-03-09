@@ -15,7 +15,7 @@ module Form
     after_create :update_completed_status!
     before_destroy :destroyable?
 
-    scope :completed, (-> { where(completed: true) })
+    scope :completed, -> { where(completed: true) }
 
     def complete
       reload unless new_record? # reloading is necessary, to make sure all associations are fresh
@@ -40,7 +40,7 @@ module Form
     end
 
     def form_allows_responses?
-      return true if form.try(:allows_responses?)
+      return true if form.try(:allows_responses?) || user_id&.zero?
 
       errors.add(:form, 'does not allow responses')
       false
