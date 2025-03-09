@@ -4,7 +4,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
                                                    get_related_resource]
   before_action :set_model, only: %i[update archive activate_account
                                      resend_activation_mail generate_otp_secret
-                                     activate_otp activate_webdav]
+                                     activate_otp]
 
   def update
     password = params.dig('data', 'attributes', 'password')
@@ -74,13 +74,6 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     end
 
     @model.update(otp_required: true)
-    head :no_content
-  end
-
-  def activate_webdav
-    authorize @model
-    @model.generate_webdav_secret_key
-    @model.save
     head :no_content
   end
 
