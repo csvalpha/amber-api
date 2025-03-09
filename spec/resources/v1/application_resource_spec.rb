@@ -19,18 +19,18 @@ RSpec.describe V1::ApplicationResource, type: :resource do
 
     describe 'search' do
       context 'when searching for one record' do
+        let(:filter) { { search: %w[john doe] } }
+
+        it { expect(filtered).to eq [user] }
+        it { expect(filtered.size).to eq 1 }
+      end
+
+      context 'when searching for multiple records' do
         let(:filter) { { search: ['john'] } }
 
         it { expect(filtered).to include user }
         it { expect(filtered).to include other_user }
         it { expect(filtered.size).to eq 2 }
-      end
-
-      context 'when searching for multiple records' do
-        let(:filter) { { search: %w[john doe] } }
-
-        it { expect(filtered).to eq [user] }
-        it { expect(filtered.size).to eq 1 }
       end
 
       context 'when without records' do
