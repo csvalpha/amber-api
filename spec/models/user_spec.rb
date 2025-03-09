@@ -208,7 +208,7 @@ RSpec.describe User do
 
     context 'when allow_sofia_sharing is changed' do
       context 'from false to true' do
-        let(:user) { create(:user, allow_tomato_sharing: false) }
+        let(:user) { create(:user, allow_sofia_sharing: false) }
 
         before { user.allow_sofia_sharing = true }
 
