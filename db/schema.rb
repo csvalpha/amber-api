@@ -558,7 +558,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_19_195453) do
     t.string "almanak_subscription_preference", default: "physical"
     t.string "digtus_subscription_preference", default: "physical"
     t.string "user_details_sharing_preference"
-    t.boolean "allow_tomato_sharing", default: false, null: false
+    t.boolean "allow_sofia_sharing", default: false, null: false
     t.string "webdav_secret_key"
     t.string "nickname"
     t.boolean "trailer_drivers_license", default: false, null: false
