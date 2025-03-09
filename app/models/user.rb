@@ -8,10 +8,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   has_many :memberships, inverse_of: :user, dependent: :delete_all
   has_many :groups, through: :memberships
-  has_many :active_groups, (lambda {
+  has_many :active_groups, lambda {
     where('start_date <= :now AND (end_date > :now OR
       memberships.end_date IS NULL)', now: Time.zone.now)
-  }), through: :memberships, source: :group
+  }, through: :memberships, source: :group
   has_many :permissions_users, class_name: 'PermissionsUsers', dependent: :delete_all
   has_many :user_permissions, through: :permissions_users, source: :permission
   has_many :article_comments, foreign_key: :author_id
@@ -66,8 +66,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   validates :picture_publication_preference, not_renullable: true, inclusion: {
     in: %w[always_publish always_ask never_publish], allow_nil: true
   }
-  validates :ifes_data_sharing_preference, not_renullable: true
-  validates :info_in_almanak, not_renullable: true
   validates :user_details_sharing_preference, not_renullable: true, inclusion: {
     in: %w[hidden members_only all_users], allow_nil: true
   }
@@ -80,26 +78,26 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_create :generate_ical_secret_key
   after_commit :sync_mail_aliases
 
-  scope :activated, (-> { where('activated_at < ?', Time.zone.now) })
+  scope :activated, -> { where(activated_at: ...Time.zone.now) }
   scope :tomato_users, (-> { where(allow_tomato_sharing: true) })
   scope :login_enabled, (-> { where(login_enabled: true) })
   scope :sidekiq_access, (-> { where(sidekiq_access: true) })
   scope :birthday, (lambda { |month = Time.zone.now.month, day = Time.zone.now.day|
     where('extract (month from birthday) = ? AND extract (day from birthday) = ?', month, day)
-  })
-  scope :upcoming_birthdays, (lambda { |days_ahead = 7|
+  }
+  scope :upcoming_birthdays, lambda { |days_ahead = 7|
     range = (0.days.from_now.to_date..days_ahead.days.from_now.to_date)
     scope = range.inject(birthday) do |birthdays, day|
       birthdays.or(birthday(day.month, day.day))
     end
     february28 = Date.new(Time.zone.now.year, 2, 28)
     scope = scope.or(birthday(2, 29)) if range.include?(february28) &&
-      !Date.leap?(Time.zone.now.year)
+                                         !Date.leap?(Time.zone.now.year)
     scope
-  })
-  scope :active_users_for_group, (lambda { |group|
+  }
+  scope :active_users_for_group, lambda { |group|
     joins(:memberships).merge(Membership.active.where(group:))
-  })
+  }
 
   def full_name
     [first_name, last_name_prefix, last_name].compact_blank.join(' ')
@@ -207,7 +205,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def allow_tomato_sharing_valid?
-    return unless allow_tomato_sharing_changed?(from: true, to: false)
+    return false unless allow_tomato_sharing_changed?(from: true, to: false)
 
     errors.add(:allow_tomato_sharing,
                'before being removed from sofia your credits needs to be zero.

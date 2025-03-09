@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Debit::Transaction, type: :model do
+RSpec.describe Debit::Transaction do
   subject(:transaction) { create(:transaction) }
 
   describe '#valid' do

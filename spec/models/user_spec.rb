@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   subject(:user) { build_stubbed(:user) }
 
   describe '#valid?' do
@@ -126,18 +126,6 @@ RSpec.describe User, type: :model do
       it { expect(user).not_to be_valid }
     end
 
-    context 'when re-null ifes_data_sharing_preference' do
-      subject(:user) { create(:user) }
-
-      it { expect(user.update(ifes_data_sharing_preference: nil)).to be false }
-    end
-
-    context 'when re-null valid info_in_almanak' do
-      subject(:user) { create(:user) }
-
-      it { expect(user.update(info_in_almanak: nil)).to be false }
-    end
-
     context 'when re-null user_details_sharing_preference' do
       subject(:user) { create(:user) }
 
@@ -219,10 +207,10 @@ RSpec.describe User, type: :model do
     end
 
     context 'when allow_tomato_sharing is changed' do
-      context 'from nil to false' do
-        let(:user) { create(:user, allow_tomato_sharing: nil) }
+      context 'from false to true' do
+        let(:user) { create(:user, allow_tomato_sharing: false) }
 
-        before { user.allow_tomato_sharing = false }
+        before { user.allow_tomato_sharing = true }
 
         it { expect(user).to be_valid }
       end
@@ -579,7 +567,7 @@ RSpec.describe User, type: :model do
 
     before { create(:group, users: [user], permission_list: ['user.update']) }
 
-    it { expect(user.permissions.map(&:name)).to match_array(['user.read', 'user.update']) }
+    it { expect(user.permissions.map(&:name)).to contain_exactly('user.read', 'user.update') }
   end
 
   describe '#current_group_member?' do

@@ -41,7 +41,7 @@ class V1::VacancyResource < V1::ApplicationResource
   def user_is_member_of_group?
     return true unless @model.group
     return true if current_user.permission?(:update, @model)
-    return if current_user.current_group_member?(@model.group)
+    return false if current_user.current_group_member?(@model.group)
 
     raise AmberError::NotMemberOfGroupError
   end

@@ -17,17 +17,17 @@ class Photo < ApplicationRecord
   validates :image, presence: true
   validates :original_filename, presence: true
 
-  scope :with_comments, (lambda {
+  scope :with_comments, lambda {
     joins(:comments).distinct
-  })
+  }
 
-  scope :with_tags, (lambda {
+  scope :with_tags, lambda {
     joins(:tags).distinct
-  })
+  }
 
-  scope :publicly_visible, (lambda {
+  scope :publicly_visible, lambda {
     joins(:photo_album).where(photo_albums: { publicly_visible: true })
-  })
+  }
 
   before_save :extract_exif
 
@@ -44,7 +44,7 @@ class Photo < ApplicationRecord
         value = value.encode('UTF-8', invalid: :replace, undef: :replace,
                                       replace: '')
       end
-      public_send("exif_#{field}=", value)
+      public_send(:"exif_#{field}=", value)
     end
   end
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StudyRoomPresence, type: :model do
+RSpec.describe StudyRoomPresence do
   subject(:study_room_presence) { build_stubbed(:study_room_presence) }
 
   describe '#valid?' do

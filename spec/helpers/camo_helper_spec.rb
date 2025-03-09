@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CamoHelper, type: :helper do
+RSpec.describe CamoHelper do
   include described_class
   describe '#camo' do
     it do

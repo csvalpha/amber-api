@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :post, class: 'Forum::Post' do
     message { Faker::Hipster.paragraph }
-    association :author, factory: :user
+    author factory: %i[user]
     thread
   end
 end

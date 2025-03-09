@@ -32,27 +32,28 @@ class V1::ApplicationResource < JSONAPI::Resource
     when :search
       search(records, value)
     else
-      super(records, filter, value, options)
+      super
     end
   end
 
   def self.search(records, value)
     return records if records == []
 
-    final_records = []
     arel = records.first.class.arel_table
     value.each do |val|
-      searchable_fields.each do |field|
-        final_records << records.where(arel[field].lower.matches("%#{val.downcase}%"))
+      val.split.each do |word|
+        records = records.where(
+          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or) # rubocop:disable Layout/LineLength
+        )
       end
     end
-    records.where(id: final_records.flatten.map(&:id))
+    records
   end
 
   def self.records(options = {})
     is_index = options.fetch(:context, {}).fetch(:action, {}) == 'index'
     includes = options.fetch(:includes, {}) || []
-    records ||= _model_class.all.includes(includes)
+    records ||= _model_class.includes(includes)
     if is_index
       records = Pundit.policy_scope!(current_user_or_application(options),
                                      _model_class).includes(includes)

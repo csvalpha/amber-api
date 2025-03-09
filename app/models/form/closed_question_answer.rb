@@ -9,13 +9,13 @@ module Form
     validate :radio_question_reflects_question?
 
     def option=(value)
-      super(value)
+      super
       self.question = option.try(:question)
       self.radio_question = radio_question?
     end
 
     def option_id=(value)
-      super(value)
+      super
       self.option = ClosedQuestionOption.find(value) if value
     end
 
