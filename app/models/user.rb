@@ -79,7 +79,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_commit :sync_mail_aliases
 
   scope :activated, -> { where(activated_at: ...Time.zone.now) }
-  scope :contactsync_users, -> { where.not(webdav_secret_key: nil) }
   scope :sofia_users, -> { where(allow_sofia_sharing: true) }
   scope :login_enabled, -> { where(login_enabled: true) }
   scope :sidekiq_access, -> { where(sidekiq_access: true) }
@@ -175,10 +174,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def self.valid_csv_attributes
     column_names.map(&:to_sym) + %i[full_name avatar_url]
-  end
-
-  def generate_webdav_secret_key
-    self.webdav_secret_key = SecureRandom.hex(32)
   end
 
   def to_ical # rubocop:disable Metrics/AbcSize

@@ -38,7 +38,7 @@ services:
       - ./log:/app/log
     labels:
       - traefik.enable=true
-      - traefik.http.routers.amber-api-staging.rule=Host(`$HOST`) && PathPrefix(`/api`, `/uploads`, `/sidekiq`, `/webdav`, `/ical`)
+      - traefik.http.routers.amber-api-staging.rule=Host(`$HOST`) && PathPrefix(`/api`, `/uploads`, `/sidekiq`, `/ical`)
       - traefik.http.routers.amber-api-staging.middlewares=amber-api-strip@file
       - traefik.http.routers.amber-api-staging.tls.certresolver=default
 

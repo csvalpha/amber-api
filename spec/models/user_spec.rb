@@ -305,14 +305,6 @@ RSpec.describe User do
     end
   end
 
-  describe '.contactsync_users' do
-    it do
-      expect { create(:user, webdav_secret_key: SecureRandom.hex(32)) }.to(
-        change { described_class.contactsync_users.count }.by(1)
-      )
-    end
-  end
-
   describe '.login_enabled' do
     it do
       expect { create(:user, login_enabled: true) }.to(
