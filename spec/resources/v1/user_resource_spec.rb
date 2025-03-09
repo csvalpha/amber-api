@@ -135,7 +135,8 @@ RSpec.describe V1::UserResource, type: :resource do
       %i[avatar nickname email address postcode city phone_number
          food_preferences vegetarian study start_study
          almanak_subscription_preference
-         digtus_subscription_preference emergency_contact emergency_number]
+         digtus_subscription_preference emergency_contact emergency_number
+         trailer_drivers_license]
     end
     let(:permissible_fields) do
       %i[first_name last_name_prefix last_name birthday
