@@ -33,8 +33,7 @@ RSpec.describe MailAlias do
       let(:other_mail_alias) { create(:mail_alias, :with_group) }
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias,
-                      :with_group, email: other_mail_alias.email)
+        build(:mail_alias, :with_group, email: other_mail_alias.email)
       end
 
       it { expect(mail_alias).not_to be_valid }
