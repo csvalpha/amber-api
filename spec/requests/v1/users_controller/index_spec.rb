@@ -32,7 +32,7 @@ describe V1::UsersController do
           create(:user, groups: [group],
                         user_permission_list: %w[user.read group.read])
         end
-        
+
         before { Bullet.enable = false }
 
         after { Bullet.enable = true }
