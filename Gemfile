@@ -7,7 +7,6 @@ gem 'carrierwave', '~> 3.1', '>= 3.1.1'
 gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
-gem 'concurrent-ruby', '1.3.4' # can be removed when we upgrade to rails 7.1 https://www.devgem.io/posts/resolving-the-loggerthreadsafelevel-error-in-rails-after-bundle-update
 gem 'counter_culture', '~> 3.8', '>= 3.8.2'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.1'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
@@ -30,7 +29,7 @@ gem 'puma', '~> 6.6'
 gem 'pundit', '~> 2.5'
 gem 'rack-attack', '~> 6.7'
 gem 'rack-cors', '~> 2.0', '>= 2.0.2', require: 'rack/cors'
-gem 'rails', '~> 7.0.0', '>= 7.0.8.7'
+gem 'rails', '~> 7.1.5', '>= 7.1.5.0'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.10'
 gem 'redis', '~> 5.4'
 gem 'roo', '~> 2.10', '>= 2.10.1'
@@ -79,7 +78,7 @@ group :test do
   gem 'rubocop-performance', '~> 1.24', '>= 1.24.0', require: false
   gem 'rubocop-rails', '~> 2.30', '>= 2.30.3', require: false
   gem 'rubocop-rspec', '~> 3.5', '>= 3.5.0', require: false
-  gem 'rubocop-rspec_rails', '~> 2.30', '>= 2.30.0', require: false
+  gem 'rubocop-rspec_rails', '~> 2.31', require: false
   gem 'simplecov', require: false
   gem 'simplecov-lcov', '~> 0.8.0', require: false
   gem 'terminal-notifier-guard'
