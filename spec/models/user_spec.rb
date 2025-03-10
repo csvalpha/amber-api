@@ -97,7 +97,7 @@ RSpec.describe User do
     end
 
     context 'when with an invalid emergency_number' do
-      subject(:user) { build_stubbed(:user, emergency_number: '+3161234567890') }
+      subject(:user) { build_stubbed(:user, emergency_number: '+31612345678901') }
 
       it { expect(user).not_to be_valid }
     end
