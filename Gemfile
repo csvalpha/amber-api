@@ -72,7 +72,7 @@ end
 
 group :test do
   gem 'guard-rspec', require: false
-  gem 'rspec-rails'
+  gem 'rspec-rails','~> 5.1', '>= 5.1.1'
   gem 'rubocop', '~> 1.73', '>= 1.73.2', require: false
   gem 'rubocop-factory_bot', '~> 2.27', require: false
   gem 'rubocop-performance', '~> 1.24', '>= 1.24.0', require: false
