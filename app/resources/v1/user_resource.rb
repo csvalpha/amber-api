@@ -21,7 +21,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   has_many :active_groups
   has_many :memberships
   has_many :mail_aliases
-  has_many :mandates, always_include_linkage_data: true
+  has_many :mandates
   has_many :group_mail_aliases
   has_many :permissions
   has_many :photos
