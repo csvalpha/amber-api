@@ -32,7 +32,7 @@ describe V1::UsersController do
              activated_at emergency_contact emergency_number info_in_almanak
              almanak_subscription_preference digtus_subscription_preference
              ifes_data_sharing_preference user_details_sharing_preference
-             trailer_drivers_license]
+             sidekiq_access]
         end
       end
     end
@@ -63,7 +63,7 @@ describe V1::UsersController do
              activated_at emergency_contact emergency_number info_in_almanak
              almanak_subscription_preference digtus_subscription_preference
              ifes_data_sharing_preference user_details_sharing_preference
-             trailer_drivers_license]
+             sidekiq_access]
         end
       end
     end
@@ -88,7 +88,8 @@ describe V1::UsersController do
         let(:record_permission) { nil }
         let(:conditional_attributes) do
           %w[picture_publication_preference email birthday address
-             postcode city phone_number food_preferences vegetarian study start_study]
+             postcode city phone_number food_preferences vegetarian study start_study
+             trailer_drivers_license]
         end
       end
     end
@@ -104,7 +105,7 @@ describe V1::UsersController do
         city picture_publication_preference info_in_almanak
         almanak_subscription_preference digtus_subscription_preference
         emergency_contact emergency_number ifes_data_sharing_preference
-        user_details_sharing_preference trailer_drivers_license
+        user_details_sharing_preference trailer_drivers_license sidekiq_access
       ]
       it_behaves_like '200 OK'
       it {

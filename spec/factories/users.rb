@@ -31,6 +31,7 @@ FactoryBot.define do
     password_confirmation { password }
 
     otp_required { false }
+    sidekiq_access { false }
     login_enabled { true }
 
     transient do
