@@ -194,13 +194,13 @@ RSpec.describe User do
       let(:user) { create(:user) }
 
       context 'username' do
-        subject(:duplicate_user) { build_stubbed(:user, username: user.username) }
+        subject(:duplicate_user) { build(:user, username: user.username) }
 
         it { expect(duplicate_user).not_to be_valid }
       end
 
       context 'email' do
-        subject(:duplicate_user) { build_stubbed(:user, email: user.email) }
+        subject(:duplicate_user) { build(:user, email: user.email) }
 
         it { expect(duplicate_user).not_to be_valid }
       end
