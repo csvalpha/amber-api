@@ -138,7 +138,7 @@ Rails.application.config.action_dispatch.default_headers = {
 # servers, first deploy without changing the serializer, then set the serializer
 # in a subsequent deploy.
 #++
-# Rails.application.config.active_support.message_serializer = :json_allow_marshal
+ Rails.application.config.active_support.message_serializer = :json_allow_marshal
 
 ###
 # Enable a performance optimization that serializes message data and metadata
@@ -151,7 +151,7 @@ Rails.application.config.action_dispatch.default_headers = {
 # leave this optimization off on the first deploy, then enable it on a
 # subsequent deploy.
 #++
-# Rails.application.config.active_support.use_message_serializer_for_metadata = true
+ Rails.application.config.active_support.use_message_serializer_for_metadata = true
 
 ###
 # Set the maximum size for Rails log files.
@@ -159,29 +159,29 @@ Rails.application.config.action_dispatch.default_headers = {
 # `config.load_defaults 7.1` does not set this value for environments other than
 # development and test.
 #++
-# if Rails.env.local?
-#   Rails.application.config.log_file_size = 100 * 1024 * 1024
-# end
+ if Rails.env.local?
+   Rails.application.config.log_file_size = 100 * 1024 * 1024
+ end
 
 ###
 # Enable raising on assignment to attr_readonly attributes. The previous
 # behavior would allow assignment but silently not persist changes to the
 # database.
 #++
-# Rails.application.config.active_record.raise_on_assign_to_attr_readonly = true
+ Rails.application.config.active_record.raise_on_assign_to_attr_readonly = true
 
 ###
 # Enable validating only parent-related columns for presence when the parent is mandatory.
 # The previous behavior was to validate the presence of the parent record, which performed an extra query
 # to get the parent every time the child record was updated, even when parent has not changed.
 #++
-# Rails.application.config.active_record.belongs_to_required_validates_foreign_key = false
+ Rails.application.config.active_record.belongs_to_required_validates_foreign_key = false
 
 ###
 # Enable precompilation of `config.filter_parameters`. Precompilation can
 # improve filtering performance, depending on the quantity and types of filters.
 #++
-# Rails.application.config.precompile_filter_parameters = true
+ Rails.application.config.precompile_filter_parameters = true
 
 ###
 # Enable before_committed! callbacks on all enrolled records in a transaction.
