@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   subject(:user) { build_stubbed(:user) }
 
   describe '#valid?' do
@@ -126,18 +126,6 @@ RSpec.describe User, type: :model do
       it { expect(user).not_to be_valid }
     end
 
-    context 'when re-null ifes_data_sharing_preference' do
-      subject(:user) { create(:user) }
-
-      it { expect(user.update(ifes_data_sharing_preference: nil)).to be false }
-    end
-
-    context 'when re-null valid info_in_almanak' do
-      subject(:user) { create(:user) }
-
-      it { expect(user.update(info_in_almanak: nil)).to be false }
-    end
-
     context 'when re-null user_details_sharing_preference' do
       subject(:user) { create(:user) }
 
@@ -218,19 +206,19 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'when allow_tomato_sharing is changed' do
-      context 'from nil to false' do
-        let(:user) { create(:user, allow_tomato_sharing: nil) }
+    context 'when allow_sofia_sharing is changed' do
+      context 'from false to true' do
+        let(:user) { create(:user, allow_sofia_sharing: false) }
 
-        before { user.allow_tomato_sharing = false }
+        before { user.allow_sofia_sharing = true }
 
         it { expect(user).to be_valid }
       end
 
       context 'from true to false' do
-        let(:user) { create(:user, allow_tomato_sharing: true) }
+        let(:user) { create(:user, allow_sofia_sharing: true) }
 
-        before { user.allow_tomato_sharing = false }
+        before { user.allow_sofia_sharing = false }
 
         it { expect(user).not_to be_valid }
       end
@@ -317,14 +305,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.contactsync_users' do
-    it do
-      expect { create(:user, webdav_secret_key: SecureRandom.hex(32)) }.to(
-        change { described_class.contactsync_users.count }.by(1)
-      )
-    end
-  end
-
   describe '.login_enabled' do
     it do
       expect { create(:user, login_enabled: true) }.to(
@@ -333,10 +313,10 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.tomato_users' do
+  describe '.sofia_users' do
     it do
-      expect { create(:user, allow_tomato_sharing: true) }.to(
-        change { described_class.tomato_users.count }.by(1)
+      expect { create(:user, allow_sofia_sharing: true) }.to(
+        change { described_class.sofia_users.count }.by(1)
       )
     end
   end
@@ -587,7 +567,7 @@ RSpec.describe User, type: :model do
 
     before { create(:group, users: [user], permission_list: ['user.update']) }
 
-    it { expect(user.permissions.map(&:name)).to match_array(['user.read', 'user.update']) }
+    it { expect(user.permissions.map(&:name)).to contain_exactly('user.read', 'user.update') }
   end
 
   describe '#current_group_member?' do
@@ -676,14 +656,10 @@ RSpec.describe User, type: :model do
     with_versioning do
       let(:user) { create(:user) }
 
-      # Currently we have a problem with paper trail
-      # which causes two versions to be created on each change
-      # This is caused by the fact that we call paper trail twice
-      # (once in ApplicationRecord and once in User)
-      it { expect(user.versions.size).to eq 2 }
+      it { expect(user.versions.size).to eq 1 }
 
       it do
-        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(2).to(4))
+        expect { user.update(first_name: 'change') }.to(change { user.versions.size }.from(1).to(2))
       end
     end
   end

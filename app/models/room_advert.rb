@@ -1,6 +1,6 @@
 class RoomAdvert < ApplicationRecord
   mount_base64_uploader :cover_photo, CoverPhotoUploader
-
+  has_paper_trail skip: [:cover_photo]
   belongs_to :author, class_name: 'User'
 
   validates :house_name, presence: true
@@ -9,5 +9,5 @@ class RoomAdvert < ApplicationRecord
   validates :publicly_visible, inclusion: [true, false]
   validates :available_from, presence: true
 
-  scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :publicly_visible, -> { where(publicly_visible: true) }
 end

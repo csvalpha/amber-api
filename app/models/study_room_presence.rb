@@ -4,17 +4,17 @@ class StudyRoomPresence < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, presence: true
   validates_datetime :end_time, after: :start_time
-  validates :status, inclusion: { in: %w[chilling studying banaan] }
+  validates :status, inclusion: { in: %w[chilling studying vergaderen] }
 
-  scope :current, (lambda {
+  scope :current, lambda {
     where('start_time <= :current_time AND end_time >= :current_time',
           current_time: Time.current)
-  })
-  scope :future, (lambda {
-    where('start_time >= :current_time', current_time: Time.current)
-  })
-  scope :current_and_future, (lambda {
+  }
+  scope :future, lambda {
+    where(start_time: Time.current..)
+  }
+  scope :current_and_future, lambda {
     where('(start_time <= :current_time AND end_time >= :current_time)
 or (start_time >= :current_time)', current_time: Time.current)
-  })
+  }
 end

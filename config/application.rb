@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module Amber
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.0
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -46,7 +46,7 @@ module Amber
     # See https://github.com/kickstarter/rack-attack#getting-started
     config.middleware.use Rack::Attack
 
-    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: (-> { Rails.logger }) do
+    config.middleware.insert_before 0, Rack::Cors, debug: true, logger: -> { Rails.logger } do
       allow do
         origins '*'
         resource '*',
@@ -61,9 +61,6 @@ module Amber
 
     config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Europe/Amsterdam'
-
-    config.x.slack_channel = '#monitoring'
-    config.x.slack_webhook = credentials.dig(Rails.env.to_sym, :slack_webhook) || ''
 
     config.x.mail_domains = %w[csvalpha.nl societeitflux.nl]
     config.x.improvmx_api_key = credentials.dig(Rails.env.to_sym, :improvmx_api_key)
@@ -83,9 +80,9 @@ module Amber
 
     config.x.healthcheck_ids = credentials.dig(Rails.env.to_sym, :healthcheck_ids)
 
-    config.x.noreply_email = ENV.fetch('NOREPLY_EMAIL', 'no-reply@csvalpha.com')
-    config.x.ict_email = ENV.fetch('ICT_EMAIL', 'ict@csvalpha.com')
-    config.x.privacy_email = ENV.fetch('PRIVACY_EMAIL', 'privacy@csvalpha.com')
-    config.x.mailbeheer_email = ENV.fetch('PRIVACY_EMAIL', 'mailbeheer@csvalpha.com')
+    config.x.noreply_email = ENV.fetch('NOREPLY_EMAIL', 'no-reply@csvalpha.nl')
+    config.x.ict_email = ENV.fetch('ICT_EMAIL', 'ict@csvalpha.nl')
+    config.x.privacy_email = ENV.fetch('PRIVACY_EMAIL', 'privacy@csvalpha.nl')
+    config.x.mailbeheer_email = ENV.fetch('MAILADMIN_EMAIL', 'mailbeheer@csvalpha.nl')
   end
 end

@@ -1,6 +1,7 @@
 require 'zip'
 
 class PhotoAlbum < ApplicationRecord
+  has_paper_trail
   has_many :photos, dependent: :destroy
   belongs_to :author, class_name: 'User'
   belongs_to :group, optional: true
@@ -8,7 +9,7 @@ class PhotoAlbum < ApplicationRecord
   validates :title, presence: true
   validates :publicly_visible, inclusion: [true, false]
 
-  scope :publicly_visible, (-> { where(publicly_visible: true) })
+  scope :publicly_visible, -> { where(publicly_visible: true) }
 
   scope :without_photo_tags, lambda {
     where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)

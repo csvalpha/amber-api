@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PhotoTag, type: :model do
+RSpec.describe PhotoTag do
   subject(:photo_tag) { build(:photo_tag) }
 
   describe '#valid?' do
