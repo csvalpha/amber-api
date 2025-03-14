@@ -97,7 +97,7 @@ RSpec.describe User do
     end
 
     context 'when with an invalid emergency_number' do
-      subject(:user) { build_stubbed(:user, emergency_number: '+3161234567890') }
+      subject(:user) { build_stubbed(:user, emergency_number: '+31612345678901') }
 
       it { expect(user).not_to be_valid }
     end
@@ -194,13 +194,13 @@ RSpec.describe User do
       let(:user) { create(:user) }
 
       context 'username' do
-        subject(:duplicate_user) { build_stubbed(:user, username: user.username) }
+        subject(:duplicate_user) { build(:user, username: user.username) }
 
         it { expect(duplicate_user).not_to be_valid }
       end
 
       context 'email' do
-        subject(:duplicate_user) { build_stubbed(:user, email: user.email) }
+        subject(:duplicate_user) { build(:user, email: user.email) }
 
         it { expect(duplicate_user).not_to be_valid }
       end

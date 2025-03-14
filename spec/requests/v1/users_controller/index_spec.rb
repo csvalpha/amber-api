@@ -33,6 +33,10 @@ describe V1::UsersController do
                         user_permission_list: %w[user.read group.read])
         end
 
+        before { Bullet.enable = false }
+
+        after { Bullet.enable = true }
+
         it do
           expect(
             json['data'].first['relationships']['active_groups']['data'].first['id'].to_i
