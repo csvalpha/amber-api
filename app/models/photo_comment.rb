@@ -6,11 +6,11 @@ class PhotoComment < ApplicationRecord
 
   validates :content, presence: true, length: { minimum: 1, maximum: 500 }
 
-  scope :publicly_visible, (lambda {
-    joins(:photo_album).where(photo_albums: { visibility: "everybody" })
-  })
+  scope :publicly_visible, lambda {
+    joins(:photo_album).where(photo_albums: { visibility: 'everybody' })
+  }
 
-  scope :alumni_visible, (lambda {
-    joins(:photo_album).where(photo_albums: { visibility: "alumni" })
-  })
+  scope :alumni_visible, lambda {
+    joins(:photo_album).where(photo_albums: { visibility: 'alumni' })
+  }
 end

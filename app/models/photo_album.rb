@@ -7,15 +7,15 @@ class PhotoAlbum < ApplicationRecord
   belongs_to :group, optional: true
 
   validates :title, presence: true
-  validates :visibility, inclusion: { in: ["everybody", "alumni", "members"] }
+  validates :visibility, inclusion: { in: %w[everybody alumni members] }
 
-  scope :alumni_visible, (-> { where(visibility: "alumni") })
-  scope :publicly_visible, (-> { where(visibility: "everybody") })
-  scope :posted_between_or_publicly_visible, (lambda { |start_date, end_date|
+  scope :alumni_visible, -> { where(visibility: 'alumni') }
+  scope :publicly_visible, -> { where(visibility: 'everybody') }
+  scope :posted_between_or_publicly_visible, lambda { |start_date, end_date|
     where(publicly_visible: true)
       .or(where.not(date: nil).where(date: start_date..end_date))
       .or(where(date: nil).where(created_at: start_date..end_date))
-  })
+  }
   scope :without_photo_tags, lambda {
     where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)
   }
