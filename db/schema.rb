@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
+ActiveRecord::Schema[7.0].define(version: 2025_03_14_221852) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
+    t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
@@ -229,7 +229,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "completed", default: false, null: false
     t.integer "lock_version"
-    t.index ["form_id", "user_id"], name: "index_form_responses_on_form_id_and_user_id", unique: true
+    t.index ["form_id", "user_id"], name: "index_form_responses_on_form_id_and_user_id_partial", unique: true, where: "(user_id <> 0)"
     t.index ["user_id"], name: "index_form_responses_on_user_id"
   end
 
@@ -411,9 +411,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "deleted_at", precision: nil
-    t.boolean "publicly_visible", default: false, null: false
     t.bigint "author_id"
     t.bigint "group_id"
+    t.string "visibility", default: "members"
     t.index ["author_id"], name: "index_photo_albums_on_author_id"
     t.index ["deleted_at"], name: "index_photo_albums_on_deleted_at"
     t.index ["group_id"], name: "index_photo_albums_on_group_id"
@@ -558,8 +558,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_18_204807) do
     t.string "almanak_subscription_preference", default: "physical"
     t.string "digtus_subscription_preference", default: "physical"
     t.string "user_details_sharing_preference"
-    t.boolean "allow_tomato_sharing", default: false, null: false
-    t.string "webdav_secret_key"
+    t.boolean "allow_sofia_sharing", default: false, null: false
     t.string "nickname"
     t.boolean "trailer_drivers_license", default: false, null: false
     t.boolean "setup_complete", default: false, null: false
