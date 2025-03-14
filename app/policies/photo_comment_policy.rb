@@ -1,6 +1,6 @@
 class PhotoCommentPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
-    def resolve # rubocop:disable Metrics/AbcSize
+    def resolve
       if user_can_read?
         membership = user.memberships.joins(:group).where(groups: { name: 'Leden' }).first
         return if membership.nil?

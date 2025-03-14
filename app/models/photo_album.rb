@@ -13,11 +13,11 @@ class PhotoAlbum < ApplicationRecord
     joins(:photo_album).where(photo_albums: { visibility: 'public' })
   }
   scope :alumni_visible, lambda { |start_date, end_date|
-  joins(:photo_album)
-    .where(photo_albums: { visibility: 'alumni' })
-    .or(photo_albums: { visibility: 'public' })
-    .or(where.not(date: nil).where(date: start_date..end_date))
-    .or(where(date: nil).where(created_at: start_date..end_date))
+    joins(:photo_album)
+      .where(photo_albums: { visibility: 'alumni' })
+      .or(photo_albums: { visibility: 'public' })
+      .or(where.not(date: nil).where(date: start_date..end_date))
+      .or(where(date: nil).where(created_at: start_date..end_date))
   }
   scope :without_photo_tags, lambda {
     where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)

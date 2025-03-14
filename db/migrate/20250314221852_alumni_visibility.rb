@@ -10,7 +10,7 @@ class AlumniVisibility < ActiveRecord::Migration[7.0]
   end
 
   def down
-    add_column :photo_albums, :publicly_visible, :boolean, default: false
+    add_column :photo_albums, :publicly_visible, :boolean, default: false, null: false
 
     photoAlbums.find_each do |record|
       record.update!(publicly_visible: record.visibility == 'public')
