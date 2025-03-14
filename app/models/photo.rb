@@ -21,14 +21,10 @@ class Photo < ApplicationRecord
     joins(:comments).distinct
   }
 
-  scope :publicly_visible, lambda {
-    joins(:photo_album).where(photo_albums: { visibility: 'everybody' })
-  }
-
   scope :alumni_visible, lambda { |start_date, end_date|
   joins(:photo_album)
     .where(photo_albums: { visibility: 'alumni' })
-    .or(photo_albums: { visibility: 'everybody' })
+    .or(photo_albums: { visibility: 'public' })
     .or(where.not(photo_albums: { date: nil}).where(photo_albums: { date: start_date..end_date}))
     .or(where(photo_albums: { date: nil }).where(photo_albums: { created_at: start_date..end_date}))
   }

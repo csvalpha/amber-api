@@ -5,7 +5,7 @@ class PhotoAlbumPolicy < ApplicationPolicy
         membership = user.memberships.joins(:group).where(groups: { name: 'Leden' }).first
         return scope.publicly_visible if membership.nil?
 
-        scope.posted_between_or_publicly_visible(
+        scope.alumni_visible(
           membership.start_date&.advance(months: -18),
           membership.end_date&.advance(months: 6)
         )
