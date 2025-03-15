@@ -413,7 +413,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_03_14_221852) do
     t.datetime "deleted_at", precision: nil
     t.bigint "author_id"
     t.bigint "group_id"
-    t.string "visibility", default: "members"
+    t.string "visibility", default: "members", null: false
     t.index ["author_id"], name: "index_photo_albums_on_author_id"
     t.index ["deleted_at"], name: "index_photo_albums_on_deleted_at"
     t.index ["group_id"], name: "index_photo_albums_on_group_id"

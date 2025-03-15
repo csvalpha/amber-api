@@ -6,7 +6,5 @@ FactoryBot.define do
     end
 
     photo
-
-    trait(:public) { photo factory: %i[photo public] }
   end
 end
