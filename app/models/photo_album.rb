@@ -10,7 +10,7 @@ class PhotoAlbum < ApplicationRecord
   validates :visibility, inclusion: { in: %w[public alumni members] }
 
   scope :publicly_visible, lambda {
-    joins(:photo_album).where(photo_album: { visibility: 'public' })
+    where({ visibility: 'public' })
   }
   scope :alumni_visible, lambda { |start_date, end_date|
     where(visibility: %w[alumni public])
