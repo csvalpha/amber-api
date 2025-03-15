@@ -8,6 +8,6 @@ FactoryBot.define do
     group
 
     trait(:public) { visibility { 'public' } }
-    trait(:alumni) { visibility { %w[alumni public].sample } }
+    trait(:alumni) { visibility { 'alumni' } }
   end
 end
