@@ -62,17 +62,19 @@ RSpec.describe Photo do
   end
 
   describe '#publicly_visible' do
-    let(:public_album) { create(:photo_album, publicly_visible: true) }
-    let(:private_album) { create(:photo_album, publicly_visible: false) }
+    let(:public_album) { create(:photo_album, visibility: 'public') }
+    let(:alumni_album) { create(:photo_album, visibility: 'alumni') }
+    let(:private_album) { create(:photo_album, visibility: 'members') }
 
     before do
       create(:photo, photo_album: public_album)
-      create(:photo, photo_album: public_album)
+      create(:photo, photo_album: alumni_album)
       create(:photo, photo_album: private_album)
     end
 
-    it { expect(described_class.publicly_visible.count).to be 2 }
-    it { expect(described_class.count - described_class.publicly_visible.count).to be 1 }
+    it { expect(described_class.where(visibility: %w[public]).count).to be 1 }
+    it { expect(described_class.where(visibility: %w[alumni public]).count).to be 2 }
+    it { expect(described_class.count - described_class.where(visibility: %w[alumni public]).count).to be 1 }
   end
 
   describe '#extract_exif' do
