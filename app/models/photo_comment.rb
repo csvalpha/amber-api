@@ -8,9 +8,8 @@ class PhotoComment < ApplicationRecord
 
   scope :alumni_visible, lambda { |start_date, end_date|
     joins(:photo_album)
-      .where(photo_albums: { visibility: 'alumni' })
-      .or(photo_albums: { visibility: 'public' })
-      .or(where.not(photo_albums: { date: nil }).where(photo_albums: { date: start_date..end_date }))
-      .or(where(photo_albums: { date: nil }).where(photo_albums: { created_at: start_date..end_date }))
+      .where(photo_album: { visibility: %w[alumni public] })
+      .or(where.not(photo_album: { date: nil }).where(photo_album: { date: start_date..end_date }))
+      .or(where(photo_album: { date: nil }).where(photo_album: { created_at: start_date..end_date }))
   }
 end

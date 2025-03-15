@@ -1,10 +1,13 @@
 FactoryBot.define do
   factory :photo_album do
     title { Faker::Book.title }
-    publicly_visible { false }
+    visibility do
+      %w[public alumni members].sample
+    end
     author factory: %i[user]
     group
 
-    trait(:public) { publicly_visible { true } }
+    trait(:public) { visibility { 'public' } }
+    trait(:alumni) { visibility %w[alumni public] }
   end
 end

@@ -19,7 +19,7 @@ RSpec.describe PhotoAlbum do
     end
 
     context 'when without public visibility' do
-      subject(:photo_album) { build_stubbed(:photo_album, publicly_visible: nil) }
+      subject(:photo_album) { build_stubbed(:photo_album, visibility: 'members') }
 
       it { expect(photo_album).not_to be_valid }
     end
@@ -29,15 +29,16 @@ RSpec.describe PhotoAlbum do
     it_behaves_like 'a model with group owners'
   end
 
-  describe '#publicly_visible' do
+  describe '#visibility' do
     before do
-      create(:photo_album, publicly_visible: true)
-      create(:photo_album, publicly_visible: true)
-      create(:photo_album, publicly_visible: false)
+      create(:photo_album, visibility: 'public')
+      create(:photo_album, visibility: 'alumni')
+      create(:photo_album, visibility: 'members')
     end
 
-    it { expect(described_class.publicly_visible.count).to be 2 }
-    it { expect(described_class.count - described_class.publicly_visible.count).to be 1 }
+    it { expect(described_class.where(visibility: %w[public]).count).to be 1 }
+    it { expect(described_class.where(visibility: %w[alumni public]).count).to be 2 }
+    it { expect(described_class.count - described_class..where(visibility: %w[alumni public]).count).to be 1 }
   end
 
   describe '#to_zip' do
