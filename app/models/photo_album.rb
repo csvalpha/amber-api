@@ -13,7 +13,7 @@ class PhotoAlbum < ApplicationRecord
     joins(:photo_album).where(photo_album: { visibility: 'public' })
   }
   scope :alumni_visible, lambda { |start_date, end_date|
-      where(visibility: %w[alumni public])
+    where(visibility: %w[alumni public])
       .or(where.not(date: nil).where(date: start_date..end_date))
       .or(where(date: nil).where(created_at: start_date..end_date))
   }
