@@ -71,8 +71,8 @@ RSpec.describe Photo do
       create(:photo, photo_album: private_album)
     end
 
-    it { expect(described_class.where(photo_albums: { visibility: %w[alumni public] }).count).to be 2 }
-    it { expect(described_class.count - described_class.where(photo_albums: { visibility: %w[alumni public] }).count).to be 1 }
+    it { expect(described_class.where(:photo_album { visibility: %w[alumni public] }).count).to be 2 }
+    it { expect(described_class.count - described_class.where(:photo_album { visibility: %w[alumni public] }).count).to be 1 }
   end
 
   describe '#extract_exif' do
