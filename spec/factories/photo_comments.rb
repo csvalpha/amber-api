@@ -6,5 +6,7 @@ FactoryBot.define do
     end
 
     photo
+
+    trait(:alumni) { photo factory: %i[photo alumni] }
   end
 end
