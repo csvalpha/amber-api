@@ -21,12 +21,15 @@ class Photo < ApplicationRecord
     joins(:comments).distinct
   }
 
-  scope :with_tags, lambda {
-    joins(:tags).distinct
+  scope :alumni_visible, lambda { |start_date, end_date|
+    joins(:photo_album)
+      .where(photo_album: { visibility: %w[alumni public] })
+      .or(where.not(photo_album: { date: nil }).where(photo_album: { date: start_date..end_date }))
+      .or(where(photo_album: { date: nil }).where(photo_album: { created_at: start_date..end_date }))
   }
 
-  scope :publicly_visible, lambda {
-    joins(:photo_album).where(photo_albums: { publicly_visible: true })
+  scope :with_tags, lambda {
+    joins(:tags).distinct
   }
 
   before_save :extract_exif
