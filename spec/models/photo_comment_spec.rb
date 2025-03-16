@@ -34,17 +34,17 @@ RSpec.describe PhotoComment do
   end
 
   describe '#visibilty' do
-  let(:alumni_album) { create(:photo_album, visibility: 'alumni') }
-  let(:private_album) { create(:photo_album, visibility: 'members') }
+    let(:alumni_album) { create(:photo_album, visibility: 'alumni') }
+    let(:private_album) { create(:photo_album, visibility: 'members') }
 
-  let(:alumni_photo) { create(:photo, photo_album: alumni_album) }
-  let(:private_photo) { create(:photo, photo_album: private_album) }
+    let(:alumni_photo) { create(:photo, photo_album: alumni_album) }
+    let(:private_photo) { create(:photo, photo_album: private_album) }
 
-  before do
-    create(:photo_comment, photo: alumni_photo)
-    create(:photo_comment, photo: alumni_photo)
-    create(:photo_comment, photo: private_photo)
-  end
+    before do
+      create(:photo_comment, photo: alumni_photo)
+      create(:photo_comment, photo: alumni_photo)
+      create(:photo_comment, photo: private_photo)
+    end
 
     it {
       expect(described_class.joins(photo: :photo_album).where(photo_album: { visibility: 'alumni' }).count).to be 2
