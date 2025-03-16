@@ -73,7 +73,7 @@ RSpec.describe Photo do
 
     it {
       expect(described_class.joins(:photo_album).where(photo_albums: { visibility: %w[alumni
-                                                                                          public] }).count).to be 2
+                                                                                      public] }).count).to be 2
     }
 
     it {

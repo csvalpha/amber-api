@@ -13,12 +13,8 @@ class PhotoCommentPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user_can_read?
-  end
-
   def show?
-    user_can_read? && scope.exists?(id: record.id)
+    scope.exists?(id: record.id)
   end
 
   def create_with_photo?(_photo)
