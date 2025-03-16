@@ -9,6 +9,8 @@ class PhotoPolicy < ApplicationPolicy
           membership.start_date&.advance(months: -18),
           membership.end_date&.advance(months: 6)
         )
+      else	        
+        scope.none
       end
     end
   end
@@ -18,6 +20,6 @@ class PhotoPolicy < ApplicationPolicy
   end
 
   def get_related_resources?
-    index?
+    user&.permission?(:read, record)
   end
 end
