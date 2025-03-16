@@ -33,14 +33,25 @@ RSpec.describe PhotoComment do
     end
   end
 
-  describe '#publicly_visible' do
+  describe '#visibilty' do
+    let(:alumni_album) { create(:photo_album, visibility: 'alumni') }
+    let(:private_album) { create(:photo_album, visibility: 'members') }
+
+    let(:alumni_photo) { create(:photo, photo_album: alumni_album) }
+    let(:private_photo) { create(:photo, photo_album: private_album) }
+
     before do
-      create(:photo_comment, :public)
-      create(:photo_comment, :public)
-      create(:photo_comment)
+      create(:photo_comment, photo: alumni_photo)
+      create(:photo_comment, photo: alumni_photo)
+      create(:photo_comment, photo: private_photo)
     end
 
-    it { expect(described_class.publicly_visible.count).to be 2 }
-    it { expect(described_class.count - described_class.publicly_visible.count).to be 1 }
+    it {
+      expect(described_class.joins(photo: :photo_album).where(photo_album: { visibility: 'alumni' }).count).to be 2
+    }
+
+    it {
+      expect(described_class.joins(photo: :photo_album).where.not(photo_album: { visibility: 'alumni' }).count).to be 1
+    }
   end
 end

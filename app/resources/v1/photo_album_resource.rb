@@ -1,5 +1,5 @@
 class V1::PhotoAlbumResource < V1::ApplicationResource
-  attributes :title, :date, :publicly_visible
+  attributes :title, :date, :visibility
 
   filter :without_photo_tags, apply: ->(records, _value, _options) { records.without_photo_tags }
 
@@ -8,7 +8,7 @@ class V1::PhotoAlbumResource < V1::ApplicationResource
   has_one :group, always_include_linkage_data: true
 
   def self.creatable_fields(_context)
-    %i[title date publicly_visible group]
+    %i[title date visibility group]
   end
 
   def self.searchable_fields

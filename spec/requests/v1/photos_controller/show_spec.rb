@@ -1,13 +1,19 @@
 require 'rails_helper'
 
 describe V1::PhotosController do
-  describe 'GET /photos/:id', version: 1 do
-    let(:record) { create(:photo) }
-    let(:record_url) { "/v1/photos/#{record.id}" }
-    let(:public_record) { create(:photo, :public) }
-    let(:public_record_url) { "/v1/photos/#{public_record.id}" }
-    let(:record_permission) { 'photo.read' }
+  let(:user) { create(:user) }
+  let(:group) { create(:group, name: 'Leden') }
+  let(:membership) { create(:membership, user: user, group: group, start_date: 2.years.ago, end_date: nil) }
+  let(:record) { create(:photo) }
 
-    it_behaves_like 'a publicly visible model'
+  before do
+    membership
+  end
+
+  describe 'GET /photos/:id', version: 1 do
+    it_behaves_like 'a permissible model' do
+      let(:record_url) { "/v1/photos/#{record.id}" }
+      let(:record_permission) { 'photo.read' }
+    end
   end
 end

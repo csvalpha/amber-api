@@ -32,9 +32,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
     upcoming_birthdays = records.upcoming_birthdays
     records.find_each do |record|
       context[:model] = record
-      unless read_user_details?(context)
-        upcoming_birthdays = upcoming_birthdays.where.not(id: record.id)
-      end
+      upcoming_birthdays = upcoming_birthdays.where.not(id: record.id) unless read_user_details?(context)
     end
     upcoming_birthdays
   }

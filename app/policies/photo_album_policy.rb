@@ -1,8 +1,14 @@
 class PhotoAlbumPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
-    def resolve
+    def resolve # rubocop:disable Metrics/AbcSize
       if user_can_read?
-        scope
+        membership = user.memberships.joins(:group).where(groups: { name: 'Leden' }).first
+        return scope.publicly_visible if membership.nil?
+
+        scope.alumni_visible(
+          membership.start_date&.advance(months: -18),
+          membership.end_date&.advance(months: 6)
+        )
       else
         scope.publicly_visible
       end

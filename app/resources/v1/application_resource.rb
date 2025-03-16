@@ -43,7 +43,7 @@ class V1::ApplicationResource < JSONAPI::Resource
     value.each do |val|
       val.split.each do |word|
         records = records.where(
-          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or) # rubocop:disable Layout/LineLength
+          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
         )
       end
     end
