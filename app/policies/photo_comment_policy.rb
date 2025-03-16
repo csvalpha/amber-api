@@ -3,7 +3,7 @@ class PhotoCommentPolicy < ApplicationPolicy
     def resolve
       if user_can_read?
         membership = user.memberships.joins(:group).where(groups: { name: 'Leden' }).first
-        return if membership.nil?
+        return scope.none if membership.nil?
 
         scope.alumni_visible(
           membership.start_date&.advance(months: -18),
@@ -14,11 +14,11 @@ class PhotoCommentPolicy < ApplicationPolicy
   end
 
   def index?
-    true
+    user_can_read?
   end
 
   def show?
-    scope.exists?(id: record.id)
+    user_can_read? && scope.exists?(id: record.id)
   end
 
   def create_with_photo?(_photo)

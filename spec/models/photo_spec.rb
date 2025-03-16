@@ -72,7 +72,7 @@ RSpec.describe Photo do
     end
 
     it {
-      expect(described_class.joins(:photo_album).where.not(photo_albums: { visibility: %w[alumni
+      expect(described_class.joins(:photo_album).where(photo_albums: { visibility: %w[alumni
                                                                                           public] }).count).to be 2
     }
 
