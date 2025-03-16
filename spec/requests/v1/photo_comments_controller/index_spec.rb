@@ -3,7 +3,7 @@ require 'rails_helper'
 describe V1::PhotoCommentsController do
   let(:user) { create(:user) }
   let(:group) { create(:group, name: 'Leden') }
-  let(:membership) { create(:membership, user: user, group: group, start_date: 2.years.ago, end_date: 1.year.from_now) }
+  let(:membership) { create(:membership, user: user, group: group, start_date: 2.years.ago, end_date: nil) }
   let(:records) { create_list(:photo_comment, 3) }
 
   before do
