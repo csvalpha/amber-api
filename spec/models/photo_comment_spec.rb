@@ -35,9 +35,9 @@ RSpec.describe PhotoComment do
 
   describe '#visibilty' do
     before do
-      create(:photo_comment, :alumni)
-      create(:photo_comment, :almuni)
-      create(:photo_comment)
+      create(:photo_comment, photo_album: alumni_album)
+      create(:photo_comment, photo_album: alumni_album)
+      create(:photo_comment, photo_album: private_album)
     end
 
     it {

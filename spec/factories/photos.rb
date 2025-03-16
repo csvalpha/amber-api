@@ -9,7 +9,6 @@ FactoryBot.define do
     photo_album
     uploader factory: %i[user]
 
-    trait(:alumni) { photo_album factory: %i[photo_album alumni] }
     trait(:invalid) do
       image do
         Rack::Test::UploadedFile.new(
