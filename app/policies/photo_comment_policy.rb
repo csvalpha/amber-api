@@ -9,7 +9,7 @@ class PhotoCommentPolicy < ApplicationPolicy
           membership.start_date&.advance(months: -18),
           membership.end_date&.advance(months: 6)
         )
-      else	        
+      else
         scope.none
       end
     end
