@@ -5,7 +5,7 @@ describe V1::PhotoAlbumsController do
   let(:group) { create(:group, name: 'Leden') }
   let(:membership) { create(:membership, user: user, group: group, start_date: 2.years.ago, end_date: nil) }
   let(:record) { create(:photo_album) }
-  
+
   before do
     membership
   end

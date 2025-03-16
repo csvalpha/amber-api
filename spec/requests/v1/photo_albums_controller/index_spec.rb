@@ -24,4 +24,3 @@ describe V1::PhotoAlbumsController do
     it_behaves_like 'a searchable model', %i[title]
   end
 end
-
