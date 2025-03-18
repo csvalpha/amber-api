@@ -70,6 +70,7 @@ module Amber
     config.x.improvmx_api_key = credentials.dig(Rails.env.to_sym, :improvmx_api_key)
     config.x.smtp_username = credentials.dig(:production, :smtp_username)
     config.x.smtp_password = credentials.dig(:production, :smtp_password)
+    config.x.ingress_password = credentials.dig(:action_mailbox, :ingress_password) || 'ingress_password'
 
     config.x.sentry_dsn = credentials.dig(Rails.env.to_sym, :sentry_dsn)
 

@@ -20,7 +20,7 @@ RSpec.describe MarkdownHelper do
 
     it do
       expect(camofy('![](http://example.org/image.jpg "Image title")')).to eq(
-        '![](localhost:9090/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067  "Image title")'
+        '![](localhost:9090/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067 "Image title")'
       )
     end
 
@@ -32,7 +32,7 @@ RSpec.describe MarkdownHelper do
 
     it do
       expect(camofy('<img src="http://example.org/image.jpg">')).to eq(
-        '<img src="localhost:9090/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067>'
+        '<img src="localhost:9090/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067">'
       )
     end
 
