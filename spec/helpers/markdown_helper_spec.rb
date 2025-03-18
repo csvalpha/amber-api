@@ -5,7 +5,7 @@ RSpec.describe MarkdownHelper do
   describe '#camofy' do
     it { expect(camofy(nil)).to be_nil }
 
-     it do
+    it do
       expect(camofy("plain text \n ![alt text](http://example.org/image.jpg)")).to eq(
         "plain text \n ![alt text](https://example.org/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067)"
       )
@@ -65,6 +65,7 @@ RSpec.describe MarkdownHelper do
         '<img alt="" style="somekindofstyle" src="https://example.org/c7125941763fc18c9d8977ed19028ca5f9378070/687474703a2f2f6578616d706c652e6f72672f696d6167652e6a7067">'
       )
     end
+
     # rubocop:enable Layout/LineLength
   end
 end
