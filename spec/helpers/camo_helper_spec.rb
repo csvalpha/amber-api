@@ -9,3 +9,4 @@ RSpec.describe CamoHelper do
       )
     end
   end
+end  
