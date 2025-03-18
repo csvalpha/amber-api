@@ -1,14 +1,12 @@
-require:
-  - rubocop-factory_bot
-  - rubocop-rspec_rails
-
 plugins:
-  - rubocop-rspec
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
-  TargetRailsVersion: 7.0
+  TargetRailsVersion: 7.1
   TargetRubyVersion: 3.3
   Exclude:
     - 'db/schema.rb'
@@ -32,9 +30,6 @@ Metrics/BlockLength:
     - 'config/environments/*'
     - 'config/routes.rb'
     - 'spec/**/*'
-
-Layout/LineLength:
-  Max: 100
 
 Metrics/MethodLength:
   Exclude:
