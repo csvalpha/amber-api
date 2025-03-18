@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_19_195453) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_10_235232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_19_195453) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
+    t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
@@ -558,8 +558,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_19_195453) do
     t.string "almanak_subscription_preference", default: "physical"
     t.string "digtus_subscription_preference", default: "physical"
     t.string "user_details_sharing_preference"
-    t.boolean "allow_tomato_sharing", default: false, null: false
-    t.string "webdav_secret_key"
+    t.boolean "allow_sofia_sharing", default: false, null: false
     t.string "nickname"
     t.boolean "trailer_drivers_license", default: false, null: false
     t.boolean "setup_complete", default: false, null: false
