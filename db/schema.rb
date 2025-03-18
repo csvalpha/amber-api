@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_16_233318) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_19_195453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -229,7 +229,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_233318) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "completed", default: false, null: false
     t.integer "lock_version"
-    t.index ["form_id", "user_id"], name: "index_form_responses_on_form_id_and_user_id", unique: true
+    t.index ["form_id", "user_id"], name: "index_form_responses_on_form_id_and_user_id_partial", unique: true, where: "(user_id <> 0)"
     t.index ["user_id"], name: "index_form_responses_on_user_id"
   end
 
@@ -558,9 +558,10 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_16_233318) do
     t.string "almanak_subscription_preference", default: "physical"
     t.string "digtus_subscription_preference", default: "physical"
     t.string "user_details_sharing_preference"
-    t.boolean "allow_tomato_sharing", default: false, null: false
-    t.string "webdav_secret_key"
+    t.boolean "allow_sofia_sharing", default: false, null: false
     t.string "nickname"
+    t.boolean "trailer_drivers_license", default: false, null: false
+    t.boolean "setup_complete", default: false, null: false
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login_enabled"], name: "index_users_on_login_enabled"

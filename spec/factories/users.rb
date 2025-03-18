@@ -16,6 +16,7 @@ FactoryBot.define do
     emergency_contact { Faker::Name.name }
     emergency_number { Faker::PhoneNumber.phone_number }
     ifes_data_sharing_preference { Faker::Boolean }
+    trailer_drivers_license { Faker::Boolean }
     info_in_almanak { Faker::Boolean }
     picture_publication_preference { %w[always_publish always_ask never_publish].sample }
     almanak_subscription_preference { %w[physical digital no_subscription].sample }
@@ -30,9 +31,8 @@ FactoryBot.define do
     password_confirmation { password }
 
     otp_required { false }
+    sidekiq_access { false }
     login_enabled { true }
-
-    trait(:webdav_enabled) { webdav_secret_key { SecureRandom.hex(32) } }
 
     transient do
       user_permission_list { [] }
