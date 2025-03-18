@@ -75,7 +75,6 @@ module Amber
 
     config.x.camo_host = ENV.fetch('CAMO_HOST', credentials.dig(Rails.env.to_sym, :camo_host))
     config.x.camo_key = ENV.fetch('CAMO_KEY', credentials.dig(Rails.env.to_sym, :camo_key))
-                        
 
     config.x.daily_verse_user = credentials.dig(Rails.env.to_sym, :daily_verse_user)
     config.x.daily_verse_password = credentials.dig(Rails.env.to_sym, :daily_verse_password)
