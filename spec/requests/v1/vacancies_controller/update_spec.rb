@@ -6,7 +6,7 @@ describe V1::VacanciesController do
     let(:record_url) { "/v1/vacancies/#{record.id}" }
     let(:record_permission) { 'vacancy.update' }
 
-    it_behaves_like 'an updatable and permissible model', response: :ok do
+    it_behaves_like 'an updatable and permissible model' do
       let(:invalid_attributes) { { title: '' } }
     end
 

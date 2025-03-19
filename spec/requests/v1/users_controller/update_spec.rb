@@ -6,7 +6,7 @@ describe V1::UsersController do
     let(:record_url) { "/v1/users/#{record.id}" }
     let(:record_permission) { 'user.update' }
 
-    it_behaves_like 'an updatable and permissible model', response: :ok do
+    it_behaves_like 'an updatable and permissible model' do
       let(:invalid_attributes) { { email: '' } }
     end
 

@@ -6,7 +6,7 @@ describe V1::RoomAdvertsController do
     let(:record_url) { "/v1/room_adverts/#{record.id}" }
     let(:record_permission) { 'room_advert.update' }
 
-    it_behaves_like 'an updatable and permissible model', response: :ok do
+    it_behaves_like 'an updatable and permissible model' do
       let(:invalid_attributes) { { house_name: '' } }
     end
 
