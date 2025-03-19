@@ -20,15 +20,17 @@ class Membership < ApplicationRecord
   private
 
   def unique_on_time_interval?
-    return true unless Membership.where.not(id:).where(group_id:, user_id:)
-                                 .exists?([':start_date BETWEEN start_date AND end_date OR
-                                        :end_date BETWEEN start_date AND end_date OR
-                                        start_date BETWEEN :start_date AND :end_date OR
-                                        end_date BETWEEN :start_date AND :end_date OR
-                                        (start_date < :start_date AND end_date IS NULL) OR
-                                        (start_date > :start_date AND :end_date IS NULL)',
-                                           { start_date:, end_date: }])
-
+    return true unless Membership.where.not(id: id)
+                                 .where(group_id: group_id, user_id: user_id)
+                                 .exists?([<<-SQL, { start_date: start_date, end_date: end_date }])
+        CAST(:start_date AS date) BETWEEN start_date AND end_date OR
+        CAST(:end_date AS date) BETWEEN start_date AND end_date OR
+        start_date BETWEEN CAST(:start_date AS date) AND CAST(:end_date AS date) OR
+        end_date BETWEEN CAST(:start_date AS date) AND CAST(:end_date AS date) OR
+        (start_date < CAST(:start_date AS date) AND end_date IS NULL) OR
+        (start_date > CAST(:start_date AS date) AND CAST(:end_date AS date) IS NULL)
+      SQL
+  
     errors.add(:membership, 'is not unique on time interval')
     false
   end
