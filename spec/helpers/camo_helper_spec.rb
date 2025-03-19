@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe CamoHelper do
   include described_class
   describe '#camo' do
-
     # rubocop:disable Layout/LineLength
     it do
       expect(camo('http://example.org/image.jpg')).to eq(
