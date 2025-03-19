@@ -1,8 +1,8 @@
 plugins:
   - rubocop-factory_bot
   - rubocop-performance
-  - rubocop-rspec
   - rubocop-rails
+  - rubocop-rspec
   - rubocop-rspec_rails
 
 AllCops:
