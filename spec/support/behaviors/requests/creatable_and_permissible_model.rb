@@ -48,7 +48,7 @@ shared_examples 'a creatable and permissible model' do
       context 'when using incorrect data' do
         subject(:request) { invalid_request }
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Entity in Plain Text'
         it { expect { request }.not_to(change { record.class.count }) }
       end
     end
@@ -64,7 +64,7 @@ shared_examples 'a creatable and permissible model' do
       context 'when using incorrect data' do
         subject(:request) { invalid_request }
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Entity in Plain Text'
         it { expect { request }.not_to(change { record.class.count }) }
       end
     end
