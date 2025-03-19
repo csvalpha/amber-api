@@ -94,6 +94,8 @@ GEM
       msgpack (~> 1.2)
     brakeman (7.0.0)
       racc
+    binding_of_caller (1.0.1)
+      debug_inspector (>= 1.2.0)
     builder (3.3.0)
     bullet (8.0.1)
       activesupport (>= 3.0.0)
