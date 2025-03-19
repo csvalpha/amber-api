@@ -8,6 +8,7 @@ gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
 gem 'counter_culture', '~> 3.8', '>= 3.8.2'
+gem 'csv', '~> 3.3', '>= 3.3.2'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.1'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
 gem 'exifr', '~> 1.4', '>= 1.4.1'
@@ -24,7 +25,7 @@ gem 'mini_magick', '~> 5.2'
 gem 'paper_trail', '~> 16.0'
 gem 'paranoia', '~> 3.0', '>= 3.0.1'
 gem 'pg', '~> 1.5', '>= 1.5.9'
-gem 'phonelib'
+gem 'phonelib', '~> 0.10', '>= 0.10.5'
 gem 'puma', '~> 6.6'
 gem 'pundit', '~> 2.5'
 gem 'rack-attack', '~> 6.7'
@@ -45,47 +46,47 @@ gem 'validates_timeliness', '~> 7.1.0'
 gem 'vpim', '~> 24.2', '>= 24.2.20'
 
 group :development, :test do
-  gem 'awesome_print'
-  gem 'brakeman', require: false
-  gem 'bullet', '~> 7.2'
-  gem 'colorize'
+  gem 'awesome_print', '~> 1.9', '>= 1.9.2'
+  gem 'brakeman', '~> 7.0', require: false
+  gem 'bullet', '~> 8.0', '>= 8.0.1'
+  gem 'colorize', '~> 1.1'
   gem 'consistency_fail'
-  gem 'dotenv-rails'
-  gem 'factory_bot_rails'
+  gem 'dotenv-rails', '~> 3.1', '>= 3.1.7'
+  gem 'factory_bot_rails', '~> 6.4', '>= 6.4.4'
   gem 'faker', '~> 3.5', '>= 3.5.1'
-  gem 'fuubar'
-  gem 'pry-byebug', '~> 3.10.1', require: false
-  gem 'pry-rails', '~> 0.3.11'
-  gem 'rack-mini-profiler', require: false
-  gem 'rb-readline', require: false
+  gem 'fuubar', '~> 2.5', '>= 2.5.1'
+  gem 'pry-byebug', '~> 3.10', '>= 3.10.1', require: false
+  gem 'pry-rails', '~> 0.3', '>= 0.3.11'
+  gem 'rack-mini-profiler', '~> 3.3', '>= 3.3.1', require: false
+  gem 'rb-readline', '~> 0.5', '>= 0.5.5', require: false
 end
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'listen'
-  gem 'mina'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'spring-watcher-listen'
+  gem 'better_errors', '~> 2.10', '>= 2.10.1'
+  gem 'binding_of_caller', '~> 1.0', '>= 1.0.1'
+  gem 'listen', '~> 3.9'
+  gem 'mina', '~> 1.2', '>= 1.2.5'
+  gem 'spring', '~> 4.2', '>= 4.2.1'
+  gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
+  gem 'spring-watcher-listen', '~> 2.1'
 end
 
 group :test do
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
   gem 'rubocop', '~> 1.73', '>= 1.73.2', require: false
   gem 'rubocop-factory_bot', '~> 2.27', require: false
-  gem 'rubocop-performance', '~> 1.24', '>= 1.24.0', require: false
+  gem 'rubocop-performance', '~> 1.24', require: false
   gem 'rubocop-rails', '~> 2.30', '>= 2.30.3', require: false
-  gem 'rubocop-rspec', '~> 3.5', '>= 3.5.0', require: false
+  gem 'rubocop-rspec', '~> 3.5', require: false
   gem 'rubocop-rspec_rails', '~> 2.31', require: false
-  gem 'simplecov', require: false
-  gem 'simplecov-lcov', '~> 0.8.0', require: false
-  gem 'terminal-notifier-guard'
-  gem 'timecop'
-  gem 'vcr'
-  gem 'webmock'
+  gem 'simplecov', '~> 0.22', require: false
+  gem 'simplecov-lcov', '~> 0.8', require: false
+  gem 'terminal-notifier-guard', '~> 1.7'
+  gem 'timecop', '~> 0.9', '>= 0.9.10'
+  gem 'vcr', '~> 6.3', '>= 6.3.1'
+  gem 'webmock', '~> 3.25', '>= 3.25.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data', platforms: %i[windows jruby]
