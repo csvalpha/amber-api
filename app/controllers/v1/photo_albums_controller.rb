@@ -8,7 +8,7 @@ class V1::PhotoAlbumsController < V1::ApplicationController
     if new_photo.save
       render json: new_photo, status: :created
     else
-      render plain: new_photo.errors.messages[:image].first, status: :unprocessable_entity
+      render plain: new_photo.errors.messages[:image].first, status: :unprocessable_content
     end
   end
 

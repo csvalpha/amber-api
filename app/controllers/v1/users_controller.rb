@@ -10,7 +10,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     password = params.dig('data', 'attributes', 'password')
     old_password = params.dig('data', 'attributes', 'old_password')
     if password.present? && !@model.authenticate(old_password)
-      render json: old_password_invalid_error, status: :unprocessable_entity
+      render json: old_password_invalid_error, status: :unprocessable_content
     else
       remove_password_from_params_when_blank?
       super
@@ -61,7 +61,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
     if @model.otp_required?
       return render json: otp_already_required_error,
-                    status: :unprocessable_entity
+                    status: :unprocessable_content
     end
 
     render json: { otp_code: regenerate_otp_provisioning_uri! }
@@ -70,7 +70,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
   def activate_otp
     authorize @model
     unless @model.authenticate_otp(params[:one_time_password], drift: 10)
-      return render json: otp_invalid_error, status: :unprocessable_entity
+      return render json: otp_invalid_error, status: :unprocessable_content
     end
 
     @model.update(otp_required: true)
@@ -93,7 +93,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
     import = Import::User.new(file, group)
 
-    return render json: { errors: import.errors }, status: :unprocessable_entity unless import.valid?
+    return render json: { errors: import.errors }, status: :unprocessable_content unless import.valid?
 
     import.save!(live_run)
     render json: { users: import.imported_users.to_json(except: excluded_display_properties),

@@ -7,7 +7,7 @@ module V1::Debit
       return head :not_found unless @model.transactions.any?
 
       sepa_files = @model.to_sepa
-      return render json: error_response, status: :unprocessable_entity if sepa_files.empty?
+      return render json: error_response, status: :unprocessable_content if sepa_files.empty?
 
       send_compressed_sepa_files(sepa_files)
     end

@@ -7,7 +7,7 @@ class V1::ActivitiesController < V1::ApplicationController
   def generate_alias
     authorize @model
 
-    return render json: no_form_error, status: :unprocessable_entity unless @model.form
+    return render json: no_form_error, status: :unprocessable_content unless @model.form
 
     mail_alias = SecureRandom.hex(4)
     forward_to = @model.form.responses.map { |r| r.user.email }
