@@ -23,7 +23,7 @@ describe V1::UsersController do
         context 'when providing incorrect OTP code' do
           subject(:request) { post(record_url, one_time_password: (user.otp_code.to_i + 1).to_s) }
 
-          it_behaves_like '422 Unprocessable Entity'
+          it_behaves_like '422 Unprocessable Content'
           it { expect { request && user.reload }.not_to(change(user, :otp_required?)) }
         end
       end
