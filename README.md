@@ -56,7 +56,6 @@ When the `master.key` is present, you can use `EDITOR=nano bundle exec rails cre
 
 [Read more about Rails credentials on EngineYard.com.](https://www.engineyard.com/blog/rails-encrypted-credentials-on-rails-5.2)
 
-S
 ## Run ImprovMX locally
 To test the ImprovMX endpoint you can setup ImprovMX to forward mail to your local machine. To do this you should follow the following steps.
 
