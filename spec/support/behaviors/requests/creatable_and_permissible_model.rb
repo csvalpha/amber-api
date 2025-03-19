@@ -1,4 +1,4 @@
-shared_examples 'a creatable and permissible model'
+shared_examples 'a creatable and permissible model' do
   let(:valid_attributes) { record.attributes }
   let(:valid_relationships) { {} }
   let(:invalid_attributes) { valid_attributes }
