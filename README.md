@@ -52,18 +52,11 @@ If you're using Docker, you can run the project by using `docker-compose -f dock
 ### Credentials
 Before you can start the application you will need the `master.key`. Ask a fellow developer for it, or pull it from the server via ssh.
 
-When the `master.key` is present, you can use `bundle exec rails credentials:edit` to open the default editor on your machine to read and edit the credentials. Be informed: these are production credentials so be careful.
+When the `master.key` is present, you can use `EDITOR=nano bundle exec rails credentials:edit` to open the nano editor on development environment to read and edit the credentials. Be informed: these are production credentials so be careful.
 
 [Read more about Rails credentials on EngineYard.com.](https://www.engineyard.com/blog/rails-encrypted-credentials-on-rails-5.2)
 
-Tip: you can also use one of the following commands to use an editor of your choice:
-
-```
-$ EDITOR="atom --wait" bundle exec rails credentials:edit
-$ EDITOR="subl --wait" bundle exec rails credentials:edit
-$ EDITOR="code --wait" bundle exec rails credentials:edit
-```
-
+S
 ## Run ImprovMX locally
 To test the ImprovMX endpoint you can setup ImprovMX to forward mail to your local machine. To do this you should follow the following steps.
 
