@@ -20,10 +20,10 @@ module Debit
 
     private
 
-    def unique_on_time_interval?
+    def unique_on_time_interval? # rubocop:disable Metrics/MethodLength
       return true unless Debit::Mandate.where.not(id:)
                                        .where(user_id:)
-                                       .exists?([<<-SQL, { start_date: start_date, end_date: end_date }])
+                                       .exists?([<<-SQL.squish, { start_date: start_date, end_date: end_date }])
 
           CAST(:start_date AS date) BETWEEN start_date AND end_date OR
           CAST(:end_date AS date) BETWEEN start_date AND end_date OR
