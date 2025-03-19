@@ -44,7 +44,7 @@ class MailAliasSyncJob < ApplicationJob
 
     uri = URI::Generic.build(default_options.merge(path:))
     uri.user = 'actionmailbox'
-    uri.password = Rails.application.credentials.action_mailbox.fetch(:ingress_password)
+    uri.password = Rails.application.config.x.ingress_password
 
     uri.to_s
   end
