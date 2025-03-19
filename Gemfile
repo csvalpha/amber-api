@@ -8,6 +8,7 @@ gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
 gem 'counter_culture', '~> 3.8', '>= 3.8.2'
+gem 'csv', '~> 3.3', '>= 3.3.2'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.1'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
 gem 'exifr', '~> 1.4', '>= 1.4.1'
@@ -89,5 +90,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[windows jruby]
-
-gem "csv", "~> 3.3"
