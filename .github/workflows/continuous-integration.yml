@@ -96,7 +96,7 @@ jobs:
       CAMO_KEY: secret_camo_key
     services:
       camo:
-        image: rx14/camo.cr:latest
+        image: rx14/camo.cr:latest@sha256:5e55c311ea0ca56532aedfa71953bde9e7f4518f3381d413835c87c86a893ca8
         env:
           PORT: 9090
       db:
