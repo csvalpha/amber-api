@@ -8,7 +8,7 @@ describe V1::GroupsController do
 
     subject(:request) { put(record_url) }
 
-    it_behaves_like 'an updatable and permissible model' do
+    it_behaves_like 'an updatable and permissible model', response: :ok do
       let(:invalid_attributes) { { name: '' } }
     end
 

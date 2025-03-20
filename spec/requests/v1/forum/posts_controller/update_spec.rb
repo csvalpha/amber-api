@@ -6,7 +6,7 @@ describe V1::Forum::PostsController do
     let(:record_url) { "/v1/forum/posts/#{record.id}" }
     let(:record_permission) { 'forum/post.update' }
 
-    it_behaves_like 'an updatable and permissible model' do
+    it_behaves_like 'an updatable and permissible model', response: :ok do
       let(:invalid_attributes) { { message: '' } }
     end
 

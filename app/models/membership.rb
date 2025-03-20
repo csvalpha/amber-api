@@ -20,21 +20,20 @@ class Membership < ApplicationRecord
   private
 
   def unique_on_time_interval? # rubocop:disable Metrics/MethodLength
-    return true unless Membership.where.not(id: id)
-                                 .where(group_id:, user_id:)
-                                 .exists?([<<-SQL.squish, { start_date: start_date, end_date: end_date }])
-
+  return true unless Membership.where.not(id:)
+                               .where(group_id:, user_id:)
+                               .exists?([<<-SQL.squish, { start_date: start_date, end_date: end_date }])
       CAST(:start_date AS date) BETWEEN start_date AND end_date OR
       CAST(:end_date AS date) BETWEEN start_date AND end_date OR
       start_date BETWEEN CAST(:start_date AS date) AND CAST(:end_date AS date) OR
       end_date BETWEEN CAST(:start_date AS date) AND CAST(:end_date AS date) OR
       (start_date < CAST(:start_date AS date) AND end_date IS NULL) OR
       (start_date > CAST(:start_date AS date) AND CAST(:end_date AS date) IS NULL)
-                                 SQL
+    SQL
 
-    errors.add(:membership, 'is not unique on time interval')
-    false
-  end
+  errors.add(:membership, 'is not unique on time interval')
+  false
+end
 
   # Remark, this will cause multiple updates when adding multiple users after each other
   # But this is quite hard to fix, but just be carefull

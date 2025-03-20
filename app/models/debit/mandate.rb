@@ -24,15 +24,14 @@ module Debit
       return true unless Debit::Mandate.where.not(id:)
                                        .where(user_id:)
                                        .exists?([<<-SQL.squish, { start_date: start_date, end_date: end_date }])
-
           CAST(:start_date AS date) BETWEEN start_date AND end_date OR
           CAST(:end_date AS date) BETWEEN start_date AND end_date OR
           start_date BETWEEN CAST(:start_date AS date) AND CAST(:end_date AS date) OR
           end_date BETWEEN CAST(:start_date AS date) AND CAST(:end_date AS date) OR
           (start_date < CAST(:start_date AS date) AND end_date IS NULL) OR
           (start_date > CAST(:start_date AS date) AND CAST(:end_date AS date) IS NULL)
-                                       SQL
-
+        SQL
+    
       errors.add(:mandate, 'is not unique on time interval')
       false
     end
