@@ -35,7 +35,7 @@ class V1::StoredMailsController < V1::ApplicationController
         code: '100',
         status: 422
       }]
-    }, status: unprocessable_entity
+    }, status: :unprocessable_entity
   end
 
   def ttl_to_midnight

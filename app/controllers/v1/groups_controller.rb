@@ -6,7 +6,7 @@ class V1::GroupsController < V1::ApplicationController
     authorize @model
     description = params[:description]
 
-    return head unprocessable_entity if description.blank?
+    return head :unprocessable_entity if description.blank?
 
     send_export_notifications(description)
     records = User.active_users_for_group(@model)

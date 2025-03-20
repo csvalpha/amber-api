@@ -45,6 +45,6 @@ class V1::ApplicationController < ApplicationController
         },
         status: 422
       }]
-    }, status: unprocessable_entity
+    }, status: :unprocessable_entity
   end
 end
