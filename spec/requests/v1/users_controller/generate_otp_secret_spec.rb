@@ -23,7 +23,7 @@ describe V1::UsersController do
         describe 'when already requiring OTP' do
           let(:record) { create(:user, otp_required: true) }
 
-          it_behaves_like '422 Unprocessable Entity'
+          it_behaves_like '422 Unprocessable Content'
         end
       end
     end

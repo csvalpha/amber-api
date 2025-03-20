@@ -7,7 +7,7 @@ describe V1::PhotoAlbumsController do
 
     it_behaves_like 'a creatable and permissible model',
                     incorrect_data_response_behaves_like:
-                    '422 Unprocessable Entity in Plain Text' do
+                    '422 Unprocessable Content in Plain Text' do
       let(:record) { create(:photo) }
       let(:valid_request) do
         post(record_url, file: attributes_for(:photo)[:image])
