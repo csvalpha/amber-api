@@ -17,6 +17,7 @@ RUN apk add --update \
   tzdata \
   libffi-dev \
   build-base \
+  yaml-dev \
   && rm -rf /var/cache/apk/*
 
 RUN mkdir /app

@@ -39,7 +39,7 @@ describe V1::Debit::CollectionsController do
           create(:transaction, collection: record)
         end
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Content'
       end
 
       context 'when with transaction and mandate' do
