@@ -52,7 +52,7 @@ describe V1::StoredMailsController do
         allow(Rails.cache).to receive(:exist?).once.and_return(true)
       end
 
-      it_behaves_like '422 Unprocessable Entity'
+      it_behaves_like '422 Unprocessable Content'
       it { expect { request }.not_to have_enqueued_job(MailForwardJob) }
     end
   end
