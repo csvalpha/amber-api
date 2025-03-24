@@ -122,7 +122,7 @@ describe V1::UsersController do
               })
         end
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Content'
       end
 
       context 'with another user' do

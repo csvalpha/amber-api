@@ -96,7 +96,7 @@ jobs:
       CAMO_KEY: secret_camo_key
     services:
       camo:
-        image: rx14/camo.cr:latest
+        image: rx14/camo.cr:latest@sha256:5e55c311ea0ca56532aedfa71953bde9e7f4518f3381d413835c87c86a893ca8
         env:
           PORT: 9090
       db:
@@ -150,7 +150,7 @@ jobs:
 
       - name: Upload coverage report artifact
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: coverage
           path: coverage/

@@ -31,7 +31,7 @@ describe V1::UsersController do
         context 'when without parameters' do
           let(:params) { nil }
 
-          it_behaves_like '422 Unprocessable Entity'
+          it_behaves_like '422 Unprocessable Content'
           it { expect(group.users.count).to eq 0 }
         end
 

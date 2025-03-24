@@ -29,7 +29,7 @@ shared_examples 'an updatable model with group' do
   end
 
   context 'when the user is not member of the new group' do
-    it_behaves_like '422 Unprocessable Entity'
+    it_behaves_like '422 Unprocessable Content'
 
     context 'when with permission' do
       include_context 'when authenticated' do
@@ -50,7 +50,7 @@ shared_examples 'an updatable model with group' do
                                                         to: Date.yesterday))
     end
 
-    it_behaves_like '422 Unprocessable Entity'
+    it_behaves_like '422 Unprocessable Content'
   end
 
   context 'when the user is member of the new group' do

@@ -63,7 +63,6 @@ module Amber
     config.action_mailbox.ingress = :improvmx
     config.action_mailbox.incinerate_after = 7.days
 
-    config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Europe/Amsterdam'
 
     config.x.mail_domains = %w[csvalpha.nl societeitflux.nl]
