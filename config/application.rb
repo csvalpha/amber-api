@@ -63,18 +63,18 @@ module Amber
     config.action_mailbox.ingress = :improvmx
     config.action_mailbox.incinerate_after = 7.days
 
-    config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Europe/Amsterdam'
 
     config.x.mail_domains = %w[csvalpha.nl societeitflux.nl]
     config.x.improvmx_api_key = credentials.dig(Rails.env.to_sym, :improvmx_api_key)
     config.x.smtp_username = credentials.dig(:production, :smtp_username)
     config.x.smtp_password = credentials.dig(:production, :smtp_password)
+    config.x.ingress_password = credentials.dig(:action_mailbox, :ingress_password) || 'ingress_password'
 
     config.x.sentry_dsn = credentials.dig(Rails.env.to_sym, :sentry_dsn)
 
-    config.x.camo_host = credentials.dig(Rails.env.to_sym, :camo_host)
-    config.x.camo_key = credentials.dig(Rails.env.to_sym, :camo_key)
+    config.x.camo_host = ENV.fetch('CAMO_HOST', credentials.dig(Rails.env.to_sym, :camo_host))
+    config.x.camo_key = ENV.fetch('CAMO_KEY', credentials.dig(Rails.env.to_sym, :camo_key))
 
     config.x.daily_verse_user = credentials.dig(Rails.env.to_sym, :daily_verse_user)
     config.x.daily_verse_password = credentials.dig(Rails.env.to_sym, :daily_verse_password)

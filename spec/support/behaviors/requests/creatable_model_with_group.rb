@@ -14,7 +14,7 @@ shared_examples 'a creatable model with group' do
   end
 
   context 'when not within group' do
-    it_behaves_like '422 Unprocessable Entity'
+    it_behaves_like '422 Unprocessable Content'
   end
 
   context 'when in group' do
