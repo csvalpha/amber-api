@@ -8,10 +8,10 @@ describe V1::StoredMailsController do
     let(:record_permission) { 'stored_mail.read' }
 
     before { Bullet.enable = false }
-    
-    it_behaves_like 'an indexable model'
 
     after { Bullet.enable = true }
+
+    it_behaves_like 'an indexable model'
 
     describe 'when user is moderator' do
       include_context 'when authenticated' do
