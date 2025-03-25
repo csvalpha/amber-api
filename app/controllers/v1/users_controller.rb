@@ -4,7 +4,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
                                                    get_related_resource]
   before_action :set_model, only: %i[update archive activate_account
                                      resend_activation_mail generate_otp_secret
-                                     activate_otp activate_webdav]
+                                     activate_otp]
 
   def update
     password = params.dig('data', 'attributes', 'password')
@@ -77,13 +77,6 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
     head :no_content
   end
 
-  def activate_webdav
-    authorize @model
-    @model.generate_webdav_secret_key
-    @model.save
-    head :no_content
-  end
-
   def nextcloud
     render json: { id: current_user.id,
                    displayName: current_user.full_name,
@@ -91,7 +84,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
                    groups: nextcloud_groups }
   end
 
-  def batch_import # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def batch_import # rubocop:disable Metrics/AbcSize
     authorize model_class
 
     file = decode_upload_file(params['file'])
@@ -100,9 +93,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
     import = Import::User.new(file, group)
 
-    unless import.valid?
-      return render json: { errors: import.errors }, status: :unprocessable_entity
-    end
+    return render json: { errors: import.errors }, status: :unprocessable_entity unless import.valid?
 
     import.save!(live_run)
     render json: { users: import.imported_users.to_json(except: excluded_display_properties),
@@ -117,7 +108,7 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
   def excluded_display_properties
     %i[created_at updated_at deleted_at activated_at archived_at password_digest activation_token
-       avatar activation_token_valid_till sidekiq_access otp_secret_key otp_required
+       avatar activation_token_valid_till setup_complete otp_secret_key otp_required
        ical_secret_key ical_categories id]
   end
 

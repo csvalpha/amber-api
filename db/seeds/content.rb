@@ -5,9 +5,8 @@ members.sample(4).each do |user|
   FactoryBot.create(:study_room_presence, user:)
 end
 
-articles = []
-members.sample(15).each do |user|
-  articles << FactoryBot.create(:article, author: user, group: nil)
+articles = members.sample(15).map do |user|
+  FactoryBot.create(:article, author: user, group: nil)
 end
 
 members.sample(5).each do |user|
@@ -53,9 +52,8 @@ members.sample(4).each do |user|
   FactoryBot.create(:activity, :public, author: user)
 end
 
-activities_with_forms = []
-members.sample(4).each do |user|
-  activities_with_forms << FactoryBot.create(:activity, :with_form, author: user)
+activities_with_forms = members.sample(4).map do |user|
+  FactoryBot.create(:activity, :with_form, author: user)
 end
 
 members.sample(4).each do |user|
@@ -84,9 +82,8 @@ activities_with_forms.each do |activity|
   end
 end
 
-polls_with_forms = []
-members.sample(4).each do |user|
-  polls_with_forms << FactoryBot.create(:poll, author: user)
+polls_with_forms = members.sample(4).map do |user|
+  FactoryBot.create(:poll, author: user)
 end
 
 polls_with_forms.each do |poll|

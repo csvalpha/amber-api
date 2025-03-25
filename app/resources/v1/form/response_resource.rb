@@ -8,10 +8,8 @@ class V1::Form::ResponseResource < V1::ApplicationResource
   has_many :closed_question_answers, always_include_linkage_data: true
 
   def self.records(options = {})
-    if options[:context][:action] == 'index'
-      options[:includes] = %i[open_question_answers closed_question_answers]
-    end
-    super(options)
+    options[:includes] = %i[open_question_answers closed_question_answers] if options[:context][:action] == 'index'
+    super
   end
 
   def self.creatable_fields(_context)

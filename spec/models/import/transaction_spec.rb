@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Import::Transaction, type: :model do
+RSpec.describe Import::Transaction do
   let(:user) { create(:user, username: 'bestuurder') }
   let(:test_file) { Rails.root.join('spec', 'support', 'files', 'collection_import.csv') }
   let(:collection) { create(:collection) }

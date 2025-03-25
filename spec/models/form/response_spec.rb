@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Form::Response, type: :model do
+RSpec.describe Form::Response do
   subject(:response) { build(:response) }
 
   describe '#valid' do

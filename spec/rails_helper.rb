@@ -22,7 +22,7 @@ require 'action_mailbox/test_helper'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').each { |f| require f }
 
 # Checks for pending migration and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -33,7 +33,7 @@ RSpec.configure do |config|
   config.include ActionMailbox::TestHelper
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = Rails.root.join('spec', 'fixtures')
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -69,6 +69,6 @@ RSpec.configure do |config|
   config.include Requests::JsonHelpers, type: :request
 
   config.after(:all) do
-    FileUtils.rm_rf(Dir[Rails.root.join('spec', 'support', 'uploads')])
+    FileUtils.rm_rf(Rails.root.glob('spec/support/uploads'))
   end
 end

@@ -20,10 +20,8 @@ class V1::Form::FormResource < V1::ApplicationResource
   end
 
   def self.records(options = {})
-    if options[:context][:action] == 'index'
-      options[:includes] = %i[responses open_questions closed_questions]
-    end
-    super(options)
+    options[:includes] = %i[responses open_questions closed_questions] if options[:context][:action] == 'index'
+    super
   end
 
   def self.creatable_fields(_context)

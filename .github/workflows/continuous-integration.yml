@@ -15,10 +15,6 @@ on:
       codecov_token:
         description: Codecov token
         required: true
-      rails_master_key:
-        description: The Rails master key
-        required: true
- 
 
 jobs:
   build:
@@ -76,21 +72,33 @@ jobs:
           name: app
 
       - name: Lint
-        env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           EXIT_STATUS=0
-          ./actionlint -ignore 'SC2153:'  -ignore 'property "sha" is not defined in object type {}' || \
+          ./actionlint \
+          -ignore 'property "gh_app_private_key" is not defined' \
+          -ignore 'SC2153:' \
+          -ignore 'property "sha" is not defined in object type {}' || \
           EXIT_STATUS=$?
-          docker run -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST=localhost -e \
-            RAILS_MASTER_KEY --network=host app bin/ci.sh lint || EXIT_STATUS=$?
+          docker run \
+          -e POSTGRES_USER=postgres \
+          -e POSTGRES_PASSWORD=postgres \
+          -e POSTGRES_HOST=localhost \
+          --network=host \
+          app bin/ci.sh lint || \
+          EXIT_STATUS=$?
           exit $EXIT_STATUS
 
   test:
     name: Test
     runs-on: ubuntu-latest
     needs: build
+    env:
+      CAMO_KEY: secret_camo_key
     services:
+      camo:
+        image: rx14/camo.cr:latest@sha256:5e55c311ea0ca56532aedfa71953bde9e7f4518f3381d413835c87c86a893ca8
+        env:
+          PORT: 9090
       db:
         image: postgres:14.7
         env:
@@ -120,22 +128,29 @@ jobs:
 
       - name: Test
         env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          CAMO_HOST: localhost:9090
         run: |
           mkdir coverage
-          docker run -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST=localhost -e \
-            RAILS_MASTER_KEY --network=host -v "$(pwd)"'/coverage:/app/coverage' app bin/ci.sh spec
+          docker run \
+          -e CAMO_KEY \
+          -e CAMO_HOST \
+          -e POSTGRES_USER=postgres \
+          -e POSTGRES_PASSWORD=postgres \
+          -e POSTGRES_HOST=localhost \
+          --network=host \
+          -v "$(pwd)"'/coverage:/app/coverage' \
+          app bin/ci.sh spec
 
       - name: Upload coverage report to Codecov
         if: ${{ !cancelled() }}
-        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5.3.1
+        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload coverage report artifact
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: coverage
           path: coverage/

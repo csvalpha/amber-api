@@ -21,7 +21,8 @@ describe V1::UsersController do
                                    info_in_almanak almanak_subscription_preference
                                    digtus_subscription_preference emergency_contact
                                    emergency_number ifes_data_sharing_preference
-                                   user_details_sharing_preference]
+                                   user_details_sharing_preference trailer_drivers_license
+                                   sidekiq_access]
       permissible_attributes = %i[first_name last_name_prefix last_name birthday]
 
       it_behaves_like 'a model with conditionally updatable attributes',
@@ -121,7 +122,7 @@ describe V1::UsersController do
               })
         end
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Content'
       end
 
       context 'with another user' do

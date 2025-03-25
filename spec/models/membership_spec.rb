@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Membership, type: :model do
+RSpec.describe Membership do
   subject(:membership) { build_stubbed(:membership) }
 
   describe '#valid?' do

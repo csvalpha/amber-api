@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MailAlias, type: :model do
+RSpec.describe MailAlias do
   describe '#valid' do
     context 'when without moderation type' do
       subject(:mail_alias) { build_stubbed(:mail_alias, moderation_type: nil) }
@@ -33,8 +33,7 @@ RSpec.describe MailAlias, type: :model do
       let(:other_mail_alias) { create(:mail_alias, :with_group) }
 
       subject(:mail_alias) do
-        build_stubbed(:mail_alias,
-                      :with_group, email: other_mail_alias.email)
+        build(:mail_alias, :with_group, email: other_mail_alias.email)
       end
 
       it { expect(mail_alias).not_to be_valid }
@@ -102,7 +101,7 @@ RSpec.describe MailAlias, type: :model do
     context 'when with user' do
       subject(:mail_alias) { build_stubbed(:mail_alias, :with_user) }
 
-      it { expect(mail_alias.mail_addresses).to match_array([mail_alias.user.email]) }
+      it { expect(mail_alias.mail_addresses).to contain_exactly(mail_alias.user.email) }
     end
   end
 

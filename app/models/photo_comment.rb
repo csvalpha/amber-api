@@ -6,8 +6,8 @@ class PhotoComment < ApplicationRecord
 
   validates :content, presence: true, length: { minimum: 1, maximum: 500 }
 
-  scope :publicly_visible, (lambda {
+  scope :publicly_visible, lambda {
     joins(photo: :photo_album)
-         .where(photo_albums: { publicly_visible: true })
-  })
+      .where(photo_albums: { publicly_visible: true })
+  }
 end
