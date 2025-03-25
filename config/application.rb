@@ -20,7 +20,7 @@ Bundler.require(*Rails.groups)
 module Amber
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 7.1
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -58,6 +58,8 @@ module Amber
                  max_age: 0
       end
     end
+
+    config.action_controller.raise_on_missing_callback_actions = false
 
     config.action_mailbox.ingress = :improvmx
     config.action_mailbox.incinerate_after = 7.days
