@@ -57,7 +57,7 @@
 # Controls whether the PostgresqlAdapter should decode dates automatically with manual queries.
 #
 # Example:
-#   ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.select_value("select '2024-01-01'::date") #=> Date
+#   ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.select_value("select '2025-01-01'::date") #=> Date
 #
 # This query used to return a `String`.
 #++
