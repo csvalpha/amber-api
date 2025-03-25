@@ -179,7 +179,7 @@ RSpec.describe Activity do
     context 'when it is another category' do
       let(:record) do
         build_stubbed(:activity,
-                      category: %w[algemeen sociëteit vorming dinsdagkring woensdagkring
+                      category: %w[algemeen sociëteit vorming kring
                                    disputen kiemgroepen huizen extern curiositates].sample)
       end
 
