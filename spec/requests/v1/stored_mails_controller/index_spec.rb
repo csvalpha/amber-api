@@ -22,7 +22,10 @@ describe V1::StoredMailsController do
       before do
         create(:stored_mail)
         create_list(:stored_mail, 2, mail_alias:)
+        Bullet.enable = false
       end
+
+      after { Bullet.enable = true }
 
       it_behaves_like '200 OK'
       it { expect(json['data'].count).to eq 2 }
