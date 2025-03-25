@@ -7,7 +7,11 @@ describe V1::StoredMailsController do
     let(:records) { create_list(:stored_mail, 3) }
     let(:record_permission) { 'stored_mail.read' }
 
+    before { Bullet.enable = false }
+    
     it_behaves_like 'an indexable model'
+
+    after { Bullet.enable = true }
 
     describe 'when user is moderator' do
       include_context 'when authenticated' do
