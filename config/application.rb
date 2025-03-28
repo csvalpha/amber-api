@@ -16,7 +16,7 @@ Bundler.require(*Rails.groups)
 module Amber
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.2
 
     config.add_autoload_paths_to_load_path = false
     # Please, add to the `ignore` list any other `lib` subdirectories that do
