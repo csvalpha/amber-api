@@ -7,8 +7,8 @@ gem 'carrierwave', '~> 3.1', '>= 3.1.1'
 gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
-gem 'counter_culture', '~> 3.8', '>= 3.8.2'
-gem 'csv', '~> 3.3', '>= 3.3.2'
+gem 'counter_culture', '~> 3.9'
+gem 'csv', '~> 3.3', '>= 3.3.3'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.1'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
 gem 'exifr', '~> 1.4', '>= 1.4.1'
@@ -20,12 +20,12 @@ gem 'improvmx', '~> 0.2.1'
 gem 'isbn_validation', '~> 1.2', '>= 1.2.2'
 gem 'jsonapi-authorization', '~> 3.0', '>= 3.0.2'
 gem 'jsonapi-resources', '~> 0.9.1'
-gem 'message_bus', '~> 4.3', '>= 4.3.9'
+gem 'message_bus', '~> 4.4', '>= 4.4.1'
 gem 'mini_magick', '~> 5.2'
 gem 'paper_trail', '~> 16.0'
 gem 'paranoia', '~> 3.0', '>= 3.0.1'
 gem 'pg', '~> 1.5', '>= 1.5.9'
-gem 'phonelib', '~> 0.10', '>= 0.10.5'
+gem 'phonelib', '~> 0.10', '>= 0.10.6'
 gem 'puma', '~> 6.6'
 gem 'pundit', '~> 2.5'
 gem 'rack-attack', '~> 6.7'
@@ -36,9 +36,9 @@ gem 'redis', '~> 5.4'
 gem 'roo', '~> 2.10', '>= 2.10.1'
 gem 'ruby-filemagic', '~> 0.7', '>= 0.7.3'
 gem 'rubyzip', '~> 2.4', '>= 2.4.1'
-gem 'sentry-rails', '~> 5.22', '>= 5.22.4'
-gem 'sentry-ruby', '~> 5.22', '>= 5.22.4'
-gem 'sentry-sidekiq', '~> 5.22', '>= 5.22.4'
+gem 'sentry-rails', '~> 5.23'
+gem 'sentry-ruby', '~> 5.23'
+gem 'sentry-sidekiq', '~> 5.23'
 gem 'sepa_king', '~> 0.14'
 gem 'sidekiq', '~> 7.3', '>= 7.3.9'
 gem 'sidekiq-scheduler', '~> 5.0', '>= 5.0.6'
@@ -66,16 +66,16 @@ group :development do
   gem 'binding_of_caller', '~> 1.0', '>= 1.0.1'
   gem 'listen', '~> 3.9'
   gem 'mina', '~> 1.2', '>= 1.2.5'
-  gem 'spring', '~> 4.2', '>= 4.2.1'
+  gem 'spring', '~> 4.3'
   gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
   gem 'spring-watcher-listen', '~> 2.1'
 end
 
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
-  gem 'rspec-rails', '~> 6.1', '>= 6.1.5'
-  gem 'rubocop', '~> 1.73', '>= 1.73.2', require: false
-  gem 'rubocop-factory_bot', '~> 2.27', require: false
+  gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
+  gem 'rubocop', '~> 1.74', require: false
+  gem 'rubocop-factory_bot', '~> 2.27', '>= 2.27.1', require: false
   gem 'rubocop-performance', '~> 1.24', require: false
   gem 'rubocop-rails', '~> 2.30', '>= 2.30.3', require: false
   gem 'rubocop-rspec', '~> 3.5', require: false
