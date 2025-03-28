@@ -56,7 +56,7 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   # Raise error when a before_action's only/except options reference missing actions
-  config.action_controller.raise_on_missing_callback_actions = false
+  config.action_controller.raise_on_missing_callback_actions = true
 
   # Configure url to test actionmailer urls
   config.action_mailer.default_url_options = { scheme: 'http', host: 'testhost', port: 1337 }

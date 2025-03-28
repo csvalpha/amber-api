@@ -16,7 +16,7 @@ Bundler.require(*Rails.groups)
 module Amber
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     config.add_autoload_paths_to_load_path = false
     # Please, add to the `ignore` list any other `lib` subdirectories that do
@@ -37,10 +37,6 @@ module Amber
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.i18n.default_locale = :nl
-
-    # Required by message_bus as long as https://github.com/SamSaffron/message_bus/issues/124
-    # is not fixed
-    config.middleware.use ActionDispatch::Flash
 
     # See https://guides.rubyonrails.org/api_app.html#using-session-middlewares
     config.session_store :cookie_store, key: '_interslice_session'
