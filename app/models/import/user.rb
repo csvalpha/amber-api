@@ -1,6 +1,7 @@
 module Import
   class User
     extend ActiveRecord::Translation
+    include ActiveModel::Model
     include SpreadsheetHelper
 
     attr_reader :errors, :imported_users

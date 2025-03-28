@@ -1,7 +1,7 @@
 require 'icalendar/tzinfo'
 
 class V1::ActivitiesController < V1::ApplicationController
-  before_action :doorkeeper_authorize!, except: %i[index upcoming show ical]
+  before_action :doorkeeper_authorize!, except: %i[index show ical]
   before_action :set_model, only: %i[generate_alias]
 
   def generate_alias
