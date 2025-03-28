@@ -7,6 +7,6 @@ describe V1::UsersController do
 
     subject(:request) { delete(record_url) }
 
-    it { expect { request }.to raise_error(ActionController::RoutingError) }
+    it_behaves_like '404 Not Found'
   end
 end

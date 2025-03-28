@@ -6,7 +6,7 @@ plugins:
   - rubocop-rspec_rails
 
 AllCops:
-  TargetRailsVersion: 7.1
+  TargetRailsVersion: 8.0
   TargetRubyVersion: 3.3
   Exclude:
     - 'db/schema.rb'
