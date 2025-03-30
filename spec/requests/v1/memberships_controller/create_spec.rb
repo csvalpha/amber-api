@@ -89,7 +89,7 @@ describe V1::MembershipsController do
           let(:user) { create(:user, user_permission_list: [record_permission]) }
         end
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Content'
       end
     end
   end
