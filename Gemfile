@@ -41,7 +41,7 @@ gem 'sentry-ruby', '~> 5.22', '>= 5.22.4'
 gem 'sentry-sidekiq', '~> 5.22', '>= 5.22.4'
 gem 'sepa_king', '~> 0.14'
 gem 'sidekiq', '~> 8.0', '>= 8.0.1'
-gem 'sidekiq-scheduler', '~> 5.0', '>= 5.0.6'
+gem 'sidekiq-scheduler', git: 'https://github.com/sidekiq-scheduler/sidekiq-scheduler.git', branch: 'master'
 gem 'validates_timeliness', '~> 7.1.0'
 gem 'vpim', '~> 24.2', '>= 24.2.20'
 
