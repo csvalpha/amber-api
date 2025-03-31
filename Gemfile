@@ -19,7 +19,7 @@ gem 'icalendar', '~> 2.10', '>= 2.10.3'
 gem 'improvmx', '~> 0.2.1'
 gem 'isbn_validation', '~> 1.2', '>= 1.2.2'
 gem 'jsonapi-authorization', '~> 3.0', '>= 3.0.2'
-gem 'jsonapi-resources', '~> 0.9.1'
+gem 'jsonapi-resources', '~> 0.10.7'
 gem 'message_bus', '~> 4.4', '>= 4.4.1'
 gem 'mini_magick', '~> 5.2'
 gem 'paper_trail', '~> 16.0'
@@ -30,7 +30,7 @@ gem 'puma', '~> 6.6'
 gem 'pundit', '~> 2.5'
 gem 'rack-attack', '~> 6.7'
 gem 'rack-cors', '~> 2.0', '>= 2.0.2', require: 'rack/cors'
-gem 'rails', '~> 7.1.5', '>= 7.1.5.1'
+gem 'rails', '~> 7.2.2', '>= 7.2.2.1'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.10'
 gem 'redis', '~> 5.4'
 gem 'roo', '~> 2.10', '>= 2.10.1'
@@ -55,7 +55,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.4', '>= 6.4.4'
   gem 'faker', '~> 3.5', '>= 3.5.1'
   gem 'fuubar', '~> 2.5', '>= 2.5.1'
-  gem 'pry-byebug', '~> 3.10', '>= 3.10.1', require: false
+  gem 'pry-byebug', '~> 3.11', require: false
   gem 'pry-rails', '~> 0.3', '>= 0.3.11'
   gem 'rack-mini-profiler', '~> 3.3', '>= 3.3.1', require: false
   gem 'rb-readline', '~> 0.5', '>= 0.5.5', require: false
@@ -74,7 +74,7 @@ end
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
-  gem 'rubocop', '~> 1.74', require: false
+  gem 'rubocop', '~> 1.75', '>= 1.75.1', require: false
   gem 'rubocop-factory_bot', '~> 2.27', '>= 2.27.1', require: false
   gem 'rubocop-performance', '~> 1.24', require: false
   gem 'rubocop-rails', '~> 2.30', '>= 2.30.3', require: false
