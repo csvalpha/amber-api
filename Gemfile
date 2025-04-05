@@ -55,7 +55,7 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.4', '>= 6.4.4'
   gem 'faker', '~> 3.5', '>= 3.5.1'
   gem 'fuubar', '~> 2.5', '>= 2.5.1'
-  gem 'pry-byebug', '~> 3.10', '>= 3.10.1', require: false
+  gem 'pry-byebug', '~> 3.11', require: false
   gem 'pry-rails', '~> 0.3', '>= 0.3.11'
   gem 'rack-mini-profiler', '~> 3.3', '>= 3.3.1', require: false
   gem 'rb-readline', '~> 0.5', '>= 0.5.5', require: false
@@ -74,7 +74,7 @@ end
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
-  gem 'rubocop', '~> 1.74', require: false
+  gem 'rubocop', '~> 1.75', '>= 1.75.1', require: false
   gem 'rubocop-factory_bot', '~> 2.27', '>= 2.27.1', require: false
   gem 'rubocop-performance', '~> 1.24', require: false
   gem 'rubocop-rails', '~> 2.30', '>= 2.30.3', require: false
