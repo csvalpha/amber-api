@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/sidekiq-scheduler/sidekiq-scheduler.git
-  revision: abbdda54e6036e90521e1d5ae89dcc459c65aeaf
-  branch: master
-  specs:
-    sidekiq-scheduler (6.0.0)
-      rufus-scheduler (~> 3.2)
-      sidekiq (>= 7.3, < 9)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -347,7 +338,7 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     racc (1.8.1-java)
-    rack (3.1.12)
+    rack (3.0.14)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
     rack-cors (2.0.2)
@@ -516,12 +507,16 @@ GEM
       iban-tools
       nokogiri
     shellany (0.0.1)
-    sidekiq (8.0.1)
-      connection_pool (>= 2.5.0)
-      json (>= 2.9.0)
-      logger (>= 1.6.2)
-      rack (>= 3.1.0)
-      redis-client (>= 0.23.2)
+    sidekiq (7.3.9)
+      base64
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
+    sidekiq-scheduler (5.0.6)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 6, < 8)
+      tilt (>= 1.4.0, < 3)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -541,6 +536,7 @@ GEM
     stringio (3.1.5)
     terminal-notifier-guard (1.7.0)
     thor (1.3.2)
+    tilt (2.6.0)
     timecop (0.9.10)
     timeliness (0.5.2)
     timeout (0.4.3)
@@ -644,8 +640,8 @@ DEPENDENCIES
   sentry-ruby (~> 5.23)
   sentry-sidekiq (~> 5.23)
   sepa_king (~> 0.14)
-  sidekiq (~> 8.0, >= 8.0.1)
-  sidekiq-scheduler!
+  sidekiq (~> 7.3, >= 7.3.9)
+  sidekiq-scheduler (~> 5.0, >= 5.0.6)
   simplecov (~> 0.22)
   simplecov-lcov (~> 0.8)
   spring (~> 4.3)
