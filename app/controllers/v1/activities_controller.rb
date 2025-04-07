@@ -21,7 +21,7 @@ class V1::ActivitiesController < V1::ApplicationController
   def ical # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return head :unauthorized unless authenticate_user_by_ical_secret_key
 
-    requested_categories = params[:categories].try(:split, ',')
+    requested_categories = User.find_by(id: params[:user_id]).ical_categories
 
     permitted_categories = (requested_categories & Activity.categories) ||
                            Activity.categories
