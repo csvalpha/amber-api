@@ -39,7 +39,7 @@ module Amber
     config.i18n.default_locale = :nl
 
     # Required by message_bus as long as https://github.com/SamSaffron/message_bus/issues/124 is not fixed
-    # 07/04/2025 this can not beremoved needs more investigation
+    # 07/04/2025 this can not be removed needs more investigation
     config.middleware.use ActionDispatch::Flash
 
     # See https://guides.rubyonrails.org/api_app.html#using-session-middlewares
