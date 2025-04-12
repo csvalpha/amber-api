@@ -14,7 +14,7 @@ class MailAlias < ApplicationRecord
   before_validation :downcase_email
 
   before_destroy :disable_smtp
-  after_save :set_smtp
+  after_commit :set_smtp
   after_commit :sync_mail_aliases
 
   scope :mail_aliases_moderated_by_user, lambda { |user|
