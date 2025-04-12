@@ -4,8 +4,8 @@ if redis_adapter == 'async'
   MessageBus.configure(backend: :memory)
 else
   MessageBus.configure(backend: :redis, redis_config: {
-    url: Rails.application.config_for(:cable)['url']
-  })
+                           url: Rails.application.config_for(:cable)['url']
+                       })
 end
 
 MessageBus.group_ids_lookup do |env|
