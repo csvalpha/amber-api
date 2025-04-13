@@ -14,7 +14,7 @@ class MailAlias < ApplicationRecord
   before_validation :downcase_email
 
   before_destroy :disable_smtp
-  after_commit :set_smtp
+  after_save :set_smtp
   after_commit :sync_mail_aliases
 
   scope :mail_aliases_moderated_by_user, lambda { |user|
@@ -86,8 +86,8 @@ class MailAlias < ApplicationRecord
 
   # :nocov:
   def set_smtp
-    return unless smtp_enabled_changed? || (new_record? && smtp_enabled?)
-
+    return unless saved_change_to_smtp_enabled? || (previously_new_record? && smtp_enabled?)
+  
     SmtpJob.perform_later(id, smtp_enabled)
   end
 
