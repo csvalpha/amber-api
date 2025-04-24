@@ -48,7 +48,7 @@ gem 'vpim', '~> 24.2', '>= 24.2.20'
 group :development, :test do
   gem 'awesome_print', '~> 1.9', '>= 1.9.2'
   gem 'brakeman', '~> 7.0', '>= 7.0.2', require: false
-  gem 'bullet', '~> 8.0', '>= 8.0.3'
+  gem 'bullet', '~> 8.0', '>= 8.0.1'
   gem 'colorize', '~> 1.1'
   gem 'consistency_fail'
   gem 'dotenv-rails', '~> 3.1', '>= 3.1.8'
