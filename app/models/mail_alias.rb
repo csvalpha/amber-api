@@ -86,15 +86,15 @@ class MailAlias < ApplicationRecord
 
   # :nocov:
   def set_smtp
-    return unless smtp_enabled_changed? || (new_record? && smtp_enabled?)
+    return unless saved_change_to_smtp_enabled? || (previously_new_record? && smtp_enabled?)
 
-    SmtpJob.perform_later(self, smtp_enabled)
+    SmtpJob.perform_later(id, smtp_enabled)
   end
 
   def disable_smtp
     return unless smtp_enabled?
 
-    SmtpJob.perform_later(self, false)
+    SmtpJob.perform_later(id, false)
   end
 
   def sync_mail_aliases

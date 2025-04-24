@@ -57,7 +57,7 @@ Rails.application.configure do
   config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'debug')
 
   # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, { url: Rails.application.config_for(:cable)['url'] }
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   config.active_job.queue_adapter = :sidekiq
@@ -91,8 +91,6 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
-  config.cache_store = :redis_cache_store, { url: Rails.application.config_for(:cable)['url'] }
 
   # Refer to the front end of AMBER (Ember)
   config.action_mailer.default_url_options = { scheme: 'https',
