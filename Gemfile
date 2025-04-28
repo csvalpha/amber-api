@@ -13,8 +13,8 @@ gem 'doorkeeper', '~> 5.8', '>= 5.8.2'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
 gem 'exifr', '~> 1.4', '>= 1.4.1'
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
-gem "graphiti", "~> 1.8"
-gem "graphiti-rails", "~> 0.4.1"
+gem "graphiti", '~> 1.8'
+gem "graphiti-rails", '~> 0.4.1'
 gem 'http', '~> 5.2'
 gem 'iban-tools', '~> 1.2.1'
 gem 'icalendar', '~> 2.11'
