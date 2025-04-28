@@ -155,7 +155,7 @@ RSpec.describe Form::Response do
         expect do
           response.update_completed_status!
           response.reload
-        end.to((change(response, :completed).from(false).to true))
+        end.to(change(response, :completed).from(false).to(true))
       end
     end
 
@@ -166,7 +166,7 @@ RSpec.describe Form::Response do
         expect do
           response.update_completed_status!
           response.reload
-        end.to((change(response, :completed).from(true).to false))
+        end.to(change(response, :completed).from(true).to(false))
       end
     end
 

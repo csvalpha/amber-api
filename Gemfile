@@ -7,7 +7,7 @@ gem 'carrierwave', '~> 3.1', '>= 3.1.2'
 gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
-gem 'counter_culture', '~> 3.9'
+gem 'counter_culture', '~> 3.10'
 gem 'csv', '~> 3.3', '>= 3.3.4'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.2'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
@@ -25,7 +25,7 @@ gem 'mini_magick', '~> 5.2'
 gem 'paper_trail', '~> 16.0'
 gem 'paranoia', '~> 3.0', '>= 3.0.1'
 gem 'pg', '~> 1.5', '>= 1.5.9'
-gem 'phonelib', '~> 0.10', '>= 0.10.7'
+gem 'phonelib', '~> 0.10', '>= 0.10.8'
 gem 'puma', '~> 6.6'
 gem 'pundit', '~> 2.5'
 gem 'rack-attack', '~> 6.7'
@@ -48,7 +48,7 @@ gem 'vpim', '~> 24.2', '>= 24.2.20'
 group :development, :test do
   gem 'awesome_print', '~> 1.9', '>= 1.9.2'
   gem 'brakeman', '~> 7.0', '>= 7.0.2', require: false
-  gem 'bullet', '~> 8.0', '>= 8.0.1'
+  gem 'bullet', '~> 8.0', '>= 8.0.5'
   gem 'colorize', '~> 1.1'
   gem 'consistency_fail'
   gem 'dotenv-rails', '~> 3.1', '>= 3.1.8'
@@ -74,11 +74,11 @@ end
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'rspec-rails', '~> 7.1', '>= 7.1.1'
-  gem 'rubocop', '~> 1.75', '>= 1.75.2', require: false
+  gem 'rubocop', '~> 1.75', '>= 1.75.3', require: false
   gem 'rubocop-factory_bot', '~> 2.27', '>= 2.27.1', require: false
   gem 'rubocop-performance', '~> 1.25', require: false
   gem 'rubocop-rails', '~> 2.31', require: false
-  gem 'rubocop-rspec', '~> 3.5', require: false
+  gem 'rubocop-rspec', '~> 3.6', require: false
   gem 'rubocop-rspec_rails', '~> 2.31', require: false
   gem 'simplecov', '~> 0.22', require: false
   gem 'simplecov-lcov', '~> 0.8', require: false
