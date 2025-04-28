@@ -226,7 +226,7 @@ RSpec.describe Activity do
     end
 
     it { expect(described_class.upcoming.count).to eq(5) }
-    it { expect(described_class.upcoming).to match_array((future_activities + current_activities)) }
+    it { expect(described_class.upcoming).to match_array(future_activities + current_activities) }
     it { expect(described_class.upcoming).not_to include(passed_activities) }
   end
 
