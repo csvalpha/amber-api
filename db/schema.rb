@@ -560,6 +560,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_10_235232) do
     t.string "user_details_sharing_preference"
     t.boolean "allow_sofia_sharing", default: false, null: false
     t.string "nickname"
+    t.string "ical_categories", default: [], array: true
     t.boolean "trailer_drivers_license", default: false, null: false
     t.boolean "setup_complete", default: false, null: false
     t.index ["deleted_at"], name: "index_users_on_deleted_at"

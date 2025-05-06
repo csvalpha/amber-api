@@ -4,7 +4,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
              :ifes_data_sharing_preference, :info_in_almanak, :almanak_subscription_preference,
              :digtus_subscription_preference, :email, :birthday, :address, :postcode, :city,
              :phone_number, :food_preferences, :vegetarian, :study, :start_study,
-             :picture_publication_preference, :ical_secret_key,
+             :picture_publication_preference, :ical_secret_key, :ical_categories
              :password, :avatar, :avatar_url, :avatar_thumb_url,
              :user_details_sharing_preference, :allow_sofia_sharing, :trailer_drivers_license,
              :sidekiq_access, :setup_complete
@@ -51,12 +51,13 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
     # Relationships
     allowed_keys += %i[groups active_groups memberships mail_aliases mandates
                        group_mail_aliases permissions photos user_permissions]
-    allowed_keys += %i[ical_secret_key] if me?
+    
+    allowed_keys += %i[ical_secret_key ical_categories] if me?
     if update_or_me?
       allowed_keys += %i[login_enabled otp_required activated_at emergency_contact
                          emergency_number ifes_data_sharing_preference info_in_almanak
                          almanak_subscription_preference digtus_subscription_preference
-                         user_details_sharing_preference allow_sofia_sharing
+                         user_details_sharing_preference allow_sofia_sharing ical_secret_key
                          sidekiq_access setup_complete]
     end
     allowed_keys += %i[picture_publication_preference] if read_or_me?
@@ -78,7 +79,8 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
       attributes += %i[otp_required password
                        user_details_sharing_preference allow_sofia_sharing
                        picture_publication_preference info_in_almanak
-                       ifes_data_sharing_preference sidekiq_access setup_complete]
+                       ifes_data_sharing_preference ical_secret_key sidekiq_access 
+                       setup_complete]
     end
 
     if user_can_create_or_update?(context)
