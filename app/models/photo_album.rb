@@ -12,18 +12,18 @@ class PhotoAlbum < ApplicationRecord
   scope :publicly_visible, -> { where(publicly_visible: true) }
 
   scope :without_photo_tags, lambda {
-    qualifying_album_ids_subquery = self.unscoped
-      .joins(:photos)
-      .left_joins(photos: :tags) 
-      .group('photo_albums.id')
-      .having(<<~SQL.squish)
-        (
-          COALESCE(COUNT(DISTINCT photo_tags.photo_id), 0) * 1.0 / COUNT(DISTINCT photos.id)
-        ) < 0.85
-      SQL
-      .select('photo_albums.id') 
+    qualifying_album_ids_subquery = unscoped
+                                    .joins(:photos)
+                                    .left_joins(photos: :tags)
+                                    .group('photo_albums.id')
+                                    .having(<<~SQL.squish)
+                                      (
+                                        COALESCE(COUNT(DISTINCT photo_tags.photo_id), 0) * 1.0 / COUNT(DISTINCT photos.id)
+                                      ) < 0.85
+                                    SQL
+                                    .select('photo_albums.id')
     where(id: qualifying_album_ids_subquery)
-      }
+  }
 
   def owners
     if group.present?
