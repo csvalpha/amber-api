@@ -8,7 +8,7 @@ gem 'carrierwave-base64', '~> 2.11'
 gem 'carrierwave-bombshelter', '~> 0.2', '>= 0.2.2'
 gem 'case_transform', '~> 0.2'
 gem 'counter_culture', '~> 3.10', '>= 3.10.1'
-gem 'csv', '~> 3.3', '>= 3.3.4'
+gem 'csv', '~> 3.3', '>= 3.3.5'
 gem 'doorkeeper', '~> 5.8', '>= 5.8.2'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
 gem 'exifr', '~> 1.4', '>= 1.4.1'
@@ -41,14 +41,14 @@ gem 'sentry-ruby', '~> 5.24'
 gem 'sentry-sidekiq', '~> 5.24'
 gem 'sepa_king', '~> 0.14'
 gem 'sidekiq', '~> 7.3', '>= 7.3.9'
-gem 'sidekiq-scheduler', '~> 6.0'
+gem 'sidekiq-scheduler', '~> 6.0', '>= 6.0.1'
 gem 'validates_timeliness', '~> 7.1.0'
 gem 'vpim', '~> 24.2', '>= 24.2.20'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.9', '>= 1.9.2'
   gem 'brakeman', '~> 7.0', '>= 7.0.2', require: false
-  gem 'bullet', '~> 8.0', '>= 8.0.7'
+  gem 'bullet', '~> 8.0', '>= 8.0.8'
   gem 'colorize', '~> 1.1'
   gem 'consistency_fail'
   gem 'dotenv-rails', '~> 3.1', '>= 3.1.8'
@@ -74,7 +74,7 @@ end
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
   gem 'rspec-rails', '~> 8.0'
-  gem 'rubocop', '~> 1.75', '>= 1.75.6', require: false
+  gem 'rubocop', '~> 1.75', '>= 1.75.8', require: false
   gem 'rubocop-factory_bot', '~> 2.27', '>= 2.27.1', require: false
   gem 'rubocop-performance', '~> 1.25', require: false
   gem 'rubocop-rails', '~> 2.32', require: false
