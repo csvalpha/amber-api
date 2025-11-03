@@ -27,7 +27,7 @@ class V1::ActivitiesController < V1::ApplicationController
 
     permitted_categories = []
 
-    if stored_categories.empty? && requested_categories.present? 
+    if stored_categories.empty? && requested_categories.present?
       # this logic is only to store preferences on first use. this makes it so the end user doesn't notice the change
       new_categories_to_store = requested_categories & Activity.categories
       @user.update(ical_categories: new_categories_to_store)
