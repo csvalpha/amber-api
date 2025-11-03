@@ -4,7 +4,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
              :ifes_data_sharing_preference, :info_in_almanak, :almanak_subscription_preference,
              :digtus_subscription_preference, :email, :birthday, :address, :postcode, :city,
              :phone_number, :food_preferences, :vegetarian, :study, :start_study,
-             :picture_publication_preference, :ical_secret_key, :ical_categories
+             :picture_publication_preference, :ical_secret_key, :ical_categories,
              :password, :avatar, :avatar_url, :avatar_thumb_url,
              :user_details_sharing_preference, :allow_sofia_sharing, :trailer_drivers_license,
              :sidekiq_access, :setup_complete
