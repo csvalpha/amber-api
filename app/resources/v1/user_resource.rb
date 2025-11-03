@@ -51,13 +51,13 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
     # Relationships
     allowed_keys += %i[groups active_groups memberships mail_aliases mandates
                        group_mail_aliases permissions photos user_permissions]
-    
+    # Ical fields
     allowed_keys += %i[ical_secret_key ical_categories] if me?
     if update_or_me?
       allowed_keys += %i[login_enabled otp_required activated_at emergency_contact
                          emergency_number ifes_data_sharing_preference info_in_almanak
                          almanak_subscription_preference digtus_subscription_preference
-                         user_details_sharing_preference allow_sofia_sharing ical_secret_key
+                         user_details_sharing_preference allow_sofia_sharing
                          sidekiq_access setup_complete]
     end
     allowed_keys += %i[picture_publication_preference] if read_or_me?
