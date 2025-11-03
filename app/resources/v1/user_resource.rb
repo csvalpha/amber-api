@@ -79,8 +79,8 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
       attributes += %i[otp_required password
                        user_details_sharing_preference allow_sofia_sharing
                        picture_publication_preference info_in_almanak
-                       ifes_data_sharing_preference ical_secret_key sidekiq_access 
-                       setup_complete]
+                       ifes_data_sharing_preference ical_secret_key ical_categories
+                       sidekiq_access setup_complete]
     end
 
     if user_can_create_or_update?(context)

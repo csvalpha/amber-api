@@ -21,10 +21,21 @@ class V1::ActivitiesController < V1::ApplicationController
   def ical # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return head :unauthorized unless authenticate_user_by_ical_secret_key
 
-    requested_categories = @user.ical_categories
+    stored_categories = @user.ical_categories
+    
+    requested_categories = params[:categories]&.split(',')
 
-    permitted_categories = (requested_categories & Activity.categories) ||
-                           Activity.categories
+    permitted_categories = []
+
+    if stored_categories.empty? && requested_categories.present? # this logic is only to store preferences on first use. this makes it so the end user doesn't notice the change
+      new_categories_to_store = requested_categories & Activity.categories
+      @user.update(ical_categories: new_categories_to_store)
+      permitted_categories = new_categories_to_store
+    else
+      permitted_categories = stored_categories & Activity.categories
+    end
+    permitted_categories = Activity.categories if permitted_categories.empty?
+                
     activities_for_ical(permitted_categories).each do |act|
       calendar.add_event(act.to_ical)
     end
