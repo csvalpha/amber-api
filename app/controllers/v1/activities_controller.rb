@@ -18,16 +18,17 @@ class V1::ActivitiesController < V1::ApplicationController
     render json: alias_response("#{mail_alias}@csvalpha.nl")
   end
 
-  def ical # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def ical # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     return head :unauthorized unless authenticate_user_by_ical_secret_key
 
     stored_categories = @user.ical_categories
-    
+
     requested_categories = params[:categories]&.split(',')
 
     permitted_categories = []
 
-    if stored_categories.empty? && requested_categories.present? # this logic is only to store preferences on first use. this makes it so the end user doesn't notice the change
+    if stored_categories.empty? && requested_categories.present? 
+      # this logic is only to store preferences on first use. this makes it so the end user doesn't notice the change
       new_categories_to_store = requested_categories & Activity.categories
       @user.update(ical_categories: new_categories_to_store)
       permitted_categories = new_categories_to_store
@@ -35,7 +36,7 @@ class V1::ActivitiesController < V1::ApplicationController
       permitted_categories = stored_categories & Activity.categories
     end
     permitted_categories = Activity.categories if permitted_categories.empty?
-                
+
     activities_for_ical(permitted_categories).each do |act|
       calendar.add_event(act.to_ical)
     end

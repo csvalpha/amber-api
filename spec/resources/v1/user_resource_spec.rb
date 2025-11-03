@@ -99,7 +99,7 @@ RSpec.describe V1::UserResource, type: :resource do
       let(:another_user) { user }
       let(:fields) do
         basic_fields + update_fields +
-          read_fields + user_details_fields + %i[ical_secret_key]
+          read_fields + user_details_fields + %i[ical_secret_key ical_categories]
       end
 
       it { expect(resource.fetchable_fields).to match_array(fields) }
@@ -155,7 +155,7 @@ RSpec.describe V1::UserResource, type: :resource do
     context 'when record is current user' do
       let(:another_user) { user }
 
-      it { expect(creatable_fields).to match_array(basic_fields + current_user_fields) }
+      it { expect(creatable_fields).to match_array(basic_fields + current_user_fields + %i[ical_categories]) }
     end
 
     context 'when with create permisison' do
@@ -170,7 +170,7 @@ RSpec.describe V1::UserResource, type: :resource do
 
         it {
           expect(creatable_fields).to match_array(basic_fields + permissible_fields +
-                                                    current_user_fields - [:login_enabled])
+                                                    current_user_fields - [:login_enabled] + %i[ical_categories])
         }
       end
     end
