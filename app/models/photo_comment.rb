@@ -7,7 +7,7 @@ class PhotoComment < ApplicationRecord
   validates :content, presence: true, length: { minimum: 1, maximum: 500 }
 
   scope :alumni_visible, lambda { |start_date, end_date|
-    joins(:photo_album)
+    joins(photo: :photo_album)
       .where(photo_albums: { visibility: 'alumni' })
       .or(photo_albums: { visibility: 'public' })
       .or(where.not(photo_albums: { date: nil }).where(photo_albums: { date: start_date..end_date }))
