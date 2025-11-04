@@ -54,7 +54,7 @@ RSpec.describe MailAliasSyncJob do
                email: 'test@test.csvalpha.nl')
       end
       let(:ingress_password) do
-        Rails.application.credentials.action_mailbox.fetch(:ingress_password)
+        Rails.application.config.x.ingress_password
       end
       let(:forward_url) do
         "http://actionmailbox:#{ingress_password}" \

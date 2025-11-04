@@ -1,14 +1,12 @@
-require:
-  - rubocop-factory_bot
-  - rubocop-rspec_rails
-
 plugins:
-  - rubocop-rspec
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
-  TargetRailsVersion: 7.0
+  TargetRailsVersion: 7.2
   TargetRubyVersion: 3.3
   Exclude:
     - 'db/schema.rb'
@@ -138,4 +136,7 @@ Lint/StructNewOverride:
   Enabled: true
 
 Naming/InclusiveLanguage:
+  Enabled: false
+
+Naming/PredicateMethod:
   Enabled: false

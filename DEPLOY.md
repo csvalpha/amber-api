@@ -12,7 +12,7 @@ We use a continuous development cycle. That means: branch `master` is always in 
 
 ## Versioning
 
-We do not use versioning in any way. In Slack the last deployed version can be looked up.
+We do not use versioning in any way.
 
 
 ## Attaching to remote console

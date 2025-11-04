@@ -16,17 +16,17 @@ RSpec.describe UserPolicy, type: :policy do
       it { expect(policy).to permit(user, create(:user)) }
     end
 
-    describe 'when with tomato application' do
-      let(:application) { Doorkeeper::Application.create(name: 'Tomato', scopes: 'tomato') }
+    describe 'when with sofia application' do
+      let(:application) { Doorkeeper::Application.create(name: 'Sofia', scopes: 'sofia') }
 
       it do
         expect(policy).to permit(application,
-                                 create(:user, allow_tomato_sharing: true))
+                                 create(:user, allow_sofia_sharing: true))
       end
 
       it do
         expect(policy).not_to permit(application,
-                                     create(:user, allow_tomato_sharing: false))
+                                     create(:user, allow_sofia_sharing: false))
       end
     end
   end

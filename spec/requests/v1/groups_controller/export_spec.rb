@@ -29,7 +29,7 @@ describe V1::GroupsController do
         context 'when without description' do
           let(:record_url) { "/v1/groups/#{record.id}/export" }
 
-          it_behaves_like '422 Unprocessable Entity in Plain Text'
+          it_behaves_like '422 Unprocessable Content in Plain Text'
         end
 
         context 'when requesting specified fields' do

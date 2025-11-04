@@ -33,7 +33,7 @@ class V1::StoredMailsController < V1::ApplicationController
         title: 'Already sent a moderated email today',
         detail: 'Already sent a moderated email today, try again tomorrow',
         code: '100',
-        status: '422'
+        status: 422
       }]
     }, status: :unprocessable_entity
   end

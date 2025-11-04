@@ -7,7 +7,7 @@ RSpec.describe SmtpJob do
     let(:mail) { ActionMailer::Base.deliveries.first }
 
     describe '#enable_smtp' do
-      let(:job) { described_class.new(mail_alias, true) }
+      let(:job) { described_class.new(mail_alias.id, true) }
       let(:management_mail) { ActionMailer::Base.deliveries.second }
 
       before do
@@ -33,7 +33,7 @@ RSpec.describe SmtpJob do
     end
 
     describe '#disable_smtp' do
-      let(:job) { described_class.new(mail_alias, false) }
+      let(:job) { described_class.new(mail_alias.id, false) }
 
       before do
         ActionMailer::Base.deliveries = []

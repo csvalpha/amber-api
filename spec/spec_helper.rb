@@ -7,6 +7,7 @@ SimpleCov.start 'rails' do
   minimum_coverage_by_file 95
 end
 
+require 'active_support'
 require 'pundit/rspec'
 require 'vcr'
 

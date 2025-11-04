@@ -43,7 +43,7 @@ class V1::ApplicationController < ApplicationController
         source: {
           pointer: '/data/relationships/group'
         },
-        status: '422'
+        status: 422
       }]
     }, status: :unprocessable_entity
   end

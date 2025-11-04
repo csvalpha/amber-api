@@ -2,7 +2,7 @@ class ApplicationController < JSONAPI::ResourceController
   include Pundit::Authorization
 
   before_action :set_paper_trail_whodunnit
-  before_action :set_raven_context
+  before_action :set_sentry_context
   protect_from_forgery with: :null_session
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -17,9 +17,11 @@ class ApplicationController < JSONAPI::ResourceController
     current_user || current_application
   end
 
+  # rubocop:disable Rails/FindByOrAssignmentMemoization
   def current_user
     @current_user ||= User.find_by(id: doorkeeper_token&.resource_owner_id)
   end
+  # rubocop:enable Rails/FindByOrAssignmentMemoization
 
   def current_application
     doorkeeper_token&.application
@@ -27,12 +29,11 @@ class ApplicationController < JSONAPI::ResourceController
 
   private
 
-  # See https://github.com/getsentry/raven-ruby/blob/master/docs/integrations/rails.rst
-  def set_raven_context
-    Raven.user_context(
+  def set_sentry_context
+    Sentry.set_user(
       id: current_user.try(:id)
     )
-    Raven.extra_context(
+    Sentry.set_extras(
       params: params.to_unsafe_h,
       url: request.url
     )

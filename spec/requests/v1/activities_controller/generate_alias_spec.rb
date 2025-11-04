@@ -27,7 +27,7 @@ describe V1::ActivitiesController do
 
         before { request }
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Content'
         it { expect(MailAliasCreateJob).not_to(have_been_enqueued) }
       end
 

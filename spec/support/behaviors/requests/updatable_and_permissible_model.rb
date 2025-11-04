@@ -44,7 +44,7 @@ shared_examples 'an updatable and permissible model' do
       context 'when using incorrect data' do
         subject(:request) { invalid_request }
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Content'
       end
     end
 
@@ -58,7 +58,7 @@ shared_examples 'an updatable and permissible model' do
       context 'when using incorrect data' do
         subject(:request) { invalid_request }
 
-        it_behaves_like '422 Unprocessable Entity'
+        it_behaves_like '422 Unprocessable Content'
       end
     end
   end

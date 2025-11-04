@@ -1,6 +1,7 @@
 class V1::ApplicationResource < JSONAPI::Resource
   include MarkdownHelper
   include JSONAPI::Authorization::PunditScopedResource
+
   abstract
 
   attributes :created_at, :updated_at
@@ -39,14 +40,15 @@ class V1::ApplicationResource < JSONAPI::Resource
   def self.search(records, value)
     return records if records == []
 
-    final_records = []
     arel = records.first.class.arel_table
     value.each do |val|
-      searchable_fields.each do |field|
-        final_records << records.where(arel[field].lower.matches("%#{val.downcase}%"))
+      val.split.each do |word|
+        records = records.where(
+          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
+        )
       end
     end
-    records.where(id: final_records.flatten.map(&:id))
+    records
   end
 
   def self.records(options = {})

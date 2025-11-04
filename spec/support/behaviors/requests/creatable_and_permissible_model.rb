@@ -1,4 +1,4 @@
-shared_examples 'a creatable and permissible model' do |incorrect_data_response_behaves_like: '422 Unprocessable Entity'| # rubocop:disable Layout/LineLength
+shared_examples 'a creatable and permissible model' do |incorrect_data_response_behaves_like: '422 Unprocessable Content'| # rubocop:disable Layout/LineLength
   let(:valid_attributes) { record.attributes }
   let(:valid_relationships) { {} }
   let(:invalid_attributes) { valid_attributes }

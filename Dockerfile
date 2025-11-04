@@ -1,5 +1,5 @@
 
-FROM ruby:3.3.7-alpine@sha256:6b6a2db6b52015669dcc4b3613c1cfd02f7a74ebbcad98dbe290a814e8ff84e4
+FROM ruby:3.4.7-alpine@sha256:cdb113e8110f2ed8c5e2e1ef4b02494e0243f8d6fe59e4c0348441437ded2aaa
 
 ARG BUILD_HASH='unknown'
 ENV BUILD_HASH=$BUILD_HASH
@@ -17,6 +17,7 @@ RUN apk add --update \
   tzdata \
   libffi-dev \
   build-base \
+  yaml-dev \
   && rm -rf /var/cache/apk/*
 
 RUN mkdir /app

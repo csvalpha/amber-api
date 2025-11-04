@@ -1,5 +1,5 @@
 class RemoveNullOptionBoolean < ActiveRecord::Migration[7.0]
-  # rubocop:disable Rails/ReversibleMigration, Rails/BulkChangeTable, Metrics/AbcSize, Layout/LineLength
+  # rubocop:disable Rails/ReversibleMigration, Rails/BulkChangeTable, Metrics/AbcSize
   def change
     execute 'UPDATE static_pages SET publicly_visible = false WHERE publicly_visible IS NULL'
     execute 'UPDATE users SET sidekiq_access = false WHERE sidekiq_access IS NULL'
@@ -34,5 +34,5 @@ class RemoveNullOptionBoolean < ActiveRecord::Migration[7.0]
     change_column_default :room_adverts, :publicly_visible, false
     change_column_null :room_adverts, :publicly_visible, false
   end
-  # rubocop:enable Rails/ReversibleMigration, Rails/BulkChangeTable, Metrics/AbcSize, Layout/LineLength
+  # rubocop:enable Rails/ReversibleMigration, Rails/BulkChangeTable, Metrics/AbcSize
 end
