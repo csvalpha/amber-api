@@ -1,5 +1,5 @@
 
-FROM ruby:3.4.5-alpine@sha256:e284f39a2103a564dca9771a81bfecb455b04cd3be4149b133ed7e508ef1b65f
+FROM ruby:3.4.7-alpine@sha256:cdb113e8110f2ed8c5e2e1ef4b02494e0243f8d6fe59e4c0348441437ded2aaa
 
 ARG BUILD_HASH='unknown'
 ENV BUILD_HASH=$BUILD_HASH
