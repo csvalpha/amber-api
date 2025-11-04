@@ -20,7 +20,7 @@ class PhotoAlbum < ApplicationRecord
                                     .having(
                                       <<~SQL.squish
                                         (
-                                          COALESCE(COUNT(DISTINCT photo_tags.photo_id), 0) * 1.0 / COUNT(DISTINCT photos.id)
+                                          COALESCE(COUNT(DISTINCT photo_tags.photo_id), 0) * 1.0 / NULLIF(COUNT(DISTINCT photos.id), 0)
                                         ) < #{tag_percentage_threshold}
                                       SQL
                                     )
