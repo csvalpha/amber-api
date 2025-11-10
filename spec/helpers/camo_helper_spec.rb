@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CamoHelper do
   include described_class
+
   describe '#camo' do
     # rubocop:disable Layout/LineLength
     it do

@@ -1,5 +1,6 @@
 class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/ClassLength
   include SpreadsheetHelper
+
   before_action :doorkeeper_authorize!, except: %i[activate_account reset_password
                                                    get_related_resource]
   before_action :set_model, only: %i[update archive activate_account
