@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_10_235232) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_03_104056) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -562,6 +562,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_10_235232) do
     t.string "nickname"
     t.boolean "trailer_drivers_license", default: false, null: false
     t.boolean "setup_complete", default: false, null: false
+    t.string "ical_categories", default: [], array: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login_enabled"], name: "index_users_on_login_enabled"

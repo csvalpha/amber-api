@@ -34,8 +34,8 @@ class Activity < ApplicationRecord
   after_save :copy_author_and_group_to_form!
 
   def self.categories
-    %w[algemeen societeit vorming dinsdagkring woensdagkring
-       choose ifes ozon disputen kiemgroepen huizen extern eerstejaars curiositates]
+    %w[algemeen societeit vorming kring
+       choose ifes ozon disputen genootschapen huizen extern eerstejaars]
   end
 
   def full_day?

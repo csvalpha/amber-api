@@ -179,8 +179,8 @@ RSpec.describe Activity do
     context 'when it is another category' do
       let(:record) do
         build_stubbed(:activity,
-                      category: %w[algemeen sociëteit vorming dinsdagkring woensdagkring
-                                   disputen kiemgroepen huizen extern curiositates].sample)
+                      category: %w[algemeen sociëteit vorming kring
+                                   disputen genootschapen huizen extern].sample)
       end
 
       it { expect(record.humanized_category).to eq record.category.capitalize }
