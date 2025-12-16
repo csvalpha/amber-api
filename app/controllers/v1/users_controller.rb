@@ -1,11 +1,30 @@
 class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/ClassLength
   include SpreadsheetHelper
 
-  before_action :doorkeeper_authorize!, except: %i[activate_account reset_password
-                                                   get_related_resource]
+  before_action :doorkeeper_authorize!, except: %i[activate_account reset_password show]
   before_action :set_model, only: %i[update archive activate_account
                                      resend_activation_mail generate_otp_secret
                                      activate_otp]
+
+  # Graphiti CRUD actions
+  def index
+    users = V1::UserResource.all(params, context)
+    render jsonapi: users
+  end
+
+  def show
+    user = V1::UserResource.find(params, context)
+    render jsonapi: user
+  end
+
+  def create
+    user = V1::UserResource.build(params, context)
+    if user.save
+      render jsonapi: user, status: :created
+    else
+      render jsonapi_errors: user
+    end
+  end
 
   def update
     password = params.dig('data', 'attributes', 'password')
@@ -14,7 +33,12 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
       render json: old_password_invalid_error, status: :unprocessable_entity
     else
       remove_password_from_params_when_blank?
-      super
+      user = V1::UserResource.find(params, context)
+      if user.update_attributes
+        render jsonapi: user
+      else
+        render jsonapi_errors: user
+      end
     end
   end
 

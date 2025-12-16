@@ -1,17 +1,17 @@
-class ApplicationController < JSONAPI::ResourceController
+# frozen_string_literal: true
+
+class ApplicationController < ActionController::API
   include Pundit::Authorization
+  include Graphiti::Rails
+  include Graphiti::Responders
+
+  # Register JSON:API MIME type
+  register_exception Graphiti::Errors::RecordNotFound, status: 404
+  register_exception Graphiti::Errors::InvalidRequest, status: 400
 
   before_action :set_paper_trail_whodunnit
   before_action :set_sentry_context
-  protect_from_forgery with: :null_session
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
-  # Disable content_type check, since it makes testing practically impossible
-  # and does not add any layers of usefulness or security.
-  # TODO: Remove when JR docs include instructions on rspec with this header
-  def verify_content_type_header
-    true
-  end
 
   def pundit_user
     current_user || current_application

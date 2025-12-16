@@ -1,8 +1,12 @@
 require 'icalendar/tzinfo'
 
 class V1::ActivitiesController < V1::ApplicationController
+  include GraphitiCrud
+
   before_action :doorkeeper_authorize!, except: %i[index show ical]
   before_action :set_model, only: %i[generate_alias]
+
+  graphiti_resource V1::ActivityResource
 
   def generate_alias
     authorize @model
@@ -98,6 +102,7 @@ class V1::ActivitiesController < V1::ApplicationController
     return false unless @user
 
     @user.permission?(:read, Activity)
+
   end
 
   def ical_add_birthdays?(requested_categories)

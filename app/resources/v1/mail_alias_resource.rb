@@ -1,21 +1,20 @@
+# frozen_string_literal: true
+
 class V1::MailAliasResource < V1::ApplicationResource
-  attributes :email, :moderation_type, :description, :smtp_enabled, :last_received_at
+  self.model = MailAlias
 
-  has_one :group, always_include_linkage_data: true
-  has_one :user, always_include_linkage_data: true
-  has_one :moderator_group, always_include_linkage_data: true
-
-  def fetchable_fields
-    return super - [:last_received_at] unless update_permission?
-
-    super
+  attribute :email, :string
+  attribute :moderation_type, :string
+  attribute :description, :string
+  attribute :smtp_enabled, :boolean
+  attribute :last_received_at, :datetime do
+    readable { update_permission? }
+    writable false
   end
 
-  def self.creatable_fields(_context)
-    %i[email moderation_type moderator_group description smtp_enabled group user]
-  end
+  has_one :group
+  has_one :user, resource: V1::UserResource
+  has_one :moderator_group, resource: V1::GroupResource
 
-  def self.searchable_fields
-    %i[email description]
-  end
+  searchable_fields :email, :description
 end

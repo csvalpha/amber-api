@@ -1,33 +1,28 @@
+# frozen_string_literal: true
+
 class V1::Forum::ThreadResource < V1::ApplicationResource
-  model_name 'Forum::Thread'
-  attributes :title, :closed_at, :amount_of_posts, :read
+  self.model = Forum::Thread
 
-  def amount_of_posts
-    @model.posts.size
+  attribute :title, :string
+  attribute :closed_at, :datetime do
+    writable { self.class.user_can_create_or_update?(context) }
+  end
+  attribute :amount_of_posts, :integer, writable: false do
+    @object.posts.size
+  end
+  attribute :read, :boolean, writable: false do
+    @object.read?(current_user)
   end
 
-  def read
-    @model.read?(current_user)
-  end
+  has_one :author, resource: V1::UserResource
+  has_one :category, resource: V1::Forum::CategoryResource
+  has_many :posts, resource: V1::Forum::PostResource
 
-  has_one :author, always_include_linkage_data: true
-  has_one :category, always_include_linkage_data: true
-  has_many :posts
+  filter :category, :integer
 
-  filter :category
+  searchable_fields :title
 
-  def self.creatable_fields(context)
-    attributes = %i[title author category]
-
-    attributes += [:closed_at] if user_can_create_or_update?(context)
-    attributes
-  end
-
-  def self.searchable_fields
-    %i[title]
-  end
-
-  before_create do
-    @model.author_id = current_user.id
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 end

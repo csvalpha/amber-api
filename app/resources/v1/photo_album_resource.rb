@@ -1,32 +1,36 @@
-class V1::PhotoAlbumResource < V1::ApplicationResource
-  attributes :title, :date, :publicly_visible
+# frozen_string_literal: true
 
-  filter :without_photo_tags, apply: ->(records, _value, _options) { records.without_photo_tags }
+class V1::PhotoAlbumResource < V1::ApplicationResource
+  self.model = PhotoAlbum
+
+  attribute :title, :string
+  attribute :date, :date
+  attribute :publicly_visible, :boolean
+
+  filter :without_photo_tags, :boolean do
+    eq { |scope, value| value ? scope.without_photo_tags : scope }
+  end
 
   has_many :photos
-  has_one :author, always_include_linkage_data: true
-  has_one :group, always_include_linkage_data: true
+  has_one :author, resource: V1::UserResource
+  has_one :group
 
-  def self.creatable_fields(_context)
-    %i[title date publicly_visible group]
+  searchable_fields :title
+
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 
-  def self.searchable_fields
-    %i[title]
+  before_save do |model|
+    user_is_member_of_group?(model)
   end
 
-  before_create do
-    @model.author_id = current_user.id
-  end
+  private
 
-  before_save do
-    user_is_member_of_group?
-  end
-
-  def user_is_member_of_group?
-    return true unless @model.group
-    return true if current_user.permission?(:update, @model)
-    return false if current_user.current_group_member?(@model.group)
+  def user_is_member_of_group?(model)
+    return true unless model.group
+    return true if current_user.permission?(:update, model)
+    return false if current_user.current_group_member?(model.group)
 
     raise AmberError::NotMemberOfGroupError
   end

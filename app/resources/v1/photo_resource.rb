@@ -1,30 +1,41 @@
+# frozen_string_literal: true
+
 class V1::PhotoResource < V1::ApplicationResource
-  attributes :image_url, :image_thumb_url, :image_medium_url, :amount_of_comments, :amount_of_tags,
-             :exif_make, :exif_model, :exif_date_time_original, :exif_exposure_time,
-             :exif_aperture_value, :exif_iso_speed_ratings, :exif_copyright, :exif_lens_model,
-             :exif_focal_length
+  self.model = Photo
 
-  def image_thumb_url
-    @model.image.thumb.url
+  attribute :image_url, :string, writable: false
+  attribute :image_thumb_url, :string, writable: false do
+    @object.image.thumb.url
+  end
+  attribute :image_medium_url, :string, writable: false do
+    @object.image.medium.url
+  end
+  attribute :amount_of_comments, :integer, writable: false do
+    @object.comments.size
+  end
+  attribute :amount_of_tags, :integer, writable: false do
+    @object.tags.size
+  end
+  attribute :exif_make, :string, writable: false
+  attribute :exif_model, :string, writable: false
+  attribute :exif_date_time_original, :datetime, writable: false
+  attribute :exif_exposure_time, :string, writable: false
+  attribute :exif_aperture_value, :string, writable: false
+  attribute :exif_iso_speed_ratings, :integer, writable: false
+  attribute :exif_copyright, :string, writable: false
+  attribute :exif_lens_model, :string, writable: false
+  attribute :exif_focal_length, :string, writable: false
+
+  filter :with_comments, :boolean do
+    eq { |scope, value| value ? scope.with_comments : scope }
   end
 
-  def image_medium_url
-    @model.image.medium.url
+  filter :with_tags, :boolean do
+    eq { |scope, value| value ? scope.with_tags : scope }
   end
 
-  def amount_of_comments
-    @model.comments.size
-  end
-
-  def amount_of_tags
-    @model.tags.size
-  end
-
-  filter :with_comments, apply: ->(records, _value, _options) { records.with_comments }
-  filter :with_tags, apply: ->(records, _value, _options) { records.with_tags }
-
-  has_one :photo_album, always_include_linkage_data: true
-  has_one :uploader, always_include_linkage_data: true
-  has_many :comments
-  has_many :tags
+  has_one :photo_album
+  has_one :uploader, resource: V1::UserResource
+  has_many :comments, resource: V1::PhotoCommentResource
+  has_many :tags, resource: V1::PhotoTagResource
 end

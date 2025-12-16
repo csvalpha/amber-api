@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 class V1::Form::ResponseResource < V1::ApplicationResource
-  model_name 'Form::Response'
-  attributes :completed
+  self.model = Form::Response
 
-  has_one :user, always_include_linkage_data: true
-  has_one :form, always_include_linkage_data: true
-  has_many :open_question_answers, always_include_linkage_data: true
-  has_many :closed_question_answers, always_include_linkage_data: true
+  attribute :completed, :boolean
 
-  def self.records(options = {})
-    options[:includes] = %i[open_question_answers closed_question_answers] if options[:context][:action] == 'index'
-    super
+  has_one :user, resource: V1::UserResource
+  has_one :form, resource: V1::Form::FormResource
+  has_many :open_question_answers, resource: V1::Form::OpenQuestionAnswerResource
+  has_many :closed_question_answers, resource: V1::Form::ClosedQuestionAnswerResource
+
+  def base_scope
+    scope = super
+    if context&.dig(:action) == 'index'
+      scope = scope.includes(:open_question_answers, :closed_question_answers)
+    end
+    scope
   end
 
-  def self.creatable_fields(_context)
-    %i[form]
-  end
-
-  before_create do
-    @model.user_id = current_user.id
+  before_save only: [:create] do |model|
+    model.user_id = current_user.id
   end
 end

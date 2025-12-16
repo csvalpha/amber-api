@@ -1,28 +1,22 @@
+# frozen_string_literal: true
+
 class V1::Debit::CollectionResource < V1::ApplicationResource
-  attributes :name, :date, :import_file
-  model_name 'Debit::Collection'
-  model_hint model: User, resource: V1::UserResource
+  self.model = Debit::Collection
 
-  has_one :author,  always_include_linkage_data: true
-  has_many :transactions
+  attribute :name, :string
+  attribute :date, :date
+  attribute :import_file, :string, readable: false # Write-only
 
-  def fetchable_fields
-    super - [:import_file]
+  has_one :author, resource: V1::UserResource
+  has_many :transactions, resource: V1::Debit::TransactionResource
+
+  searchable_fields :name
+
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 
-  def self.creatable_fields(_context)
-    %i[name date import_file]
-  end
-
-  def self.searchable_fields
-    %i[name]
-  end
-
-  before_create do
-    @model.author_id = current_user.id
-  end
-
-  after_create do
-    CollectionImportJob.perform_later(@model.import_file, @model, context[:user])
+  after_commit only: [:create] do |model|
+    CollectionImportJob.perform_later(model.import_file, model, context[:user])
   end
 end

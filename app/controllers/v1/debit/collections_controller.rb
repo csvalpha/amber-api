@@ -1,6 +1,12 @@
+# frozen_string_literal: true
+
 module V1::Debit
   class CollectionsController < V1::ApplicationController
+    include GraphitiCrud
+
     before_action :set_model, only: %i[sepa]
+
+    graphiti_resource V1::Debit::CollectionResource
 
     def sepa
       authorize Debit::Collection
@@ -34,9 +40,13 @@ module V1::Debit
     end
 
     def error_response
-      resource = V1::Debit::CollectionResource.new(@model, {})
-      errors = JSONAPI::Exceptions::ValidationErrors.new(resource).errors
-      JSONAPI::ErrorsOperationResult.new(422, errors)
+      {
+        errors: [{
+          title: 'Validation Error',
+          detail: 'Collection has validation errors',
+          status: '422'
+        }]
+      }
     end
   end
 end

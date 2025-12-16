@@ -1,11 +1,10 @@
+# frozen_string_literal: true
+
 class V1::Form::OpenQuestionAnswerResource < V1::ApplicationResource
-  model_name 'Form::OpenQuestionAnswer'
-  attributes :answer
+  self.model = Form::OpenQuestionAnswer
 
-  has_one :response, always_include_linkage_data: true
-  has_one :question, always_include_linkage_data: true
+  attribute :answer, :string
 
-  def self.creatable_fields(_context)
-    %i[answer response question]
-  end
+  has_one :response, resource: V1::Form::ResponseResource
+  has_one :question, resource: V1::Form::OpenQuestionResource
 end

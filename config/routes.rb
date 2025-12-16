@@ -9,53 +9,48 @@ Rails.application.routes.draw do
   end
 
   namespace :v1 do
-    jsonapi_resources :activities do
-      jsonapi_relationships
+    resources :activities do
       member do
         post :generate_alias
       end
     end
-    jsonapi_resources :articles
-    jsonapi_resources :article_comments
-    jsonapi_resources :board_room_presences
-    jsonapi_resources :study_room_presences
-    jsonapi_resources :books do
+    resources :articles
+    resources :article_comments
+    resources :board_room_presences
+    resources :study_room_presences
+    resources :books do
       collection do
         get :isbn_lookup
       end
     end
-    jsonapi_resources :groups do
-      jsonapi_relationships
+    resources :groups do
       member do
         get :export
       end
     end
-    jsonapi_resources :mail_aliases
-    jsonapi_resources :memberships
-    jsonapi_resources :permissions, only: %i[index show]
-    jsonapi_resources :photo_albums do
-      jsonapi_relationships
+    resources :mail_aliases
+    resources :memberships
+    resources :permissions, only: %i[index show]
+    resources :photo_albums do
       member do
         post :dropzone
         get :zip
       end
     end
-    jsonapi_resources :photo_comments
-    jsonapi_resources :photo_tags
-    jsonapi_resources :photos, only: %i[index show destroy]
-    jsonapi_resources :polls
-    jsonapi_resources :room_adverts
-    jsonapi_resources :static_pages
-    jsonapi_resources :stored_mails, only: %i[index show destroy] do
-      jsonapi_relationships
+    resources :photo_comments
+    resources :photo_tags
+    resources :photos, only: %i[index show destroy]
+    resources :polls
+    resources :room_adverts
+    resources :static_pages
+    resources :stored_mails, only: %i[index show destroy] do
       member do
         post :accept
         post :reject
       end
     end
     resources :daily_verses, only: [:index]
-    jsonapi_resources :users, only: %i[index show create update] do
-      jsonapi_relationships
+    resources :users, only: %i[index show create update] do
       collection do
         post :reset_password
         post :batch_import
@@ -70,34 +65,32 @@ Rails.application.routes.draw do
     end
     get 'users/me/nextcloud', to: 'users#nextcloud'
 
-    jsonapi_resources :vacancies
+    resources :vacancies
 
     namespace :debit do
-      jsonapi_resources :collections do
-        jsonapi_relationships
+      resources :collections do
         member do
           get :sepa
         end
       end
-      jsonapi_resources :transactions
-      jsonapi_resources :mandates, only: %i[index show create update]
+      resources :transactions
+      resources :mandates, only: %i[index show create update]
     end
 
     namespace :form do
-      jsonapi_resources :closed_questions
-      jsonapi_resources :closed_question_answers
-      jsonapi_resources :closed_question_options
-      jsonapi_resources :forms
-      jsonapi_resources :responses
-      jsonapi_resources :open_questions
-      jsonapi_resources :open_question_answers
+      resources :closed_questions
+      resources :closed_question_answers
+      resources :closed_question_options
+      resources :forms
+      resources :responses
+      resources :open_questions
+      resources :open_question_answers
     end
 
     namespace :forum do
-      jsonapi_resources :categories
-      jsonapi_resources :posts
-      jsonapi_resources :threads do
-        jsonapi_relationships
+      resources :categories
+      resources :posts
+      resources :threads do
         member do
           post :mark_read
         end

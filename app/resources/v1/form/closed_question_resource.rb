@@ -1,16 +1,21 @@
+# frozen_string_literal: true
+
 class V1::Form::ClosedQuestionResource < V1::ApplicationResource
-  model_name 'Form::ClosedQuestion'
-  attributes :question, :field_type, :required, :position
+  self.model = Form::ClosedQuestion
 
-  has_one :form, always_include_linkage_data: true
-  has_many :options, always_include_linkage_data: true
+  attribute :question, :string
+  attribute :field_type, :string
+  attribute :required, :boolean
+  attribute :position, :integer
 
-  def self.records(options = {})
-    options[:includes] = [:options] if options[:context][:action] == 'index'
-    super
-  end
+  has_one :form, resource: V1::Form::FormResource
+  has_many :options, resource: V1::Form::ClosedQuestionOptionResource
 
-  def self.creatable_fields(_context)
-    %i[question field_type required position form]
+  def base_scope
+    scope = super
+    if context&.dig(:action) == 'index'
+      scope = scope.includes(:options)
+    end
+    scope
   end
 end
