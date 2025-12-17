@@ -6,9 +6,7 @@ class V1::Forum::ThreadResource < V1::ApplicationResource
   with_timestamps
 
   attribute :title, :string
-  attribute :closed_at, :datetime do
-    writable { self.class.user_can_create_or_update? }
-  end
+  attribute :closed_at, :datetime, writable: -> { self.class.user_can_create_or_update? }
   attribute :amount_of_posts, :integer, writable: false do
     @object.posts.size
   end

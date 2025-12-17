@@ -7,21 +7,9 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
 
   # Basic attributes (always visible)
   attribute :username, :string, writable: false
-  attribute :first_name, :string do
-    writable do
-      user_can_create_or_update?
-    end
-  end
-  attribute :last_name_prefix, :string do
-    writable do
-      user_can_create_or_update?
-    end
-  end
-  attribute :last_name, :string do
-    writable do
-      user_can_create_or_update?
-    end
-  end
+  attribute :first_name, :string, writable: -> { user_can_create_or_update? }
+  attribute :last_name_prefix, :string, writable: -> { user_can_create_or_update? }
+  attribute :last_name, :string, writable: -> { user_can_create_or_update? }
   attribute :full_name, :string, writable: false
   attribute :nickname, :string
 
