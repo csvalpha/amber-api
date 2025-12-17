@@ -197,7 +197,7 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   # Scope with eager loading for index
   def base_scope
     scope = super
-    if context&.dig(:action) == 'index'
+    if Graphiti.context[:action] == 'index'
       scope = scope.includes(:mandates)
     end
     scope
@@ -224,19 +224,19 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
 
   def read_user_details_for_record?(record)
     record.user_details_sharing_preference == 'all_users' ||
-      ((self.class.read_permission?(context) || record == current_user) &&
+      ((self.class.read_permission? || record == current_user) &&
        record.user_details_sharing_preference == 'members_only') ||
-      record == current_user || self.class.update_permission?(context)
+      record == current_user || self.class.update_permission?
   end
 
   def application_is_sofia?
-    return false unless context&.key?(:application) && context[:application]
+    return false unless context&.key?(:application) && Graphiti.context[:application]
 
-    context[:application].scopes.to_a.include?('sofia')
+    Graphiti.context[:application].scopes.to_a.include?('sofia')
   end
 
   def update_or_me?
-    self.class.update_permission?(context) || me?
+    self.class.update_permission? || me?
   end
 
   def me?
@@ -244,6 +244,6 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   end
 
   def user_can_create_or_update?
-    self.class.user_can_create_or_update?(context)
+    self.class.user_can_create_or_update?
   end
 end

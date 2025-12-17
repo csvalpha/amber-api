@@ -38,7 +38,7 @@ class V1::ApplicationResource < Graphiti::Resource
 
   # Apply Pundit scoping on index
   def base_scope
-    if context&.dig(:action) == 'index' && current_user_or_application
+    if Graphiti.context[:action] == :index && current_user_or_application
       Pundit.policy_scope!(current_user_or_application, self.class.model)
     else
       self.class.model.all
@@ -47,11 +47,11 @@ class V1::ApplicationResource < Graphiti::Resource
 
   # Authorization helpers
   def current_user
-    context&.dig(:user)
+    Graphiti.context[:user]
   end
 
   def current_application
-    context&.dig(:application)
+    Graphiti.context[:application]
   end
 
   def current_user_or_application
@@ -68,17 +68,17 @@ class V1::ApplicationResource < Graphiti::Resource
 
   # Class-level permission checks
   class << self
-    def user_can_create_or_update?(context)
-      user = context&.dig(:user)
+    def user_can_create_or_update?
+      user = Graphiti.context[:user]
       user&.permission?(:create, model) || user&.permission?(:update, model)
     end
 
-    def update_permission?(context)
-      context&.dig(:user)&.permission?(:update, model)
+    def update_permission?
+      Graphiti.context[:user]&.permission?(:update, model)
     end
 
-    def read_permission?(context)
-      context&.dig(:user)&.permission?(:read, model)
+    def read_permission?
+      Graphiti.context[:user]&.permission?(:read, model)
     end
   end
 end

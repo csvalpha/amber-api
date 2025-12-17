@@ -19,6 +19,6 @@ class V1::Debit::CollectionResource < V1::ApplicationResource
   end
 
   after_commit only: [:create] do |model|
-    CollectionImportJob.perform_later(model.import_file, model, context[:user])
+    CollectionImportJob.perform_later(model.import_file, model, Graphiti.context[:user])
   end
 end

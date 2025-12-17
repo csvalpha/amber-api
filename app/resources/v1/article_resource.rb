@@ -25,7 +25,7 @@ class V1::ArticleResource < V1::ApplicationResource
     @object.group ? @object.group.avatar.thumb.url : @object.author.avatar.thumb.url
   end
   attribute :pinned, :boolean do
-    writable { self.class.update_permission?(context) }
+    writable { self.class.update_permission? }
   end
 
   has_one :author, resource: V1::UserResource

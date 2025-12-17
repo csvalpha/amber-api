@@ -24,7 +24,7 @@ class V1::StoredMailResource < V1::ApplicationResource
 
   def base_scope
     scope = super
-    if context&.dig(:action) == 'index'
+    if Graphiti.context[:action] == 'index'
       scope = scope.includes(inbound_email: { raw_email_attachment: :blob })
     end
     scope

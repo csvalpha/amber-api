@@ -60,6 +60,6 @@ class V1::GroupResource < V1::ApplicationResource
   private
 
   def user_can_create_or_update?
-    self.class.user_can_create_or_update?(context)
+    self.class.user_can_create_or_update?
   end
 end

@@ -8,21 +8,27 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
 
   # Graphiti CRUD actions
   def index
-    users = V1::UserResource.all(params, context)
-    render json: users.to_jsonapi
+    Graphiti.with_context(context, action_name.to_sym) do
+      users = V1::UserResource.all(params)
+      render json: users.to_jsonapi
+    end
   end
 
   def show
-    user = V1::UserResource.find(params, context)
-    render json: user.to_jsonapi
+    Graphiti.with_context(context, action_name.to_sym) do
+      user = V1::UserResource.find(params)
+      render json: user.to_jsonapi
+    end
   end
 
   def create
-    user = V1::UserResource.build(params, context)
-    if user.save
-      render json: user.to_jsonapi, status: :created
-    else
-      render json: user.errors.to_jsonapi, status: :unprocessable_entity
+    Graphiti.with_context(context, action_name.to_sym) do
+      user = V1::UserResource.build(params)
+      if user.save
+        render json: user.to_jsonapi, status: :created
+      else
+        render json: user.errors.to_jsonapi, status: :unprocessable_entity
+      end
     end
   end
 
@@ -33,11 +39,13 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
       render json: old_password_invalid_error, status: :unprocessable_entity
     else
       remove_password_from_params_when_blank?
-      user = V1::UserResource.find(params, context)
-      if user.update_attributes
-        render json: user.to_jsonapi
-      else
-        render json: user.errors.to_jsonapi, status: :unprocessable_entity
+      Graphiti.with_context(context, action_name.to_sym) do
+        user = V1::UserResource.find(params)
+        if user.update_attributes
+          render json: user.to_jsonapi
+        else
+          render json: user.errors.to_jsonapi, status: :unprocessable_entity
+        end
       end
     end
   end

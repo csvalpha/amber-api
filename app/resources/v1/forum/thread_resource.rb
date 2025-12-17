@@ -7,7 +7,7 @@ class V1::Forum::ThreadResource < V1::ApplicationResource
 
   attribute :title, :string
   attribute :closed_at, :datetime do
-    writable { self.class.user_can_create_or_update?(context) }
+    writable { self.class.user_can_create_or_update? }
   end
   attribute :amount_of_posts, :integer, writable: false do
     @object.posts.size

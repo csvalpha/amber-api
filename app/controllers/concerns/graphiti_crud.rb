@@ -16,42 +16,52 @@ module GraphitiCrud
   end
 
   def index
-    resources = resource_class.all(params, context)
-    render json: resources.to_jsonapi
+    Graphiti.with_context(context, action_name.to_sym) do
+      resources = resource_class.all(params)
+      render json: resources.to_jsonapi
+    end
   end
 
   def show
-    resource = resource_class.find(params, context)
-    render json: resource.to_jsonapi
+    Graphiti.with_context(context, action_name.to_sym) do
+      resource = resource_class.find(params)
+      render json: resource.to_jsonapi
+    end
   end
 
   def create
-    resource = resource_class.build(params, context)
+    Graphiti.with_context(context, action_name.to_sym) do
+      resource = resource_class.build(params)
 
-    if resource.save
-      render json: resource.to_jsonapi, status: :created
-    else
-      render json: resource.errors.to_jsonapi, status: :unprocessable_entity
+      if resource.save
+        render json: resource.to_jsonapi, status: :created
+      else
+        render json: resource.errors.to_jsonapi, status: :unprocessable_entity
+      end
     end
   end
 
   def update
-    resource = resource_class.find(params, context)
+    Graphiti.with_context(context, action_name.to_sym) do
+      resource = resource_class.find(params)
 
-    if resource.update_attributes
-      render json: resource.to_jsonapi
-    else
-      render json: resource.errors.to_jsonapi, status: :unprocessable_entity
+      if resource.update_attributes
+        render json: resource.to_jsonapi
+      else
+        render json: resource.errors.to_jsonapi, status: :unprocessable_entity
+      end
     end
   end
 
   def destroy
-    resource = resource_class.find(params, context)
+    Graphiti.with_context(context, action_name.to_sym) do
+      resource = resource_class.find(params)
 
-    if resource.destroy
-      head :no_content
-    else
-      render jsonapi_errors: resource
+      if resource.destroy
+        head :no_content
+      else
+        render json: resource.errors.to_jsonapi, status: :unprocessable_entity
+      end
     end
   end
 

@@ -14,7 +14,7 @@ class V1::Forum::CategoryResource < V1::ApplicationResource
 
   def base_scope
     scope = super
-    if context&.dig(:action) == 'index'
+    if Graphiti.context[:action] == 'index'
       scope = scope.includes(:threads)
     end
     scope

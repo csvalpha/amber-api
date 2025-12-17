@@ -27,7 +27,7 @@ class V1::Form::FormResource < V1::ApplicationResource
 
   def base_scope
     scope = super
-    if context&.dig(:action) == 'index'
+    if Graphiti.context[:action] == 'index'
       scope = scope.includes(:responses, :open_questions, :closed_questions)
     end
     scope
