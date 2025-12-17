@@ -9,20 +9,20 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
   # Graphiti CRUD actions
   def index
     users = V1::UserResource.all(params, context)
-    render jsonapi: users
+    render json: users.to_jsonapi
   end
 
   def show
     user = V1::UserResource.find(params, context)
-    render jsonapi: user
+    render json: user.to_jsonapi
   end
 
   def create
     user = V1::UserResource.build(params, context)
     if user.save
-      render jsonapi: user, status: :created
+      render json: user.to_jsonapi, status: :created
     else
-      render jsonapi_errors: user
+      render json: user.errors.to_jsonapi, status: :unprocessable_entity
     end
   end
 
@@ -35,9 +35,9 @@ class V1::UsersController < V1::ApplicationController # rubocop:disable Metrics/
       remove_password_from_params_when_blank?
       user = V1::UserResource.find(params, context)
       if user.update_attributes
-        render jsonapi: user
+        render json: user.to_jsonapi
       else
-        render jsonapi_errors: user
+        render json: user.errors.to_jsonapi, status: :unprocessable_entity
       end
     end
   end

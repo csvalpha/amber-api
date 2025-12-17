@@ -17,21 +17,21 @@ module GraphitiCrud
 
   def index
     resources = resource_class.all(params, context)
-    render jsonapi: resources
+    render json: resources.to_jsonapi
   end
 
   def show
     resource = resource_class.find(params, context)
-    render jsonapi: resource
+    render json: resource.to_jsonapi
   end
 
   def create
     resource = resource_class.build(params, context)
 
     if resource.save
-      render jsonapi: resource, status: :created
+      render json: resource.to_jsonapi, status: :created
     else
-      render jsonapi_errors: resource
+      render json: resource.errors.to_jsonapi, status: :unprocessable_entity
     end
   end
 
@@ -39,9 +39,9 @@ module GraphitiCrud
     resource = resource_class.find(params, context)
 
     if resource.update_attributes
-      render jsonapi: resource
+      render json: resource.to_jsonapi
     else
-      render jsonapi_errors: resource
+      render json: resource.errors.to_jsonapi, status: :unprocessable_entity
     end
   end
 

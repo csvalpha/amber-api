@@ -2,12 +2,6 @@
 
 class ApplicationController < ActionController::API
   include Pundit::Authorization
-  include Graphiti::Rails
-  include Graphiti::Responders
-
-  # Register JSON:API MIME type
-  register_exception Graphiti::Errors::RecordNotFound, status: 404
-  register_exception Graphiti::Errors::InvalidRequest, status: 400
 
   before_action :set_paper_trail_whodunnit
   before_action :set_sentry_context

@@ -215,15 +215,12 @@ class ApplicationController < JSONAPI::ResourceController
 end
 ```
 
-**After:**
+**After (API-only Rails apps):**
 ```ruby
 class ApplicationController < ActionController::API
   include Pundit::Authorization
-  include Graphiti::Rails
-  include Graphiti::Responders
-
-  register_exception Graphiti::Errors::RecordNotFound, status: 404
-  register_exception Graphiti::Errors::InvalidRequest, status: 400
+  # Note: For API-only apps, do NOT include Graphiti::Rails or Graphiti::Responders
+  # Use .to_jsonapi method directly for rendering
 end
 ```
 
@@ -248,29 +245,29 @@ module GraphitiCrud
 
   def index
     resources = resource_class.all(params, context)
-    render jsonapi: resources
+    render json: resources.to_jsonapi
   end
 
   def show
     resource = resource_class.find(params, context)
-    render jsonapi: resource
+    render json: resource.to_jsonapi
   end
 
   def create
     resource = resource_class.build(params, context)
     if resource.save
-      render jsonapi: resource, status: :created
+      render json: resource.to_jsonapi, status: :created
     else
-      render jsonapi_errors: resource
+      render json: resource.errors.to_jsonapi, status: :unprocessable_entity
     end
   end
 
   def update
     resource = resource_class.find(params, context)
     if resource.update_attributes
-      render jsonapi: resource
+      render json: resource.to_jsonapi
     else
-      render jsonapi_errors: resource
+      render json: resource.errors.to_jsonapi, status: :unprocessable_entity
     end
   end
 

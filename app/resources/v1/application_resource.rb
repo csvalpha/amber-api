@@ -7,32 +7,27 @@ class V1::ApplicationResource < Graphiti::Resource
   self.adapter = Graphiti::Adapters::ActiveRecord
   self.abstract_class = true
 
-  # Default attributes for all resources
-  attribute :created_at, :datetime, writable: false
-  attribute :updated_at, :datetime, writable: false
-
-  # Search filter - override searchable_fields in child resources
-  filter :search, :string do
-    eq do |scope, value|
-      searchable = self.class.config[:searchable_fields] || []
-      return scope if searchable.empty?
-
-      arel = scope.model.arel_table
-      value.to_s.split.each do |word|
-        conditions = searchable.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
-        scope = scope.where(conditions)
-      end
-      scope
-    end
-  end
-
-  # Class method to define searchable fields
+  # Class method to register searchable fields and automatically add search filter
   def self.searchable_fields(*fields)
     if fields.any?
-      config[:searchable_fields] = fields
-    else
-      config[:searchable_fields] || []
+      @searchable_fields = fields
+      
+      # Define the search filter for this resource
+      filter :search, :string do
+        eq do |scope, value|
+          searchable = self.class.instance_variable_get(:@searchable_fields) || []
+          next scope if searchable.empty?
+
+          arel = scope.model.arel_table
+          value.to_s.split.each do |word|
+            conditions = searchable.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
+            scope = scope.where(conditions)
+          end
+          scope
+        end
+      end
     end
+    @searchable_fields || []
   end
 
   # Apply Pundit scoping on index
