@@ -3,6 +3,8 @@
 class V1::PhotoAlbumResource < V1::ApplicationResource
   self.model = PhotoAlbum
 
+  with_timestamps
+
   attribute :title, :string
   attribute :date, :date
   attribute :publicly_visible, :boolean

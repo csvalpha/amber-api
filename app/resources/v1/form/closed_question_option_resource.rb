@@ -3,6 +3,8 @@
 class V1::Form::ClosedQuestionOptionResource < V1::ApplicationResource
   self.model = Form::ClosedQuestionOption
 
+  with_timestamps
+
   attribute :option, :string
   attribute :position, :integer
 

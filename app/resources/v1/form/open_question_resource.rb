@@ -3,6 +3,8 @@
 class V1::Form::OpenQuestionResource < V1::ApplicationResource
   self.model = Form::OpenQuestion
 
+  with_timestamps
+
   attribute :question, :string
   attribute :field_type, :string
   attribute :required, :boolean

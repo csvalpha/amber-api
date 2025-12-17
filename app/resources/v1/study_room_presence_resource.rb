@@ -3,6 +3,8 @@
 class V1::StudyRoomPresenceResource < V1::ApplicationResource
   self.model = StudyRoomPresence
 
+  with_timestamps
+
   attribute :start_time, :datetime
   attribute :end_time, :datetime
   attribute :status, :string

@@ -3,6 +3,8 @@
 class V1::ArticleResource < V1::ApplicationResource
   self.model = Article
 
+  with_timestamps
+
   attribute :title, :string
   attribute :content, :string
   attribute :publicly_visible, :boolean

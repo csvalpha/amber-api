@@ -3,6 +3,8 @@
 class V1::Form::ResponseResource < V1::ApplicationResource
   self.model = Form::Response
 
+  with_timestamps
+
   attribute :completed, :boolean
 
   has_one :user, resource: V1::UserResource

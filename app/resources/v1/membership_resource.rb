@@ -3,6 +3,8 @@
 class V1::MembershipResource < V1::ApplicationResource
   self.model = Membership
 
+  with_timestamps
+
   attribute :start_date, :date
   attribute :end_date, :date
   attribute :function, :string

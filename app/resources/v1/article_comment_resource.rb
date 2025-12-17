@@ -3,6 +3,8 @@
 class V1::ArticleCommentResource < V1::ApplicationResource
   self.model = ArticleComment
 
+  with_timestamps
+
   attribute :content, :string
 
   has_one :article

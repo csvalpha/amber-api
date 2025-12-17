@@ -3,6 +3,8 @@
 class V1::StoredMailResource < V1::ApplicationResource
   self.model = StoredMail
 
+  with_timestamps
+
   attribute :received_at, :datetime, writable: false
   attribute :sender, :string, writable: false
   attribute :subject, :string, writable: false

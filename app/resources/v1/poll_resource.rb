@@ -3,6 +3,8 @@
 class V1::PollResource < V1::ApplicationResource
   self.model = Poll
 
+  with_timestamps
+
   has_one :form, resource: V1::Form::FormResource
   has_one :author, resource: V1::UserResource
 

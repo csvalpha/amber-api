@@ -3,6 +3,8 @@
 class V1::Forum::ThreadResource < V1::ApplicationResource
   self.model = Forum::Thread
 
+  with_timestamps
+
   attribute :title, :string
   attribute :closed_at, :datetime do
     writable { self.class.user_can_create_or_update?(context) }

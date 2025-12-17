@@ -3,6 +3,8 @@
 class V1::ActivityResource < V1::ApplicationResource
   self.model = Activity
 
+  with_timestamps
+
   attribute :title, :string
   attribute :description, :string
   attribute :description_camofied, :string, writable: false do

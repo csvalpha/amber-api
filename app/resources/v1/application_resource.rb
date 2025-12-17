@@ -7,6 +7,12 @@ class V1::ApplicationResource < Graphiti::Resource
   self.adapter = Graphiti::Adapters::ActiveRecord
   self.abstract_class = true
 
+  # Class method to add standard timestamps (call this in child resources)
+  def self.with_timestamps
+    attribute :created_at, :datetime, writable: false
+    attribute :updated_at, :datetime, writable: false
+  end
+
   # Class method to register searchable fields and automatically add search filter
   def self.searchable_fields(*fields)
     if fields.any?

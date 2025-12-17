@@ -3,6 +3,8 @@
 class V1::Form::OpenQuestionAnswerResource < V1::ApplicationResource
   self.model = Form::OpenQuestionAnswer
 
+  with_timestamps
+
   attribute :answer, :string
 
   has_one :response, resource: V1::Form::ResponseResource

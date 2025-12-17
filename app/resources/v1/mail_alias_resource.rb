@@ -3,6 +3,8 @@
 class V1::MailAliasResource < V1::ApplicationResource
   self.model = MailAlias
 
+  with_timestamps
+
   attribute :email, :string
   attribute :moderation_type, :string
   attribute :description, :string

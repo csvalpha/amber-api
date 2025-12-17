@@ -3,6 +3,8 @@
 class V1::GroupResource < V1::ApplicationResource
   self.model = Group
 
+  with_timestamps
+
   attribute :name, :string do
     writable { user_can_create_or_update? }
   end

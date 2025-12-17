@@ -3,6 +3,8 @@
 class V1::Forum::PostResource < V1::ApplicationResource
   self.model = Forum::Post
 
+  with_timestamps
+
   attribute :message, :string
   attribute :message_camofied, :string, writable: false do
     camofy(@object['message'])

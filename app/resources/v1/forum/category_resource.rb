@@ -3,6 +3,8 @@
 class V1::Forum::CategoryResource < V1::ApplicationResource
   self.model = Forum::Category
 
+  with_timestamps
+
   attribute :name, :string
   attribute :amount_of_threads, :integer, writable: false do
     @object.threads.size

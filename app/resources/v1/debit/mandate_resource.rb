@@ -3,6 +3,8 @@
 class V1::Debit::MandateResource < V1::ApplicationResource
   self.model = Debit::Mandate
 
+  with_timestamps
+
   attribute :start_date, :date
   attribute :end_date, :date
   attribute :iban, :string

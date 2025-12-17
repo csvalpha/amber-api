@@ -3,6 +3,8 @@
 class V1::PhotoTagResource < V1::ApplicationResource
   self.model = PhotoTag
 
+  with_timestamps
+
   attribute :x, :float
   attribute :y, :float
 

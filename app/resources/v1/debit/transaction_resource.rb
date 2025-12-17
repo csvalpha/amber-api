@@ -3,6 +3,8 @@
 class V1::Debit::TransactionResource < V1::ApplicationResource
   self.model = Debit::Transaction
 
+  with_timestamps
+
   attribute :description, :string
   attribute :amount, :float
 

@@ -3,6 +3,8 @@
 class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/ClassLength
   self.model = User
 
+  with_timestamps
+
   # Basic attributes (always visible)
   attribute :username, :string, writable: false
   attribute :first_name, :string do

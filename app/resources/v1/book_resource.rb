@@ -3,6 +3,8 @@
 class V1::BookResource < V1::ApplicationResource
   self.model = Book
 
+  with_timestamps
+
   attribute :title, :string
   attribute :author, :string
   attribute :description, :string

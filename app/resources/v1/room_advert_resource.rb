@@ -3,6 +3,8 @@
 class V1::RoomAdvertResource < V1::ApplicationResource
   self.model = RoomAdvert
 
+  with_timestamps
+
   attribute :house_name, :string
   attribute :contact, :string
   attribute :location, :string

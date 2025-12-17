@@ -3,6 +3,8 @@
 class V1::StaticPageResource < V1::ApplicationResource
   self.model = StaticPage
 
+  with_timestamps
+
   attribute :title, :string
   attribute :content, :string
   attribute :content_camofied, :string, writable: false do

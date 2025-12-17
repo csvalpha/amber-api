@@ -3,6 +3,8 @@
 class V1::Form::ClosedQuestionAnswerResource < V1::ApplicationResource
   self.model = Form::ClosedQuestionAnswer
 
+  with_timestamps
+
   has_one :response, resource: V1::Form::ResponseResource
   has_one :option, resource: V1::Form::ClosedQuestionOptionResource
 end

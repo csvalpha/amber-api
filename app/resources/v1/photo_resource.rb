@@ -3,6 +3,8 @@
 class V1::PhotoResource < V1::ApplicationResource
   self.model = Photo
 
+  with_timestamps
+
   attribute :image_url, :string, writable: false
   attribute :image_thumb_url, :string, writable: false do
     @object.image.thumb.url

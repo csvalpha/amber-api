@@ -3,6 +3,8 @@
 class V1::Debit::CollectionResource < V1::ApplicationResource
   self.model = Debit::Collection
 
+  with_timestamps
+
   attribute :name, :string
   attribute :date, :date
   attribute :import_file, :string, readable: false # Write-only

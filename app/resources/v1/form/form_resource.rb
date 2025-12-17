@@ -3,6 +3,8 @@
 class V1::Form::FormResource < V1::ApplicationResource
   self.model = Form::Form
 
+  with_timestamps
+
   attribute :respond_from, :datetime
   attribute :respond_until, :datetime
   attribute :amount_of_responses, :integer, writable: false do
