@@ -41,7 +41,7 @@ jobs:
       stage: ${{ steps.get_metadata.outputs.stage }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       - name: Get metadata
         id: get_metadata
@@ -86,7 +86,7 @@ jobs:
 
       - name: Checkout code
         if: fromJSON(needs.metadata.outputs.has_diff)
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       - name: Run merge
         if: fromJSON(needs.metadata.outputs.has_diff) || inputs.ignore_metadata_diff
@@ -143,7 +143,7 @@ jobs:
           fi
 
       - name: Checkout code
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           ref: ${{ needs.merge.outputs.sha }}
 
@@ -155,7 +155,7 @@ jobs:
           env: ${{ needs.metadata.outputs.stage }}
 
       - name: Deploy
-        uses: appleboy/ssh-action@91f3272fc5907f4699dcf59761eb622a07342f5a # v1.2.3
+        uses: appleboy/ssh-action@823bd89e131d8d508129f9443cad5855e9ba96f0 # v1.2.4
         env:
           STAGE: ${{ needs.metadata.outputs.stage }}
         with:
@@ -170,7 +170,7 @@ jobs:
             docker-compose up -d
 
       - name: Finalize Sentry release
-        uses: getsentry/action-release@128c5058bbbe93c8e02147fe0a9c713f166259a6 # v3.4.0
+        uses: getsentry/action-release@dab6548b3c03c4717878099e43782cf5be654289 # v3.5.0
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG_NAME }}
