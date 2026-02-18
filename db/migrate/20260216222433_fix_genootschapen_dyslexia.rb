@@ -1,9 +1,10 @@
 class FixGenootschapenDyslexia < ActiveRecord::Migration[7.2]
   def up
-    Activity.where(category: "Genootschapen").update_all(category: "Genootschappen")
+    Activity.where(category: "genootschapen").update_all(category: "genootschappen")
   end
 
   def down
-    Activity.where(category: "Genootschappen").update_all(category: "Genootschapen")
+    Activity.where(category: "genootschappen").update_all(category: "genootschapen")
   end
+end
 end
