@@ -7,4 +7,3 @@ class FixGenootschapenDyslexia < ActiveRecord::Migration[7.2]
     Activity.where(category: "genootschappen").update_all(category: "genootschapen")
   end
 end
-end
