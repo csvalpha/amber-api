@@ -1,17 +1,29 @@
+# frozen_string_literal: true
+
 class V1::StudyRoomPresenceResource < V1::ApplicationResource
-  attributes :start_time, :end_time, :status
+  self.model = StudyRoomPresence
 
-  has_one :user, always_include_linkage_data: true
+  with_timestamps
 
-  filter :current, apply: ->(records, _value, _options) { records.current }
-  filter :future, apply: ->(records, _value, _options) { records.future }
-  filter :current_and_future, apply: ->(records, _value, _options) { records.current_and_future }
+  attribute :start_time, :datetime
+  attribute :end_time, :datetime
+  attribute :status, :string
 
-  before_create do
-    @model.user_id = current_user.id
+  has_one :user, resource: V1::UserResource
+
+  filter :current, :boolean do
+    eq { |scope, value| value ? scope.current : scope }
   end
 
-  def self.creatable_fields(_context)
-    %i[start_time end_time status]
+  filter :future, :boolean do
+    eq { |scope, value| value ? scope.future : scope }
+  end
+
+  filter :current_and_future, :boolean do
+    eq { |scope, value| value ? scope.current_and_future : scope }
+  end
+
+  before_save only: [:create] do |model|
+    model.user_id = current_user.id
   end
 end

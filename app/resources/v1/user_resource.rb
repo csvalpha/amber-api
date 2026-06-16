@@ -1,134 +1,194 @@
+# frozen_string_literal: true
+
 class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/ClassLength
-  attributes :username, :first_name, :last_name_prefix, :last_name, :full_name, :nickname,
-             :login_enabled, :otp_required, :activated_at, :emergency_contact, :emergency_number,
-             :ifes_data_sharing_preference, :info_in_almanak, :almanak_subscription_preference,
-             :digtus_subscription_preference, :email, :birthday, :address, :postcode, :city,
-             :phone_number, :food_preferences, :vegetarian, :study, :start_study,
-             :picture_publication_preference, :ical_secret_key, :ical_categories,
-             :password, :avatar, :avatar_url, :avatar_thumb_url,
-             :user_details_sharing_preference, :allow_sofia_sharing, :trailer_drivers_license,
-             :sidekiq_access, :setup_complete
+  self.model = User
 
-  def avatar_url
-    @model.avatar.url
+  with_timestamps
+
+  # Basic attributes (always visible)
+  attribute :username, :string, writable: false
+  attribute :first_name, :string, writable: -> { user_can_create_or_update? }
+  attribute :last_name_prefix, :string, writable: -> { user_can_create_or_update? }
+  attribute :last_name, :string, writable: -> { user_can_create_or_update? }
+  attribute :full_name, :string, writable: false
+  attribute :nickname, :string
+
+  # Avatar attributes (always visible)
+  attribute :avatar_url, :string, writable: false do
+    @object.avatar.url
+  end
+  attribute :avatar_thumb_url, :string, writable: false do
+    @object.avatar.thumb.url
+  end
+  attribute :avatar, :string, readable: false # Write-only for uploads
+
+  # Conditional attributes - only visible if update_or_me?
+  attribute :login_enabled, :boolean do
+    readable { update_or_me? }
+    writable { user_can_create_or_update? && !me? }
+  end
+  attribute :otp_required, :boolean do
+    readable { update_or_me? }
+    writable { me? }
+  end
+  attribute :activated_at, :datetime do
+    readable { update_or_me? }
+    writable false
+  end
+  attribute :emergency_contact, :string do
+    readable { update_or_me? }
+  end
+  attribute :emergency_number, :string do
+    readable { update_or_me? }
+  end
+  attribute :ifes_data_sharing_preference, :string do
+    readable { update_or_me? }
+    writable { me? }
+  end
+  attribute :info_in_almanak, :boolean do
+    readable { update_or_me? }
+    writable { me? }
+  end
+  attribute :almanak_subscription_preference, :string do
+    readable { update_or_me? }
+  end
+  attribute :digtus_subscription_preference, :string do
+    readable { update_or_me? }
+  end
+  attribute :user_details_sharing_preference, :string do
+    readable { update_or_me? }
+    writable { me? }
+  end
+  attribute :allow_sofia_sharing, :boolean do
+    readable { update_or_me? }
+    writable { me? }
+  end
+  attribute :sidekiq_access, :boolean do
+    readable { update_or_me? }
+    writable { me? }
+  end
+  attribute :setup_complete, :boolean do
+    readable { update_or_me? }
+    writable { me? }
   end
 
-  def avatar_thumb_url
-    @model.avatar.thumb.url
+  # Attributes visible if read_or_me?
+  attribute :picture_publication_preference, :string do
+    readable { read_or_me? }
+    writable { me? }
   end
 
+  # Attributes visible if read_user_details? (and not sofia)
+  attribute :email, :string do
+    readable { read_user_details_or_sofia? }
+  end
+  attribute :birthday, :date do
+    readable { read_user_details_or_sofia? }
+    writable { user_can_create_or_update? }
+  end
+  attribute :address, :string do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :postcode, :string do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :city, :string do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :phone_number, :string do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :food_preferences, :string do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :vegetarian, :boolean do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :study, :string do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :start_study, :integer do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+  attribute :trailer_drivers_license, :boolean do
+    readable { read_user_details? && !application_is_sofia? }
+  end
+
+  # iCal attributes (only me)
+  attribute :ical_secret_key, :string do
+    readable { me? }
+    writable false
+  end
+  attribute :ical_categories, :array do
+    readable { me? }
+    writable { me? }
+  end
+
+  # Password (write-only)
+  attribute :password, :string, readable: false do
+    writable { me? }
+  end
+
+  # Relationships
   has_many :groups
-  has_many :active_groups
+  has_many :active_groups, resource: V1::GroupResource
   has_many :memberships
   has_many :mail_aliases
-  has_many :mandates, always_include_linkage_data: true
-  has_many :group_mail_aliases
+  has_many :mandates, resource: V1::Debit::MandateResource
+  has_many :group_mail_aliases, resource: V1::MailAliasResource
   has_many :permissions
   has_many :photos
-  has_many :user_permissions
+  has_many :user_permissions, resource: V1::PermissionsUsersResource
 
-  filter :upcoming_birthdays, apply: lambda { |records, _value, options|
-    context = options[:context]
-    upcoming_birthdays = records.upcoming_birthdays
-    records.find_each do |record|
-      context[:model] = record
-      upcoming_birthdays = upcoming_birthdays.where.not(id: record.id) unless read_user_details?(context)
-    end
-    upcoming_birthdays
-  }
-  filter :me, apply: lambda { |records, _value, options|
-    records.where(id: current_user_or_application(options))
-  }
-  filter :group, apply: lambda { |records, value, _options|
-    records.active_users_for_group(Group.find_by(name: value))
-  }
+  # Filters
+  filter :upcoming_birthdays, :boolean do
+    eq do |scope, value|
+      next scope unless value
 
-  # rubocop:disable all
-  def fetchable_fields
-    # Attributes
-    allowed_keys = %i[username first_name last_name_prefix last_name full_name nickname
-                      avatar_url avatar_thumb_url created_at updated_at id]
-    # Relationships
-    allowed_keys += %i[groups active_groups memberships mail_aliases mandates
-                       group_mail_aliases permissions photos user_permissions]
-    # Ical fields
-    allowed_keys += %i[ical_secret_key ical_categories] if me?
-    if update_or_me?
-      allowed_keys += %i[login_enabled otp_required activated_at emergency_contact
-                         emergency_number ifes_data_sharing_preference info_in_almanak
-                         almanak_subscription_preference digtus_subscription_preference
-                         user_details_sharing_preference allow_sofia_sharing
-                         sidekiq_access setup_complete]
-    end
-    allowed_keys += %i[picture_publication_preference] if read_or_me?
-    if read_user_details? && !application_is_sofia?
-      allowed_keys += %i[email birthday address postcode city phone_number food_preferences vegetarian
-                         study start_study trailer_drivers_license]
-    end
-    allowed_keys += %i[email birthday] if application_is_sofia? && @model.allow_sofia_sharing
-    super && allowed_keys
-  end
-  # rubocop:enable all
-
-  def self.creatable_fields(context) # rubocop:disable Metrics/MethodLength
-    attributes = %i[avatar nickname email address postcode city phone_number
-                    food_preferences vegetarian study start_study
-                    almanak_subscription_preference digtus_subscription_preference
-                    emergency_contact emergency_number trailer_drivers_license]
-    if me?(context)
-      attributes += %i[otp_required password
-                       user_details_sharing_preference allow_sofia_sharing
-                       picture_publication_preference info_in_almanak
-                       ifes_data_sharing_preference ical_categories sidekiq_access
-                       setup_complete]
-    end
-
-    if user_can_create_or_update?(context)
-      attributes += %i[first_name last_name_prefix last_name birthday
-                       user_permissions]
-      attributes += [:login_enabled] unless me?(context)
-    end
-    attributes
-  end
-
-  def self.searchable_fields
-    %i[email first_name last_name last_name_prefix nickname study]
-  end
-
-  def self.records(options = {})
-    options[:includes] = %i[mandates] if options[:context][:action] == 'index'
-    super
-  end
-
-  before_save do
-    if @model.new_record?
-      @model.activation_token = User.activation_token_hash[:activation_token]
-      @model.activation_token_valid_till = User.activation_token_hash[:activation_token_valid_till]
-      @model.username = @model.generate_username
+      upcoming_birthdays = scope.upcoming_birthdays
+      scope.find_each do |record|
+        unless read_user_details_for_record?(record)
+          upcoming_birthdays = upcoming_birthdays.where.not(id: record.id)
+        end
+      end
+      upcoming_birthdays
     end
   end
 
-  after_create do
-    UserMailer.account_creation_email(@model).deliver_later if @model.login_enabled
+  filter :me, :boolean do
+    eq do |scope, value|
+      next scope unless value
+
+      scope.where(id: current_user_or_application&.id)
+    end
   end
 
-  def self.update_permission?(context)
-    context[:user]&.permission?(:update, _model_class)
+  filter :group, :string do
+    eq do |scope, value|
+      scope.active_users_for_group(Group.find_by(name: value))
+    end
   end
 
-  def self.read_permission?(context)
-    context[:user]&.permission?(:read, _model_class)
+  searchable_fields :email, :first_name, :last_name, :last_name_prefix, :nickname, :study
+
+  # Callbacks
+  before_save only: [:create] do |model|
+    model.activation_token = User.activation_token_hash[:activation_token]
+    model.activation_token_valid_till = User.activation_token_hash[:activation_token_valid_till]
+    model.username = model.generate_username
   end
 
-  def self.me?(context)
-    context[:model] == context[:user]
+  after_commit only: [:create] do |model|
+    UserMailer.account_creation_email(model).deliver_later if model.login_enabled
   end
 
-  def self.read_user_details?(context)
-    context[:model].user_details_sharing_preference == 'all_users' ||
-      ((read_permission?(context) || me?(context)) &&
-      context[:model].user_details_sharing_preference == 'members_only') ||
-      me?(context) || update_permission?(context)
+  # Scope with eager loading for index
+  def base_scope
+    scope = super
+    if Graphiti.context[:action] == 'index'
+      scope = scope.includes(:mandates)
+    end
+    scope
   end
 
   private
@@ -138,22 +198,40 @@ class V1::UserResource < V1::ApplicationResource # rubocop:disable Metrics/Class
   end
 
   def read_user_details?
-    current_user && (@model.user_details_sharing_preference == 'all_users' ||
-      (read_or_me? && @model.user_details_sharing_preference == 'members_only') ||
-      me? || update_or_me?)
+    return false unless current_user
+
+    @object.user_details_sharing_preference == 'all_users' ||
+      (read_or_me? && @object.user_details_sharing_preference == 'members_only') ||
+      me? || update_or_me?
+  end
+
+  def read_user_details_or_sofia?
+    read_user_details? ||
+      (application_is_sofia? && @object.allow_sofia_sharing)
+  end
+
+  def read_user_details_for_record?(record)
+    record.user_details_sharing_preference == 'all_users' ||
+      ((self.class.read_permission? || record == current_user) &&
+       record.user_details_sharing_preference == 'members_only') ||
+      record == current_user || self.class.update_permission?
   end
 
   def application_is_sofia?
-    return false unless context.key?(:application) && context.fetch(:application)
+    return false unless context&.key?(:application) && Graphiti.context[:application]
 
-    context.fetch(:application).scopes.to_a.include?('sofia')
+    Graphiti.context[:application].scopes.to_a.include?('sofia')
   end
 
   def update_or_me?
-    self.class.update_permission?(context) || me?
+    self.class.update_permission? || me?
   end
 
   def me?
-    @model == current_user
+    @object == current_user
+  end
+
+  def user_can_create_or_update?
+    self.class.user_can_create_or_update?
   end
 end

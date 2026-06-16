@@ -1,31 +1,30 @@
+# frozen_string_literal: true
+
 class V1::RoomAdvertResource < V1::ApplicationResource
-  attributes :house_name, :contact, :location, :available_from,
-             :description, :description_camofied, :author_name,
-             :cover_photo_url, :cover_photo, :publicly_visible
+  self.model = RoomAdvert
 
-  def cover_photo_url
-    @model.cover_photo.url
+  with_timestamps
+
+  attribute :house_name, :string
+  attribute :contact, :string
+  attribute :location, :string
+  attribute :available_from, :date
+  attribute :description, :string
+  attribute :description_camofied, :string, writable: false do
+    camofy(@object['description'])
   end
-
-  def description_camofied
-    camofy(@model['description'])
+  attribute :author_name, :string, writable: false do
+    @object.author.full_name
   end
-
-  def author_name
-    @model.author.full_name
+  attribute :cover_photo_url, :string, writable: false do
+    @object.cover_photo.url
   end
+  attribute :cover_photo, :string, readable: false # Write-only
+  attribute :publicly_visible, :boolean
 
-  has_one :author, always_include_linkage_data: true
+  has_one :author, resource: V1::UserResource
 
-  def fetchable_fields
-    super - [:cover_photo]
-  end
-
-  def self.creatable_fields(_context)
-    %i[house_name contact location available_from description cover_photo publicly_visible]
-  end
-
-  before_create do
-    @model.author_id = current_user.id
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 end

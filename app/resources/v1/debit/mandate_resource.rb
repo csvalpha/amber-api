@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class V1::Debit::MandateResource < V1::ApplicationResource
-  attributes :start_date, :end_date, :iban, :iban_holder
-  model_name 'Debit::Mandate'
+  self.model = Debit::Mandate
 
-  has_one :user, always_include_linkage_data: true
+  with_timestamps
 
-  def self.creatable_fields(_context)
-    %i[user start_date end_date iban iban_holder]
-  end
+  attribute :start_date, :date
+  attribute :end_date, :date
+  attribute :iban, :string
+  attribute :iban_holder, :string
 
-  def self.searchable_fields
-    %i[iban iban_holder]
-  end
+  has_one :user, resource: V1::UserResource
+
+  searchable_fields :iban, :iban_holder
 end

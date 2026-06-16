@@ -1,91 +1,84 @@
-class V1::ApplicationResource < JSONAPI::Resource
+# frozen_string_literal: true
+
+class V1::ApplicationResource < Graphiti::Resource
   include MarkdownHelper
-  include JSONAPI::Authorization::PunditScopedResource
 
-  abstract
+  # Use ActiveRecord adapter
+  self.adapter = Graphiti::Adapters::ActiveRecord
+  self.abstract_class = true
 
-  attributes :created_at, :updated_at
-
-  filter :search
-
-  # :nocov:
-  def self.creatable_fields(_context)
-    []
-  end
-  # :nocov:
-
-  def self.updatable_fields(context)
-    creatable_fields(context)
+  # Class method to add standard timestamps (call this in child resources)
+  def self.with_timestamps
+    attribute :created_at, :datetime, writable: false
+    attribute :updated_at, :datetime, writable: false
   end
 
-  # :nocov:
-  def self.searchable_fields
-    []
-  end
-  # :nocov:
+  # Class method to register searchable fields and automatically add search filter
+  def self.searchable_fields(*fields)
+    if fields.any?
+      @searchable_fields = fields
+      
+      # Define the search filter for this resource
+      filter :search, :string do
+        eq do |scope, value|
+          searchable = self.class.instance_variable_get(:@searchable_fields) || []
+          next scope if searchable.empty?
 
-  def self.apply_filter(records, filter, value, options)
-    # Monkeypatch for weird bug in filter method
-    # When defining a filter on application level
-    # it will be applied before knowing which resource it is in
-    # When doing it with overwriting apply_filter (as done here) it knows which resource it is
-    case filter
-    when :search
-      search(records, value)
-    else
-      super
-    end
-  end
-
-  def self.search(records, value)
-    return records if records == []
-
-    arel = records.first.class.arel_table
-    value.each do |val|
-      val.split.each do |word|
-        records = records.where(
-          searchable_fields.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
-        )
+          arel = scope.model.arel_table
+          value.to_s.split.each do |word|
+            conditions = searchable.map { |field| arel[field].lower.matches("%#{word.downcase}%") }.inject(:or)
+            scope = scope.where(conditions)
+          end
+          scope
+        end
       end
     end
-    records
+    @searchable_fields || []
   end
 
-  def self.records(options = {})
-    is_index = options.fetch(:context, {}).fetch(:action, {}) == 'index'
-    includes = options.fetch(:includes, {}) || []
-    records ||= _model_class.includes(includes)
-    if is_index
-      records = Pundit.policy_scope!(current_user_or_application(options),
-                                     _model_class).includes(includes)
+  # Apply Pundit scoping on index
+  def base_scope
+    if Graphiti.context[:action] == :index && current_user_or_application
+      Pundit.policy_scope!(current_user_or_application, self.class.model)
+    else
+      self.class.model.all
     end
-    records
+  end
+
+  # Authorization helpers
+  def current_user
+    Graphiti.context[:user]
+  end
+
+  def current_application
+    Graphiti.context[:application]
+  end
+
+  def current_user_or_application
+    current_user || current_application
   end
 
   def read_permission?
-    current_user&.permission?(:read, @model)
+    current_user&.permission?(:read, @object)
   end
 
   def update_permission?
-    current_user&.permission?(:update, @model)
+    current_user&.permission?(:update, @object)
   end
 
-  def self.user_can_create_or_update?(context)
-    context[:user]&.permission?(:create, _model_class) ||
-      context[:user]&.permission?(:update, _model_class)
-  end
+  # Class-level permission checks
+  class << self
+    def user_can_create_or_update?
+      user = Graphiti.context[:user]
+      user&.permission?(:create, model) || user&.permission?(:update, model)
+    end
 
-  def current_user
-    context.fetch(:user)
-  end
+    def update_permission?
+      Graphiti.context[:user]&.permission?(:update, model)
+    end
 
-  # :nocov:
-  def current_application
-    context.fetch(:application)
-  end
-  # :nocov:
-
-  def self.current_user_or_application(options)
-    options.fetch(:context).fetch(:user) || options.fetch(:context).fetch(:application)
+    def read_permission?
+      Graphiti.context[:user]&.permission?(:read, model)
+    end
   end
 end

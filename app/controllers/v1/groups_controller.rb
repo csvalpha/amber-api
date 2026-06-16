@@ -1,6 +1,12 @@
+# frozen_string_literal: true
+
 class V1::GroupsController < V1::ApplicationController
-  before_action :doorkeeper_authorize!, except: %i[get_related_resource]
+  include GraphitiCrud
+
+  before_action :doorkeeper_authorize!, except: %i[index show]
   before_action :set_model, only: %i[export]
+
+  graphiti_resource V1::GroupResource
 
   def export
     authorize @model
@@ -28,9 +34,8 @@ class V1::GroupsController < V1::ApplicationController
 
   def permitted_serializable_user_attributes
     @permitted_serializable_user_attributes ||= begin
-      attributes = V1::UserResource.new(User.new, context).fetchable_fields
       attrs = params[:user_attrs].presence || 'id'
-      attributes & attrs.split(',').map(&:to_sym)
+      attrs.split(',').map(&:to_sym)
     end
   end
 end

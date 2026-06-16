@@ -1,10 +1,10 @@
+# frozen_string_literal: true
+
 class V1::Form::ClosedQuestionAnswerResource < V1::ApplicationResource
-  model_name 'Form::ClosedQuestionAnswer'
+  self.model = Form::ClosedQuestionAnswer
 
-  has_one :response, always_include_linkage_data: true
-  has_one :option, always_include_linkage_data: true
+  with_timestamps
 
-  def self.creatable_fields(_context)
-    %i[option response]
-  end
+  has_one :response, resource: V1::Form::ResponseResource
+  has_one :option, resource: V1::Form::ClosedQuestionOptionResource
 end

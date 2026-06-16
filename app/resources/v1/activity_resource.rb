@@ -1,52 +1,68 @@
+# frozen_string_literal: true
+
 class V1::ActivityResource < V1::ApplicationResource
-  attributes :title, :description, :description_camofied, :price, :location, :start_time,
-             :end_time, :category, :publicly_visible, :cover_photo_url, :cover_photo
+  self.model = Activity
 
-  def cover_photo_url
-    @model.cover_photo.url
+  with_timestamps
+
+  attribute :title, :string
+  attribute :description, :string
+  attribute :description_camofied, :string, writable: false do
+    camofy(@object['description'])
+  end
+  attribute :price, :float
+  attribute :location, :string
+  attribute :start_time, :datetime
+  attribute :end_time, :datetime
+  attribute :category, :string
+  attribute :publicly_visible, :boolean
+  attribute :cover_photo_url, :string, writable: false do
+    @object.cover_photo.url
+  end
+  attribute :cover_photo, :string, readable: false # Write-only for uploads
+
+  has_one :form, resource: V1::Form::FormResource
+  has_one :author, resource: V1::UserResource
+  has_one :group
+
+  filter :upcoming, :boolean do
+    eq do |scope, value|
+      value ? scope.upcoming : scope
+    end
   end
 
-  def description_camofied
-    camofy(@model['description'])
+  filter :closing, :boolean do
+    eq do |scope, value|
+      value ? scope.closing : scope
+    end
   end
 
-  has_one :form, always_include_linkage_data: true
-  has_one :author, always_include_linkage_data: true
-  has_one :group, always_include_linkage_data: true
-
-  filter :upcoming, apply: ->(records, _value, _options) { records.upcoming }
-  filter :closing, apply: ->(records, _value, _options) { records.closing }
-  filter :group, apply: ->(records, value, _options) { records.where(group_id: value) }
-
-  def fetchable_fields
-    super - [:cover_photo]
+  filter :group, :integer do
+    eq do |scope, value|
+      scope.where(group_id: value)
+    end
   end
 
-  def self.creatable_fields(_context)
-    %i[form title description group respond_until respond_from price
-       location start_time end_time category publicly_visible cover_photo]
+  sort :form_respond_until, :datetime do |scope, direction|
+    scope.joins(:form).order("form_forms.respond_until #{direction}")
   end
 
-  def self.searchable_fields
-    %i[title description location]
+  searchable_fields :title, :description, :location
+
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 
-  def self.sortable_fields(context)
-    super + [:'form.respond_until']
+  before_save do |model|
+    user_is_member_of_group?(model)
   end
 
-  before_create do
-    @model.author_id = current_user.id
-  end
+  private
 
-  before_save do
-    user_is_member_of_group?
-  end
-
-  def user_is_member_of_group?
-    return true unless @model.group
-    return true if current_user.permission?(:update, @model)
-    return false if current_user.current_group_member?(@model.group)
+  def user_is_member_of_group?(model)
+    return true unless model.group
+    return true if current_user.permission?(:update, model)
+    return false if current_user.current_group_member?(model.group)
 
     raise AmberError::NotMemberOfGroupError
   end

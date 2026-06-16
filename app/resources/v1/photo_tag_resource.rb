@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 class V1::PhotoTagResource < V1::ApplicationResource
-  attributes :x
-  attributes :y
+  self.model = PhotoTag
 
-  has_one :photo, always_include_linkage_data: true
-  has_one :author, always_include_linkage_data: true
-  has_one :tagged_user, always_include_linkage_data: true
+  with_timestamps
 
-  before_create do
-    @model.author_id = current_user.id
-  end
+  attribute :x, :float
+  attribute :y, :float
 
-  def self.creatable_fields(_context)
-    %i[x y photo tagged_user]
+  has_one :photo
+  has_one :author, resource: V1::UserResource
+  has_one :tagged_user, resource: V1::UserResource
+
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 end

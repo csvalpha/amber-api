@@ -1,19 +1,20 @@
+# frozen_string_literal: true
+
 class V1::PollResource < V1::ApplicationResource
-  has_one :form, always_include_linkage_data: true
-  has_one :author
+  self.model = Poll
 
-  before_create do
-    @model.author_id = current_user.id
+  with_timestamps
+
+  has_one :form, resource: V1::Form::FormResource
+  has_one :author, resource: V1::UserResource
+
+  filter :search, :string do
+    eq do |scope, value|
+      scope.joins(form: :closed_questions).where('form_closed_questions.question ILIKE ?', "%#{value}%")
+    end
   end
 
-  def self.creatable_fields(_context)
-    %i[form]
-  end
-
-  def self.search(records, value)
-    return records if records == []
-
-    records.joins(form: :closed_questions).where('form_closed_questions.question ILIKE ?',
-                                                 "%#{value.first}%")
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 end

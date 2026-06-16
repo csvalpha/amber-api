@@ -1,18 +1,43 @@
+# frozen_string_literal: true
+
 class V1::GroupResource < V1::ApplicationResource
-  attributes :name, :avatar_url, :avatar_thumb_url, :description, :description_camofied,
-             :kind, :recognized_at_gma, :rejected_at_gma, :administrative, :avatar
+  self.model = Group
 
-  def avatar_url
-    @model.avatar.url
-  end
+  with_timestamps
 
-  def avatar_thumb_url
-    @model.avatar.thumb.url
+  attribute :name, :string do
+    writable { user_can_create_or_update? }
   end
-
-  def description_camofied
-    camofy(@model['description'])
+  attribute :avatar_url, :string, writable: false do
+    @object.avatar.url
   end
+  attribute :avatar_thumb_url, :string, writable: false do
+    @object.avatar.thumb.url
+  end
+  attribute :description, :string do
+    readable { current_user.present? }
+  end
+  attribute :description_camofied, :string, writable: false do
+    readable { current_user.present? }
+    camofy(@object['description'])
+  end
+  attribute :kind, :string do
+    readable { current_user.present? }
+    writable { user_can_create_or_update? }
+  end
+  attribute :recognized_at_gma, :date do
+    readable { current_user.present? }
+    writable { user_can_create_or_update? }
+  end
+  attribute :rejected_at_gma, :date do
+    readable { current_user.present? }
+    writable { user_can_create_or_update? }
+  end
+  attribute :administrative, :boolean do
+    readable { current_user.present? }
+    writable { user_can_create_or_update? }
+  end
+  attribute :avatar, :string, readable: false # Write-only for uploads
 
   has_many :users
   has_many :memberships
@@ -20,27 +45,21 @@ class V1::GroupResource < V1::ApplicationResource
   has_many :permissions
   has_many :articles
 
-  filter :active, apply: ->(records, _value, _options) { records.active }
-  filter :kind
-  filter :administrative
-
-  def fetchable_fields
-    return super - [:avatar] if current_user
-
-    super - %i[description description_camofied kind
-               recognized_at_gma rejected_at_gma administrative avatar]
-  end
-
-  def self.creatable_fields(context)
-    attributes = %i[avatar description]
-
-    if user_can_create_or_update?(context)
-      attributes += %i[name kind recognized_at_gma rejected_at_gma administrative permissions]
+  filter :active, :boolean do
+    eq do |scope, value|
+      value ? scope.active : scope
     end
-    attributes
   end
 
-  def self.searchable_fields
-    %i[name]
+  filter :kind, :string
+
+  filter :administrative, :boolean
+
+  searchable_fields :name
+
+  private
+
+  def user_can_create_or_update?
+    self.class.user_can_create_or_update?
   end
 end

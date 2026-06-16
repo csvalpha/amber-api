@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class V1::ArticleCommentResource < V1::ApplicationResource
-  attributes :content
+  self.model = ArticleComment
+
+  with_timestamps
+
+  attribute :content, :string
 
   has_one :article
-  has_one :author, always_include_linkage_data: true
+  has_one :author, resource: V1::UserResource
 
-  def self.creatable_fields(_context)
-    %i[content article]
-  end
-
-  before_create do
-    @model.author_id = current_user.id
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 end

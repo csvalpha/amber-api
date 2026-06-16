@@ -1,19 +1,18 @@
+# frozen_string_literal: true
+
 class V1::BookResource < V1::ApplicationResource
-  attributes :title, :author, :description, :isbn, :cover_photo, :cover_photo_url
+  self.model = Book
 
-  def cover_photo_url
-    @model.cover_photo.url
+  with_timestamps
+
+  attribute :title, :string
+  attribute :author, :string
+  attribute :description, :string
+  attribute :isbn, :string
+  attribute :cover_photo, :string, readable: false # Write-only
+  attribute :cover_photo_url, :string, writable: false do
+    @object.cover_photo.url
   end
 
-  def fetchable_fields
-    super - [:cover_photo]
-  end
-
-  def self.creatable_fields(_context)
-    %i[title author description isbn cover_photo]
-  end
-
-  def self.searchable_fields
-    %i[title author description isbn]
-  end
+  searchable_fields :title, :author, :description, :isbn
 end

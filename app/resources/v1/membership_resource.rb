@@ -1,14 +1,18 @@
+# frozen_string_literal: true
+
 class V1::MembershipResource < V1::ApplicationResource
-  attributes :start_date, :end_date, :function
+  self.model = Membership
 
-  has_one :user, always_include_linkage_data: true
-  has_one :group, always_include_linkage_data: true
+  with_timestamps
 
-  before_save do
-    @model.start_date ||= Date.current
-  end
+  attribute :start_date, :date
+  attribute :end_date, :date
+  attribute :function, :string
 
-  def self.creatable_fields(_context)
-    %i[start_date end_date function group user]
+  has_one :user, resource: V1::UserResource
+  has_one :group
+
+  before_save do |model|
+    model.start_date ||= Date.current
   end
 end

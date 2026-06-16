@@ -1,8 +1,13 @@
-class V1::PermissionResource < V1::ApplicationResource
-  require 'case_transform'
-  attributes :name
+# frozen_string_literal: true
 
-  def name
-    CaseTransform.dash(@model.name)
+require 'case_transform'
+
+class V1::PermissionResource < V1::ApplicationResource
+  self.model = Permission
+
+  with_timestamps
+
+  attribute :name, :string, writable: false do
+    CaseTransform.dash(@object.name)
   end
 end

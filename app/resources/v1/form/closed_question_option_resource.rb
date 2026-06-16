@@ -1,16 +1,21 @@
+# frozen_string_literal: true
+
 class V1::Form::ClosedQuestionOptionResource < V1::ApplicationResource
-  model_name 'Form::ClosedQuestionOption'
-  attributes :option, :position
+  self.model = Form::ClosedQuestionOption
 
-  has_one :question, always_include_linkage_data: true
-  has_many :answers, always_include_linkage_data: true
+  with_timestamps
 
-  def self.records(options = {})
-    options[:includes] = [:answers] if options[:context][:action] == 'index'
-    super
-  end
+  attribute :option, :string
+  attribute :position, :integer
 
-  def self.creatable_fields(_context)
-    %i[option position question]
+  has_one :question, resource: V1::Form::ClosedQuestionResource
+  has_many :answers, resource: V1::Form::ClosedQuestionAnswerResource
+
+  def base_scope
+    scope = super
+    if Graphiti.context[:action] == 'index'
+      scope = scope.includes(:answers)
+    end
+    scope
   end
 end

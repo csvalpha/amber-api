@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
 class V1::BooksController < V1::ApplicationController
+  include GraphitiCrud
+
+  graphiti_resource V1::BookResource
+
   def isbn_lookup # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     authorize Book
 

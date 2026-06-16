@@ -1,17 +1,17 @@
+# frozen_string_literal: true
+
 class V1::Debit::TransactionResource < V1::ApplicationResource
-  attributes :description, :amount
-  model_name 'Debit::Transaction'
+  self.model = Debit::Transaction
 
-  has_one :collection
-  has_one :user, always_include_linkage_data: true
+  with_timestamps
 
-  filter :collection
+  attribute :description, :string
+  attribute :amount, :float
 
-  def self.creatable_fields(_context)
-    %i[user collection description amount]
-  end
+  has_one :collection, resource: V1::Debit::CollectionResource
+  has_one :user, resource: V1::UserResource
 
-  def self.searchable_fields
-    %i[description]
-  end
+  filter :collection, :integer
+
+  searchable_fields :description
 end

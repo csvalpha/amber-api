@@ -1,23 +1,24 @@
+# frozen_string_literal: true
+
 class V1::Forum::CategoryResource < V1::ApplicationResource
-  model_name 'Forum::Category'
-  attributes :name, :amount_of_threads
+  self.model = Forum::Category
 
-  def amount_of_threads
-    @model.threads.size
+  with_timestamps
+
+  attribute :name, :string
+  attribute :amount_of_threads, :integer, writable: false do
+    @object.threads.size
   end
 
-  has_many :threads, always_include_linkage_data: true
+  has_many :threads, resource: V1::Forum::ThreadResource
 
-  def self.records(options = {})
-    options[:includes] = [:threads] if options[:context][:action] == 'index'
-    super
+  def base_scope
+    scope = super
+    if Graphiti.context[:action] == 'index'
+      scope = scope.includes(:threads)
+    end
+    scope
   end
 
-  def self.creatable_fields(_context)
-    [:name]
-  end
-
-  def self.searchable_fields
-    %i[name]
-  end
+  searchable_fields :name
 end

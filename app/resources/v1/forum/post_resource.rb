@@ -1,25 +1,23 @@
+# frozen_string_literal: true
+
 class V1::Forum::PostResource < V1::ApplicationResource
-  model_name 'Forum::Post'
-  attributes :message, :message_camofied
+  self.model = Forum::Post
 
-  def message_camofied
-    camofy(@model['message'])
+  with_timestamps
+
+  attribute :message, :string
+  attribute :message_camofied, :string, writable: false do
+    camofy(@object['message'])
   end
 
-  has_one :author, always_include_linkage_data: true
-  has_one :thread
+  has_one :author, resource: V1::UserResource
+  has_one :thread, resource: V1::Forum::ThreadResource
 
-  filter :thread
+  filter :thread, :integer
 
-  def self.creatable_fields(_context)
-    %i[message user thread]
-  end
+  searchable_fields :message
 
-  def self.searchable_fields
-    %i[message]
-  end
-
-  before_create do
-    @model.author_id = current_user.id
+  before_save only: [:create] do |model|
+    model.author_id = current_user.id
   end
 end
