@@ -57,7 +57,7 @@ group :development, :test do
   gem 'fuubar', '~> 2.5', '>= 2.5.1'
   gem 'pry-byebug', '~> 3.11', require: false
   gem 'pry-rails', '~> 0.3', '>= 0.3.11'
-  gem 'rack-mini-profiler', '~> 3.3', '>= 3.3.1', require: false
+  gem 'rack-mini-profiler', '~> 4.0', '>= 4.0.1', require: false
   gem 'rb-readline', '~> 0.5', '>= 0.5.5', require: false
 end
 
