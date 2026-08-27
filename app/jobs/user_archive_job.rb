@@ -39,11 +39,12 @@ class UserArchiveJob < ApplicationJob
 
   def migrate_keep_entity_records(key, records)
     records.each do |r|
-      unless r.update({ key => global_archive_user })
+      if r.respond_to?(:archive!)
+        r.archive!
+      elsif !r.update({ key => global_archive_user })
         raise ActiveRecord::RecordInvalid.new(r),
               "Failed to update #{r.class} record (ID: #{r.id})"
       end
-
       r.versions.destroy_all
     end
   end

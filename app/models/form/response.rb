@@ -33,6 +33,12 @@ module Form
       raise e
     end
 
+    def archive!
+      transaction do
+        update_column(:user_id, 0)
+      end
+    end
+
     private
 
     def destroyable?
