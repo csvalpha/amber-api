@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_28_004330) do
     t.boolean "help_kring", default: false, null: false
     t.boolean "help_vereniging", default: false, null: false
     t.text "help_anders"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_alumni_contributions_on_user_id", unique: true
