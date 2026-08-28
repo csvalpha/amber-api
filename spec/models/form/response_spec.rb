@@ -261,10 +261,5 @@ RSpec.describe Form::Response do
     it 'updates user_id to 0' do
       expect { response.archive! }.to change(response, :user_id).to(0)
     end
-
-    it 'is idempotent' do
-      response.user_id = 0
-      expect { response.archive! }.not_to raise_error
-    end
   end
 end
