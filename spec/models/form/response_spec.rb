@@ -261,5 +261,11 @@ RSpec.describe Form::Response do
     it 'updates user_id to 0' do
       expect { response.archive! }.to change(response, :user_id).to(0)
     end
+
+    it 'raises when update_column returns false' do
+      persisted = create(:response)
+      allow(persisted).to receive(:update_column).with(:user_id, 0).and_return(false)
+      expect { persisted.archive! }.to raise_error(ActiveRecord::RecordInvalid)
+    end
   end
 end
