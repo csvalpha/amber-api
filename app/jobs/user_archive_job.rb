@@ -39,12 +39,11 @@ class UserArchiveJob < ApplicationJob
 
   def migrate_keep_entity_records(key, records)
     records.each do |r|
-      if r.respond_to?(:archive!)
-        r.archive!
-      elsif !r.update({ key => global_archive_user })
+      unless r.update({ key => global_archive_user })
         raise ActiveRecord::RecordInvalid.new(r),
               "Failed to update #{r.class} record (ID: #{r.id})"
       end
+
       r.versions.destroy_all
     end
   end
@@ -70,9 +69,9 @@ class UserArchiveJob < ApplicationJob
   end
 
   def entity_key(entity)
-    return 'author_id' if entity.has_attribute?('author_id')
-    return 'uploader_id' if entity.has_attribute?('uploader_id')
+    return 'author' if entity.has_attribute?('author_id')
+    return 'uploader' if entity.has_attribute?('uploader_id')
 
-    'user_id'
+    'user'
   end
 end

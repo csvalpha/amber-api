@@ -33,19 +33,6 @@ module Form
       raise e
     end
 
-    def archive!
-      # rubocop:disable Rails/SkipsModelValidations
-      result = update_column(:user_id, 0)
-      # rubocop:enable Rails/SkipsModelValidations
-
-      if result == false
-        raise ActiveRecord::RecordInvalid.new(self),
-              "Failed to archive #{self.class} record (ID: #{id})"
-      end
-
-      result
-    end
-
     private
 
     def destroyable?
