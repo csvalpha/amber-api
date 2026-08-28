@@ -27,6 +27,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :mandates, class_name: 'Debit::Mandate', dependent: :delete_all
   has_many :transactions, class_name: 'Debit::Transaction', dependent: :delete_all
   has_many :group_mail_aliases, through: :active_groups, source: :mail_aliases
+  has_one :alumni_contribution, dependent: :destroy
 
   # See https://github.com/doorkeeper-gem/doorkeeper#active-record
   has_many :access_grants, class_name: 'Doorkeeper::AccessGrant',
