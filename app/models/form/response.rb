@@ -42,7 +42,7 @@ module Form
         raise ActiveRecord::RecordInvalid.new(self),
               "Failed to archive #{self.class} record (ID: #{id})"
       end
-      
+
       result
     end
 
