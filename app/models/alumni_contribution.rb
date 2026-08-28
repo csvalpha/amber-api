@@ -1,6 +1,6 @@
 class AlumniContribution < ApplicationRecord
   has_paper_trail
-  
+
   belongs_to :user
 
   validates :user, uniqueness: true
