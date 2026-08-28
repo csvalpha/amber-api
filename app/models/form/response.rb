@@ -34,8 +34,15 @@ module Form
     end
 
     def archive!
+      # rubocop:disable Rails/SkipsModelValidations
       result = update_column(:user_id, 0)
-      raise ActiveRecord::RecordInvalid.new(self), "Failed to archive #{self.class} record (ID: #{id})" if result == false
+      # rubocop:enable Rails/SkipsModelValidations
+
+      if result == false
+        raise ActiveRecord::RecordInvalid.new(self),
+              "Failed to archive #{self.class} record (ID: #{id})"
+      end
+      
       result
     end
 
