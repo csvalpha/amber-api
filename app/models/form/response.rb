@@ -34,9 +34,7 @@ module Form
     end
 
     def archive!
-      transaction do
-        update_column(:user_id, 0)
-      end
+      update(user_id: 0, validate: false)
     end
 
     private
