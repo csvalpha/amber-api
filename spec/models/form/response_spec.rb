@@ -258,14 +258,15 @@ RSpec.describe Form::Response do
   end
 
   describe '#archive!' do
+    let(:persisted_response) { create(:response) }
+
     it 'updates user_id to 0' do
-      expect { response.archive! }.to change(response, :user_id).to(0)
+      expect { persisted_response.archive! }.to change(persisted_response, :user_id).to(0)
     end
 
     it 'raises when update_column returns false' do
-      persisted = create(:response)
-      allow(persisted).to receive(:update_column).with(:user_id, 0).and_return(false)
-      expect { persisted.archive! }.to raise_error(ActiveRecord::RecordInvalid)
+      allow(persisted_response).to receive(:update_column).with(:user_id, 0).and_return(false)
+      expect { persisted_response.archive! }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 end

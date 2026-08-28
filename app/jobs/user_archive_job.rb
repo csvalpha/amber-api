@@ -70,9 +70,9 @@ class UserArchiveJob < ApplicationJob
   end
 
   def entity_key(entity)
-    return 'author' if entity.has_attribute?('author_id')
-    return 'uploader' if entity.has_attribute?('uploader_id')
+    return 'author_id' if entity.has_attribute?('author_id')
+    return 'uploader_id' if entity.has_attribute?('uploader_id')
 
-    'user'
+    'user_id'
   end
 end
