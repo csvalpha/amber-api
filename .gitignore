@@ -32,3 +32,6 @@
 
 # Ignore activestorage files
 /storage
+
+# Ignore development guide
+AI_DEVELOPMENT_GUIDE.md
