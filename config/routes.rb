@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         post :generate_alias
       end
     end
+    jsonapi_resources :alumni_contributions
     jsonapi_resources :articles
     jsonapi_resources :article_comments
     jsonapi_resources :board_room_presences

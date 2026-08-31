@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_03_104056) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_28_004330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,6 +69,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_03_104056) do
     t.boolean "publicly_visible", default: false, null: false
     t.index ["deleted_at"], name: "index_activities_on_deleted_at"
     t.index ["form_id"], name: "index_activities_on_form_id", unique: true
+  end
+
+  create_table "alumni_contributions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "sponsoring_amount", precision: 10, scale: 2, default: "0.0"
+    t.boolean "help_digtus", default: false, null: false
+    t.boolean "help_kring", default: false, null: false
+    t.boolean "help_vereniging", default: false, null: false
+    t.text "help_anders"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_alumni_contributions_on_user_id", unique: true
   end
 
   create_table "article_comments", id: :serial, force: :cascade do |t|
@@ -597,6 +610,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_03_104056) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "alumni_contributions", "users"
   add_foreign_key "article_comments", "articles"
   add_foreign_key "article_comments", "users", column: "author_id"
   add_foreign_key "articles", "groups"
