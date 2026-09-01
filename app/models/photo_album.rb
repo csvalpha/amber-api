@@ -12,7 +12,20 @@ class PhotoAlbum < ApplicationRecord
   scope :publicly_visible, -> { where(publicly_visible: true) }
 
   scope :without_photo_tags, lambda {
-    where.not(id: Photo.joins(:tags).select(:photo_album_id).distinct)
+    tag_percentage_threshold = 0.85
+    qualifying_album_ids_subquery = unscoped
+                                    .joins(:photos)
+                                    .left_joins(photos: :tags)
+                                    .group('photo_albums.id')
+                                    .having(
+                                      <<~SQL.squish
+                                        (
+                                          COALESCE(COUNT(DISTINCT photo_tags.photo_id), 0) * 1.0 / NULLIF(COUNT(DISTINCT photos.id), 0)
+                                        ) < #{tag_percentage_threshold}
+                                      SQL
+                                    )
+                                    .select('photo_albums.id')
+    where(id: qualifying_album_ids_subquery)
   }
 
   def owners
