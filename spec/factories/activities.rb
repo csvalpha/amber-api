@@ -11,7 +11,7 @@ FactoryBot.define do
     end_time { Faker::Time.between(from: 1.day.from_now, to: 2.days.from_now) }
     category do
       %w[algemeen societeit vorming kring
-         choose ifes ozon disputen genootschapen huizen extern eerstejaars].sample
+         choose ifes ozon disputen genootschappen huizen extern eerstejaars].sample
     end
     publicly_visible { false }
 
