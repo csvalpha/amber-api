@@ -63,7 +63,7 @@ end
 
 group :development do
   gem 'better_errors', '~> 2.10', '>= 2.10.1'
-  gem 'binding_of_caller', '~> 1.0', '>= 1.0.1'
+  gem 'binding_of_caller', '~> 2.0'
   gem 'listen', '~> 3.9'
   gem 'mina', '~> 1.2', '>= 1.2.5'
   gem 'spring', '~> 4.4'
