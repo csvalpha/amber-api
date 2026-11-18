@@ -18,7 +18,7 @@ describe V1::DeclarationsController do
       it_behaves_like '200 OK'
       it { expect(request.media_type).to eq 'application/pdf' }
       it { expect(request.body).to start_with '%PDF' }
-      it { expect(request.headers['Content-Disposition']).to include "id#{record.id}.pdf" }
+      it { expect(request.headers['Content-Disposition']).to include "_#{record.id}_declaratie.pdf" }
 
       context 'when the declaration is not approved' do
         let(:record) { create(:declaration) }

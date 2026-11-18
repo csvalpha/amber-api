@@ -5,6 +5,8 @@ require 'http'
 class NextcloudWebdav
   class Error < StandardError; end
 
+  TIMEOUTS = { connect: 10, write: 60, read: 60 }.freeze # seconds
+
   def self.configured?
     config = Rails.application.config.x
     [config.nextcloud_url, config.nextcloud_declarations_user, config.nextcloud_declarations_password].all?(&:present?)
@@ -16,7 +18,10 @@ class NextcloudWebdav
         password: config.nextcloud_declarations_password)
   end
 
+  # Only HTTPS is accepted, the credentials are sent with every request
   def initialize(url:, user:, password:)
+    raise ArgumentError, 'Nextcloud URL must use https' unless url.to_s.start_with?('https://')
+
     @url = url.chomp('/')
     @user = user
     @password = password
@@ -42,7 +47,7 @@ class NextcloudWebdav
   end
 
   def request(verb, path, body: nil, allowed_codes: [])
-    response = HTTP.basic_auth(user: @user, pass: @password).request(verb, url_for(path), body:)
+    response = HTTP.timeout(TIMEOUTS).basic_auth(user: @user, pass: @password).request(verb, url_for(path), body:)
     return response if response.status.success? || allowed_codes.include?(response.code)
 
     raise Error, "Nextcloud #{verb.upcase} #{path} failed with status #{response.code}"

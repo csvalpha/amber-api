@@ -31,6 +31,21 @@ RSpec.describe Debit::Transaction do
     end
   end
 
+  describe 'on a finalized collection' do
+    let(:finalized) { create(:collection) }
+    let(:open_collection) { create(:collection) }
+    let!(:locked_transaction) { create(:transaction, collection: finalized) }
+
+    before { finalized.update!(finalized_at: Time.zone.now) }
+
+    it { expect(build(:transaction, collection: finalized)).not_to be_valid }
+    it { expect(locked_transaction.update(amount: 1)).to be false }
+    it { expect(locked_transaction.update(collection: open_collection)).to be false }
+    it { expect(create(:transaction, collection: open_collection).update(collection: finalized)).to be false }
+    it { expect(locked_transaction.destroy).to be false }
+    it { expect(create(:transaction, collection: open_collection).destroy).to be_truthy }
+  end
+
   describe '.transactions_for' do
     context 'when transaction is for user' do
       let(:scoped) { described_class.transactions_for(transaction.user) }

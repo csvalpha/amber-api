@@ -6,13 +6,18 @@ RSpec.describe DeclarationPdf do
   let(:user) { create(:user, first_name: 'Jan', last_name_prefix: 'de', last_name: 'Vries') }
   let(:declaration) do
     create(:declaration, :approved, user:, amount: 12.5, description: 'Boodschappen borrel',
-                                    purchase_date: Date.new(2026, 11, 1))
+                                    purchase_date: Date.new(2026, 11, 1), created_at: Time.zone.local(2026, 11, 18, 12))
   end
   let(:text) { PDF::Inspector::Text.analyze(pdf.render).strings.join(' ') }
+  let(:page_count) { PDF::Inspector::Page.analyze(pdf.render).pages.size }
 
   describe '#filename' do
-    it do
-      expect(pdf.filename).to eq "2026-11-01_vries-de-jan_boodschappen-borrel_EUR12.50_id#{declaration.id}.pdf"
+    it { expect(pdf.filename).to eq "2026-11-18_jan_de-vries_#{declaration.id}_declaratie.pdf" }
+
+    context 'when the user has no last name prefix' do
+      let(:user) { create(:user, first_name: 'Anne Marie', last_name_prefix: nil, last_name: "D'Artagnan") }
+
+      it { expect(pdf.filename).to eq "2026-11-18_anne-marie_d-artagnan_#{declaration.id}_declaratie.pdf" }
     end
   end
 
@@ -22,7 +27,7 @@ RSpec.describe DeclarationPdf do
 
   describe '#render' do
     it { expect(pdf.render).to start_with '%PDF' }
-    it { expect(PDF::Inspector::Page.analyze(pdf.render).pages.size).to eq 1 }
+    it { expect(page_count).to eq 1 }
     it { expect(text).to include 'Jan de Vries', '€ 12,50', 'Boodschappen borrel', '01-11-2026' }
     it { expect(text).to include 'Bon ontbreekt', declaration.missing_receipt_reason }
     it { expect(text).to include 'geen actief mandaat' }
@@ -37,13 +42,22 @@ RSpec.describe DeclarationPdf do
       let(:declaration) { create(:declaration, :approved, :with_receipt) }
 
       it { expect(text).not_to include 'Bon ontbreekt' }
-      it { expect(PDF::Inspector::Page.analyze(pdf.render).pages.size).to eq 1 }
+      it { expect(page_count).to eq 1 }
+      it { expect(PDF::Inspector::XObject.analyze(pdf.render).page_xobjects.first).not_to be_empty }
     end
 
     context 'when with a pdf receipt' do
       let(:declaration) { create(:declaration, :approved, :with_pdf_receipt) }
 
-      it { expect(PDF::Inspector::Page.analyze(pdf.render).pages.size).to eq 1 }
+      it { expect(page_count).to eq 1 }
+      it { expect(PDF::Inspector::XObject.analyze(pdf.render).page_xobjects.first).not_to be_empty }
+    end
+
+    context 'when the reason for the missing receipt is very long' do
+      let(:reason) { Array.new(150) { |i| "Regel #{i} van de uitleg" }.join("\n") }
+      let(:declaration) { create(:declaration, :approved, missing_receipt_reason: reason) }
+
+      it { expect(page_count).to eq 1 }
     end
 
     context 'when the description contains characters outside of the font' do

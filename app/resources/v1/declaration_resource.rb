@@ -1,7 +1,7 @@
 class V1::DeclarationResource < V1::ApplicationResource
   attributes :amount, :description, :purchase_date, :receipt, :missing_receipt_reason,
              :status, :rejection_reason, :include_in_next_collection, :approved_at,
-             :paid_amount, :open_amount, :has_receipt, :pdf_uploaded_at
+             :paid_amount, :open_amount, :has_receipt, :pdf_uploaded_at, :pdf_filename
 
   has_one :user, always_include_linkage_data: true
   has_one :approved_by, class_name: 'User', always_include_linkage_data: true
@@ -22,6 +22,11 @@ class V1::DeclarationResource < V1::ApplicationResource
 
   def has_receipt # rubocop:disable Naming/PredicatePrefix
     @model.receipt.present?
+  end
+
+  # The UI can not read Content-Disposition (not exposed via CORS), so it gets the name here
+  def pdf_filename
+    DeclarationPdf.new(@model).filename if @model.approved_at.present?
   end
 
   def self.creatable_fields(_context)

@@ -30,5 +30,21 @@ RSpec.describe ReceiptUploader do
     expect { uploader.store!(upload('collection_import.csv', 'text/csv')) }.to raise_error(CarrierWave::IntegrityError)
   end
 
+  context 'when a file is declared as pdf but is not a pdf' do
+    let(:fake_pdf) do
+      Tempfile.new(%w[fake .pdf]).tap do |file|
+        file.write("username,amount\nfoo,1\n")
+        file.flush
+      end
+    end
+
+    after { fake_pdf.close! }
+
+    it do
+      expect { uploader.store!(Rack::Test::UploadedFile.new(fake_pdf.path, 'application/pdf')) }
+        .to raise_error(CarrierWave::IntegrityError)
+    end
+  end
+
   it { expect(uploader.size_range).to eq(1..(10.megabytes)) }
 end

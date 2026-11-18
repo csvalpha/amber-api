@@ -42,10 +42,19 @@ class ReceiptUploader < ApplicationUploader
     end
   end
 
-  # The image bomb check only applies to images, a PDF receipt has no pixel dimensions
+  # The image bomb check only applies to images, a PDF receipt has no pixel dimensions.
+  # The rendered size of a PDF is bounded when it is rasterized, see DeclarationPdf#rasterize_first_page.
   def protect_from_image_bomb!(new_file)
-    return if pdf?(new_file)
+    return super unless pdf?(new_file)
+    return if pdf_signature?(new_file)
 
-    super
+    raise CarrierWave::IntegrityError, 'is geen geldige PDF'
+  end
+
+  # Reads from the path when there is one, so the upload stream itself is left untouched
+  def pdf_signature?(new_file)
+    path = new_file.path
+    header = path.present? && File.exist?(path) ? File.binread(path, 5) : new_file.read.to_s.first(5)
+    header == '%PDF-'
   end
 end

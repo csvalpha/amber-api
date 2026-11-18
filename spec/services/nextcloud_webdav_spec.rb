@@ -33,8 +33,23 @@ RSpec.describe NextcloudWebdav do
     end
   end
 
+  describe '.new' do
+    it 'refuses to send credentials over plain http' do
+      expect { described_class.new(url: 'http://cloud.example.com', user: 'questor', password: 'secret') }
+        .to raise_error(ArgumentError, /https/)
+    end
+  end
+
   describe '.configured?' do
-    it { expect(described_class.configured?).to be false }
+    context 'when not configured' do
+      before do
+        allow(Rails.application.config.x).to receive_messages(nextcloud_url: nil,
+                                                              nextcloud_declarations_user: nil,
+                                                              nextcloud_declarations_password: nil)
+      end
+
+      it { expect(described_class.configured?).to be false }
+    end
 
     context 'when configured' do
       before do

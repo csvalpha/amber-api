@@ -1,17 +1,25 @@
 class V1::DeclarationsController < V1::ApplicationController
   before_action :set_model, only: %i[approve reject receipt pdf]
 
+  # The decision is taken under a row lock (with_lock reloads the record), so two concurrent
+  # decisions cannot both pass the pending check in the policy
   def approve
-    authorize @model
-    return render_model_errors unless @model.approve!(current_user)
+    approved = @model.with_lock do
+      authorize @model
+      @model.approve!(current_user)
+    end
+    return render_model_errors unless approved
 
     DeclarationMailer.approved_email(@model).deliver_later
     head :no_content
   end
 
   def reject
-    authorize @model
-    return render_model_errors unless @model.reject!(params[:rejection_reason])
+    rejected = @model.with_lock do
+      authorize @model
+      @model.reject!(params[:rejection_reason])
+    end
+    return render_model_errors unless rejected
 
     DeclarationMailer.rejected_email(@model).deliver_later
     head :no_content

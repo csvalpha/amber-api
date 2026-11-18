@@ -45,6 +45,20 @@ describe V1::Debit::CollectionsController do
 
         it_behaves_like '422 Unprocessable Content'
         it { expect { request }.not_to(change { declaration.reload.status }) }
+        it { expect { request }.not_to(change { record.reload.finalized_at }) }
+        it { expect { request }.not_to(change { record.transactions.count }) }
+      end
+
+      context 'when sepa_king rejects the transaction data' do
+        # The SEPA::DirectDebit is built inside Debit::Collection#to_sepa, so there is no instance to inject
+        before do
+          allow_any_instance_of(SEPA::DirectDebit).to receive(:add_transaction) # rubocop:disable RSpec/AnyInstance
+            .and_raise(ArgumentError, 'Name is too long')
+        end
+
+        it_behaves_like '422 Unprocessable Content'
+        it { expect { request }.not_to(change { record.reload.finalized_at }) }
+        it { expect { request }.not_to(change { declaration.reload.status }) }
       end
 
       context 'when already finalized' do

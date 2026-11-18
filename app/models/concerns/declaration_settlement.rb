@@ -37,13 +37,15 @@ module DeclarationSettlement
     end
   end
 
+  # The row lock (which also reloads the record) makes a concurrent second finalize wait
+  # and then see the committed finalized_at, so declarations are never settled twice
   def finalize!
-    if finalized?
-      errors.add(:finalized_at, 'incasso is al definitief gemaakt')
-      return false
-    end
+    with_lock do
+      if finalized?
+        errors.add(:finalized_at, 'incasso is al definitief gemaakt')
+        return false
+      end
 
-    self.class.transaction do
       settle_declarations!(pending_declaration_credits)
       raise ActiveRecord::Rollback unless sepa_valid?
 
@@ -64,10 +66,14 @@ module DeclarationSettlement
     end
   end
 
-  # to_sepa does not raise, it adds errors and returns an empty list or nil instead
+  # to_sepa adds errors and returns an empty list or nil for known problems,
+  # but sepa_king raises ArgumentError on invalid transaction data (e.g. a malformed mandate)
   def sepa_valid?
     sepa_files = to_sepa
     errors.add(:sepa, 'bevat geen transacties') if sepa_files.blank? && errors.empty?
     errors.empty?
+  rescue ArgumentError => e
+    errors.add(:sepa, e.message)
+    false
   end
 end
