@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_28_004330) do
+ActiveRecord::Schema[7.2].define(version: 2026_11_18_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -142,6 +142,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_28_004330) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.datetime "finalized_at"
     t.index ["author_id"], name: "index_debit_collections_on_author_id"
   end
 
@@ -165,8 +166,32 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_28_004330) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "declaration_id"
     t.index ["collection_id"], name: "index_debit_transactions_on_collection_id"
+    t.index ["declaration_id"], name: "index_debit_transactions_on_declaration_id"
     t.index ["user_id"], name: "index_debit_transactions_on_user_id"
+  end
+
+  create_table "declarations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "amount", precision: 8, scale: 2, null: false
+    t.string "description", null: false
+    t.date "purchase_date", null: false
+    t.string "receipt"
+    t.text "missing_receipt_reason"
+    t.string "status", default: "pending", null: false
+    t.text "rejection_reason"
+    t.boolean "include_in_next_collection", default: false, null: false
+    t.bigint "approved_by_id"
+    t.datetime "approved_at"
+    t.string "pdf_path"
+    t.datetime "pdf_uploaded_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_by_id"], name: "index_declarations_on_approved_by_id"
+    t.index ["status"], name: "index_declarations_on_status"
+    t.index ["user_id"], name: "index_declarations_on_user_id"
   end
 
   create_table "form_closed_question_answers", id: :serial, force: :cascade do |t|
@@ -615,6 +640,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_28_004330) do
   add_foreign_key "article_comments", "users", column: "author_id"
   add_foreign_key "articles", "groups"
   add_foreign_key "board_room_presences", "users"
+  add_foreign_key "debit_transactions", "declarations"
+  add_foreign_key "declarations", "users"
+  add_foreign_key "declarations", "users", column: "approved_by_id", on_delete: :nullify
   add_foreign_key "form_responses", "users"
   add_foreign_key "forum_posts", "users", column: "author_id"
   add_foreign_key "forum_threads", "users", column: "author_id"

@@ -18,6 +18,9 @@ services:
     depends_on:
       - db
       - redis
+    volumes:
+      # Declaration receipts are read by DeclarationPdfJob
+      - ./private_uploads:/app/private_uploads
     environment:
       - RAILS_ENV=production
       - REDIS_HOST=redis
@@ -34,6 +37,7 @@ services:
       - POSTGRES_HOST=db
     volumes:
       - ./public/uploads:/app/public/uploads
+      - ./private_uploads:/app/private_uploads
       - ./log:/app/log
     labels:
       - traefik.enable=true

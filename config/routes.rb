@@ -25,6 +25,15 @@ Rails.application.routes.draw do
         get :isbn_lookup
       end
     end
+    jsonapi_resources :declarations do
+      jsonapi_relationships
+      member do
+        post :approve
+        post :reject
+        get :receipt
+        get :pdf
+      end
+    end
     jsonapi_resources :groups do
       jsonapi_relationships
       member do
@@ -78,6 +87,7 @@ Rails.application.routes.draw do
         jsonapi_relationships
         member do
           get :sepa
+          post :finalize
         end
       end
       jsonapi_resources :transactions

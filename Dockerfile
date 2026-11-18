@@ -13,6 +13,7 @@ RUN apk add --update \
   file-dev \
   jpeg-dev \
   imagemagick \
+  ghostscript \
   postgresql-dev \
   tzdata \
   libffi-dev \

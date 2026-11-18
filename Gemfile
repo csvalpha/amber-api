@@ -26,6 +26,7 @@ gem 'paper_trail', '~> 16.0'
 gem 'paranoia', '~> 3.0', '>= 3.0.1'
 gem 'pg', '~> 1.6', '>= 1.6.1'
 gem 'phonelib', '~> 0.10', '>= 0.10.11'
+gem 'prawn', '~> 2.5'
 gem 'puma', '~> 6.6', '>= 6.6.1'
 gem 'pundit', '~> 2.5'
 gem 'rack-attack', '~> 6.7'
@@ -73,6 +74,7 @@ end
 
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
+  gem 'pdf-inspector', '~> 1.3', require: 'pdf/inspector'
   gem 'rspec-rails', '~> 8.0', '>= 8.0.2'
   gem 'rubocop', '~> 1.79', '>= 1.79.2', require: false
   gem 'rubocop-factory_bot', '~> 2.27', '>= 2.27.1', require: false
