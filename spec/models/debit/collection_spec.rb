@@ -200,6 +200,20 @@ RSpec.describe Debit::Collection do
       end
     end
 
+    context 'when the declaration is paid manually after the credits were calculated' do
+      before do
+        create(:transaction, collection:, user:, amount: 50)
+        credits = collection.pending_declaration_credits
+        allow(collection).to receive(:pending_declaration_credits).and_return(credits)
+        declaration.mark_manually_paid!(create(:user))
+        collection.finalize!
+      end
+
+      it { expect(collection.transactions.where.not(declaration_id: nil)).to be_empty }
+      it { expect(declaration.reload.paid_amount).to eq 30 }
+      it { expect(collection.reload).to be_finalized }
+    end
+
     context 'when the declaration is not included in the next collection' do
       before do
         declaration.update!(include_in_next_collection: false)

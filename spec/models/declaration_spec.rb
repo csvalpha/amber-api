@@ -121,6 +121,25 @@ RSpec.describe Declaration do
     end
   end
 
+  describe '#mark_manually_paid!' do
+    let(:declaration) { create(:declaration, :approved, amount: 30) }
+    let(:payer) { create(:user) }
+
+    before do
+      create(:transaction, declaration:, user: declaration.user, amount: -10)
+      declaration.update!(status: :partially_paid)
+      declaration.mark_manually_paid!(payer)
+    end
+
+    it { expect(declaration).to be_paid }
+    it { expect(declaration.manually_paid_amount).to eq 20 }
+    it { expect(declaration.paid_amount).to eq 30 }
+    it { expect(declaration.open_amount).to eq 0 }
+    it { expect(declaration.manually_paid_by).to eq payer }
+    it { expect(declaration.manually_paid_at).to be_present }
+    it { expect(declaration.include_in_next_collection).to be false }
+  end
+
   describe '#reject!' do
     let(:declaration) { create(:declaration) }
 

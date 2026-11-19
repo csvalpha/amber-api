@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       member do
         post :approve
         post :reject
+        post :mark_manually_paid
         get :receipt
         get :pdf
       end

@@ -9,6 +9,7 @@ class Declaration < ApplicationRecord
 
   belongs_to :user
   belongs_to :approved_by, class_name: 'User', optional: true
+  belongs_to :manually_paid_by, class_name: 'User', optional: true
   has_many :transactions, class_name: 'Debit::Transaction', dependent: :restrict_with_error
 
   enum :status, STATUSES.index_with(&:itself), validate: true
@@ -26,8 +27,13 @@ class Declaration < ApplicationRecord
 
   after_commit :enqueue_pdf_upload, on: %i[create update], if: :pdf_outdated?
 
+  # Settled on collections plus what the treasurer paid out by hand (e.g. a bank transfer)
   def paid_amount
-    -transactions.sum(:amount)
+    manually_paid_amount - transactions.sum(:amount)
+  end
+
+  def settleable?
+    approved? || partially_paid?
   end
 
   def open_amount
@@ -45,6 +51,12 @@ class Declaration < ApplicationRecord
 
   def reject!(reason)
     update(status: :rejected, rejection_reason: reason)
+  end
+
+  # Pays the open amount outside of a collection, so it is no longer settled on one
+  def mark_manually_paid!(payer)
+    update(status: :paid, manually_paid_amount: manually_paid_amount + open_amount,
+           manually_paid_by: payer, manually_paid_at: Time.zone.now, include_in_next_collection: false)
   end
 
   private

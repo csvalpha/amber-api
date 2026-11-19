@@ -45,6 +45,10 @@ class DeclarationPolicy < ApplicationPolicy
     approve?
   end
 
+  def mark_manually_paid?
+    treasurer?(:update) && record.settleable?
+  end
+
   def receipt?
     show?
   end

@@ -26,7 +26,11 @@ RSpec.describe V1::DeclarationResource, type: :resource do
     let(:resource) { described_class.new(create(:declaration), context) }
 
     it { expect(resource.fetchable_fields).not_to include(:receipt) }
-    it { expect(resource.fetchable_fields).to include(:paid_amount, :open_amount, :has_receipt, :status) }
+
+    it do
+      expect(resource.fetchable_fields)
+        .to include(:paid_amount, :open_amount, :has_receipt, :status, :manually_paid_amount, :manually_paid_at)
+    end
   end
 
   describe '#searchable_fields' do

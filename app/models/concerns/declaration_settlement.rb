@@ -59,11 +59,18 @@ module DeclarationSettlement
   def settle_declarations!(credits)
     credits.each do |credit|
       declaration = credit[:declaration]
-      transactions.create!(user_id: declaration.user_id, declaration:, amount: -credit[:amount],
-                           description: "Declaratie: #{declaration.description}")
-      declaration.transactions.reset
-      declaration.update!(status: declaration.open_amount.zero? ? :paid : :partially_paid)
+      # Reload under lock: it may have been paid manually since the credits were calculated
+      declaration.lock!
+      amount = [credit[:amount], declaration.open_amount].min
+      settle_declaration!(declaration, amount) if declaration.settleable? && amount.positive?
     end
+  end
+
+  def settle_declaration!(declaration, amount)
+    transactions.create!(user_id: declaration.user_id, declaration:, amount: -amount,
+                         description: "Declaratie: #{declaration.description}")
+    declaration.transactions.reset
+    declaration.update!(status: declaration.open_amount.zero? ? :paid : :partially_paid)
   end
 
   # to_sepa adds errors and returns an empty list or nil for known problems,

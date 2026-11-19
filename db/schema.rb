@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_11_18_120000) do
+ActiveRecord::Schema[7.2].define(version: 2026_11_18_130000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -189,7 +189,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_11_18_120000) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "manually_paid_amount", precision: 8, scale: 2, default: "0.0", null: false
+    t.datetime "manually_paid_at"
+    t.bigint "manually_paid_by_id"
     t.index ["approved_by_id"], name: "index_declarations_on_approved_by_id"
+    t.index ["manually_paid_by_id"], name: "index_declarations_on_manually_paid_by_id"
     t.index ["status"], name: "index_declarations_on_status"
     t.index ["user_id"], name: "index_declarations_on_user_id"
   end
@@ -643,6 +647,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_11_18_120000) do
   add_foreign_key "debit_transactions", "declarations"
   add_foreign_key "declarations", "users"
   add_foreign_key "declarations", "users", column: "approved_by_id", on_delete: :nullify
+  add_foreign_key "declarations", "users", column: "manually_paid_by_id", on_delete: :nullify
   add_foreign_key "form_responses", "users"
   add_foreign_key "forum_posts", "users", column: "author_id"
   add_foreign_key "forum_threads", "users", column: "author_id"

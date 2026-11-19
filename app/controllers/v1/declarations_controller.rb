@@ -1,5 +1,5 @@
 class V1::DeclarationsController < V1::ApplicationController
-  before_action :set_model, only: %i[approve reject receipt pdf]
+  before_action :set_model, only: %i[approve reject mark_manually_paid receipt pdf]
 
   # The decision is taken under a row lock (with_lock reloads the record), so two concurrent
   # decisions cannot both pass the pending check in the policy
@@ -22,6 +22,17 @@ class V1::DeclarationsController < V1::ApplicationController
     return render_model_errors unless rejected
 
     DeclarationMailer.rejected_email(@model).deliver_later
+    head :no_content
+  end
+
+  # Locked like approve, so it can not race a second manual payment
+  def mark_manually_paid
+    paid = @model.with_lock do
+      authorize @model
+      @model.mark_manually_paid!(current_user)
+    end
+    return render_model_errors unless paid
+
     head :no_content
   end
 

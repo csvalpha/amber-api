@@ -1,10 +1,12 @@
 class V1::DeclarationResource < V1::ApplicationResource
   attributes :amount, :description, :purchase_date, :receipt, :missing_receipt_reason,
              :status, :rejection_reason, :include_in_next_collection, :approved_at,
-             :paid_amount, :open_amount, :has_receipt, :pdf_uploaded_at, :pdf_filename
+             :paid_amount, :open_amount, :has_receipt, :pdf_uploaded_at, :pdf_filename,
+             :manually_paid_amount, :manually_paid_at
 
   has_one :user, always_include_linkage_data: true
   has_one :approved_by, class_name: 'User', always_include_linkage_data: true
+  has_one :manually_paid_by, class_name: 'User', always_include_linkage_data: true
   has_many :transactions, class_name: 'Debit::Transaction'
 
   filter :status
