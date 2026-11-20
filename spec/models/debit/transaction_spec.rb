@@ -44,6 +44,11 @@ RSpec.describe Debit::Transaction do
     it { expect(create(:transaction, collection: open_collection).update(collection: finalized)).to be false }
     it { expect(locked_transaction.destroy).to be false }
     it { expect(create(:transaction, collection: open_collection).destroy).to be_truthy }
+
+    it 'checks the persisted collection when the association was reassigned without saving' do
+      locked_transaction.collection = open_collection
+      expect(locked_transaction.destroy).to be false
+    end
   end
 
   describe '.transactions_for' do

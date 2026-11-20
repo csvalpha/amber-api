@@ -38,9 +38,10 @@ module DeclarationSettlement
   end
 
   # The row lock (which also reloads the record) makes a concurrent second finalize wait
-  # and then see the committed finalized_at, so declarations are never settled twice
+  # and then see the committed finalized_at, so declarations are never settled twice.
+  # requires_new makes it a savepoint, so the rollback also works inside an outer transaction.
   def finalize!
-    with_lock do
+    with_lock(requires_new: true) do
       if finalized?
         errors.add(:finalized_at, 'incasso is al definitief gemaakt')
         return false
@@ -59,10 +60,12 @@ module DeclarationSettlement
   def settle_declarations!(credits)
     credits.each do |credit|
       declaration = credit[:declaration]
-      # Reload under lock: it may have been paid manually since the credits were calculated
+      # Reload under lock: it may have been paid manually or excluded since the credits were calculated
       declaration.lock!
+      next unless declaration.settleable? && declaration.include_in_next_collection
+
       amount = [credit[:amount], declaration.open_amount].min
-      settle_declaration!(declaration, amount) if declaration.settleable? && amount.positive?
+      settle_declaration!(declaration, amount) if amount.positive?
     end
   end
 

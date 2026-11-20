@@ -60,6 +60,13 @@ RSpec.describe DeclarationPdf do
       it { expect(page_count).to eq 1 }
     end
 
+    context 'when the description contains many line breaks' do
+      let(:declaration) { create(:declaration, :approved, description: "a\n" * 120) }
+
+      it { expect(text).to include 'Goedgekeurd op' }
+      it { expect(page_count).to eq 1 }
+    end
+
     context 'when the description contains characters outside of the font' do
       let(:declaration) { create(:declaration, :approved, description: 'Taart 🎂') }
 

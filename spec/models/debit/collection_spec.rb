@@ -214,6 +214,20 @@ RSpec.describe Debit::Collection do
       it { expect(collection.reload).to be_finalized }
     end
 
+    context 'when the declaration is excluded after the credits were calculated' do
+      before do
+        create(:transaction, collection:, user:, amount: 50)
+        credits = collection.pending_declaration_credits
+        allow(collection).to receive(:pending_declaration_credits).and_return(credits)
+        declaration.update!(include_in_next_collection: false)
+        collection.finalize!
+      end
+
+      it { expect(collection.transactions.where.not(declaration_id: nil)).to be_empty }
+      it { expect(declaration.reload).to be_approved }
+      it { expect(collection.reload).to be_finalized }
+    end
+
     context 'when the declaration is not included in the next collection' do
       before do
         declaration.update!(include_in_next_collection: false)
@@ -260,6 +274,14 @@ RSpec.describe Debit::Collection do
       it 'keeps the collection open' do
         collection.finalize!
         expect(collection.reload).not_to be_finalized
+      end
+
+      context 'when called inside an outer transaction' do
+        before { ActiveRecord::Base.transaction { collection.finalize! } }
+
+        it { expect(collection.transactions.where.not(declaration_id: nil)).to be_empty }
+        it { expect(declaration.reload).to be_approved }
+        it { expect(collection.reload).not_to be_finalized }
       end
     end
 

@@ -8,7 +8,8 @@ module Debit
     validates :amount, presence: true
     validate :collections_not_finalized
 
-    before_destroy :prevent_destroy_on_finalized_collection
+    before_save :lock_open_collections
+    before_destroy :lock_open_collections
 
     scope :transactions_for, ->(user) { where(user:) }
 
@@ -23,8 +24,13 @@ module Debit
       errors.add(:collection, 'is al definitief gemaakt')
     end
 
-    def prevent_destroy_on_finalized_collection
-      return unless collection&.finalized?
+    # The validation above gives a friendly error; this check is authoritative. It locks the persisted
+    # and the new collection (in id order, against deadlocks) until commit, so a concurrent
+    # finalize can not slip in between. It uses ids instead of the (possibly reassigned) association.
+    def lock_open_collections
+      ids = [collection_id, collection_id_in_database].compact.uniq
+      finalized = Debit::Collection.where(id: ids).order(:id).lock.pluck(:finalized_at).any?
+      return unless finalized
 
       errors.add(:collection, 'is al definitief gemaakt')
       throw :abort

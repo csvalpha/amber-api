@@ -47,9 +47,11 @@ class DeclarationPdf
     document.move_down 12
   end
 
+  # The details are single line fields: squish them, so line breaks in e.g. the description
+  # can not overflow the box and cut off the fields after it
   def render_details(document)
     fragments = details.flat_map do |label, value|
-      [{ text: "#{label}: ", styles: [:bold] }, { text: "#{printable(value)}\n" }]
+      [{ text: "#{label}: ", styles: [:bold] }, { text: "#{printable(value).squish}\n" }]
     end
     bounded_text(document, fragments, DETAILS_MAX_HEIGHT)
     document.move_down 12
