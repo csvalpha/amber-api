@@ -18,6 +18,7 @@ class Declaration < ApplicationRecord
   validates :description, presence: true, length: { maximum: 255 }
   validates :purchase_date, presence: true
   validates_date :purchase_date, on_or_before: :today, allow_nil: true
+  validates :missing_receipt_reason, length: { maximum: 1000 }
   validates :rejection_reason, presence: true, if: :rejected?
   validate :receipt_or_missing_receipt_reason
   validate :amount_not_below_paid_amount, if: :persisted?

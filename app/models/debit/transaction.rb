@@ -24,16 +24,19 @@ module Debit
       errors.add(:collection, 'is al definitief gemaakt')
     end
 
-    # The validation above gives a friendly error; this check is authoritative. It locks the persisted
-    # and the new collection (in id order, against deadlocks) until commit, so a concurrent
-    # finalize can not slip in between. It uses ids instead of the (possibly reassigned) association.
+    # The validation above gives a friendly error; this check is authoritative. It locks the transaction row
+    # and reads its collection from the database (this instance may be stale), then locks that and the new
+    # collection (in id order, against deadlocks) until commit, so a concurrent finalize can not slip in between.
     def lock_open_collections
-      ids = [collection_id, collection_id_in_database].compact.uniq
-      finalized = Debit::Collection.where(id: ids).order(:id).lock.pluck(:finalized_at).any?
-      return unless finalized
+      ids = [collection_id, locked_persisted_collection_id].compact.uniq
+      return unless Debit::Collection.where(id: ids).order(:id).lock.pluck(:finalized_at).any?
 
       errors.add(:collection, 'is al definitief gemaakt')
       throw :abort
+    end
+
+    def locked_persisted_collection_id
+      self.class.where(id:).lock.pick(:collection_id) if persisted?
     end
   end
 end

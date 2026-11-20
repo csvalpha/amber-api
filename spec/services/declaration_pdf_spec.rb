@@ -53,10 +53,21 @@ RSpec.describe DeclarationPdf do
       it { expect(PDF::Inspector::XObject.analyze(pdf.render).page_xobjects.first).not_to be_empty }
     end
 
-    context 'when the reason for the missing receipt is very long' do
-      let(:reason) { Array.new(150) { |i| "Regel #{i} van de uitleg" }.join("\n") }
+    context 'when the reason for the missing receipt has the maximum length' do
+      let(:reason) { "#{Array.new(42) { |i| "Regel #{i} van de uitleg" }.join("\n")}\nEINDE".first(1000) }
       let(:declaration) { create(:declaration, :approved, missing_receipt_reason: reason) }
 
+      it { expect(reason.length).to be <= 1000 }
+      it { expect(page_count).to eq 1 }
+      it { expect(text).to include 'EINDE' }
+    end
+
+    context 'when the pdf receipt can not be rasterized' do
+      let(:declaration) { create(:declaration, :approved, :with_pdf_receipt) }
+
+      before { allow(PdfRasterizer).to receive(:first_page).and_raise(PdfRasterizer::Error) }
+
+      it { expect(text).to include 'Bon kon niet worden weergegeven' }
       it { expect(page_count).to eq 1 }
     end
 

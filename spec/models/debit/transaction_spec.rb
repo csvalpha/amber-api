@@ -49,6 +49,26 @@ RSpec.describe Debit::Transaction do
       locked_transaction.collection = open_collection
       expect(locked_transaction.destroy).to be false
     end
+
+    context 'when a stale instance changes a transaction that was moved to a finalized collection' do
+      let(:transaction) { create(:transaction, collection: open_collection) }
+      let(:stale) { described_class.find(transaction.id) }
+      let(:other_collection) { create(:collection) }
+
+      before do
+        stale
+        transaction.update!(collection: other_collection)
+        other_collection.update!(finalized_at: Time.zone.now)
+      end
+
+      it { expect(stale.update(amount: 1)).to be false }
+      it { expect(stale.destroy).to be false }
+    end
+
+    it 'still updates a transaction when both collections are open' do
+      transaction = create(:transaction, collection: open_collection)
+      expect(transaction.update(collection: create(:collection), amount: 1)).to be true
+    end
   end
 
   describe '.transactions_for' do

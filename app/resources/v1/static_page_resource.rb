@@ -27,3 +27,4 @@ class V1::StaticPageResource < V1::ApplicationResource
     %i[title content]
   end
 end
+https://duckduckgo.com/

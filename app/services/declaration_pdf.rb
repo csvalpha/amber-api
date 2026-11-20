@@ -101,13 +101,22 @@ class DeclarationPdf
     document.move_down 12
 
     if @declaration.receipt.present?
-      document.image receipt_image_path, fit: [document.bounds.width, document.cursor], position: :center
+      render_receipt_image(document)
     else
       document.text 'Bon ontbreekt', size: 14, style: :bold
       document.move_down 6
-      bounded_text(document, [{ text: "Reden: #{printable(@declaration.missing_receipt_reason)}" }],
+      # The reason is limited to 1000 characters (see Declaration), squished that always fits the box
+      bounded_text(document, [{ text: "Reden: #{printable(@declaration.missing_receipt_reason).squish}" }],
                    [document.cursor, REASON_MAX_HEIGHT].min)
     end
+  end
+
+  # A PDF receipt that ghostscript can not read (e.g. damaged or encrypted) should not block
+  # the download or the Nextcloud upload; the original file stays available in Amber
+  def render_receipt_image(document)
+    document.image receipt_image_path, fit: [document.bounds.width, document.cursor], position: :center
+  rescue PdfRasterizer::Error
+    document.text 'Bon kon niet worden weergegeven, zie het originele bestand in Amber', size: 14, style: :bold
   end
 
   # The built-in PDF fonts only support Windows-1252, replace anything else (e.g. emoji)

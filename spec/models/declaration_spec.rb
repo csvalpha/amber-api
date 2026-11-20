@@ -49,6 +49,12 @@ RSpec.describe Declaration do
       it { expect(declaration).not_to be_valid }
     end
 
+    context 'when the reason for the missing receipt is too long' do
+      subject(:declaration) { build(:declaration, missing_receipt_reason: 'a' * 1001) }
+
+      it { expect(declaration).not_to be_valid }
+    end
+
     context 'when rejected without a reason' do
       subject(:declaration) { build(:declaration, :rejected, rejection_reason: nil) }
 
