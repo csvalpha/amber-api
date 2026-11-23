@@ -1,13 +1,27 @@
 module V1::Debit
   class CollectionsController < V1::ApplicationController
-    before_action :set_model, only: %i[sepa]
+    before_action :set_model, only: %i[sepa finalize]
+
+    # Settles the pending declaration credits on this collection and locks it,
+    # so the downloaded SEPA file always matches the transactions in Amber
+    def finalize
+      authorize @model
+      return render json: error_response, status: :unprocessable_entity unless @model.finalize!
+
+      head :no_content
+    end
 
     def sepa
       authorize Debit::Collection
       return head :not_found unless @model.transactions.any?
 
+      unless @model.finalized?
+        @model.errors.add(:finalized_at, 'incasso moet eerst definitief gemaakt worden')
+        return render json: error_response, status: :unprocessable_entity
+      end
+
       sepa_files = @model.to_sepa
-      return render json: error_response, status: :unprocessable_entity if sepa_files.empty?
+      return render json: error_response, status: :unprocessable_entity if sepa_files.blank?
 
       send_compressed_sepa_files(sepa_files)
     end

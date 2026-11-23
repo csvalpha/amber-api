@@ -53,6 +53,7 @@ all_permissions_map = {
   'debit/collection' => %i[create read update destroy],
   'debit/transaction' => %i[create read update destroy],
   'debit/mandate' => %i[create read update],
+  'declaration' => %i[create read update destroy],
   'vacancy' => %i[create read update destroy]
 }
 

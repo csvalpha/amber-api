@@ -10,6 +10,7 @@ end
 require 'active_support'
 require 'pundit/rspec'
 require 'vcr'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
