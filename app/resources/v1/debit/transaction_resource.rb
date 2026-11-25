@@ -4,8 +4,10 @@ class V1::Debit::TransactionResource < V1::ApplicationResource
 
   has_one :collection
   has_one :user, always_include_linkage_data: true
+  has_one :declaration
 
   filter :collection
+  filter :declaration
 
   def self.creatable_fields(_context)
     %i[user collection description amount]

@@ -26,6 +26,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :read_threads, class_name: 'Forum::ReadThread', dependent: :delete_all
   has_many :mandates, class_name: 'Debit::Mandate', dependent: :delete_all
   has_many :transactions, class_name: 'Debit::Transaction', dependent: :delete_all
+  has_many :declarations, dependent: :destroy
   has_many :group_mail_aliases, through: :active_groups, source: :mail_aliases
   has_one :alumni_contribution, dependent: :destroy
 
