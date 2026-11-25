@@ -1,6 +1,7 @@
 class V1::ApplicationResource < JSONAPI::Resource
   include MarkdownHelper
   include JSONAPI::Authorization::PunditScopedResource
+
   abstract
 
   attributes :created_at, :updated_at

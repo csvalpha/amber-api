@@ -23,6 +23,7 @@
 
 # Ignore uploads
 /public/uploads/*
+/private_uploads
 
 # Intellij Idea folder
 /.idea/*

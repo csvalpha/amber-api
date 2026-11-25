@@ -1,5 +1,5 @@
 
-FROM ruby:3.4.5-alpine@sha256:e284f39a2103a564dca9771a81bfecb455b04cd3be4149b133ed7e508ef1b65f
+FROM ruby:3.4.7-alpine@sha256:d279decff1a40535597120bf9546b6c01a5d00298b9a87628f28cf0efd07b02c
 
 ARG BUILD_HASH='unknown'
 ENV BUILD_HASH=$BUILD_HASH
@@ -13,6 +13,7 @@ RUN apk add --update \
   file-dev \
   jpeg-dev \
   imagemagick \
+  ghostscript \
   postgresql-dev \
   tzdata \
   libffi-dev \

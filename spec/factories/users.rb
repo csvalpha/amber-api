@@ -37,6 +37,8 @@ FactoryBot.define do
     transient do
       user_permission_list { [] }
       groups { [] }
+      with_alumni_contribution { false }
+      alumni_contribution_attributes { {} }
     end
 
     after :create do |user, evaluator|
@@ -46,6 +48,10 @@ FactoryBot.define do
 
       evaluator.groups.each do |group|
         FactoryBot.create(:membership, group:, user:)
+      end
+
+      if evaluator.with_alumni_contribution
+        FactoryBot.create(:alumni_contribution, user:, **evaluator.alumni_contribution_attributes)
       end
     end
   end

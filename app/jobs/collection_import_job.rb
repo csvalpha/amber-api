@@ -2,6 +2,7 @@ require 'http'
 
 class CollectionImportJob < ApplicationJob
   include SpreadsheetHelper
+
   queue_as :default
 
   def perform(base64_data, collection, job_user)

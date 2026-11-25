@@ -137,3 +137,6 @@ Lint/StructNewOverride:
 
 Naming/InclusiveLanguage:
   Enabled: false
+
+Naming/PredicateMethod:
+  Enabled: false
