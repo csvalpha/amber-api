@@ -50,7 +50,7 @@ gem 'vpim', '~> 24.2', '>= 24.2.20'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.9', '>= 1.9.2'
-  gem 'brakeman', '~> 7.1', '>= 7.1.1', require: false
+  gem 'brakeman', '~> 8.1', '>= 8.1.1', require: false
   gem 'bullet', '~> 8.1'
   gem 'colorize', '~> 1.1'
   gem 'consistency_fail'
