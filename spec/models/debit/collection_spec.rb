@@ -132,4 +132,193 @@ RSpec.describe Debit::Collection do
       end
     end
   end
+
+  describe '.current' do
+    let!(:latest) { create(:collection, date: 2.months.from_now) }
+
+    before do
+      create(:collection, date: 1.month.from_now)
+      create(:collection, date: 3.months.from_now, finalized_at: Time.zone.now)
+    end
+
+    it { expect(described_class.current).to eq latest }
+    it { expect(latest).to be_current }
+    it { expect(described_class.where.not(id: latest.id).none?(&:current?)).to be true }
+  end
+
+  describe 'declaration settlement' do
+    let(:collection) { create(:collection) }
+    let(:user) { create(:user) }
+    let!(:declaration) { create(:declaration, :approved, user:, amount: 30) }
+
+    before { create(:mandate, user:) }
+
+    context 'when the user owes more than the declaration' do
+      before { create(:transaction, collection:, user:, amount: 50) }
+
+      it { expect(collection.pending_declaration_credits).to eq [{ declaration:, amount: 30 }] }
+
+      it 'settles the declaration completely' do
+        collection.finalize!
+        expect(declaration.reload).to be_paid
+      end
+
+      it { expect { collection.finalize! }.to(change(collection, :total_transaction_amount).from(50).to(20)) }
+      it { expect { collection.finalize! }.to(change { collection.reload.finalized_at }.from(nil)) }
+    end
+
+    context 'when the user owes less than the declaration' do
+      before do
+        create(:transaction, collection:, user:, amount: 10)
+        create(:transaction, collection:, user: create(:mandate).user, amount: 5)
+        collection.finalize!
+      end
+
+      it { expect(declaration.reload).to be_partially_paid }
+      it { expect(declaration.open_amount).to eq 20 }
+      it { expect(collection.transactions.where(user:).sum(:amount)).to eq 0 }
+      it { expect(collection.reload).to be_finalized }
+
+      it 'carries the rest over to the next collection' do
+        next_collection = create(:collection)
+        create(:transaction, collection: next_collection, user:, amount: 40)
+        expect(next_collection.pending_declaration_credits).to eq [{ declaration:, amount: 20 }]
+      end
+    end
+
+    context 'when the user has multiple declarations' do
+      let!(:older) { create(:declaration, :approved, user:, amount: 15, approved_at: 2.days.ago) }
+
+      before do
+        declaration
+        create(:transaction, collection:, user:, amount: 20)
+      end
+
+      it 'settles the oldest declaration first' do
+        expect(collection.pending_declaration_credits).to eq [{ declaration: older, amount: 15 },
+                                                              { declaration:, amount: 5 }]
+      end
+    end
+
+    context 'when the declaration is paid manually after the credits were calculated' do
+      before do
+        create(:transaction, collection:, user:, amount: 50)
+        credits = collection.pending_declaration_credits
+        allow(collection).to receive(:pending_declaration_credits).and_return(credits)
+        declaration.mark_manually_paid!(create(:user))
+        collection.finalize!
+      end
+
+      it { expect(collection.transactions.where.not(declaration_id: nil)).to be_empty }
+      it { expect(declaration.reload.paid_amount).to eq 30 }
+      it { expect(collection.reload).to be_finalized }
+    end
+
+    context 'when the declaration is excluded after the credits were calculated' do
+      before do
+        create(:transaction, collection:, user:, amount: 50)
+        credits = collection.pending_declaration_credits
+        allow(collection).to receive(:pending_declaration_credits).and_return(credits)
+        declaration.update!(include_in_next_collection: false)
+        collection.finalize!
+      end
+
+      it { expect(collection.transactions.where.not(declaration_id: nil)).to be_empty }
+      it { expect(declaration.reload).to be_approved }
+      it { expect(collection.reload).to be_finalized }
+    end
+
+    context 'when the declaration is not included in the next collection' do
+      before do
+        declaration.update!(include_in_next_collection: false)
+        create(:transaction, collection:, user:, amount: 50)
+      end
+
+      it { expect(collection.pending_declaration_credits).to be_empty }
+    end
+
+    context 'when the user has nothing to pay on this collection' do
+      before do
+        declaration
+        create(:transaction, collection:, amount: 50, user: create(:mandate).user)
+      end
+
+      it { expect(collection.pending_declaration_credits).to be_empty }
+    end
+
+    context 'when the collection is not the current one' do
+      before do
+        create(:transaction, collection:, user:, amount: 50)
+        declaration
+        create(:collection, date: collection.date + 1.day)
+      end
+
+      it { expect(collection.pending_declaration_credits).to be_empty }
+    end
+
+    context 'when the sepa cannot be generated' do
+      before do
+        declaration
+        create(:transaction, collection:, user:, amount: 50)
+        create(:transaction, collection:, amount: 10) # user without mandate
+      end
+
+      it { expect(collection.finalize!).to be false }
+      it { expect { collection.finalize! }.not_to(change { collection.transactions.count }) }
+
+      it 'rolls back the settlement' do
+        collection.finalize!
+        expect(declaration.reload).to be_approved
+      end
+
+      it 'keeps the collection open' do
+        collection.finalize!
+        expect(collection.reload).not_to be_finalized
+      end
+
+      context 'when called inside an outer transaction' do
+        before { ActiveRecord::Base.transaction { collection.finalize! } }
+
+        it { expect(collection.transactions.where.not(declaration_id: nil)).to be_empty }
+        it { expect(declaration.reload).to be_approved }
+        it { expect(collection.reload).not_to be_finalized }
+      end
+    end
+
+    context 'when the collection date has passed' do
+      let(:collection) { create(:collection, date: 1.day.ago) }
+
+      before { create(:transaction, collection:, user:, amount: 50) }
+
+      it { expect(collection.finalize!).to be false }
+    end
+
+    context 'when the user ends at exactly zero' do
+      before do
+        create(:transaction, collection:, user:, amount: 30)
+        create(:transaction, collection:, user: create(:mandate).user, amount: 10)
+        collection.finalize!
+      end
+
+      it { expect(declaration.reload).to be_paid }
+      it { expect(collection.to_sepa.first.transactions.size).to eq 1 }
+    end
+
+    context 'when only users at zero remain' do
+      before { create(:transaction, collection:, user:, amount: 30) }
+
+      it { expect(collection.finalize!).to be false }
+
+      it do
+        collection.finalize!
+        expect(collection.errors[:sepa]).to include 'bevat geen transacties'
+      end
+    end
+
+    context 'when already finalized' do
+      let(:collection) { create(:collection, finalized_at: Time.zone.now) }
+
+      it { expect(collection.finalize!).to be false }
+    end
+  end
 end

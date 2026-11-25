@@ -20,12 +20,13 @@ gem 'improvmx', '~> 0.2.1'
 gem 'isbn_validation', '~> 1.2', '>= 1.2.2'
 gem 'jsonapi-authorization', '~> 3.0', '>= 3.0.2'
 gem 'jsonapi-resources', '~> 0.9.1'
-gem 'message_bus', '~> 4.4', '>= 4.4.1'
+gem 'message_bus', '~> 5.1'
 gem 'mini_magick', '~> 5.3'
 gem 'paper_trail', '~> 16.0'
 gem 'paranoia', '~> 3.0', '>= 3.0.1'
 gem 'pg', '~> 1.6', '>= 1.6.1'
 gem 'phonelib', '~> 0.10', '>= 0.10.11'
+gem 'prawn', '~> 2.5'
 gem 'puma', '~> 6.6', '>= 6.6.1'
 gem 'pundit', '~> 2.5'
 gem 'rack-attack', '~> 6.7'
@@ -33,9 +34,9 @@ gem 'rack-cors', '~> 3.0', require: 'rack/cors'
 gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.10'
 gem 'redis', '~> 5.4', '>= 5.4.1'
-gem 'roo', '~> 2.10', '>= 2.10.1'
+gem 'roo', '~> 3.0'
 gem 'ruby-filemagic', '~> 0.7', '>= 0.7.3'
-gem 'rubyzip', '~> 2.4', '>= 2.4.1'
+gem 'rubyzip', '~> 3.0', '>= 3.4.0'
 gem 'sentry-rails', '~> 5.26'
 gem 'sentry-ruby', '~> 5.26'
 gem 'sentry-sidekiq', '~> 5.26'
@@ -73,6 +74,7 @@ end
 
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
+  gem 'pdf-inspector', '~> 1.3', require: 'pdf/inspector'
   gem 'rspec-rails', '~> 8.0', '>= 8.0.2'
   gem 'rubocop', '~> 1.79', '>= 1.79.2', require: false
   gem 'rubocop-factory_bot', '~> 2.27', '>= 2.27.1', require: false
@@ -80,7 +82,7 @@ group :test do
   gem 'rubocop-rails', '~> 2.33', '>= 2.33.3', require: false
   gem 'rubocop-rspec', '~> 3.6', require: false
   gem 'rubocop-rspec_rails', '~> 2.31', require: false
-  gem 'simplecov', '~> 0.22', require: false
+  gem 'simplecov', '~> 1.1', '>= 1.1.1', require: false
   gem 'simplecov-lcov', '~> 0.8', require: false
   gem 'terminal-notifier-guard', '~> 1.7'
   gem 'timecop', '~> 0.9', '>= 0.9.10'

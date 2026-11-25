@@ -7,5 +7,16 @@ describe V1::Debit::CollectionsController do
     let(:record_permission) { 'debit/collection.destroy' }
 
     it_behaves_like 'a destroyable and permissible model'
+
+    context 'when the collection is finalized' do
+      include_context 'when authenticated' do
+        let(:user) { create(:user, user_permission_list: [record_permission]) }
+      end
+
+      let(:record) { create(:collection, finalized_at: Time.zone.now) }
+      let(:request) { delete(record_url) }
+
+      it_behaves_like '403 Forbidden'
+    end
   end
 end

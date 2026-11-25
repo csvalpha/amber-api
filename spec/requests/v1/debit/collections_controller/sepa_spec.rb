@@ -47,7 +47,17 @@ describe V1::Debit::CollectionsController do
 
         before { create(:mandate, user: transaction.user) }
 
-        it_behaves_like '200 OK'
+        context 'when the collection is not finalized' do
+          it_behaves_like '422 Unprocessable Content'
+        end
+
+        context 'when the collection is finalized' do
+          before { record.update!(finalized_at: Time.zone.now) }
+
+          it_behaves_like '200 OK'
+          it { expect { request }.not_to(change { record.transactions.count }) }
+          it { expect { request }.not_to(change { record.reload.updated_at }) }
+        end
       end
     end
   end
