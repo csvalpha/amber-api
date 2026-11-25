@@ -85,7 +85,7 @@ group :test do
   gem 'terminal-notifier-guard', '~> 1.7'
   gem 'timecop', '~> 0.9', '>= 0.9.10'
   gem 'vcr', '~> 6.3', '>= 6.3.1'
-  gem 'webmock', '~> 3.25', '>= 3.25.1'
+  gem 'webmock', '~> 3.41'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

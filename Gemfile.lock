@@ -558,7 +558,7 @@ GEM
     vcr (6.3.1)
       base64
     vpim (24.2.20)
-    webmock (3.25.1)
+    webmock (3.41.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -657,7 +657,7 @@ DEPENDENCIES
   validates_timeliness (~> 7.1.0)
   vcr (~> 6.3, >= 6.3.1)
   vpim (~> 24.2, >= 24.2.20)
-  webmock (~> 3.25, >= 3.25.1)
+  webmock (~> 3.41)
 
 BUNDLED WITH
    2.6.6
