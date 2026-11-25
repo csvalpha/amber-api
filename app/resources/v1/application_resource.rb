@@ -8,21 +8,21 @@ class V1::ApplicationResource < JSONAPI::Resource
 
   filter :search
 
-  # :nocov:
+  # simplecov:disable
   def self.creatable_fields(_context)
     []
   end
-  # :nocov:
+  # simplecov:enable
 
   def self.updatable_fields(context)
     creatable_fields(context)
   end
 
-  # :nocov:
+  # simplecov:disable
   def self.searchable_fields
     []
   end
-  # :nocov:
+  # simplecov:enable
 
   def self.apply_filter(records, filter, value, options)
     # Monkeypatch for weird bug in filter method
@@ -79,11 +79,11 @@ class V1::ApplicationResource < JSONAPI::Resource
     context.fetch(:user)
   end
 
-  # :nocov:
+  # simplecov:disable
   def current_application
     context.fetch(:application)
   end
-  # :nocov:
+  # simplecov:enable
 
   def self.current_user_or_application(options)
     options.fetch(:context).fetch(:user) || options.fetch(:context).fetch(:application)

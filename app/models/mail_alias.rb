@@ -84,7 +84,7 @@ class MailAlias < ApplicationRecord
     Rails.application.config.x.mail_domains
   end
 
-  # :nocov:
+  # simplecov:disable
   def set_smtp
     return unless saved_change_to_smtp_enabled? || (previously_new_record? && smtp_enabled?)
 
@@ -102,5 +102,5 @@ class MailAlias < ApplicationRecord
 
     MailAliasSyncJob.perform_later(id)
   end
-  # :nocov:
+  # simplecov:enable
 end

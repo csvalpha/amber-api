@@ -1,5 +1,5 @@
 require 'http'
-# :nocov:
+# simplecov:disable
 class MailForwardSendJob < ApplicationJob
   queue_as :mail_handlers
 
@@ -26,4 +26,4 @@ class MailForwardSendJob < ApplicationJob
     "#{mail.from.first} <forwarding@csvalpha.nl>"
   end
 end
-# :nocov:
+# simplecov:enable
