@@ -1,5 +1,5 @@
 class V1::Debit::CollectionResource < V1::ApplicationResource
-  attributes :name, :date, :import_file
+  attributes :name, :date, :import_file, :finalized_at, :pending_declaration_credits
   model_name 'Debit::Collection'
   model_hint model: User, resource: V1::UserResource
 
@@ -8,6 +8,14 @@ class V1::Debit::CollectionResource < V1::ApplicationResource
 
   def fetchable_fields
     super - [:import_file]
+  end
+
+  def pending_declaration_credits
+    @model.pending_declaration_credits.map do |credit|
+      declaration = credit[:declaration]
+      { declaration_id: declaration.id, user_id: declaration.user_id,
+        description: declaration.description, amount: credit[:amount] }
+    end
   end
 
   def self.creatable_fields(_context)

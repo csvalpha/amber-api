@@ -90,5 +90,11 @@ module Amber
     config.x.ict_email = ENV.fetch('ICT_EMAIL', 'ict@csvalpha.nl')
     config.x.privacy_email = ENV.fetch('PRIVACY_EMAIL', 'privacy@csvalpha.nl')
     config.x.mailbeheer_email = ENV.fetch('MAILADMIN_EMAIL', 'mailbeheer@csvalpha.nl')
+
+    # Approved declaration PDFs are uploaded via WebDAV to this Nextcloud account (use an app password)
+    config.x.nextcloud_url = ENV.fetch('NEXTCLOUD_URL', nil)
+    config.x.nextcloud_declarations_user = ENV.fetch('NEXTCLOUD_DECLARATIONS_USER', nil)
+    config.x.nextcloud_declarations_password = ENV.fetch('NEXTCLOUD_DECLARATIONS_APP_PASSWORD', nil)
+    config.x.nextcloud_declarations_path = ENV.fetch('NEXTCLOUD_DECLARATIONS_PATH', 'Declaraties')
   end
 end

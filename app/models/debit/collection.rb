@@ -1,6 +1,8 @@
 module Debit
   class Collection < ApplicationRecord
     require 'csv'
+    include DeclarationSettlement
+
     attr_accessor(:import_file)
 
     has_paper_trail

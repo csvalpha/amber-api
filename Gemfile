@@ -13,29 +13,32 @@ gem 'doorkeeper', '~> 5.8', '>= 5.8.2'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.8'
 gem 'exifr', '~> 1.4', '>= 1.4.1'
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
-gem 'http', '~> 5.3', '>= 5.3.1'
+gem 'http', '~> 6.0', '>= 6.0.4'
 gem 'iban-tools', '~> 1.2.1'
 gem 'icalendar', '~> 2.12', '>= 2.12.1'
 gem 'improvmx', '~> 0.2.1'
 gem 'isbn_validation', '~> 1.2', '>= 1.2.2'
 gem 'jsonapi-authorization', '~> 3.0', '>= 3.0.2'
 gem 'jsonapi-resources', '~> 0.9.1'
-gem 'message_bus', '~> 4.4', '>= 4.4.1'
+gem 'message_bus', '~> 5.1'
 gem 'mini_magick', '~> 5.3', '>= 5.3.1'
 gem 'paper_trail', '~> 16.0'
 gem 'paranoia', '~> 3.1'
 gem 'pg', '~> 1.6', '>= 1.6.2'
 gem 'phonelib', '~> 0.10', '>= 0.10.14'
-gem 'puma', '~> 6.6', '>= 6.6.1'
+gem 'prawn', '~> 2.5'
+gem 'puma', '~> 7.0', '>= 7.2.1'
 gem 'pundit', '~> 2.5', '>= 2.5.2'
+# jsonapi-resources is not compatible with rack 3.2 (deprecated :unprocessable_entity status)
+gem 'rack', '< 3.2'
 gem 'rack-attack', '~> 6.8'
 gem 'rack-cors', '~> 3.0', require: 'rack/cors'
-gem 'rails', '~> 7.2.3'
+gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.10'
 gem 'redis', '~> 5.4', '>= 5.4.1'
-gem 'roo', '~> 2.10', '>= 2.10.1'
+gem 'roo', '~> 4.0'
 gem 'ruby-filemagic', '~> 0.7', '>= 0.7.3'
-gem 'rubyzip', '~> 2.4', '>= 2.4.1'
+gem 'rubyzip', '~> 3.0', '>= 3.4.0'
 gem 'sentry-rails', '~> 5.28', '>= 5.28.1'
 gem 'sentry-ruby', '~> 5.28', '>= 5.28.1'
 gem 'sentry-sidekiq', '~> 5.28', '>= 5.28.1'
@@ -57,13 +60,13 @@ group :development, :test do
   gem 'fuubar', '~> 2.5', '>= 2.5.1'
   gem 'pry-byebug', '~> 3.11', require: false
   gem 'pry-rails', '~> 0.3', '>= 0.3.11'
-  gem 'rack-mini-profiler', '~> 3.3', '>= 3.3.1', require: false
+  gem 'rack-mini-profiler', '~> 5.0', require: false
   gem 'rb-readline', '~> 0.5', '>= 0.5.5', require: false
 end
 
 group :development do
   gem 'better_errors', '~> 2.10', '>= 2.10.1'
-  gem 'binding_of_caller', '~> 1.0', '>= 1.0.1'
+  gem 'binding_of_caller', '~> 2.0'
   gem 'listen', '~> 3.9'
   gem 'mina', '~> 1.2', '>= 1.2.5'
   gem 'spring', '~> 4.4'
@@ -73,6 +76,7 @@ end
 
 group :test do
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3', require: false
+  gem 'pdf-inspector', '~> 1.3', require: 'pdf/inspector'
   gem 'rspec-rails', '~> 8.0', '>= 8.0.2'
   gem 'rubocop', '~> 1.81', '>= 1.81.7', require: false
   gem 'rubocop-factory_bot', '~> 2.28', require: false
@@ -80,12 +84,12 @@ group :test do
   gem 'rubocop-rails', '~> 2.34', '>= 2.34.1', require: false
   gem 'rubocop-rspec', '~> 3.8', require: false
   gem 'rubocop-rspec_rails', '~> 2.32', require: false
-  gem 'simplecov', '~> 0.22', require: false
+  gem 'simplecov', '~> 1.1', '>= 1.1.1', require: false
   gem 'simplecov-lcov', '~> 0.9', require: false
   gem 'terminal-notifier-guard', '~> 1.7'
   gem 'timecop', '~> 0.9', '>= 0.9.10'
   gem 'vcr', '~> 6.3', '>= 6.3.1'
-  gem 'webmock', '~> 3.26', '>= 3.26.1'
+  gem 'webmock', '~> 3.41'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
