@@ -26,9 +26,9 @@ class SmtpJob < ApplicationJob
     MailSmtpMailer.disabled_email(mail_alias).deliver_later
   end
 
-  # :nocov:
+  # simplecov:disable
   def client
     @client ||= Improvmx::Client.new
   end
-  # :nocov:
+  # simplecov:enable
 end

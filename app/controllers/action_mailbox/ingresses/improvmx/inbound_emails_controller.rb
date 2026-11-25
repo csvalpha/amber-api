@@ -1,6 +1,6 @@
 # Will try to add this to Rails itself, then we need to test it in minitest.
 # Do not like to write it in Rspec now and covert it afterwards
-# :nocov:
+# simplecov:disable
 module ActionMailbox::Ingresses::Improvmx # rubocop:disable Style/ClassAndModuleChildren
   class InboundEmailsController < ActionMailbox::BaseController
     before_action :authenticate_by_password
@@ -18,4 +18,4 @@ module ActionMailbox::Ingresses::Improvmx # rubocop:disable Style/ClassAndModule
     end
   end
 end
-# :nocov:
+# simplecov:enable

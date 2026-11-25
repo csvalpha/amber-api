@@ -99,14 +99,17 @@ describe V1::UsersController do
         let(:user) { record }
       end
 
-      authenticated_attributes = %w[
-        email birthday address postcode phone_number study
-        food_preferences vegetarian start_study ical_secret_key
-        city picture_publication_preference info_in_almanak
-        almanak_subscription_preference digtus_subscription_preference
-        emergency_contact emergency_number ifes_data_sharing_preference
-        user_details_sharing_preference trailer_drivers_license sidekiq_access
-      ]
+      let(:authenticated_attributes) do
+        %w[
+          email birthday address postcode phone_number study
+          food_preferences vegetarian start_study ical_secret_key
+          city picture_publication_preference info_in_almanak
+          almanak_subscription_preference digtus_subscription_preference
+          emergency_contact emergency_number ifes_data_sharing_preference
+          user_details_sharing_preference trailer_drivers_license sidekiq_access
+        ]
+      end
+
       it_behaves_like '200 OK'
       it {
         expect(json['data']['attributes'].keys).to include(*authenticated_attributes)

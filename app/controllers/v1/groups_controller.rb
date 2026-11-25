@@ -19,11 +19,11 @@ class V1::GroupsController < V1::ApplicationController
   def send_export_notifications(description)
     return unless Rails.env.production? || Rails.env.staging?
 
-    # :nocov:
+    # simplecov:disable
     UserExportMailerJob.perform_later(
       current_user, @model, permitted_serializable_user_attributes.join(', '), description
     )
-    # :nocov:
+    # simplecov:enable
   end
 
   def permitted_serializable_user_attributes

@@ -218,12 +218,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.ical_secret_key = SecureRandom.hex(32)
   end
 
-  # :nocov:
+  # simplecov:disable
   def sync_mail_aliases
     return unless Rails.env.production? || Rails.env.staging?
 
     MailAliasSyncJob.perform_later(mail_aliases.ids) if mail_aliases.any?
     MailAliasSyncJob.perform_later(group_mail_aliases.ids) if group_mail_aliases.any?
   end
-  # :nocov:
+  # simplecov:enable
 end
