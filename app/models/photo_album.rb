@@ -26,7 +26,7 @@ class PhotoAlbum < ApplicationRecord
   def to_zip
     temp_file = Tempfile.new('test.zip')
 
-    Zip::File.open(temp_file.path, Zip::File::CREATE) do |file|
+    Zip::File.open(temp_file.path, create: true) do |file|
       photos.each do |photo|
         file.add("#{photo.id}.#{photo.image.file.extension}", photo.image.path)
       end
