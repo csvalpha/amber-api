@@ -18,11 +18,9 @@ class PhotoAlbum < ApplicationRecord
                                     .left_joins(photos: :tags)
                                     .group('photo_albums.id')
                                     .having(
-                                      <<~SQL.squish
-                                        (
-                                          COALESCE(COUNT(DISTINCT photo_tags.photo_id), 0) * 1.0 / NULLIF(COUNT(DISTINCT photos.id), 0)
-                                        ) < #{tag_percentage_threshold}
-                                      SQL
+                                      'COALESCE(COUNT(DISTINCT photo_tags.photo_id), 0) * 1.0 / ' \
+                                      'NULLIF(COUNT(DISTINCT photos.id), 0) < ?',
+                                      tag_percentage_threshold
                                     )
                                     .select('photo_albums.id')
     where(id: qualifying_album_ids_subquery)
