@@ -29,6 +29,8 @@ gem 'phonelib', '~> 0.10', '>= 0.10.11'
 gem 'prawn', '~> 2.5'
 gem 'puma', '~> 6.6', '>= 6.6.1'
 gem 'pundit', '~> 2.5'
+# jsonapi-resources is not compatible with rack 3.2 (deprecated :unprocessable_entity status)
+gem 'rack', '< 3.2'
 gem 'rack-attack', '~> 6.7'
 gem 'rack-cors', '~> 3.0', require: 'rack/cors'
 gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
@@ -58,7 +60,7 @@ group :development, :test do
   gem 'fuubar', '~> 2.5', '>= 2.5.1'
   gem 'pry-byebug', '~> 3.11', require: false
   gem 'pry-rails', '~> 0.3', '>= 0.3.11'
-  gem 'rack-mini-profiler', '~> 3.3', '>= 3.3.1', require: false
+  gem 'rack-mini-profiler', '~> 5.0', require: false
   gem 'rb-readline', '~> 0.5', '>= 0.5.5', require: false
 end
 
