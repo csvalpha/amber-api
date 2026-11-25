@@ -13,7 +13,7 @@ gem 'doorkeeper', '~> 5.8', '>= 5.8.2'
 gem 'doorkeeper-i18n', '~> 5.2', '>= 5.2.7'
 gem 'exifr', '~> 1.4', '>= 1.4.1'
 gem 'friendly_id', '~> 5.5', '>= 5.5.1'
-gem 'http', '~> 5.3', '>= 5.3.1'
+gem 'http', '~> 6.0', '>= 6.0.4'
 gem 'iban-tools', '~> 1.2.1'
 gem 'icalendar', '~> 2.11', '>= 2.11.2'
 gem 'improvmx', '~> 0.2.1'
@@ -89,7 +89,7 @@ group :test do
   gem 'terminal-notifier-guard', '~> 1.7'
   gem 'timecop', '~> 0.9', '>= 0.9.10'
   gem 'vcr', '~> 6.3', '>= 6.3.1'
-  gem 'webmock', '~> 3.25', '>= 3.25.1'
+  gem 'webmock', '~> 3.41'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
