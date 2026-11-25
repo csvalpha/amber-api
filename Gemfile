@@ -27,7 +27,7 @@ gem 'paranoia', '~> 3.0', '>= 3.0.1'
 gem 'pg', '~> 1.6', '>= 1.6.1'
 gem 'phonelib', '~> 0.10', '>= 0.10.11'
 gem 'prawn', '~> 2.5'
-gem 'puma', '~> 6.6', '>= 6.6.1'
+gem 'puma', '~> 7.0', '>= 7.2.1'
 gem 'pundit', '~> 2.5'
 # jsonapi-resources is not compatible with rack 3.2 (deprecated :unprocessable_entity status)
 gem 'rack', '< 3.2'
