@@ -4,7 +4,7 @@ require 'simplecov-lcov'
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start 'rails' do
   minimum_coverage 95
-  minimum_coverage_by_file 95
+  coverage(:line) { minimum_per_file 95 }
 end
 
 require 'active_support'
