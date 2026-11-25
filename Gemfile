@@ -28,6 +28,8 @@ gem 'pg', '~> 1.6', '>= 1.6.1'
 gem 'phonelib', '~> 0.10', '>= 0.10.11'
 gem 'puma', '~> 6.6', '>= 6.6.1'
 gem 'pundit', '~> 2.5'
+# jsonapi-resources is not compatible with rack 3.2 (deprecated :unprocessable_entity status)
+gem 'rack', '< 3.2'
 gem 'rack-attack', '~> 6.7'
 gem 'rack-cors', '~> 3.0', require: 'rack/cors'
 gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
