@@ -347,12 +347,6 @@ GEM
       pry (>= 0.13, < 0.16)
     pry-rails (0.3.11)
       pry (>= 0.13.0)
-    psych (5.5.0)
-      date
-      stringio
-    psych (5.5.0-java)
-      date
-      jar-dependencies (>= 0.1.7)
     public_suffix (6.0.2)
     puma (7.2.1)
       nio4r (~> 2.0)
@@ -418,13 +412,23 @@ GEM
     rb-inotify (0.11.1)
       ffi (~> 1.0)
     rb-readline (0.5.5)
-    rdoc (6.17.0)
+    rbs (4.2.0)
+      logger
+      prism (>= 1.6.0)
+      tsort
+    rbs (4.2.0-java)
+      jar-dependencies (>= 0.1.7)
+      logger
+      prism (>= 1.6.0)
+      tsort
+    rdoc (8.1.0)
       erb
-      psych (>= 4.0.0)
+      prism (>= 1.6.0)
+      rbs (>= 4.0.0)
       tsort
     redis (5.4.1)
       redis-client (>= 0.22.0)
-    redis-client (0.24.0)
+    redis-client (0.31.0)
       connection_pool
     regexp_parser (2.13.4)
     reline (0.7.0)
@@ -530,26 +534,27 @@ GEM
     rufus-scheduler (3.9.2)
       fugit (~> 1.1, >= 1.11.1)
     securerandom (0.4.1)
-    sentry-rails (5.28.1)
-      railties (>= 5.0)
-      sentry-ruby (~> 5.28.1)
-    sentry-ruby (5.28.1)
+    sentry-rails (7.3.0)
+      railties (>= 5.2.0)
+      sentry-ruby (~> 7.3.0)
+    sentry-ruby (7.3.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sentry-sidekiq (5.28.1)
-      sentry-ruby (~> 5.28.1)
-      sidekiq (>= 3.0)
+      logger
+    sentry-sidekiq (7.3.0)
+      sentry-ruby (~> 7.3.0)
+      sidekiq (>= 5.0)
     sepa_king (0.14.0)
       activemodel (>= 4.2)
       iban-tools
       nokogiri
     shellany (0.0.1)
-    sidekiq (7.3.9)
+    sidekiq (7.3.10)
       base64
-      connection_pool (>= 2.3.0)
+      connection_pool (>= 2.3.0, < 3)
       logger
-      rack (>= 2.2.4)
-      redis-client (>= 0.22.2)
+      rack (>= 2.2.4, < 3.3)
+      redis-client (>= 0.23.0, < 1)
     sidekiq-scheduler (6.0.1)
       rufus-scheduler (~> 3.2)
       sidekiq (>= 7.3, < 9)
@@ -564,7 +569,6 @@ GEM
       listen (>= 2.7, < 4.0)
       spring (>= 4)
     ssrf_filter (1.2.0)
-    stringio (3.2.0)
     terminal-notifier-guard (1.7.0)
     thor (1.5.0)
     timecop (0.9.10)
@@ -674,9 +678,9 @@ DEPENDENCIES
   rubocop-rspec_rails (~> 2.32)
   ruby-filemagic (~> 0.7, >= 0.7.3)
   rubyzip (~> 3.0, >= 3.4.0)
-  sentry-rails (~> 5.28, >= 5.28.1)
-  sentry-ruby (~> 5.28, >= 5.28.1)
-  sentry-sidekiq (~> 5.28, >= 5.28.1)
+  sentry-rails (~> 7.3)
+  sentry-ruby (~> 7.3)
+  sentry-sidekiq (~> 7.3)
   sepa_king (~> 0.14)
   sidekiq (~> 7.3, >= 7.3.9)
   sidekiq-scheduler (~> 6.0, >= 6.0.1)
