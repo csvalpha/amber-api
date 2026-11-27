@@ -1,11 +1,15 @@
 class PhotoPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      if user_can_read?
-        scope
-      else
-        scope.publicly_visible
-      end
+      scope.where(photo_album: albums)
+    end
+
+    private
+
+    def albums
+      return PhotoAlbum.publicly_visible unless user_can_read?
+
+      PhotoAlbumPolicy::Scope.new(user, PhotoAlbum).readable_albums
     end
   end
 

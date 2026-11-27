@@ -7,6 +7,8 @@ describe V1::PhotoCommentsController do
     let(:record_permission) { 'photo_comment.read' }
     let(:request) { get(record_url) }
 
-    it_behaves_like 'an indexable model'
+    it_behaves_like 'an indexable model' do
+      include_context 'when member'
+    end
   end
 end

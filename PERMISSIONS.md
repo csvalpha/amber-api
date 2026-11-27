@@ -20,4 +20,10 @@ When the user has the read permission it is able to get all groups (as always). 
 
 ### Activity/Article/Photo
 #### Unauthenticated and without permission
-When not logged in or when without permission it is possible to get activities, articles and photos which have the publicly visible property to true.
+When not logged in or when without permission it is possible to get activities and articles which have the publicly visible property set to true, and photo albums which have the visibility property set to public. Of a public photo album only the overview of its photos (`/photo_albums/:id/photos`) is available; single photos, the photos index and photo comments require logging in.
+
+### Photo album visibility
+A photo album has a visibility of `public`, `alumni` or `members`. Photos and photo comments follow the visibility of their album. A user with the read permission can see:
+- all albums, when the user has the update permission on photo albums or is a current member of the 'Leden' group
+- `public` and `alumni` albums, and `members` albums dated from 18 months before the start until 6 months after the end of their 'Leden' membership, when the user is a former member (albums without a date use their creation date)
+- only `public` albums, when the user has never been a member of the 'Leden' group

@@ -1,4 +1,4 @@
-﻿require 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe PhotoAlbum do
   subject(:photo_album) { build_stubbed(:photo_album) }
@@ -18,8 +18,14 @@ RSpec.describe PhotoAlbum do
       it { expect(photo_album.valid?).to be false }
     end
 
-    context 'when without public visibility' do
-      subject(:photo_album) { build_stubbed(:photo_album, publicly_visible: nil) }
+    context 'when without visibility' do
+      subject(:photo_album) { build_stubbed(:photo_album, visibility: nil) }
+
+      it { expect(photo_album).not_to be_valid }
+    end
+
+    context 'when with an unknown visibility' do
+      subject(:photo_album) { build_stubbed(:photo_album, visibility: 'everyone') }
 
       it { expect(photo_album).not_to be_valid }
     end
@@ -31,13 +37,29 @@ RSpec.describe PhotoAlbum do
 
   describe '#publicly_visible' do
     before do
-      create(:photo_album, publicly_visible: true)
-      create(:photo_album, publicly_visible: true)
-      create(:photo_album, publicly_visible: false)
+      create(:photo_album, :public)
+      create(:photo_album, :alumni)
+      create(:photo_album)
     end
 
-    it { expect(described_class.publicly_visible.count).to be 2 }
-    it { expect(described_class.count - described_class.publicly_visible.count).to be 1 }
+    it { expect(described_class.publicly_visible.count).to be 1 }
+    it { expect(described_class.publicly_visible.first.visibility).to eq 'public' }
+  end
+
+  describe '#visible_in_period' do
+    subject(:albums) { described_class.visible_in_period(3.years.ago.to_date, 1.year.ago.to_date) }
+
+    let!(:public_album) { create(:photo_album, :public, date: 10.years.ago) }
+    let!(:alumni_album) { create(:photo_album, :alumni, date: 10.years.ago) }
+    let!(:album_in_period) { create(:photo_album, date: 2.years.ago) }
+    let!(:album_before_period) { create(:photo_album, date: 4.years.ago) }
+    let!(:album_after_period) { create(:photo_album, date: 1.month.ago) }
+    let!(:undated_album_in_period) { create(:photo_album, date: nil, created_at: 2.years.ago) }
+    let!(:undated_album_after_period) { create(:photo_album, date: nil) }
+
+    it { expect(albums).to include(public_album, alumni_album) }
+    it { expect(albums).to include(album_in_period, undated_album_in_period) }
+    it { expect(albums).not_to include(album_before_period, album_after_period, undated_album_after_period) }
   end
 
   describe '#without_photo_tags' do

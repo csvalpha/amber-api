@@ -5,9 +5,4 @@ class PhotoComment < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   validates :content, presence: true, length: { minimum: 1, maximum: 500 }
-
-  scope :publicly_visible, lambda {
-    joins(photo: :photo_album)
-      .where(photo_albums: { publicly_visible: true })
-  }
 end

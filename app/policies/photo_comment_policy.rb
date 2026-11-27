@@ -1,11 +1,10 @@
 class PhotoCommentPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
+    # Photo comments are never public, readers see the comments of the photo albums they can see
     def resolve
-      if user_can_read?
-        scope
-      else
-        scope.publicly_visible
-      end
+      return scope.none unless user_can_read?
+
+      scope.where(photo: Photo.where(photo_album: PhotoAlbumPolicy::Scope.new(user, PhotoAlbum).readable_albums))
     end
   end
 
