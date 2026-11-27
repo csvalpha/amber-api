@@ -30,7 +30,7 @@ gem 'prawn', '~> 2.5'
 gem 'puma', '~> 7.0', '>= 7.2.1'
 gem 'pundit', '~> 2.5', '>= 2.5.2'
 # jsonapi-resources is not compatible with rack 3.1 (deprecated :unprocessable_entity status)
-gem 'rack', '< 3.1'
+gem 'rack', '< 3.2'
 gem 'rack-attack', '~> 6.8'
 gem 'rack-cors', '~> 3.0', require: 'rack/cors'
 gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
