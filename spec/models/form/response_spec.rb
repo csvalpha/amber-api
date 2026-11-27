@@ -232,6 +232,20 @@ RSpec.describe Form::Response do
     end
   end
 
+  describe '#really_destroy!' do
+    describe 'when soft-deleted and form has expired since' do
+      subject(:response) { create(:response) }
+
+      before do
+        response.destroy
+        response.form.update!(respond_from: 2.weeks.ago, respond_until: 1.week.ago)
+        response.really_destroy!
+      end
+
+      it { expect(described_class.with_deleted.exists?(response.id)).to be false }
+    end
+  end
+
   describe '#save' do
     it_behaves_like 'a model with dependent destroy relationship' do
       let(:relation) do
