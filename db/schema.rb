@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_14_221852) do
+ActiveRecord::Schema[7.2].define(version: 2026_11_18_130000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +71,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_221852) do
     t.index ["form_id"], name: "index_activities_on_form_id", unique: true
   end
 
+  create_table "alumni_contributions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "sponsoring_amount", precision: 10, scale: 2, default: "0.0"
+    t.boolean "help_digtus", default: false, null: false
+    t.boolean "help_kring", default: false, null: false
+    t.boolean "help_vereniging", default: false, null: false
+    t.text "help_anders"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_alumni_contributions_on_user_id", unique: true
+  end
+
   create_table "article_comments", id: :serial, force: :cascade do |t|
     t.text "content"
     t.integer "article_id"
@@ -129,6 +142,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_221852) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.datetime "finalized_at"
     t.index ["author_id"], name: "index_debit_collections_on_author_id"
   end
 
@@ -152,8 +166,36 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_221852) do
     t.datetime "deleted_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "declaration_id"
     t.index ["collection_id"], name: "index_debit_transactions_on_collection_id"
+    t.index ["declaration_id"], name: "index_debit_transactions_on_declaration_id"
     t.index ["user_id"], name: "index_debit_transactions_on_user_id"
+  end
+
+  create_table "declarations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "amount", precision: 8, scale: 2, null: false
+    t.string "description", null: false
+    t.date "purchase_date", null: false
+    t.string "receipt"
+    t.text "missing_receipt_reason"
+    t.string "status", default: "pending", null: false
+    t.text "rejection_reason"
+    t.boolean "include_in_next_collection", default: false, null: false
+    t.bigint "approved_by_id"
+    t.datetime "approved_at"
+    t.string "pdf_path"
+    t.datetime "pdf_uploaded_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "manually_paid_amount", precision: 8, scale: 2, default: "0.0", null: false
+    t.datetime "manually_paid_at"
+    t.bigint "manually_paid_by_id"
+    t.index ["approved_by_id"], name: "index_declarations_on_approved_by_id"
+    t.index ["manually_paid_by_id"], name: "index_declarations_on_manually_paid_by_id"
+    t.index ["status"], name: "index_declarations_on_status"
+    t.index ["user_id"], name: "index_declarations_on_user_id"
   end
 
   create_table "form_closed_question_answers", id: :serial, force: :cascade do |t|
@@ -411,9 +453,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_221852) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "deleted_at", precision: nil
+    t.boolean "publicly_visible", default: false, null: false
     t.bigint "author_id"
     t.bigint "group_id"
-    t.string "visibility", default: "members"
     t.index ["author_id"], name: "index_photo_albums_on_author_id"
     t.index ["deleted_at"], name: "index_photo_albums_on_deleted_at"
     t.index ["group_id"], name: "index_photo_albums_on_group_id"
@@ -562,6 +604,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_221852) do
     t.string "nickname"
     t.boolean "trailer_drivers_license", default: false, null: false
     t.boolean "setup_complete", default: false, null: false
+    t.string "ical_categories", default: [], array: true
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["login_enabled"], name: "index_users_on_login_enabled"
@@ -596,10 +639,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_14_221852) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "alumni_contributions", "users"
   add_foreign_key "article_comments", "articles"
   add_foreign_key "article_comments", "users", column: "author_id"
   add_foreign_key "articles", "groups"
   add_foreign_key "board_room_presences", "users"
+  add_foreign_key "debit_transactions", "declarations"
+  add_foreign_key "declarations", "users"
+  add_foreign_key "declarations", "users", column: "approved_by_id", on_delete: :nullify
+  add_foreign_key "declarations", "users", column: "manually_paid_by_id", on_delete: :nullify
   add_foreign_key "form_responses", "users"
   add_foreign_key "forum_posts", "users", column: "author_id"
   add_foreign_key "forum_threads", "users", column: "author_id"

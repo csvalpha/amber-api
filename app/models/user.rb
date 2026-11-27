@@ -26,7 +26,9 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :read_threads, class_name: 'Forum::ReadThread', dependent: :delete_all
   has_many :mandates, class_name: 'Debit::Mandate', dependent: :delete_all
   has_many :transactions, class_name: 'Debit::Transaction', dependent: :delete_all
+  has_many :declarations, dependent: :destroy
   has_many :group_mail_aliases, through: :active_groups, source: :mail_aliases
+  has_one :alumni_contribution, dependent: :destroy
 
   # See https://github.com/doorkeeper-gem/doorkeeper#active-record
   has_many :access_grants, class_name: 'Doorkeeper::AccessGrant',
@@ -216,12 +218,12 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.ical_secret_key = SecureRandom.hex(32)
   end
 
-  # :nocov:
+  # simplecov:disable
   def sync_mail_aliases
     return unless Rails.env.production? || Rails.env.staging?
 
     MailAliasSyncJob.perform_later(mail_aliases.ids) if mail_aliases.any?
     MailAliasSyncJob.perform_later(group_mail_aliases.ids) if group_mail_aliases.any?
   end
-  # :nocov:
+  # simplecov:enable
 end

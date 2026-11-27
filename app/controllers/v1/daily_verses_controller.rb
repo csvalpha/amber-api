@@ -20,9 +20,9 @@ class V1::DailyVersesController < V1::ApplicationController
 
   def parse_verse(response)
     data = response['data'][0]
-    copyright = ActionView::Base.full_sanitizer.sanitize(response['copyrights']['bgt'])
+    copyright = ActionView::Base.full_sanitizer.sanitize(response['copyrights']['nbv21'])
     reference = ActionView::Base.full_sanitizer.sanitize(data['source'])
-    content = ActionView::Base.full_sanitizer.sanitize(data['text']['bgt'])
+    content = ActionView::Base.full_sanitizer.sanitize(data['text']['nbv21'])
     { data: [{ id: 1, type: 'daily_verse', attributes:
       { copyright:, reference:, content: } }] }
   end

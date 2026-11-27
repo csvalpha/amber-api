@@ -1,4 +1,4 @@
-# :nocov:
+# simplecov:disable
 class ModeratedMailbox < ApplicationMailbox
   def process # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     recipients = inbound_email.mail.to

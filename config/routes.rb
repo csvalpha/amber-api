@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         post :generate_alias
       end
     end
+    jsonapi_resources :alumni_contributions
     jsonapi_resources :articles
     jsonapi_resources :article_comments
     jsonapi_resources :board_room_presences
@@ -22,6 +23,16 @@ Rails.application.routes.draw do
     jsonapi_resources :books do
       collection do
         get :isbn_lookup
+      end
+    end
+    jsonapi_resources :declarations do
+      jsonapi_relationships
+      member do
+        post :approve
+        post :reject
+        post :mark_manually_paid
+        get :receipt
+        get :pdf
       end
     end
     jsonapi_resources :groups do
@@ -77,6 +88,7 @@ Rails.application.routes.draw do
         jsonapi_relationships
         member do
           get :sepa
+          post :finalize
         end
       end
       jsonapi_resources :transactions

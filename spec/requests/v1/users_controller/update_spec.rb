@@ -15,18 +15,16 @@ describe V1::UsersController do
         let(:user) { record }
       end
 
-      unrestricted_attributes = %i[email address postcode city phone_number
-                                   food_preferences study start_study vegetarian
-                                   otp_required picture_publication_preference
-                                   info_in_almanak almanak_subscription_preference
-                                   digtus_subscription_preference emergency_contact
-                                   emergency_number ifes_data_sharing_preference
-                                   user_details_sharing_preference trailer_drivers_license
-                                   sidekiq_access]
-      permissible_attributes = %i[first_name last_name_prefix last_name birthday]
-
       it_behaves_like 'a model with conditionally updatable attributes',
-                      unrestricted_attributes, permissible_attributes, :ok do
+                      %i[email address postcode city phone_number
+                         food_preferences study start_study vegetarian
+                         otp_required picture_publication_preference
+                         info_in_almanak almanak_subscription_preference
+                         digtus_subscription_preference emergency_contact
+                         emergency_number ifes_data_sharing_preference
+                         user_details_sharing_preference trailer_drivers_license
+                         sidekiq_access],
+                      %i[first_name last_name_prefix last_name birthday], :ok do
         let(:override_attrs) do
           { last_name_prefix: '_',
             picture_publication_preference: 'always_ask',
