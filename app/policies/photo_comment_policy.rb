@@ -1,15 +1,10 @@
 class PhotoCommentPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
+    # Photo comments are never public, readers see the comments of the photo albums they can see
     def resolve
-      if user_can_read?
-        membership = user.memberships.joins(:group).where(groups: { name: 'Leden' }).first
-        return if membership.nil?
+      return scope.none unless user_can_read?
 
-        scope.alumni_visible(
-          membership.start_date&.advance(months: -18),
-          membership.end_date&.advance(months: 6)
-        )
-      end
+      scope.where(photo: Photo.where(photo_album: PhotoAlbumPolicy::Scope.new(user, PhotoAlbum).readable_albums))
     end
   end
 

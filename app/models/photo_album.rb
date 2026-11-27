@@ -6,19 +6,21 @@ class PhotoAlbum < ApplicationRecord
   belongs_to :author, class_name: 'User'
   belongs_to :group, optional: true
 
-  validates :title, presence: true
-  validates :visibility, inclusion: { in: %w[public alumni members] }
+  # public: everyone, alumni: everyone with read permission,
+  # members: only users who were a member around the date of the album
+  VISIBILITIES = %w[public alumni members].freeze
 
-  scope :publicly_visible, lambda {
-    joins(:photo_album).where(photo_albums: { visibility: 'public' })
+  validates :title, presence: true
+  validates :visibility, inclusion: { in: VISIBILITIES }
+
+  scope :publicly_visible, -> { where(visibility: 'public') }
+
+  scope :visible_in_period, lambda { |from, to|
+    where(visibility: %w[public alumni]).or(
+      where('COALESCE(photo_albums.date, CAST(photo_albums.created_at AS date)) BETWEEN ? AND ?', from, to)
+    )
   }
-  scope :alumni_visible, lambda { |start_date, end_date|
-    joins(:photo_album)
-      .where(photo_albums: { visibility: 'alumni' })
-      .or(photo_albums: { visibility: 'public' })
-      .or(where.not(date: nil).where(date: start_date..end_date))
-      .or(where(date: nil).where(created_at: start_date..end_date))
-  }
+
   scope :without_photo_tags, lambda {
     tag_percentage_threshold = 0.85
     qualifying_album_ids_subquery = unscoped

@@ -13,6 +13,8 @@ class V1::PhotoAlbumsController < V1::ApplicationController
   end
 
   def zip
+    authorize @model, :show?
+
     send_data @model.to_zip
   end
 

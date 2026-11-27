@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_11_18_130000) do
+ActiveRecord::Schema[7.2].define(version: 2026_11_27_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -453,9 +453,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_11_18_130000) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "deleted_at", precision: nil
-    t.boolean "publicly_visible", default: false, null: false
     t.bigint "author_id"
     t.bigint "group_id"
+    t.string "visibility", default: "members", null: false
     t.index ["author_id"], name: "index_photo_albums_on_author_id"
     t.index ["deleted_at"], name: "index_photo_albums_on_deleted_at"
     t.index ["group_id"], name: "index_photo_albums_on_group_id"
