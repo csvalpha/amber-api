@@ -61,5 +61,57 @@ RSpec.describe UserArchiveJob do
       it { expect { job }.to change(PhotoTag, :count).by(-1) }
       it { expect { job }.to change { User.exists?(user.id) }.from(true).to(false) }
     end
+
+    describe 'soft-deleted keep entities are destroyed' do
+      let(:response) { create(:response, user:) }
+      let(:comment) { create(:article_comment, author: user) }
+
+      before do
+        archive_user
+        response.destroy
+        comment.destroy
+      end
+
+      it { expect { job }.to change { User.exists?(user.id) }.from(true).to(false) }
+      it { expect { job }.to change { Form::Response.with_deleted.exists?(response.id) }.from(true).to(false) }
+      it { expect { job }.to change { ArticleComment.with_deleted.exists?(comment.id) }.from(true).to(false) }
+
+      context 'when the form of the response is soft-deleted' do
+        before { response.form.destroy }
+
+        it { expect { job }.to change { Form::Response.with_deleted.exists?(response.id) }.from(true).to(false) }
+      end
+
+      context 'when the form of the response is closed' do
+        before { response.form.update!(respond_from: 2.weeks.ago, respond_until: 1.week.ago) }
+
+        it { expect { job }.to change { Form::Response.with_deleted.exists?(response.id) }.from(true).to(false) }
+      end
+    end
+
+    describe 'soft-deleted other entities are destroyed' do
+      let(:post) { create(:post) }
+
+      before do
+        archive_user
+        [create(:board_room_presence, user:),
+         create(:study_room_presence, user:),
+         create(:mandate, user:),
+         create(:transaction, user:),
+         create(:mail_alias, user:),
+         create(:membership, user:),
+         create(:permissions_users, user:),
+         create(:photo_tag, tagged_user: user),
+         create(:declaration, user:),
+         Forum::ReadThread.create!(user:, thread: post.thread, post:)].each(&:destroy)
+      end
+
+      it { expect { job }.to change { User.exists?(user.id) }.from(true).to(false) }
+
+      [BoardRoomPresence, StudyRoomPresence, Debit::Mandate, Debit::Transaction, MailAlias,
+       Membership, PermissionsUsers, PhotoTag, Declaration, Forum::ReadThread].each do |model|
+        it { expect { job }.to change { model.only_deleted.count }.by(-1) }
+      end
+    end
   end
 end

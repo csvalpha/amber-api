@@ -13,7 +13,7 @@ module Form
     validate :form_allows_responses?
 
     after_create :update_completed_status!
-    before_destroy :destroyable?
+    before_destroy :destroyable?, unless: :deleted?
 
     scope :completed, -> { where(completed: true) }
 

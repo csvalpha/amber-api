@@ -127,6 +127,20 @@ RSpec.describe Form::ClosedQuestionAnswer do
     end
   end
 
+  describe '#really_destroy!' do
+    describe 'when soft-deleted and form has expired since' do
+      subject(:closed_question_answer) { create(:closed_question_answer) }
+
+      before do
+        closed_question_answer.destroy
+        closed_question_answer.response.form.update!(respond_from: 2.weeks.ago, respond_until: 1.week.ago)
+        closed_question_answer.really_destroy!
+      end
+
+      it { expect(described_class.with_deleted.exists?(closed_question_answer.id)).to be false }
+    end
+  end
+
   describe '#after_commit' do
     before do
       allow(closed_question_answer.response).to receive(:update_completed_status!)
